@@ -1,0 +1,28 @@
+21-3-2568
+FAIL :
+-update-window 
+-docker install
+-compose container sql sever
+
+SUCCESS :
+-Update data page :
+-update feed page
+-validation update data page
+-create table database update
+
+running :
+-create page-login before navigate to datapage update
+-backend api to sql : waiting to set connection--->
+
+waiting :
+
+
+-------------------------------------------------------------------------
+
+soon:
+-del data in sql page
+-view log page
+-del feed page
+
+
+

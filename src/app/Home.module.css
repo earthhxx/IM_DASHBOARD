@@ -1,0 +1,25 @@
+.wave {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #6c63ff, #09f, #6c3, #f09);
+  background-size: 400% 400%;
+  animation: waveBackground 10s ease infinite;
+}
+
+/* ทำให้ background วิ่งเป็นคลื่น */
+@keyframes waveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
