@@ -138,6 +138,7 @@ const Production1_skill_Matrix = () => {
         throw new Error(`Failed to fetch data. Status: ${response.status}`);
       }
       const result = await response.json();
+      console.log(result);
       setData4M(result.data);
       setShow4MCard(true);
     } catch (err) {
@@ -190,12 +191,70 @@ const Production1_skill_Matrix = () => {
       )}
     </>
   );
+  const renderProcess4M = () => {
+    const data = Data4M[0];
 
-  const processList = Array.from({ length: 14 }, (_, i) => ({
-    process: `Process${i + 1}`,
-    am: `AM${i + 1}`,
-    pm: `PM${i + 1}`,
-  }));
+    const allprocess = [
+      data.Process1, data.Process2, data.Process3, data.Process4,
+      data.Process5, data.Process6, data.Process7, data.Process8,
+      data.Process9, data.Process10, data.Process11, data.Process12,
+      data.Process13, data.Process14,
+    ];
+
+    const allam = [
+      data.AM1, data.AM2, data.AM3, data.AM4, data.AM5, data.AM6, data.AM7,
+      data.AM8, data.AM9, data.AM10, data.AM11, data.AM12, data.AM13, data.AM14,
+    ];
+
+    const allpm = [
+      data.PM1, data.PM2, data.PM3, data.PM4, data.PM5, data.PM6, data.PM7,
+      data.PM8, data.PM9, data.PM10, data.PM11, data.PM12, data.PM13, data.PM14,
+    ];
+
+    const groupallprocess = allprocess.map((item, i) => ({
+      process: item,
+      am: allam[i],
+      pm: allpm[i],
+    }));
+
+    return (
+      <div className="p-6">
+        {/* Header info */}
+        <div className="bg-gray-100 p-4 rounded-xl shadow mb-6 text-sm text-gray-800 flex flex-wrap gap-4">
+          <div><strong>Line:</strong> {data.Line}</div>
+          <div><strong>Shift:</strong> {data.Shift}</div>
+          <div><strong>Date:</strong> {data.Date}</div>
+          <div><strong>Checked:</strong> {data.Checked}</div>
+          <div><strong>QA Confirm:</strong> {data.QA_Confirm}</div>
+        </div>
+
+        {/* Process Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-black">
+          {groupallprocess.map((d, index) => (
+            <div key={index} className="border rounded-xl shadow-md overflow-hidden bg-white">
+              <div className="bg-blue-100 text-blue-900 font-semibold text-center py-2 text-md">
+                {d.process || `Process ${index + 1}`}
+              </div>
+              <div className="flex justify-around py-4 text-sm">
+                <div className="text-center">
+                  <div className="text-gray-500">AM</div>
+                  <div className="font-medium">{d.am}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-gray-500">PM</div>
+                  <div className="font-medium">{d.pm}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+
+
+
 
   return (
     <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
@@ -274,90 +333,34 @@ const Production1_skill_Matrix = () => {
       {/* 4M Data Modal */}
       {show4MCard && Data4M.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex flex-col items-center justify-center">
-          <div className="w-full h-full relative bg-white rounded-xl shadow-lg overflow-auto p-4">
+          <div className="w-full h-full relative bg-white shadow-lg overflow-auto">
             <button
-              className="absolute top-70 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
+              className="absolute top-10 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
               onClick={() => setShow4MCard(false)}
             >
               ❌ Close
             </button>
-            <div>
-              <table className="table-auto border-collapse w-full text-center text-sm text-black">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th colSpan={34} className="border px-4 py-2 font-semibold">{Data4M[0].Line}</th>
-                  </tr>
-                  {/* แถวที่ 1 */}
-                  <tr>
-                    <th rowSpan={3} colSpan={2} className="border px-4 py-2 font-semibold">Date / Item</th>
-                    <th rowSpan={3} colSpan={4} className="border px-4 py-2 font-semibold">SHIFT</th>
-                    <th colSpan={28} className="border px-4 py-2 font-semibold">PROCESS</th>
-                  </tr>
+            <div className="">
+              <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl">
+                <div className="flex flex-1 justify-end">
+                  <div className="flex flex-col justify-end">
+                    <div className="flex justify-end">
+                      <h1 className="absolute bottom-[20px] text-[55px] text-white font-extrabold drop-shadow-2xl pe-10 ps-10">
+                        SKILL MATRIX
+                      </h1>
+                    </div>
+                    <div className="flex justify-end">
+                      <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
+                        PRODUCTION 1
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                  {/* แถวที่ 2: หัวข้อกระบวนการ */}
-                  <tr>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process1}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process2}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process3}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process4}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process5}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process6}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process7}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process8}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process9}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process10}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process11}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process12}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process13}</th>
-                    <th colSpan={2} className="border px-4 py-2">{Data4M[0].Process14}</th>
-                  </tr>
-
-                  {/* แถวที่ 3: AM / PM */}
-                  <tr className="bg-blue-50">
-                    {[...Array(28)].map((_, index) => (
-                      <th key={`shift-${index}`} className="border px-4 py-2">
-                        {index % 2 === 0 ? 'AM' : 'PM'}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr className="bg-white hover:bg-gray-50">
-                    <td colSpan={4} className="border px-4 py-2"></td>
-                    <td colSpan={2} className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                    <td className="border px-4 py-2"></td>
-                  </tr>
-                </tbody>
-
-              </table>
+            <div className="m-4 overflow-hidden rounded-b-md">
+              {renderProcess4M()}
             </div>
           </div>
 
