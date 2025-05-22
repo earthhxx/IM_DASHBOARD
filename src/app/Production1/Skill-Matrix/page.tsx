@@ -323,36 +323,40 @@ const Production1_skill_Matrix = () => {
                 </thead>
 
                 <tbody>
-                  <td colSpan={4} className="border px-4 py-2"></td>
-                      <td colSpan={2} className="border px-4 py-2"></td>
-                      <td colSpan={2} className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
-                      <td className="border px-4 py-2"></td>
+                  <tr className="bg-white hover:bg-gray-50">
+                    <td colSpan={4} className="border px-4 py-2"></td>
+                    <td colSpan={2} className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                    <td className="border px-4 py-2"></td>
+                  </tr>
                 </tbody>
+
               </table>
             </div>
           </div>
