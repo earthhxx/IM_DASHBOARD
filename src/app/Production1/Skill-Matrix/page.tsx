@@ -229,7 +229,7 @@ const Production1_skill_Matrix = () => {
         </div>
 
         {/* Process Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-black">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 text-black">
           {groupallprocess.map((d, index) => (
             <div key={index} className="border rounded-xl shadow-md overflow-hidden bg-white">
               <div className="bg-blue-100 text-blue-900 font-semibold text-center py-2 text-md">
