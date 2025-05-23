@@ -224,23 +224,23 @@ const Production1_skill_Matrix = () => {
         {/* Header info */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200 transition-all hover:shadow-md">
           <div className="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
-            <h2 className="text-2xl font-bold text-blue-800 flex items-center gap-2">
+            <h2 className="text-2xl font-bold font-sans text-blue-800 flex items-center gap-2">
               <FaProjectDiagram className="text-blue-600" />
-              Production Information
+              4M REALTIME MORNITOR
             </h2>
-            <div className={`px-3 py-1 rounded-full text-xs font-medium ${data.QA_Confirm === 'Yes'
+            {/* <div className={`px-3 py-1 rounded-full text-xs font-medium ${data.QA_Confirm === 'Yes'
                 ? 'bg-blue-100 text-blue-800'
                 : 'bg-amber-100 text-amber-800'
               }`}>
               QA Status: {data.QA_Confirm}
-            </div>
+            </div> */}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
             <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaProjectDiagram className="text-blue-400" />
-                Production Line
+                PROCESS
               </div>
               <div className="text-lg font-semibold text-gray-800">{data.Line}</div>
             </div>
@@ -248,7 +248,7 @@ const Production1_skill_Matrix = () => {
             <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaClock className="text-blue-400" />
-                Shift
+                SHIFT
               </div>
               <div className="text-lg font-semibold text-gray-800">{data.Shift}</div>
             </div>
@@ -256,7 +256,7 @@ const Production1_skill_Matrix = () => {
             <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaCalendarAlt className="text-blue-400" />
-                Date
+                DATE
               </div>
               <div className="text-lg font-semibold text-gray-800">{data.Date}</div>
             </div>
@@ -264,7 +264,7 @@ const Production1_skill_Matrix = () => {
             <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaCheckCircle className="text-blue-400" />
-                Checked
+                CHECKED 
               </div>
               <div className="text-lg font-semibold">
                 <span className={`px-2 py-1 rounded-full text-white ${data.Checked === 'Completed'
