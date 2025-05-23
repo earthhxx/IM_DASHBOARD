@@ -87,6 +87,7 @@ const Production1_skill_Matrix = () => {
   const [show4MCard, setShow4MCard] = useState(false);
   const S_room = 'PRODUCTION1';
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const [errorimg,setErrorimg] = useState(false);
 
   useEffect(() => {
     const fetchTeamData = async () => {
@@ -305,14 +306,24 @@ const Production1_skill_Matrix = () => {
                 {/* AM Section */}
                 <div className="text-center space-y-3 flex-1">
                   <div className="mx-auto relative w-16 h-16">
-                    <Image
-                      src={`/api/get-image?filename=${d.am}`}
-                      alt="AM Image"
-                      fill
-                      priority
-                      onError={(e) => (e.currentTarget.src = '/placeholder.png')}
-                      className="object-cover rounded-xl shadow-md border-1 border-black"
-                    />
+                    { d.am && d.am !== '-' ? (
+                      <Image
+                        src={`/api/get-image?filename=${d.am}`|| `/Placeholder.png`}
+                        alt="PM Image"
+                        fill
+                        priority
+                        className="object-cover border-1 border-black rounded-2xl"
+                 
+                      />
+                    ) : (
+                      <Image
+                        src="/images/placeholder.png"
+                        alt="Placeholder"
+                        fill
+                        className="object-cover opacity-50 border-1 border-black rounded-2xl"
+                      />
+                    )}
+
                   </div>
                   <div className="text-gray-500 font-medium tracking-wide text-xs uppercase">AM Shift</div>
                   <div className={`text-lg font-semibold ${d.am ? 'text-blue-700' : 'text-gray-400'
@@ -324,14 +335,24 @@ const Production1_skill_Matrix = () => {
                 {/* PM Section */}
                 <div className="text-center space-y-3 flex-1">
                   <div className="mx-auto relative w-16 h-16">
-                    <Image 
-                      src={`/api/get-image?filename=${d.am}`}
-                      alt="PM Image"
-                      fill
-                      priority
-                      onError={(e) => (e.currentTarget.src = '/placeholder.png')}
-                      className="object-cover rounded-xl shadow-md border-1 border-black"
-                    />
+                    {d.pm && d.pm !== '-' ? (
+                      <Image
+                        src={`/api/get-image?filename=${d.pm}`}
+                        alt="PM Image"
+                        fill
+                        priority
+                        className="object-cover border-1 border-black rounded-2xl"
+                  
+                      />
+                    ) : (
+                      <Image
+                        src="/images/placeholder.png"
+                        alt="Placeholder"
+                        fill
+                        className="object-cover opacity-50 border-1 border-black rounded-2xl"
+                      />
+                    )}
+
                   </div>
                   <div className="text-gray-500 font-medium tracking-wide text-xs uppercase">PM Shift</div>
                   <div className={`text-lg font-semibold ${d.pm ? 'text-blue-700' : 'text-gray-400'
