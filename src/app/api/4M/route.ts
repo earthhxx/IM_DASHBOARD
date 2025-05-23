@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
                 ,[Checked]
                 ,[QA_Confirm]
                 FROM [DASHBOARD].[dbo].[4M_Change]
-                WHERE [Line] = 'SMT-1' and shift like 'A%'
+                WHERE [Line] = 'SMT-14' and shift like 'A%'
 `);
 
         console.log(`Qurey`, result.recordset);

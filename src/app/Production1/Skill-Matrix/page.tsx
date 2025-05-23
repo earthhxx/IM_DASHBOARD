@@ -306,35 +306,37 @@ const Production1_skill_Matrix = () => {
                 <div className="text-center space-y-3 flex-1">
                   <div className="mx-auto relative w-16 h-16">
                     <Image
-                      src="/api/get-image?filename=0022"
+                      src={`/api/get-image?filename=${d.am}`}
                       alt="AM Image"
                       fill
                       priority
+                      onError={(e) => (e.currentTarget.src = '/placeholder.png')}
                       className="object-cover rounded-xl shadow-md border-1 border-black"
                     />
                   </div>
                   <div className="text-gray-500 font-medium tracking-wide text-xs uppercase">AM Shift</div>
                   <div className={`text-lg font-semibold ${d.am ? 'text-blue-700' : 'text-gray-400'
                     }`}>
-                    {d.am || 'N/A'}
+                    {d.am || '-'}
                   </div>
                 </div>
 
                 {/* PM Section */}
                 <div className="text-center space-y-3 flex-1">
                   <div className="mx-auto relative w-16 h-16">
-                    <Image
-                      src="/images/0022.PNG"
+                    <Image 
+                      src={`/api/get-image?filename=${d.am}`}
                       alt="PM Image"
                       fill
                       priority
+                      onError={(e) => (e.currentTarget.src = '/placeholder.png')}
                       className="object-cover rounded-xl shadow-md border-1 border-black"
                     />
                   </div>
                   <div className="text-gray-500 font-medium tracking-wide text-xs uppercase">PM Shift</div>
                   <div className={`text-lg font-semibold ${d.pm ? 'text-blue-700' : 'text-gray-400'
                     }`}>
-                    {d.pm || 'N/A'}
+                    {d.pm || '-'}
                   </div>
                 </div>
               </div>
