@@ -6,7 +6,7 @@ import { SpecialZoomLevel, Viewer, Worker } from "@react-pdf-viewer/core";
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import { FaClock, FaCalendarAlt, FaUserCheck, FaClipboardCheck, FaProjectDiagram } from 'react-icons/fa';
+import { FaProjectDiagram, FaCheckCircle, FaCalendarAlt, FaClock } from 'react-icons/fa';
 
 
 type TeamData = {
@@ -220,200 +220,219 @@ const Production1_skill_Matrix = () => {
     })).filter(item => item.process); // กรอง process ที่ไม่ใช่ null/undefined
 
     return (
-      <div className="p-6">
+      <div className="p-6 mx-auto">
         {/* Header info */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200">
-          <h2 className="text-xl font-bold text-blue-800 mb-4 border-b pb-2">Production Info</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-8 text-sm text-gray-700">
-
-            <div className="flex items-center gap-2">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200 transition-all hover:shadow-md">
+          <div className="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
+            <h2 className="text-2xl font-bold text-blue-800 flex items-center gap-2">
               <FaProjectDiagram className="text-blue-600" />
-              <span className="font-semibold text-gray-500">Line:</span>
-              <span className="text-gray-900">{data.Line}</span>
+              Production Information
+            </h2>
+            <div className={`px-3 py-1 rounded-full text-xs font-medium ${data.QA_Confirm === 'Yes'
+                ? 'bg-blue-100 text-blue-800'
+                : 'bg-amber-100 text-amber-800'
+              }`}>
+              QA Status: {data.QA_Confirm}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                <FaProjectDiagram className="text-blue-400" />
+                Production Line
+              </div>
+              <div className="text-lg font-semibold text-gray-800">{data.Line}</div>
             </div>
 
-
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-500">Shift:</span>
-              <span className="text-gray-900">{data.Shift}</span>
+            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                <FaClock className="text-blue-400" />
+                Shift
+              </div>
+              <div className="text-lg font-semibold text-gray-800">{data.Shift}</div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-500">Date:</span>
-              <span className="text-gray-900">{data.Date}</span>
+            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                <FaCalendarAlt className="text-blue-400" />
+                Date
+              </div>
+              <div className="text-lg font-semibold text-gray-800">{data.Date}</div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-500">Checked:</span>
-              <span className="px-2 py-1 rounded-full text-white text-xs font-medium bg-green-500">
-                {data.Checked}
-              </span>
+            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+              <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                <FaCheckCircle className="text-blue-400" />
+                Checked
+              </div>
+              <div className="text-lg font-semibold">
+                <span className={`px-2 py-1 rounded-full text-white ${data.Checked === 'Completed'
+                    ? 'bg-green-500'
+                    : 'bg-amber-500'
+                  }`}>
+                  {data.Checked}
+                </span>
+              </div>
             </div>
-
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-500">QA Confirm:</span>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${data.QA_Confirm === 'Yes' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
-                }`}>
-                {data.QA_Confirm}
-              </span>
-            </div>
-
           </div>
         </div>
 
-
         {/* Process Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 text-black">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {groupallprocess.map((d, index) => (
             <div
               key={index}
-              className="border rounded-2xl shadow-lg bg-white hover:shadow-xl transition duration-300"
+              className="border rounded-2xl shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              <div className="bg-gradient-to-r rounded-t-2xl from-blue-500 to-blue-700 text-white font-bold text-center py-2 text-md">
+              <div className="bg-gradient-to-r rounded-t-2xl from-blue-600 to-blue-800 text-white font-bold text-center py-3 text-md">
                 {d.process}
               </div>
-              <div className="flex justify-around py-6 text-sm items-center gap-4">
 
+              <div className="flex justify-around py-6 px-2 text-sm items-center gap-4">
                 {/* AM Section */}
-                <div className="text-center space-y-2">
-                  <Image
-                    src="/images/0019.PNG"
-                    alt="AM Image"
-                    width={100}
-                    height={100}
-                    priority
-                    className="mx-auto rounded-xl shadow-md border"
-                  />
-                  <div className="text-gray-500 font-medium tracking-wide">AM</div>
-                  <div className="text-blue-700 font-semibold text-md">
+                <div className="text-center space-y-3 flex-1">
+                  <div className="mx-auto relative w-16 h-16">
+                    <Image
+                      src="/images/0019.PNG"
+                      alt="AM Image"
+                      fill
+                      priority
+                      className="object-cover rounded-xl shadow-md border-1 border-black"
+                    />
+                  </div>
+                  <div className="text-gray-500 font-medium tracking-wide text-xs uppercase">AM Shift</div>
+                  <div className={`text-lg font-semibold ${d.am ? 'text-blue-700' : 'text-gray-400'
+                    }`}>
                     {d.am || 'N/A'}
                   </div>
                 </div>
 
                 {/* PM Section */}
-                <div className="text-center space-y-2">
-                  <Image
-                    src="/images/0022.PNG"
-                    alt="AM Image"
-                    width={100}
-                    height={100}
-                    priority
-                    className="mx-auto rounded-xl shadow-md border"
-                  />
-                  <div className="text-gray-500 font-medium tracking-wide">PM</div>
-                  <div className="text-blue-700 font-semibold text-md">
+                <div className="text-center space-y-3 flex-1">
+                  <div className="mx-auto relative w-16 h-16">
+                    <Image
+                      src="/images/0022.PNG"
+                      alt="PM Image"
+                      fill
+                      priority
+                      className="object-cover rounded-xl shadow-md border-1 border-black"
+                    />
+                  </div>
+                  <div className="text-gray-500 font-medium tracking-wide text-xs uppercase">PM Shift</div>
+                  <div className={`text-lg font-semibold ${d.pm ? 'text-blue-700' : 'text-gray-400'
+                    }`}>
                     {d.pm || 'N/A'}
                   </div>
                 </div>
-
               </div>
-
             </div>
           ))}
         </div>
       </div>
     );
-  };
+
+};
 
 
 
 
-  return (
-    <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
-      {/* Header */}
-      <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl">
-        <div className="flex flex-1 justify-end">
-          <div className="flex flex-col justify-end">
-            <div className="flex justify-end">
-              <h1 className="absolute bottom-[20px] text-[55px] text-white font-extrabold drop-shadow-2xl pe-10 ps-10">
-                SKILL MATRIX
-              </h1>
-            </div>
-            <div className="flex justify-end">
-              <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
-                PRODUCTION 1
-              </h2>
-            </div>
+return (
+  <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
+    {/* Header */}
+    <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl">
+      <div className="flex flex-1 justify-end">
+        <div className="flex flex-col justify-end">
+          <div className="flex justify-end">
+            <h1 className="absolute bottom-[20px] text-[55px] text-white font-extrabold drop-shadow-2xl pe-10 ps-10">
+              SKILL MATRIX
+            </h1>
+          </div>
+          <div className="flex justify-end">
+            <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
+              PRODUCTION 1
+            </h2>
           </div>
         </div>
       </div>
+    </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex-col items-center justify-end w-full bg-white shadow-lg rounded-xl">
-        {/* Team Selection */}
-        <div className="flex w-full h-15 justify-between">
-          <div className="flex-none w-1/2"></div>
-          <div className="flex w-80 gap-4 mt-2 justify-center pe-10">
-            <button
-              className={`flex-1 ${selectedTeam === "A" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
-              onClick={() => setSelectedTeam("A")}
-            >
-              TEAM : A
-            </button>
-            <button
-              className={`flex-1 ${selectedTeam === "B" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
-              onClick={() => setSelectedTeam("B")}
-            >
-              TEAM : B
-            </button>
-          </div>
+    {/* Main Content */}
+    <div className="flex-1 flex-col items-center justify-end w-full bg-white shadow-lg rounded-xl">
+      {/* Team Selection */}
+      <div className="flex w-full h-15 justify-between">
+        <div className="flex-none w-1/2"></div>
+        <div className="flex w-80 gap-4 mt-2 justify-center pe-10">
+          <button
+            className={`flex-1 ${selectedTeam === "A" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
+            onClick={() => setSelectedTeam("A")}
+          >
+            TEAM : A
+          </button>
+          <button
+            className={`flex-1 ${selectedTeam === "B" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
+            onClick={() => setSelectedTeam("B")}
+          >
+            TEAM : B
+          </button>
         </div>
-
-        {/* Department Sections */}
-        {renderDepartmentSection('PRODUCTION')}
-        {renderDepartmentSection('ENGINEER')}
-        {renderDepartmentSection('QA')}
       </div>
 
-      {/* PDF Viewer Modal */}
-      {pdfUrl && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-40 flex flex-col items-center justify-center">
-          <div className="w-full h-full relative bg-white rounded-xl shadow-lg overflow-hidden">
-            <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
-              onClick={() => setPdfUrl(null)}
-            >
-              ❌ Close PDF
-            </button>
-            <button
-              className="absolute top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 z-50"
-              onClick={fetchData4m}
-            >
-              Fetch 4M Data
-            </button>
-            <Worker workerUrl="/pdf.worker.min.js">
-              <Viewer
-                fileUrl={pdfUrl}
-                defaultScale={SpecialZoomLevel.PageFit}
-                plugins={[defaultLayoutPluginInstance]}
-              />
-            </Worker>
+      {/* Department Sections */}
+      {renderDepartmentSection('PRODUCTION')}
+      {renderDepartmentSection('ENGINEER')}
+      {renderDepartmentSection('QA')}
+    </div>
+
+    {/* PDF Viewer Modal */}
+    {pdfUrl && (
+      <div className="fixed inset-0 bg-black bg-opacity-70 z-40 flex flex-col items-center justify-center">
+        <div className="w-full h-full relative bg-white rounded-xl shadow-lg overflow-hidden">
+          <button
+            className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
+            onClick={() => setPdfUrl(null)}
+          >
+            ❌ Close PDF
+          </button>
+          <button
+            className="absolute top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 z-50"
+            onClick={fetchData4m}
+          >
+            Fetch 4M Data
+          </button>
+          <Worker workerUrl="/pdf.worker.min.js">
+            <Viewer
+              fileUrl={pdfUrl}
+              defaultScale={SpecialZoomLevel.PageFit}
+              plugins={[defaultLayoutPluginInstance]}
+            />
+          </Worker>
+        </div>
+      </div>
+    )}
+
+    {/* 4M Data Modal */}
+    {show4MCard && Data4M.length > 0 && (
+      <div className="fixed inset-0 bg-linear-to-r/hsl from-indigo-300/40 backdrop-blur-[5px] to-sky-200/40 z-50 flex flex-col items-center justify-center">
+        <div className="w-full h-full relative bg- shadow-lg overflow-auto">
+          <button
+            className="absolute top-3 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
+            onClick={() => setShow4MCard(false)}
+          >
+            ❌ Close
+          </button>
+
+          <div className="m-4 overflow-hidden rounded-b-md">
+            {renderProcess4M()}
           </div>
         </div>
-      )}
 
-      {/* 4M Data Modal */}
-      {show4MCard && Data4M.length > 0 && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex flex-col items-center justify-center">
-          <div className="w-full h-full relative bg-white shadow-lg overflow-auto">
-            <button
-              className="absolute top-10 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
-              onClick={() => setShow4MCard(false)}
-            >
-              ❌ Close
-            </button>
+      </div>
+    )
+    }
 
-            <div className="m-4 overflow-hidden rounded-b-md">
-              {renderProcess4M()}
-            </div>
-          </div>
-
-        </div>
-      )
-      }
-
-    </div >
-  );
+  </div >
+);
 };
 
 export default Production1_skill_Matrix;
