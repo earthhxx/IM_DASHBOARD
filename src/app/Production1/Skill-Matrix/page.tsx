@@ -6,6 +6,8 @@ import { SpecialZoomLevel, Viewer, Worker } from "@react-pdf-viewer/core";
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import { FaClock, FaCalendarAlt, FaUserCheck, FaClipboardCheck, FaProjectDiagram } from 'react-icons/fa';
+
 
 type TeamData = {
   room: string;
@@ -215,43 +217,103 @@ const Production1_skill_Matrix = () => {
       process: item,
       am: allam[i],
       pm: allpm[i],
-    }));
+    })).filter(item => item.process); // กรอง process ที่ไม่ใช่ null/undefined
 
     return (
       <div className="p-6">
         {/* Header info */}
-        <div className="bg-gray-100 p-4 rounded-xl shadow mb-6 text-sm text-gray-800 flex flex-wrap gap-4">
-          <div><strong>Line:</strong> {data.Line}</div>
-          <div><strong>Shift:</strong> {data.Shift}</div>
-          <div><strong>Date:</strong> {data.Date}</div>
-          <div><strong>Checked:</strong> {data.Checked}</div>
-          <div><strong>QA Confirm:</strong> {data.QA_Confirm}</div>
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200">
+          <h2 className="text-xl font-bold text-blue-800 mb-4 border-b pb-2">Production Info</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-8 text-sm text-gray-700">
+
+            <div className="flex items-center gap-2">
+              <FaProjectDiagram className="text-blue-600" />
+              <span className="font-semibold text-gray-500">Line:</span>
+              <span className="text-gray-900">{data.Line}</span>
+            </div>
+
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-gray-500">Shift:</span>
+              <span className="text-gray-900">{data.Shift}</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-gray-500">Date:</span>
+              <span className="text-gray-900">{data.Date}</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-gray-500">Checked:</span>
+              <span className="px-2 py-1 rounded-full text-white text-xs font-medium bg-green-500">
+                {data.Checked}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-gray-500">QA Confirm:</span>
+              <span className={`px-2 py-1 rounded-full text-xs font-medium ${data.QA_Confirm === 'Yes' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+                }`}>
+                {data.QA_Confirm}
+              </span>
+            </div>
+
+          </div>
         </div>
+
 
         {/* Process Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 text-black">
           {groupallprocess.map((d, index) => (
-            <div key={index} className="border rounded-xl shadow-md overflow-hidden bg-white">
-              <div className="bg-blue-100 text-blue-900 font-semibold text-center py-2 text-md">
-                {d.process || `Process ${index + 1}`}
+            <div
+              key={index}
+              className="border rounded-2xl shadow-lg bg-white hover:shadow-xl transition duration-300"
+            >
+              <div className="bg-gradient-to-r rounded-t-2xl from-blue-500 to-blue-700 text-white font-bold text-center py-2 text-md">
+                {d.process}
               </div>
-              <div className="flex justify-around py-4 text-sm">
-                <div className="text-center">
-                  <div className="text-gray-500">AM</div>
-                  <div className="font-medium">{d.am}</div>
+              <div className="flex justify-around py-6 text-sm items-center gap-4">
+
+                {/* AM Section */}
+                <div className="text-center space-y-2">
+                  <Image
+                    src="/images/0019.PNG"
+                    alt="AM Image"
+                    width={100}
+                    height={100}
+                    priority
+                    className="mx-auto rounded-xl shadow-md border"
+                  />
+                  <div className="text-gray-500 font-medium tracking-wide">AM</div>
+                  <div className="text-blue-700 font-semibold text-md">
+                    {d.am || 'N/A'}
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-gray-500">PM</div>
-                  <div className="font-medium">{d.pm}</div>
+
+                {/* PM Section */}
+                <div className="text-center space-y-2">
+                  <Image
+                    src="/images/0022.PNG"
+                    alt="AM Image"
+                    width={100}
+                    height={100}
+                    priority
+                    className="mx-auto rounded-xl shadow-md border"
+                  />
+                  <div className="text-gray-500 font-medium tracking-wide">PM</div>
+                  <div className="text-blue-700 font-semibold text-md">
+                    {d.pm || 'N/A'}
+                  </div>
                 </div>
+
               </div>
+
             </div>
           ))}
         </div>
       </div>
     );
   };
-
 
 
 
@@ -340,24 +402,6 @@ const Production1_skill_Matrix = () => {
             >
               ❌ Close
             </button>
-            <div className="">
-              <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl">
-                <div className="flex flex-1 justify-end">
-                  <div className="flex flex-col justify-end">
-                    <div className="flex justify-end">
-                      <h1 className="absolute bottom-[20px] text-[55px] text-white font-extrabold drop-shadow-2xl pe-10 ps-10">
-                        SKILL MATRIX
-                      </h1>
-                    </div>
-                    <div className="flex justify-end">
-                      <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
-                        PRODUCTION 1
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div className="m-4 overflow-hidden rounded-b-md">
               {renderProcess4M()}
