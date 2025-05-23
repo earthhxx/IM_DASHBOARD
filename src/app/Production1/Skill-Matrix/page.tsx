@@ -306,7 +306,7 @@ const Production1_skill_Matrix = () => {
                 <div className="text-center space-y-3 flex-1">
                   <div className="mx-auto relative w-16 h-16">
                     <Image
-                      src="/images/0019.PNG"
+                      src="/api/get-image?filename=0022"
                       alt="AM Image"
                       fill
                       priority
@@ -410,7 +410,7 @@ const Production1_skill_Matrix = () => {
               className="absolute top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 z-50"
               onClick={fetchData4m}
             >
-              Fetch 4M Data
+              4M MONITOR
             </button>
             <Worker workerUrl="/pdf.worker.min.js">
               <Viewer

@@ -1,10 +1,21 @@
-// next.config.ts
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true, // เปิด React strict mode
+  reactStrictMode: true,
+
   eslint: {
-    ignoreDuringBuilds: true, // ข้ามข้อผิดพลาด ESLint ระหว่างการ build
+    ignoreDuringBuilds: true,
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '192.168.120.9',
+        port:'',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

@@ -24,7 +24,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/Button.js", "src/app/api/insertData/route.ts", "src/app/components/Navbar.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/Button.js", "src/app/api/insertData/route.ts", "src/app/components/Navbar.tsx", "src/app/api/get-image"],
   "exclude": ["node_modules"]
   
 }
