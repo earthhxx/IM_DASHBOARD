@@ -195,6 +195,11 @@ const Production1_skill_Matrix = () => {
   );
   const renderProcess4M = () => {
     const data = Data4M[0];
+    const formattedDate = new Date(data.Date).toLocaleDateString("th-TH", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
 
     const allprocess = [
       data.Process1, data.Process2, data.Process3, data.Process4,
@@ -225,7 +230,14 @@ const Production1_skill_Matrix = () => {
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200 transition-all hover:shadow-md">
           <div className="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
             <h2 className="text-2xl font-bold font-sans text-blue-800 flex items-center gap-2">
-              <FaProjectDiagram className="text-blue-600" />
+              <Image
+                src="/images/LOGO4.png"
+                alt="Logo"
+                width={400}
+                height={400}
+                priority
+                className="w-10 h-10"
+              />
               4M REALTIME MORNITOR
             </h2>
             {/* <div className={`px-3 py-1 rounded-full text-xs font-medium ${data.QA_Confirm === 'Yes'
@@ -237,7 +249,7 @@ const Production1_skill_Matrix = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaProjectDiagram className="text-blue-400" />
                 PROCESS
@@ -245,7 +257,7 @@ const Production1_skill_Matrix = () => {
               <div className="text-lg font-semibold text-gray-800">{data.Line}</div>
             </div>
 
-            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaClock className="text-blue-400" />
                 SHIFT
@@ -253,23 +265,23 @@ const Production1_skill_Matrix = () => {
               <div className="text-lg font-semibold text-gray-800">{data.Shift}</div>
             </div>
 
-            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaCalendarAlt className="text-blue-400" />
                 DATE
               </div>
-              <div className="text-lg font-semibold text-gray-800">{data.Date}</div>
+              <div className="text-lg font-semibold text-gray-800">{formattedDate}</div>
             </div>
 
-            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
               <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                 <FaCheckCircle className="text-blue-400" />
-                CHECKED 
+                CHECKED
               </div>
               <div className="text-lg font-semibold">
                 <span className={`px-2 py-1 rounded-full text-white ${data.Checked === 'Completed'
-                    ? 'bg-green-500'
-                    : 'bg-amber-500'
+                  ? 'bg-green-500'
+                  : 'bg-amber-500'
                   }`}>
                   {data.Checked}
                 </span>
@@ -332,107 +344,107 @@ const Production1_skill_Matrix = () => {
       </div>
     );
 
-};
+  };
 
 
 
 
-return (
-  <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
-    {/* Header */}
-    <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl">
-      <div className="flex flex-1 justify-end">
-        <div className="flex flex-col justify-end">
-          <div className="flex justify-end">
-            <h1 className="absolute bottom-[20px] text-[55px] text-white font-extrabold drop-shadow-2xl pe-10 ps-10">
-              SKILL MATRIX
-            </h1>
+  return (
+    <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
+      {/* Header */}
+      <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl">
+        <div className="flex flex-1 justify-end">
+          <div className="flex flex-col justify-end">
+            <div className="flex justify-end">
+              <h1 className="absolute bottom-[20px] text-[55px] text-white font-extrabold drop-shadow-2xl pe-10 ps-10">
+                SKILL MATRIX
+              </h1>
+            </div>
+            <div className="flex justify-end">
+              <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
+                PRODUCTION 1
+              </h2>
+            </div>
           </div>
-          <div className="flex justify-end">
-            <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
-              PRODUCTION 1
-            </h2>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Main Content */}
-    <div className="flex-1 flex-col items-center justify-end w-full bg-white shadow-lg rounded-xl">
-      {/* Team Selection */}
-      <div className="flex w-full h-15 justify-between">
-        <div className="flex-none w-1/2"></div>
-        <div className="flex w-80 gap-4 mt-2 justify-center pe-10">
-          <button
-            className={`flex-1 ${selectedTeam === "A" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
-            onClick={() => setSelectedTeam("A")}
-          >
-            TEAM : A
-          </button>
-          <button
-            className={`flex-1 ${selectedTeam === "B" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
-            onClick={() => setSelectedTeam("B")}
-          >
-            TEAM : B
-          </button>
         </div>
       </div>
 
-      {/* Department Sections */}
-      {renderDepartmentSection('PRODUCTION')}
-      {renderDepartmentSection('ENGINEER')}
-      {renderDepartmentSection('QA')}
-    </div>
-
-    {/* PDF Viewer Modal */}
-    {pdfUrl && (
-      <div className="fixed inset-0 bg-black bg-opacity-70 z-40 flex flex-col items-center justify-center">
-        <div className="w-full h-full relative bg-white rounded-xl shadow-lg overflow-hidden">
-          <button
-            className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
-            onClick={() => setPdfUrl(null)}
-          >
-            ❌ Close PDF
-          </button>
-          <button
-            className="absolute top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 z-50"
-            onClick={fetchData4m}
-          >
-            Fetch 4M Data
-          </button>
-          <Worker workerUrl="/pdf.worker.min.js">
-            <Viewer
-              fileUrl={pdfUrl}
-              defaultScale={SpecialZoomLevel.PageFit}
-              plugins={[defaultLayoutPluginInstance]}
-            />
-          </Worker>
-        </div>
-      </div>
-    )}
-
-    {/* 4M Data Modal */}
-    {show4MCard && Data4M.length > 0 && (
-      <div className="fixed inset-0 bg-linear-to-r/hsl from-indigo-300/40 backdrop-blur-[5px] to-sky-200/40 z-50 flex flex-col items-center justify-center">
-        <div className="w-full h-full relative bg- shadow-lg overflow-auto">
-          <button
-            className="absolute top-3 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
-            onClick={() => setShow4MCard(false)}
-          >
-            ❌ Close
-          </button>
-
-          <div className="m-4 overflow-hidden rounded-b-md">
-            {renderProcess4M()}
+      {/* Main Content */}
+      <div className="flex-1 flex-col items-center justify-end w-full bg-white shadow-lg rounded-xl">
+        {/* Team Selection */}
+        <div className="flex w-full h-15 justify-between">
+          <div className="flex-none w-1/2"></div>
+          <div className="flex w-80 gap-4 mt-2 justify-center pe-10">
+            <button
+              className={`flex-1 ${selectedTeam === "A" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
+              onClick={() => setSelectedTeam("A")}
+            >
+              TEAM : A
+            </button>
+            <button
+              className={`flex-1 ${selectedTeam === "B" ? "bg-blue-100" : "bg-gray-50 hover:bg-gray-100"} text-blue-900 py-2 px-2 drop-shadow-2xl rounded-lg transition-all text-lg`}
+              onClick={() => setSelectedTeam("B")}
+            >
+              TEAM : B
+            </button>
           </div>
         </div>
 
+        {/* Department Sections */}
+        {renderDepartmentSection('PRODUCTION')}
+        {renderDepartmentSection('ENGINEER')}
+        {renderDepartmentSection('QA')}
       </div>
-    )
-    }
 
-  </div >
-);
+      {/* PDF Viewer Modal */}
+      {pdfUrl && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-40 flex flex-col items-center justify-center">
+          <div className="w-full h-full relative bg-white rounded-xl shadow-lg overflow-hidden">
+            <button
+              className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
+              onClick={() => setPdfUrl(null)}
+            >
+              ❌ Close PDF
+            </button>
+            <button
+              className="absolute top-16 right-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 z-50"
+              onClick={fetchData4m}
+            >
+              Fetch 4M Data
+            </button>
+            <Worker workerUrl="/pdf.worker.min.js">
+              <Viewer
+                fileUrl={pdfUrl}
+                defaultScale={SpecialZoomLevel.PageFit}
+                plugins={[defaultLayoutPluginInstance]}
+              />
+            </Worker>
+          </div>
+        </div>
+      )}
+
+      {/* 4M Data Modal */}
+      {show4MCard && Data4M.length > 0 && (
+        <div className="fixed inset-0 bg-linear-to-r/hsl from-indigo-300/40 backdrop-blur-[5px] to-sky-200/40 z-50 flex flex-col items-center justify-center">
+          <div className="w-full h-full relative bg- shadow-lg overflow-auto">
+            <button
+              className="absolute top-3 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 z-50"
+              onClick={() => setShow4MCard(false)}
+            >
+              ❌ Close
+            </button>
+
+            <div className="m-4 overflow-hidden rounded-b-md">
+              {renderProcess4M()}
+            </div>
+          </div>
+
+        </div>
+      )
+      }
+
+    </div >
+  );
 };
 
 export default Production1_skill_Matrix;
