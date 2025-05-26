@@ -327,7 +327,7 @@ const Production1_skill_Matrix = () => {
               className="border rounded-2xl shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className={`bg-gradient-to-r rounded-t-2xl  text-white font-bold text-center py-3 text-md ${data.ProcessChange === d.process
-                  ? 'bg-yellow-300'
+                  ? 'from-yellow-300/70 to-yellow-400'
                   : 'from-blue-600 to-blue-800'
                   }`}>
                 {d.process}
