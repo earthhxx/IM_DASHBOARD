@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
                 WHERE [Line] = @locationto4m AND  [Shift] like @team AND CAST([Date] AS DATE) = CAST(GETDATE() AS DATE)
             `);
 
-        console.log(`Qurey`, result.recordset);
+        // console.log(`Qurey`, result.recordset);
 
         if (result.recordset.length === 0) {
             return NextResponse.json({ message: 'No data found' }, { status: 404 });
