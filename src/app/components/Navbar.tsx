@@ -208,7 +208,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => {handleCardToggle(1)}} href="/pages/skill-Matrix?Param='PRODUCTION1'">
+                        <Link onClick={() => {handleCardToggle(1)}} href="/pages/skill-Matrix?Param=PRODUCTION1">
                           SKILL MATRIX
                         </Link>
                       </li>
@@ -244,7 +244,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => handleCardToggle(2)} href="/Production2/Skill-Matrix">
+                        <Link onClick={() => handleCardToggle(2)} href="/pages/skill-Matrix?Param=PRODUCTION2">
                           SKILL MATRIX
                         </Link>
                       </li>
@@ -280,7 +280,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => handleCardToggle(3)} href="/Production3/Skill-Matrix">
+                        <Link onClick={() => handleCardToggle(3)} href="/pages/skill-Matrix?Param=PRODUCTION3">
                           SKILL MATRIX
                         </Link>
                       </li>
@@ -316,7 +316,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => handleCardToggle(4)} href="/Production4/Skill-Matrix">
+                        <Link onClick={() => handleCardToggle(4)} href="/pages/skill-Matrix?Param=PRODUCTION4">
                           SKILL MATRIX
                         </Link>
                       </li>
@@ -352,7 +352,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => handleCardToggle(5)} href="/Production5/Skill-Matrix">
+                        <Link onClick={() => handleCardToggle(5)} href="/pages/skill-Matrix?Param=PRODUCTION5">
                           SKILL MATRIX
                         </Link>
                       </li>
@@ -388,7 +388,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => handleCardToggle(6)} href="/Warehouse/Skill-Matrix">
+                        <Link onClick={() => handleCardToggle(6)} href="/pages/skill-Matrix?Param=WAREHOUSE">
                           SKILL MATRIX
                         </Link>
                       </li>
@@ -424,7 +424,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => handleCardToggle(7)} href="/Maintenance/Skill-Matrix">
+                        <Link onClick={() => handleCardToggle(7)} href="/pages/skill-Matrix?Param=MAINTENANCE">
                           SKILL MATRIX
                         </Link>
                       </li>

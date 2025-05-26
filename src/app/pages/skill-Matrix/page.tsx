@@ -82,7 +82,6 @@ const Production1_skill_Matrix = () => {
 
 
   const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-  const S_room = param;
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   type ErrorMapType = { [key: string]: boolean };
@@ -92,10 +91,16 @@ const Production1_skill_Matrix = () => {
   const isMock = false;
   const sampleBase64Pdf = "data:application/pdf;base64,JVBERi0xLjUKJeLjz9MKMSAwIG9iago8PAovVGl0bGUgKP7/AEMAbwBuAHQAZQBuAHQAKQovQ3JlYXRvciAoUHl0aG9uIFBERiBHZW5lcmF0b3IpCi9Qcm9kdWNlciAoUHl0aG9uIFBERiBMaWJyYXJ5IDMuMy4xKQovQ3JlYXRpb25EYXRlIChEOjIwMjUwNTE5MDkyNzI4KzAwJzAwJykKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0xlbmd0aCAzNwo+PgpcbHN0cmVhbQpCBiAwIDAgMCAwIDAgMCBzCkJUCi9GMQAxMiBUZgovVGQKKDEwMCA3MDApIFRkCihIZWxsbywgUERGISkgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgNCAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgNSAwIFIKPj4KPj4KL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KL0NvbnRlbnRzIDIgMCBSCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovTmFtZSAvRjEKL0Jhc2VGb250IC9IZWx2ZXRpY2EKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKPj4KZW5kb2JqCnhyZWYKMCA2CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDExNiAwMDAwMCBuIAowMDAwMDAwMjgxIDAwMDAwIG4gCjAwMDAwMDAzNzkgMDAwMDAgbiAKMDAwMDAwMDUzMiAwMDAwMCBuIAowMDAwMDAwNjMyIDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgNgovUm9vdCAxIDAgUgo+PgpzdGFydHhyZWYKNzM2CiUlRU9G";
 
-
+    useEffect(() => {
+    if (param) {
+      console.log("ProductOrderNo updated:", param);
+      // You can add additional logic here, such as fetching data based on ProductOrderNo
+    }
+  }, [param]);
 
   useEffect(() => {
     const fetchTeamData = async () => {
+      if (!param) return; // ✅ รอจนกว่า param จะมีค่า
       if (isMock) {
         const mockData = [
           {
@@ -119,7 +124,7 @@ const Production1_skill_Matrix = () => {
       }
 
       try {
-        const response = await fetch(`/api/SKILL_MATRIX?S_team=${selectedTeam}&S_room=${S_room}`);
+        const response = await fetch(`/api/SKILL_MATRIX?S_team=${selectedTeam}&S_room=${param}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }
@@ -134,7 +139,7 @@ const Production1_skill_Matrix = () => {
     };
 
     fetchTeamData();
-  }, [selectedTeam]);
+  }, [selectedTeam,param,ParamListener]);
 
   const loadPdf = (base64: string) => {
     try {
@@ -162,7 +167,8 @@ const Production1_skill_Matrix = () => {
     try {
       const response = await fetch(`/api/4M?S_team=${selectedTeam}&locationto4m=${locationto4m}`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch data. Status: ${response.status}`);
+        setNo4mData(true);
+        console.log(`Failed to fetch data. Status: ${response.status}`);
       }
       const result = await response.json();
       console.log(result);
@@ -171,7 +177,6 @@ const Production1_skill_Matrix = () => {
     } catch (err) {
       setNo4mData(true);
       console.error("Error fetching 4M data:", err);
-
     }
   };
 
@@ -191,7 +196,6 @@ const Production1_skill_Matrix = () => {
           </div>
 
           {loading && <p className="text-center text-xl text-blue-700">Loading data...</p>}
-          {error && <p className="text-center text-xl text-red-500">Error: {error}</p>}
 
           {!loading && teamData.length > 0 && (
             <div dir="ltr" className="ps-7 pe-10 w-full mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
@@ -436,7 +440,7 @@ const Production1_skill_Matrix = () => {
             </div>
             <div className="flex justify-end">
               <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
-                {S_room}
+                {param}
               </h2>
             </div>
           </div>
@@ -497,7 +501,7 @@ const Production1_skill_Matrix = () => {
       )}
 
       {/* 4M Data Modal */}
-      {show4MCard && Data4M.length > 0 && (
+      {show4MCard && Data4M && Data4M.length > 0 && (
         <div className="fixed inset-0 bg-linear-to-r/hsl from-indigo-300/40 backdrop-blur-[5px] to-sky-200/40 z-50 flex flex-col items-center justify-center">
           <div className="w-full h-full relative bg- shadow-lg overflow-auto">
             <button
