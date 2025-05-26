@@ -354,7 +354,7 @@ const Production1_skill_Matrix = () => {
                         alt="AM Image"
                         fill
                         priority
-                        className="object-cover border-1 border-black rounded-2xl"
+                        className="object-cover border-1 border-gray-500 rounded-2xl"
                         onError={() =>
                           setErrorMap((prev) => ({ ...prev, [d.am]: true }))
                         }
@@ -364,7 +364,7 @@ const Production1_skill_Matrix = () => {
                         src="/images/placeholder.png"
                         alt="Placeholder"
                         fill
-                        className="object-cover opacity-50 border-1 border-black rounded-2xl"
+                        className="object-cover opacity-50 border-1 border-gray-500 rounded-2xl"
                       />
                     )}
                   </div>
@@ -388,7 +388,7 @@ const Production1_skill_Matrix = () => {
                         alt="PM Image"
                         fill
                         priority
-                        className="object-cover border-1 border-black rounded-2xl"
+                        className="object-cover border-1 border-gray-500 rounded-2xl"
                         onError={() =>
                           setErrorMap((prev) => ({ ...prev, [d.pm]: true }))
                         }
@@ -398,7 +398,7 @@ const Production1_skill_Matrix = () => {
                         src="/images/placeholder.png"
                         alt="Placeholder"
                         fill
-                        className="object-cover opacity-50 border-1 border-black rounded-2xl"
+                        className="object-cover opacity-50 border-1 border-gray-500 rounded-2xl"
                       />
                     )}
                   </div>
@@ -529,8 +529,8 @@ const Production1_skill_Matrix = () => {
               ❌ Close
             </button>
             <div className="flex flex-col h-full w-full justify-center items-center">
-              <div className="flex justify-center items-center h-100 w-200 rounded-4xl text-5xl text-black bg-red-600/10">
-                ยังไม่มีการลงบันทึกประจำวัน
+              <div className="flex justify-center items-center h-100 w-200 rounded-4xl text-5xl font-kanit text-black bg-red-600/10">
+                รอผลบันทึก 4M ประจำวัน
               </div>
 
             </div>

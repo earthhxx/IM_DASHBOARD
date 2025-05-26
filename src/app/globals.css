@@ -5,6 +5,11 @@
   --foreground: #171717;
 }
 
+@theme inline{ 
+  --font-kanit: var(--font-kanit);
+  --font-noto: var(--font-noto);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

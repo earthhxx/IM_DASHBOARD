@@ -2,6 +2,13 @@ import { ReactNode } from "react";
 import "@/app/globals.css"; // Global styles
 import Navbar from "./components/Navbar";
 import Logo from "./components/Logo";
+import { Kanit, Noto_Sans } from "next/font/google";
+
+const kanitFont = Kanit({
+  subsets: ['thai'],
+  weight: ["400", "700"],
+  variable: "--font-kanit",
+});
 // import Sidebar from "@/app/components/sidebar"; // Uncomment if you want to add Sidebar
 
 const Layout = ({ children }: { children: ReactNode }) => {
