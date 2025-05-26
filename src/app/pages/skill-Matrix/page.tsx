@@ -529,7 +529,7 @@ const Production1_skill_Matrix = () => {
               ❌ Close
             </button>
             <div className="flex flex-col h-full w-full justify-center items-center">
-              <div className="flex justify-center items-center h-100 w-200 rounded-4xl text-5xl font-kanit text-black bg-red-600/10">
+              <div className="flex justify-center items-center h-100 w-200 rounded-4xl text-5xl font-kanit text-white bg-red-400/70">
                 รอผลบันทึก 4M ประจำวัน
               </div>
 
