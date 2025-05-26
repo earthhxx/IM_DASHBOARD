@@ -225,7 +225,8 @@ const Production1_skill_Matrix = () => {
       process: item,
       am: allam[i],
       pm: allpm[i],
-    })).filter(item => item.process); // กรอง process ที่ไม่ใช่ null/undefined
+    })).filter(item => item.process && (item.am || item.pm)); // กรอง process ที่ไม่ใช่ null/undefined
+    console.log(groupallprocess);
 
     return (
       <div className="p-6 mx-auto">
