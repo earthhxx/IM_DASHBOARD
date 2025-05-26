@@ -208,7 +208,7 @@ const Navbar = () => {
                     <div className='border-t border-gray-300 '></div>
                     <div className='grid grid-cols-4 gap-4 scale-z-90 mt-4'>
                       <li>
-                        <Link onClick={() => {handleCardToggle(1)}} href="/Pages/Skill-Matrix?Param='PRODUCTION1'">
+                        <Link onClick={() => {handleCardToggle(1)}} href="/pages/skill-Matrix?Param='PRODUCTION1'">
                           SKILL MATRIX
                         </Link>
                       </li>
