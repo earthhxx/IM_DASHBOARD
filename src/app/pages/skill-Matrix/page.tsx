@@ -169,9 +169,17 @@ const Production1_skill_Matrix = () => {
       console.error("Location to 4M is not set.");
       return;
     }
-    else if (locationto4m === "") {
-      setlocationto4m("");
-      console.error("Selected team is not set.");
+    else if (locationto4m === "PCBA Camera") {
+      setlocationto4m("Kyocera");
+    }
+    else if (locationto4m === "FPCA Camera") {
+      setlocationto4m("NPCT");
+    }
+    else if (locationto4m === "Motor Sensor") {
+      setlocationto4m("NPCT");
+    }
+    else if (locationto4m === "ICT Heater Sensor") {
+      setlocationto4m("PANA PMFTH");
     }
 
     try {
