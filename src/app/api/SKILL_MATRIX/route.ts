@@ -18,33 +18,41 @@ export async function GET(req: NextRequest) {
       .input('team', sql.VarChar, team)
       .input('room', sql.VarChar, room)
       .query(`
-        SELECT S_Room, S_Team, S_Dep, S_Loc, S_PDF 
-        FROM SKILL_MATRIX
-        WHERE S_Room = @room AND S_Team = @team
-        ORDER BY 
-            CASE 
-                WHEN S_loc = 'SMT-1' THEN 1
-                WHEN S_loc = 'SMT-2' THEN 2
-                WHEN S_loc = 'SMT-3' THEN 3
-                WHEN S_loc = 'SMT-4' THEN 4
-                WHEN S_loc = 'SMT-5' THEN 5
-                WHEN S_loc = 'SMT-6' THEN 6
-                WHEN S_loc = 'SMT-7' THEN 7
-                WHEN S_loc = 'SMT-8' THEN 8
-                WHEN S_loc = 'SMT-9' THEN 9
-                WHEN S_loc = 'SMT-10' THEN 10
-                WHEN S_loc = 'SMT-11' THEN 11
-                WHEN S_loc = 'SMT-12' THEN 12
-                WHEN S_loc = 'SMT-13' THEN 13
-                WHEN S_loc = 'SMT-14' THEN 14
-                WHEN S_loc = 'SMT-15' THEN 15
-                WHEN S_loc = 'SMT-16' THEN 16
-                WHEN S_loc = 'SMT-17' THEN 17
-                WHEN S_loc = 'SMT-18' THEN 18
-                WHEN S_loc = 'SMT-19' THEN 19
-                WHEN S_loc = 'SMT-20' THEN 20
-                WHEN S_loc = 'SMT-21' THEN 21
-            END
+                SELECT S_Room, S_Team, S_Dep, S_Loc, S_PDF 
+          FROM SKILL_MATRIX
+          WHERE S_Room = @room AND S_Team = @team
+          ORDER BY 
+              CASE S_Room
+                  WHEN 'Production' THEN 1
+                  WHEN 'QA' THEN 2
+                  WHEN 'Engineer' THEN 3
+                  ELSE 99
+              END,
+              CASE S_Loc
+                  WHEN 'SMT-1' THEN 1
+                  WHEN 'SMT-2' THEN 2
+                  WHEN 'SMT-3' THEN 3
+                  WHEN 'SMT-4' THEN 4
+                  WHEN 'SMT-5' THEN 5
+                  WHEN 'SMT-6' THEN 6
+                  WHEN 'SMT-7' THEN 7
+                  WHEN 'SMT-8' THEN 8
+                  WHEN 'SMT-9' THEN 9
+                  WHEN 'SMT-10' THEN 10
+                  WHEN 'SMT-11' THEN 11
+                  WHEN 'SMT-12' THEN 12
+                  WHEN 'SMT-13' THEN 13
+                  WHEN 'SMT-14' THEN 14
+                  WHEN 'SMT-15' THEN 15
+                  WHEN 'SMT-16' THEN 16
+                  WHEN 'SMT-17' THEN 17
+                  WHEN 'SMT-18' THEN 18
+                  WHEN 'SMT-19' THEN 19
+                  WHEN 'SMT-20' THEN 20
+                  WHEN 'SMT-21' THEN 21
+                  ELSE 99
+              END;
+
       `);
 
     if (result.recordset.length === 0) {

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdClose } from "react-icons/md";
 import Image from 'next/image';
 import { SpecialZoomLevel, Viewer, Worker } from "@react-pdf-viewer/core";
 import '@react-pdf-viewer/core/lib/styles/index.css';
@@ -69,11 +68,6 @@ type Data4M = {
   ProcessChange: string;
 };
 
-const DEPARTMENT = {
-  PRODUCTION: 'Production',
-  ENGINEER: 'Engineer',
-  QA: 'QA'
-} as const;
 
 const Production1_skill_Matrix = () => {
   const [selectedTeam, setSelectedTeam] = useState<"A" | "B">("A");
@@ -437,7 +431,7 @@ const Production1_skill_Matrix = () => {
               </div>
               <div className="flex justify-end">
                 <h2 className="absolute bottom-[6px] text-[25px] text-white font-bold drop-shadow-2xl pe-10 ps-10">
-                  PRODUCTION 1
+                  {S_room}
                 </h2>
               </div>
             </div>
