@@ -4,61 +4,31 @@ import sql from 'mssql';
 
 
 export async function GET(req: NextRequest) {
+    const { searchParams } = req.nextUrl;
+    const team = searchParams.get('S_team');
+    const locationto4m = searchParams.get('locationto4m');
+    if (!team || !locationto4m) {
+        return NextResponse.json({ message: 'Missing team or room parameter' }, { status: 400 });
+    }
+
     try {
         const pool = await createConnection();
         const result = await pool
             .request()
-            .query(`SELECT [Id]
-                ,[Date]
-                ,[Line]
-                ,[Shift]
-                ,[Process1]
-                ,[Process2]
-                ,[Process3]
-                ,[Process4]
-                ,[Process5]
-                ,[Process6]
-                ,[Process7]
-                ,[Process8]
-                ,[Process9]
-                ,[Process10]
-                ,[Process11]
-                ,[Process12]
-                ,[Process13]
-                ,[Process14]
-                ,[AM1]
-                ,[PM1]
-                ,[AM2]
-                ,[PM2]
-                ,[AM3]
-                ,[PM3]
-                ,[AM4]
-                ,[PM4]
-                ,[AM5]
-                ,[PM5]
-                ,[AM6]
-                ,[PM6]
-                ,[AM7]
-                ,[PM7]
-                ,[AM8]
-                ,[PM8]
-                ,[AM9]
-                ,[PM9]
-                ,[AM10]
-                ,[PM10]
-                ,[AM11]
-                ,[PM11]
-                ,[AM12]
-                ,[PM12]
-                ,[AM13]
-                ,[PM13]
-                ,[AM14]
-                ,[PM14]
-                ,[Checked]
-                ,[QA_Confirm]
+            .input('team', sql.VarChar, team + '%')
+            .input('locationto4m', sql.VarChar, locationto4m)
+            .query(`
+                SELECT [Id], [Date], [Line], [Shift],
+                       [Process1], [Process2], [Process3], [Process4], [Process5],
+                       [Process6], [Process7], [Process8], [Process9], [Process10],
+                       [Process11], [Process12], [Process13], [Process14],
+                       [AM1], [PM1], [AM2], [PM2], [AM3], [PM3], [AM4], [PM4],
+                       [AM5], [PM5], [AM6], [PM6], [AM7], [PM7], [AM8], [PM8],
+                       [AM9], [PM9], [AM10], [PM10], [AM11], [PM11], [AM12], [PM12],
+                       [AM13], [PM13], [AM14], [PM14], [Checked], [QA_Confirm] ,[ProcessChange]
                 FROM [DASHBOARD].[dbo].[4M_Change]
-                WHERE [Line] = 'SMT-14' and shift like 'A%'
-`);
+                WHERE [Line] = @locationto4m AND  [Shift] like @team AND CAST([Date] AS DATE) = CAST(GETDATE() AS DATE)
+            `);
 
         console.log(`Qurey`, result.recordset);
 

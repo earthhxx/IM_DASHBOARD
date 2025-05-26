@@ -66,6 +66,7 @@ type Data4M = {
   PM14: string;
   Checked: string;
   QA_Confirm: string;
+  ProcessChange:string;
 };
 
 const DEPARTMENT = {
@@ -89,12 +90,36 @@ const Production1_skill_Matrix = () => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   type ErrorMapType = { [key: string]: boolean };
   const [errorMap, setErrorMap] = useState<ErrorMapType>({});
+  const [locationto4m,setlocationto4m] = useState("")
+
+  const isMock = false;
+  const sampleBase64Pdf = "data:application/pdf;base64,JVBERi0xLjUKJeLjz9MKMSAwIG9iago8PAovVGl0bGUgKP7/AEMAbwBuAHQAZQBuAHQAKQovQ3JlYXRvciAoUHl0aG9uIFBERiBHZW5lcmF0b3IpCi9Qcm9kdWNlciAoUHl0aG9uIFBERiBMaWJyYXJ5IDMuMy4xKQovQ3JlYXRpb25EYXRlIChEOjIwMjUwNTE5MDkyNzI4KzAwJzAwJykKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0xlbmd0aCAzNwo+PgpcbHN0cmVhbQpCBiAwIDAgMCAwIDAgMCBzCkJUCi9GMQAxMiBUZgovVGQKKDEwMCA3MDApIFRkCihIZWxsbywgUERGISkgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgNCAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgNSAwIFIKPj4KPj4KL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KL0NvbnRlbnRzIDIgMCBSCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovTmFtZSAvRjEKL0Jhc2VGb250IC9IZWx2ZXRpY2EKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKPj4KZW5kb2JqCnhyZWYKMCA2CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDExNiAwMDAwMCBuIAowMDAwMDAwMjgxIDAwMDAwIG4gCjAwMDAwMDAzNzkgMDAwMDAgbiAKMDAwMDAwMDUzMiAwMDAwMCBuIAowMDAwMDAwNjMyIDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgNgovUm9vdCAxIDAgUgo+PgpzdGFydHhyZWYKNzM2CiUlRU9G";
+
 
 
   useEffect(() => {
     const fetchTeamData = async () => {
-      setLoading(true);
-      setError("");
+      if (isMock) {
+        const mockData = [
+          {
+            room: 'PRODUCTION1',
+            team: 'A',
+            department: 'Production',
+            location: 'SMT-1',
+            base64Pdf: sampleBase64Pdf
+          },
+          {
+            room: 'PRODUCTION2',
+            team: 'A',
+            department: 'Production',
+            location: 'SMT-2',
+            base64Pdf: sampleBase64Pdf
+          }
+        ];
+        setTeamData(mockData);
+        setLoading(false);
+        return;
+      }
 
       try {
         const response = await fetch(`/api/SKILL_MATRIX?S_team=${selectedTeam}&S_room=${S_room}`);
@@ -138,7 +163,7 @@ const Production1_skill_Matrix = () => {
 
   const fetchData4m = async () => {
     try {
-      const response = await fetch(`/api/4M`);
+      const response = await fetch(`/api/4M?S_team=${selectedTeam}&locationto4m=${locationto4m}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch data. Status: ${response.status}`);
       }
@@ -174,7 +199,7 @@ const Production1_skill_Matrix = () => {
             .map((data) => (
               <div
                 key={`${data.room}_${data.department}_${data.location}`}
-                onClick={() => loadPdf(data.base64Pdf)}
+                onClick={() => {loadPdf(data.base64Pdf);setlocationto4m(data.location);console.log(locationto4m)}}
                 className="group flex w-65 h-25 rounded-l-lg items-center border border-solid border-blue-100 justify-center bg-white shadow-lg hover:bg-white transition-all cursor-pointer"
               >
                 <div className="flex w-[35%] h-full text-blue-900 bg-blue-100 rounded-l-lg justify-center items-center group-hover:text-white group-hover:bg-blue-800 text-wrap">
@@ -283,9 +308,9 @@ const Production1_skill_Matrix = () => {
                 CHECKED
               </div>
               <div className="text-lg font-semibold">
-                <span className={`px-2 py-1 rounded-full text-white ${data.Checked === 'Completed'
+                <span className={`px-2 py-1 rounded-full text-white ${data.Checked
                   ? 'bg-green-500'
-                  : 'bg-amber-500'
+                  : 'bg-yellow-300'
                   }`}>
                   {data.Checked}
                 </span>
@@ -301,7 +326,10 @@ const Production1_skill_Matrix = () => {
               key={index}
               className="border rounded-2xl shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              <div className="bg-gradient-to-r rounded-t-2xl from-blue-600 to-blue-800 text-white font-bold text-center py-3 text-md">
+              <div className={`bg-gradient-to-r rounded-t-2xl  text-white font-bold text-center py-3 text-md ${data.ProcessChange === d.process
+                  ? 'bg-yellow-300'
+                  : 'from-blue-600 to-blue-800'
+                  }`}>
                 {d.process}
               </div>
 
