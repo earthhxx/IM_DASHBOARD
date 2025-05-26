@@ -1,6 +1,0 @@
-{"data":[
-    {"room":"PRODUCTION1", 0
-    "team":"A", 1
-    "department":"Production", 2
-    "location":"SMT-10", 3
-    "pdfUrl":"/team_A_PRODUCTION1.pdf"} 4

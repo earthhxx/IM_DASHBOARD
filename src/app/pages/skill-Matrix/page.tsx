@@ -165,28 +165,28 @@ const Production1_skill_Matrix = () => {
 
   const fetchData4m = async () => {
     if (!locationto4m) {
-
       console.error("Location to 4M is not set.");
       return;
     }
-    else if (locationto4m === "PCBA Camera") {
-      setlocationto4m("Kyocera");
-    }
-    else if (locationto4m === "FPCA Camera") {
-      setlocationto4m("NPCT");
-    }
-    else if (locationto4m === "Motor Sensor") {
-      setlocationto4m("NPCT");
-    }
-    else if (locationto4m === "ICT Heater Sensor") {
-      setlocationto4m("PANA PMFTH");
+
+    let finalLocation = locationto4m;
+
+    if (locationto4m === "PCBA Camera") {
+      finalLocation = "Kyocera";
+    } else if (locationto4m === "FPCA Camera") {
+      finalLocation = "NPCT";
+    } else if (locationto4m === "Motor Sensor") {
+      finalLocation = "ASIN";
+    } else if (locationto4m === "ICT Heater Sensor") {
+      finalLocation = "PANA PMFTH";
     }
 
     try {
-      const response = await fetch(`/api/4M?S_team=${selectedTeam}&locationto4m=${locationto4m}`);
+      const response = await fetch(`/api/4M?S_team=${selectedTeam}&locationto4m=${encodeURIComponent(finalLocation)}`);
       if (!response.ok) {
         setNo4mData(true);
         console.log(`Failed to fetch data. Status: ${response.status}`);
+        return;
       }
       const result = await response.json();
       console.log(result);
@@ -197,6 +197,7 @@ const Production1_skill_Matrix = () => {
       console.error("Error fetching 4M data:", err);
     }
   };
+
 
   const departments = [...new Set(teamData.map(data => data.department))];
 
@@ -280,10 +281,22 @@ const Production1_skill_Matrix = () => {
       am: allam[i],
       pm: allpm[i],
     })).filter(item => item.process && (
-        (item.am && item.am !== '-' && item.am !== 'null') ||
-        (item.pm && item.pm !== '-' && item.pm !== 'null')
-      )); // กรอง process ที่ไม่ใช่ null/undefined
+      (item.am && item.am !== '-' && item.am !== 'null') ||
+      (item.pm && item.pm !== '-' && item.pm !== 'null')
+    )); // กรอง process ที่ไม่ใช่ null/undefined
     console.log(groupallprocess);
+
+    let finalLine = data.Line;
+
+    if (data.Line === "Kyocera") {
+      finalLine = "PCBA Camera";
+    } else if (data.Line === "NPCT") {
+      finalLine = "FPCA Camera";
+    } else if (data.Line  === "ASIN") {
+      finalLine = "Motor Sensor";
+    } else if (data.Line  === "PANA PMFTH") {
+      finalLine = "ICT Heater Sensor";
+    }
 
     return (
       <div className="p-6 mx-auto">
@@ -315,7 +328,7 @@ const Production1_skill_Matrix = () => {
                 <FaProjectDiagram className="text-blue-400" />
                 PROCESS
               </div>
-              <div className="text-lg font-semibold text-gray-800">{data.Line}</div>
+              <div className="text-lg font-semibold text-gray-800">{finalLine}</div>
             </div>
 
             <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
