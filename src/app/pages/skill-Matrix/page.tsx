@@ -179,7 +179,11 @@ const Production1_skill_Matrix = () => {
       finalLocation = "ASIN";
     } else if (locationto4m === "ICT Heater Sensor") {
       finalLocation = "PANA PMFTH";
-    }
+    } else if (locationto4m === "Automotive") {
+      finalLocation = "W/H";
+    } else if (locationto4m === "Finish Good") {
+      finalLocation = "FG";
+    } 
 
     try {
       const response = await fetch(`/api/4M?S_team=${selectedTeam}&locationto4m=${encodeURIComponent(finalLocation)}`);
@@ -292,11 +296,16 @@ const Production1_skill_Matrix = () => {
       finalLine = "PCBA Camera";
     } else if (data.Line === "NPCT") {
       finalLine = "FPCA Camera";
-    } else if (data.Line  === "ASIN") {
+    } else if (data.Line === "ASIN") {
       finalLine = "Motor Sensor";
-    } else if (data.Line  === "PANA PMFTH") {
+    } else if (data.Line === "PANA PMFTH") {
       finalLine = "ICT Heater Sensor";
-    }
+    } else if (data.Line === "W/H") {
+      finalLine = "Automotive";
+    } else if (locationto4m === "FG") {
+      finalLine = "Finish Good";
+    } 
+    
 
     return (
       <div className="p-6 mx-auto">
