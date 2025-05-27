@@ -373,7 +373,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                        <Link href="/pages/temperature?Param=WHEREHOUSE">
+                        <Link href="/pages/temperature?Param=WAREHOUSE">
                           TEMPERATURE
                         </Link>
                       </li>
