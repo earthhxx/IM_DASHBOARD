@@ -28,7 +28,10 @@ const cleanedData = data.map((item) => ({
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-    const [state, setState] = useState<'location' | 'mapnone' | 'mapProduction1' | 'mapProduction2' | 'mapProduction3' | 'mapProduction4' | 'mapProduction5' | 'mapWarehouse' | 'temperatureCheckerCard'>('mapnone');
+    const [rendertemperatureCheckerCard, setrendertemperatureCheckerCard] = useState(false);
+    const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
+    const [renderSuperDry3_4Card, setrenderSuperDry3_4] = useState(false);
+    const [state, setState] = useState<'location' | 'mapnone' | 'mapProduction1' | 'mapProduction2' | 'mapProduction3' | 'mapProduction4' | 'mapProduction5' | 'mapWarehouse'>('mapnone');
     useEffect(() => {
         if (param) {
             console.log("ProductOrderNo updated:", param);
@@ -360,7 +363,7 @@ export default function TempChart() {
                 <button
                     className="absolute top-36 -right-1 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
+                    onClick={() => setrenderSuperDry1_2(true)}
                 >
                     click
                 </button>
@@ -372,7 +375,7 @@ export default function TempChart() {
                 <button
                     className="absolute bottom-71 left-1 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
+                    onClick={() => setrenderSuperDry3_4(true)}
                 >
                     click
                 </button>
@@ -384,13 +387,16 @@ export default function TempChart() {
                 <button
                     className="absolute -top-2 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('temperatureCheckerCard')}
+                    onClick={() => setrendertemperatureCheckerCard(true)}
                 >
                     click
                 </button>
                 <div className='absolute -top-2 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
+                {rendertemperatureCheckerCard && rendertemCheckerCard()}
+                {renderSuperDry1_2Card && renderSuperDry1_2()}
+                {renderSuperDry3_4Card && renderSuperDry3_4()}
 
 
 
@@ -398,19 +404,50 @@ export default function TempChart() {
         </div>
     );
 
-    const rendertemperatureCheckerCard = () => (
-        <div className='fixed flex items-center justify-center w-full mt-[20px]'>
-            <div className="w-[75%]">
+    const rendertemCheckerCard = () => (
+        <div className=''>
+            <div className="absolute top-15 -right-45 z-20 w-[40%]">
                 <div className='grid grid-cols-3 gap-4'>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Temperature Checker 1
-                    </button>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Temperature Checker 2
-                    </button>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                    <button onClick={ () => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         Temperature Checker 3
                     </button>
+                    <button  onClick={ () => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        Temperature Checker 2
+                    </button>
+                    <button  onClick={ () => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        Temperature Checker 1                    </button>
+                </div>
+            </div>
+        </div>
+    );
+
+    const renderSuperDry1_2 = () => (
+        <div className='relative'>
+            <div className="absolute -top-142 -right-0 z-20 w-[20%]">
+                <div className='grid grid-cols-1 gap-4'>
+                    <button onClick={ () => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        SuperDry 1
+                    </button>
+                    <button  onClick={ () => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        SuperDry 2
+                    </button>
+                   
+                </div>
+            </div>
+        </div>
+    );
+
+    const renderSuperDry3_4 = () => (
+        <div className='relative'>
+            <div className="absolute -top-60 left-0 z-20 w-[20%]">
+                <div className='grid grid-cols-1 gap-4'>
+                    <button onClick={ () => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        SuperDry 3
+                    </button>
+                    <button  onClick={ () => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        SuperDry 4
+                    </button>
+                   
                 </div>
             </div>
         </div>
@@ -443,8 +480,8 @@ export default function TempChart() {
                 {state === 'mapProduction4' && renderMapProduction4()}
                 {state === 'mapProduction5' && renderMapProduction5()}
                 {state === 'mapWarehouse' && renderMapWarehouse()}
-                {state === 'temperatureCheckerCard' && rendertemperatureCheckerCard()}
                 {state === 'location' && renderGraph()}
+                
             </div>
         </div>
     );
