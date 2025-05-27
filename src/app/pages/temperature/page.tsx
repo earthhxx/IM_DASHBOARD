@@ -1,6 +1,7 @@
 // TempChart.tsx
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Suspense ,useEffect } from 'react';
+import ParamListener from '../../components/UseParams';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
@@ -19,14 +20,27 @@ const data = Array.from({ length: 31 }, (_, i) => {
 });
 
 const cleanedData = data.map((item) => ({
-  ...item,
-  min: item.min === 0 || item.min === 0 ? null : item.min,
-  max: item.max === 0 || item.max === 0 ? null : item.max,
+    ...item,
+    min: item.min === 0 || item.min === 0 ? null : item.min,
+    max: item.max === 0 || item.max === 0 ? null : item.max,
 }));
 
 
 export default function TempChart() {
-    const [state, setState] = useState<'map' | 'location'>('map');
+    const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
+    const [state, setState] = useState<'mapProduction2' | 'mapProduction1' | 'location' | 'mapnone'>('mapnone');
+    useEffect(() => {
+        if (param) {
+          console.log("ProductOrderNo updated:", param);
+          if(param === 'PRODUCTION1') {
+            setState('mapProduction1')
+          }
+          else if (param === 'PRODUCTION2'){
+            setState('mapProduction2')
+          }
+          // You can add additional logic here, such as fetching data based on ProductOrderNo
+        }
+      }, [param]);
 
     const renderGraph = () => (
         <>
@@ -35,7 +49,7 @@ export default function TempChart() {
                     <button
                         className="flex bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                        onClick={() => setState('map')}
+                        onClick={() => setState('mapProduction1')}
                     >
                         กลับไปดูแผนที่
                     </button>
@@ -84,13 +98,56 @@ export default function TempChart() {
         </>
     );
 
-    const renderMap = () => (
+    const renderMapnone = () => (
+        <>
+        </>
+    );
+
+    const renderMapProduction1 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
             <div className="relative w-[75%]">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Production1.png"
                     alt="Production1"
+                    className="w-full h-auto mt-2"
+                />
+
+                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
+                <button
+                    className="absolute top-4 right-149 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute top-4 right-149 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+                {/* ปุ่ม Overlay - ดูความชื้น */}
+                <button
+                    className="absolute -bottom-3 right-157 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute -bottom-3 right-157 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+            </div>
+        </div>
+    );
+
+    const renderMapProduction2 = () => (
+        <div className='flex items-center justify-center w-full mt-[20px]'>
+            <div className="relative w-[75%]">
+                {/* ภาพพื้นหลัง */}
+                <img
+                    src="/images/Production2.png"
+                    alt="Production2"
                     className="w-full h-auto mt-2"
                 />
 
@@ -129,7 +186,7 @@ export default function TempChart() {
             <header className="w-full bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl px-10 mt-22 py-4">
                 <div className="flex flex-col items-end text-white">
                     <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg tracking-wide">
-                        PRODUCTION1
+                        {param}
                     </h1>
                     <h2 className="text-lg md:text-2xl font-semibold uppercase drop-shadow">
                         Temperature
@@ -139,7 +196,12 @@ export default function TempChart() {
 
             {/* Main Content */}
             <div className="flex-1 overflow-auto">
-                {state === 'map' && renderMap()}
+                <Suspense fallback={<div>Loading...</div>}>
+                    <ParamListener onGetParam={setParam} />
+                </Suspense>
+                {state === 'mapnone' && renderMapnone()}
+                {state === 'mapProduction1' && renderMapProduction1()}
+                {state === 'mapProduction2' && renderMapProduction2()}
                 {state === 'location' && renderGraph()}
             </div>
         </div>
