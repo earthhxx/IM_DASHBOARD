@@ -67,30 +67,30 @@ export default function TempChart() {
         , [param]);
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const isClickOutsidecardtem = cardtemCheckRef.current && cardtemCheckRef.current && !cardtemCheckRef.current.contains(event.target as Node);
-            const isClickOutsideSuper1_2 = cardSuper1_2Ref.current && !cardSuper1_2Ref.current.contains(event.target as Node);
-            const isClickOutsideSuper3_4 = cardSuper3_4Ref.current && !cardSuper3_4Ref.current.contains(event.target as Node);
+    const handleClickOutside = (event: MouseEvent) => {
+        const clickedTarget = event.target as Node;
 
-            // ถ้าเปิดเมนูอยู่ แล้วคลิกข้างนอก ให้ปิดเมนู
-            if (renderSuperDry1_2Card === true && isClickOutsideSuper1_2) {
-                setrenderSuperDry1_2(false);
-            }
-            if (renderSuperDry3_4Card === true && isClickOutsideSuper3_4) {
-                setrenderSuperDry3_4(false);
-            }
-            if (rendertemperatureCheckerCard === true && isClickOutsidecardtem) {
-                setrendertemperatureCheckerCard(false);
-            }
-        };
+        const isClickOutsideTem = cardtemCheckRef.current && !cardtemCheckRef.current.contains(clickedTarget);
+        const isClickOutsideSuper1_2 = cardSuper1_2Ref.current && !cardSuper1_2Ref.current.contains(clickedTarget);
+        const isClickOutsideSuper3_4 = cardSuper3_4Ref.current && !cardSuper3_4Ref.current.contains(clickedTarget);
 
-        document.addEventListener("mousedown", handleClickOutside);
+        if (rendertemperatureCheckerCard && isClickOutsideTem) {
+            setrendertemperatureCheckerCard(false);
+        }
+        if (renderSuperDry1_2Card && isClickOutsideSuper1_2) {
+            setrenderSuperDry1_2(false);
+        }
+        if (renderSuperDry3_4Card && isClickOutsideSuper3_4) {
+            setrenderSuperDry3_4(false);
+        }
+    };
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    document.addEventListener("mousedown", handleClickOutside);
 
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+}, [rendertemperatureCheckerCard, renderSuperDry1_2Card, renderSuperDry3_4Card]);
 
 
     const renderGraph = () => (
@@ -439,7 +439,7 @@ export default function TempChart() {
 
     const rendertemCheckerCard = () => (
         <div className=''>
-            <div className="absolute top-15 -right-45 z-20 w-[40%]">
+            <div ref={cardtemCheckRef} className="absolute top-15 -right-45 z-20 w-[40%]">
                 <div className='grid grid-cols-3 gap-4'>
                     <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         Temperature Checker 3
@@ -456,7 +456,7 @@ export default function TempChart() {
 
     const renderSuperDry1_2 = () => (
         <div className='relative'>
-            <div className="absolute -top-142 -right-0 z-20 w-[20%]">
+            <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[20%]">
                 <div   className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 1
@@ -472,7 +472,7 @@ export default function TempChart() {
 
     const renderSuperDry3_4 = () => (
         <div  className='relative'>
-            <div className="absolute -top-60 left-0 z-20 w-[20%]">
+            <div ref={cardSuper3_4Ref} className="absolute -top-60 left-0 z-20 w-[20%]">
                 <div  className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 3
