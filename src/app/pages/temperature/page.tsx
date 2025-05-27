@@ -32,6 +32,12 @@ export default function TempChart() {
     const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
     const [renderSuperDry3_4Card, setrenderSuperDry3_4] = useState(false);
     const [state, setState] = useState<'location' | 'mapnone' | 'mapProduction1' | 'mapProduction2' | 'mapProduction3' | 'mapProduction4' | 'mapProduction5' | 'mapWarehouse'>('mapnone');
+
+    // Define refs for the cards
+    const cardtemCheckRef = React.useRef<HTMLDivElement>(null);
+    const cardSuper1_2Ref = React.useRef<HTMLDivElement>(null);
+    const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         if (param) {
             console.log("ProductOrderNo updated:", param);
@@ -56,9 +62,36 @@ export default function TempChart() {
             else {
                 setState('mapnone')
             }
-            // You can add additional logic here, such as fetching data based on ProductOrderNo
         }
-    }, [param]);
+    }
+        , [param]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const isClickOutsidecardtem = cardtemCheckRef.current && cardtemCheckRef.current && !cardtemCheckRef.current.contains(event.target as Node);
+            const isClickOutsideSuper1_2 = cardSuper1_2Ref.current && !cardSuper1_2Ref.current.contains(event.target as Node);
+            const isClickOutsideSuper3_4 = cardSuper3_4Ref.current && !cardSuper3_4Ref.current.contains(event.target as Node);
+
+            // ถ้าเปิดเมนูอยู่ แล้วคลิกข้างนอก ให้ปิดเมนู
+            if (renderSuperDry1_2Card === true && isClickOutsideSuper1_2) {
+                setrenderSuperDry1_2(false);
+            }
+            if (renderSuperDry3_4Card === true && isClickOutsideSuper3_4) {
+                setrenderSuperDry3_4(false);
+            }
+            if (rendertemperatureCheckerCard === true && isClickOutsidecardtem) {
+                setrendertemperatureCheckerCard(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+
 
     const renderGraph = () => (
         <>
@@ -408,13 +441,13 @@ export default function TempChart() {
         <div className=''>
             <div className="absolute top-15 -right-45 z-20 w-[40%]">
                 <div className='grid grid-cols-3 gap-4'>
-                    <button onClick={ () => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         Temperature Checker 3
                     </button>
-                    <button  onClick={ () => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         Temperature Checker 2
                     </button>
-                    <button  onClick={ () => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         Temperature Checker 1                    </button>
                 </div>
             </div>
@@ -424,30 +457,30 @@ export default function TempChart() {
     const renderSuperDry1_2 = () => (
         <div className='relative'>
             <div className="absolute -top-142 -right-0 z-20 w-[20%]">
-                <div className='grid grid-cols-1 gap-4'>
-                    <button onClick={ () => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                <div   className='grid grid-cols-1 gap-4'>
+                    <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 1
                     </button>
-                    <button  onClick={ () => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                    <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 2
                     </button>
-                   
+
                 </div>
             </div>
         </div>
     );
 
     const renderSuperDry3_4 = () => (
-        <div className='relative'>
+        <div  className='relative'>
             <div className="absolute -top-60 left-0 z-20 w-[20%]">
-                <div className='grid grid-cols-1 gap-4'>
-                    <button onClick={ () => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                <div  className='grid grid-cols-1 gap-4'>
+                    <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 3
                     </button>
-                    <button  onClick={ () => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                    <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 4
                     </button>
-                   
+
                 </div>
             </div>
         </div>
@@ -481,7 +514,7 @@ export default function TempChart() {
                 {state === 'mapProduction5' && renderMapProduction5()}
                 {state === 'mapWarehouse' && renderMapWarehouse()}
                 {state === 'location' && renderGraph()}
-                
+
             </div>
         </div>
     );
