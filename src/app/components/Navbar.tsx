@@ -79,7 +79,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div>
+    
       <div className='fixed w-full h-24 z-30 justify-center items-center mt-1 ps-8 pe-8'>
         <div className='flex justify-center items-center'>
           <div className='flex justify-start items-start '>
@@ -462,7 +462,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
 
