@@ -28,7 +28,7 @@ const cleanedData = data.map((item) => ({
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-    const [state, setState] = useState<'mapProduction2' | 'mapProduction1' | 'location' | 'mapnone'>('mapnone');
+    const [state, setState] = useState< 'location' | 'mapnone'| 'mapProduction1' | 'mapProduction2'| 'mapProduction3'>('mapnone');
     useEffect(() => {
         if (param) {
           console.log("ProductOrderNo updated:", param);
@@ -38,6 +38,9 @@ export default function TempChart() {
           else if (param === 'PRODUCTION2'){
             setState('mapProduction2')
           }
+          else if (param === 'PRODUCTION3'){
+            setState('mapProduction3')
+            }
           // You can add additional logic here, such as fetching data based on ProductOrderNo
         }
       }, [param]);
@@ -100,6 +103,7 @@ export default function TempChart() {
 
     const renderMapnone = () => (
         <>
+
         </>
     );
 
@@ -153,25 +157,63 @@ export default function TempChart() {
 
                 {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
                 <button
-                    className="absolute top-4 right-149 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                    className="absolute top-4 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
                     onClick={() => setState('location')}
                 >
                     click
                 </button>
-                <div className='absolute top-4 right-149 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute top-4 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
 
                 {/* ปุ่ม Overlay - ดูความชื้น */}
                 <button
-                    className="absolute -bottom-3 right-157 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                    className="absolute -bottom-3 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
                     onClick={() => setState('location')}
                 >
                     click
                 </button>
-                <div className='absolute -bottom-3 right-157 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute -bottom-3 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+            </div>
+        </div>
+    );
+
+     const renderMapProduction3 = () => (
+        <div className='flex items-center justify-center w-full mt-[20px]'>
+            <div className="relative w-[75%]">
+                {/* ภาพพื้นหลัง */}
+                <img
+                    src="/images/Production3.png"
+                    alt="Production3"
+                    className="w-full h-auto mt-2"
+                />
+
+                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
+                <button
+                    className="absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+                {/* ปุ่ม Overlay - ดูความชื้น */}
+                <button
+                    className="absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
 
@@ -202,6 +244,7 @@ export default function TempChart() {
                 {state === 'mapnone' && renderMapnone()}
                 {state === 'mapProduction1' && renderMapProduction1()}
                 {state === 'mapProduction2' && renderMapProduction2()}
+                {state === 'mapProduction3' && renderMapProduction3()}
                 {state === 'location' && renderGraph()}
             </div>
         </div>
