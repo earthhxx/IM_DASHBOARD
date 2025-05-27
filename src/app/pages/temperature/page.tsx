@@ -1,6 +1,6 @@
 // TempChart.tsx
 'use client';
-import React, { useState, Suspense ,useEffect } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import ParamListener from '../../components/UseParams';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -28,22 +28,31 @@ const cleanedData = data.map((item) => ({
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-    const [state, setState] = useState< 'location' | 'mapnone'| 'mapProduction1' | 'mapProduction2'| 'mapProduction3'>('mapnone');
+    const [state, setState] = useState<'location' | 'mapnone' | 'mapProduction1' | 'mapProduction2' | 'mapProduction3' | 'mapProduction4' | 'mapProduction5'>('mapnone');
     useEffect(() => {
         if (param) {
-          console.log("ProductOrderNo updated:", param);
-          if(param === 'PRODUCTION1') {
-            setState('mapProduction1')
-          }
-          else if (param === 'PRODUCTION2'){
-            setState('mapProduction2')
-          }
-          else if (param === 'PRODUCTION3'){
-            setState('mapProduction3')
+            console.log("ProductOrderNo updated:", param);
+            if (param === 'PRODUCTION1') {
+                setState('mapProduction1')
             }
-          // You can add additional logic here, such as fetching data based on ProductOrderNo
+            else if (param === 'PRODUCTION2') {
+                setState('mapProduction2')
+            }
+            else if (param === 'PRODUCTION3') {
+                setState('mapProduction3')
+            }
+            else if (param === 'PRODUCTION4') {
+                setState('mapProduction4')
+            }
+            else if (param === 'PRODUCTION5') {
+                setState('mapProduction5')
+            }
+            else {
+                setState('mapnone')
+            }
+            // You can add additional logic here, such as fetching data based on ProductOrderNo
         }
-      }, [param]);
+    }, [param]);
 
     const renderGraph = () => (
         <>
@@ -183,7 +192,83 @@ export default function TempChart() {
         </div>
     );
 
-     const renderMapProduction3 = () => (
+    const renderMapProduction3 = () => (
+        <div className='flex items-center justify-center w-full mt-[20px]'>
+            <div className="relative w-[75%]">
+                {/* ภาพพื้นหลัง */}
+                <img
+                    src="/images/Production3.png"
+                    alt="Production3"
+                    className="w-full h-auto mt-2"
+                />
+
+                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
+                <button
+                    className="absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+                {/* ปุ่ม Overlay - ดูความชื้น */}
+                <button
+                    className="absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+            </div>
+        </div>
+    );
+
+    const renderMapProduction4 = () => (
+        <div className='flex items-center justify-center w-full mt-[20px]'>
+            <div className="relative w-[75%]">
+                {/* ภาพพื้นหลัง */}
+                <img
+                    src="/images/Production3.png"
+                    alt="Production3"
+                    className="w-full h-auto mt-2"
+                />
+
+                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
+                <button
+                    className="absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+                {/* ปุ่ม Overlay - ดูความชื้น */}
+                <button
+                    className="absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
+                    onClick={() => setState('location')}
+                >
+                    click
+                </button>
+                <div className='absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                </div>
+
+            </div>
+        </div>
+    );
+
+    const renderMapProduction5 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
             <div className="relative w-[75%]">
                 {/* ภาพพื้นหลัง */}
@@ -245,6 +330,8 @@ export default function TempChart() {
                 {state === 'mapProduction1' && renderMapProduction1()}
                 {state === 'mapProduction2' && renderMapProduction2()}
                 {state === 'mapProduction3' && renderMapProduction3()}
+                {state === 'mapProduction4' && renderMapProduction4()}
+                {state === 'mapProduction5' && renderMapProduction5()}
                 {state === 'location' && renderGraph()}
             </div>
         </div>
