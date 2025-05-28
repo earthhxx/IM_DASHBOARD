@@ -5,6 +5,9 @@ import ParamListener from '../../components/UseParams';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
+import { CiTempHigh } from "react-icons/ci"; // commented out originally
+
+
 
 const data = Array.from({ length: 31 }, (_, i) => {
     // สร้างวันที่เองโดยไม่ใช้ไลบรารี
@@ -67,30 +70,30 @@ export default function TempChart() {
         , [param]);
 
     useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-        const clickedTarget = event.target as Node;
+        const handleClickOutside = (event: MouseEvent) => {
+            const clickedTarget = event.target as Node;
 
-        const isClickOutsideTem = cardtemCheckRef.current && !cardtemCheckRef.current.contains(clickedTarget);
-        const isClickOutsideSuper1_2 = cardSuper1_2Ref.current && !cardSuper1_2Ref.current.contains(clickedTarget);
-        const isClickOutsideSuper3_4 = cardSuper3_4Ref.current && !cardSuper3_4Ref.current.contains(clickedTarget);
+            const isClickOutsideTem = cardtemCheckRef.current && !cardtemCheckRef.current.contains(clickedTarget);
+            const isClickOutsideSuper1_2 = cardSuper1_2Ref.current && !cardSuper1_2Ref.current.contains(clickedTarget);
+            const isClickOutsideSuper3_4 = cardSuper3_4Ref.current && !cardSuper3_4Ref.current.contains(clickedTarget);
 
-        if (rendertemperatureCheckerCard && isClickOutsideTem) {
-            setrendertemperatureCheckerCard(false);
-        }
-        if (renderSuperDry1_2Card && isClickOutsideSuper1_2) {
-            setrenderSuperDry1_2(false);
-        }
-        if (renderSuperDry3_4Card && isClickOutsideSuper3_4) {
-            setrenderSuperDry3_4(false);
-        }
-    };
+            if (rendertemperatureCheckerCard && isClickOutsideTem) {
+                setrendertemperatureCheckerCard(false);
+            }
+            if (renderSuperDry1_2Card && isClickOutsideSuper1_2) {
+                setrenderSuperDry1_2(false);
+            }
+            if (renderSuperDry3_4Card && isClickOutsideSuper3_4) {
+                setrenderSuperDry3_4(false);
+            }
+        };
 
-    document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-    };
-}, [rendertemperatureCheckerCard, renderSuperDry1_2Card, renderSuperDry3_4Card]);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [rendertemperatureCheckerCard, renderSuperDry1_2Card, renderSuperDry3_4Card]);
 
 
     const renderGraph = () => (
@@ -413,27 +416,40 @@ export default function TempChart() {
                     click
                 </button>
                 <div className='absolute bottom-71 left-13 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping duration-100000'>
                 </div>
 
-                {/* TEMPERATURE CHECKER */}
-                <button
-                    className="absolute top-10 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setrendertemperatureCheckerCard(true)}
-                >
-                    click
-                </button>
-                <div className='absolute top-10 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
-                </div>
-                {rendertemperatureCheckerCard && rendertemCheckerCard()}
-                {renderSuperDry1_2Card && renderSuperDry1_2()}
-                {renderSuperDry3_4Card && renderSuperDry3_4()}
+                {/* TEMPERATURE CHECKER BUTTON */}
 
+                {/* Wrapping container with relative positioning and fixed size */}
+                <div className="absolute top-10 right-20 w-12 h-12 z-10 ">
+                    {/* Ripple Effect */}
+                    <span
+                        className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300 opacity-70 pointer-events-none"
+                        style={{
+                            animation: 'ripple 2.5s ease-out infinite',
+                        }}
+                    ></span>
+
+                    {/* Temperature Button */}
+                    <button
+                        className="relative w-12 h-12 bg-gradient-to-br from-fuchsia-300/70 to-fuchsia-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
+      ring-1 ring-black/10 flex items-center justify-center
+      transition-all duration-300 hover:scale-110 hover:shadow-pink-300/50 z-20"
+                        onClick={() => setrendertemperatureCheckerCard(true)}
+                    >
+                        <CiTempHigh className="size-9" />
+                    </button>
+                </div>
 
 
             </div>
+            {rendertemperatureCheckerCard && rendertemCheckerCard()}
+            {renderSuperDry1_2Card && renderSuperDry1_2()}
+            {renderSuperDry3_4Card && renderSuperDry3_4()}
+
+
+
         </div>
     );
 
@@ -457,7 +473,7 @@ export default function TempChart() {
     const renderSuperDry1_2 = () => (
         <div className='relative'>
             <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[15%]">
-                <div   className='grid grid-cols-1 gap-4'>
+                <div className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 1
                     </button>
@@ -471,9 +487,9 @@ export default function TempChart() {
     );
 
     const renderSuperDry3_4 = () => (
-        <div  className='relative'>
+        <div className='relative'>
             <div ref={cardSuper3_4Ref} className="absolute -top-60 left-0 z-20 w-[15%]">
-                <div  className='grid grid-cols-1 gap-4'>
+                <div className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 3
                     </button>
