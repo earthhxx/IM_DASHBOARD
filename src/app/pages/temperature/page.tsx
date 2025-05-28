@@ -332,7 +332,7 @@ export default function TempChart() {
             </div>
 
             {/* F 1-2-3 */}
-            <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[6%] right-[5%] w-12 h-12 z-10 ">
+            <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[4%] right-[5%] w-12 h-12 z-10 ">
                 {Riple_effect()}
             </div>
 
@@ -342,38 +342,38 @@ export default function TempChart() {
 
     const SUPERDRY = () => (
         <>
-       
-                <div className="w-44 h-96 bg-white rounded-xl shadow-xl border-4 border-blue-300 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
-                        <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
-                        <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
-                        <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                        <div className="absolute center top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                        <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                        <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    </div>
 
-
-                    <div className="absolute top-1/3 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
-                        <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
-                        <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
-                        <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                        <div className="absolute left-4 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-
-                        <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    </div>
-
-
-                    <div className="absolute bottom-0 left-0 w-full h-1/3 flex items-center justify-center">
-                        <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
-                        <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
-                        <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                        <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                        <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                        <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    </div>
+            <div className="w-44 h-96 bg-white rounded-xl shadow-xl border-4 border-blue-300 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute center top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                 </div>
-       
+
+
+                <div className="absolute top-1/3 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute left-4 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+
+                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                </div>
+
+
+                <div className="absolute bottom-0 left-0 w-full h-1/3 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                </div>
+            </div>
+
         </>
 
     );
@@ -436,7 +436,7 @@ export default function TempChart() {
     return (
         <div className='flex flex-col bg-white w-full h-screen'>
             {/* Header ใหม่ */}
-            <header className="w-full bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl px-10 mt-22 py-4">
+            <header className="fixed w-full bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl px-10 mt-22 py-4">
                 <div className="flex flex-col items-end text-white">
                     <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg tracking-wide">
                         {param}
@@ -448,18 +448,21 @@ export default function TempChart() {
             </header>
 
             {/* Main Content */}
-            <div className="flex-1 overflow-auto">
-                <Suspense fallback={<div>Loading...</div>}>
-                    <ParamListener onGetParam={setParam} />
-                </Suspense>
-                {state === 'mapnone' && renderMapnone()}
-                {state === 'mapProduction1' && renderMapProduction1()}
-                {state === 'mapProduction2' && renderMapProduction2()}
-                {state === 'mapProduction3' && renderMapProduction3()}
-                {state === 'mapProduction4' && renderMapProduction4()}
-                {state === 'mapProduction5' && renderMapProduction5()}
-                {state === 'mapWarehouse' && renderMapWarehouse()}
-                {state === 'location' && renderGraph()}
+            <div className="flex-1">
+                <div className='h-[25%]'></div>
+                <div className=''>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ParamListener onGetParam={setParam} />
+                    </Suspense>
+                    {state === 'mapnone' && renderMapnone()}
+                    {state === 'mapProduction1' && renderMapProduction1()}
+                    {state === 'mapProduction2' && renderMapProduction2()}
+                    {state === 'mapProduction3' && renderMapProduction3()}
+                    {state === 'mapProduction4' && renderMapProduction4()}
+                    {state === 'mapProduction5' && renderMapProduction5()}
+                    {state === 'mapWarehouse' && renderMapWarehouse()}
+                    {state === 'location' && renderGraph()}
+                </div>
             </div>
             {/* renderALLCard */}
             {rendertemperatureCheckerCard && rendertemCheckerCard()}
