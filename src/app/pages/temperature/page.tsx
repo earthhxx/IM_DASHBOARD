@@ -41,6 +41,7 @@ export default function TempChart() {
     const cardSuper1_2Ref = React.useRef<HTMLDivElement>(null);
     const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
 
+
     useEffect(() => {
         if (param) {
             console.log("ProductOrderNo updated:", param);
@@ -94,6 +95,33 @@ export default function TempChart() {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [rendertemperatureCheckerCard, renderSuperDry1_2Card, renderSuperDry3_4Card]);
+
+    const Riple_effect = () => (
+        <>
+        <div className='absolute size-10'>
+             {/* Ripple Effect */}
+            <span
+                className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
+                style={{
+                    animation: 'ripple 2.5s ease-out infinite',
+                }}
+            ></span>
+            {/* Button */}
+            <button
+                className="absolute w-full h-full  bg-gradient-to-br from-fuchsia-300/70 to-fuchsia-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
+                    ring-1 ring-black/10 flex items-center justify-center
+                    transition-all duration-300 hover:scale-110 hover:shadow-pink-300/50 z-20"
+                onClick={() => setState('location')}
+            >
+                <CiTempHigh className="size-9" />
+            </button>
+        </div>
+           
+        </>
+    );
+
+
+
 
 
     const renderGraph = () => (
@@ -348,9 +376,13 @@ export default function TempChart() {
         </div>
     );
 
+
+
+
+
     const renderMapWarehouse = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-[75%]">
+            <div className="relative w-full max-w-7xl mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Warehouse.png"
@@ -358,95 +390,42 @@ export default function TempChart() {
                     className="w-full h-auto mt-2"
                 />
 
-
-                {/* POINT 1 */}
-                <button
-                    className="absolute bottom-2 right-40 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-2 right-40 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                {/* POINT 1*/}
+                <div onClick={() => setState('location')} className="absolute bottom-[0%] right-[12%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
-                {/* POINT 2 */}
-                <button
-                    className="absolute bottom-80 left-124 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-80 left-124 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                {/* POINT 2*/}
+                <div onClick = {() => setState('location')} className="absolute bottom-[40%] right-[61%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
-                {/* POINT 3 */}
-                <button
-                    className="absolute bottom-90 left-194 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-90 left-194 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                {/* POINT 3*/}
+                <div onClick = {() => setState('location')} className="absolute top-[54%] right-[49%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
                 {/* Super Dry 1-2 */}
-                <button
-                    className="absolute top-36 right-11 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setrenderSuperDry1_2(true)}
-                >
-                    click
-                </button>
-                <div className='absolute top-36 right-11 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => {setrenderSuperDry1_2(true)}}  className="absolute top-[17%] right-[2%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
                 {/* Super Dry 3-4 */}
-                <button
-                    className="absolute bottom-71 left-13 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setrenderSuperDry3_4(true)}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-71 left-13 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping duration-100000'>
+                <div onClick = {() => {setrenderSuperDry3_4(true)}}  className="absolute top-[60%] left-[4%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
                 {/* TEMPERATURE CHECKER BUTTON */}
-
-                {/* Wrapping container with relative positioning and fixed size */}
-                <div className="absolute top-10 right-18 w-12 h-12 z-10 ">
-                    {/* Ripple Effect */}
-                    <span
-                        className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
-                        style={{
-                            animation: 'ripple 2.5s ease-out infinite',
-                        }}
-                    ></span>
-
-                    {/* Temperature Button */}
-                    <button
-                        className="relative w-12 h-12 bg-gradient-to-br from-fuchsia-300/70 to-fuchsia-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
-      ring-1 ring-black/10 flex items-center justify-center
-      transition-all duration-300 hover:scale-110 hover:shadow-pink-300/50 z-20"
-                        onClick={() => setrendertemperatureCheckerCard(true)}
-                    >
-                        <CiTempHigh className="size-9" />
-                    </button>
+                <div onClick = {() => {setrendertemperatureCheckerCard(true)}}  className="absolute top-[4%] right-[4.7%] w-12 h-12 z-10 ">
+                    {Riple_effect()}
                 </div>
 
-
+                {/* renderALLCard */}
+                {rendertemperatureCheckerCard && rendertemCheckerCard()}
+                {renderSuperDry1_2Card && renderSuperDry1_2()}
+                {renderSuperDry3_4Card && renderSuperDry3_4()}
             </div>
-            {rendertemperatureCheckerCard && rendertemCheckerCard()}
-            {renderSuperDry1_2Card && renderSuperDry1_2()}
-            {renderSuperDry3_4Card && renderSuperDry3_4()}
+
 
 
 
