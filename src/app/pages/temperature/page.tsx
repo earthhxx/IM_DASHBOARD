@@ -595,18 +595,18 @@ export default function TempChart() {
 
     const renderSuperDry3_4 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
-            <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
+            <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[60%] h-[50%] ">
 
                 <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
                     {/* Group Wrapper */}
-                    <div className="col-span-2 grid grid-cols-2 gap-2 w-full group">
+                    <div className="col-span-3 grid grid-cols-3 gap-2 w-full group">
 
                         {/* Box 1 */}
                         <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 3</div>
-                            <div className='mt-[20px] flex justify-end w-full'>
+                            <div className='mt-[20px] flex justify-center w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
                             </div>
@@ -616,11 +616,22 @@ export default function TempChart() {
                         <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 4</div>
-                            <div className='mt-[20px] flex justify-start w-full'>
+                            <div className='mt-[20px] flex justify-center w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
                             </div>
                         </div>
+
+                         {/* Box 3 */}
+                        <div className='flex flex-col items-center justify-center w-full p-[20px]  uppercase rounded-r-xl 
+                                   transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                            <div>Fridge 9</div>
+                            <div className='mt-[20px] flex justify-center w-full'>
+                                {FEEZNORMAL()}
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
