@@ -482,14 +482,14 @@ export default function TempChart() {
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
             <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
                 <div className='font-bold text-2xl  grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
-                    <div className='flex items-center justify-end w-full p-[20px] bg-blue-800 rounded-l-xl'>
-                        F 3
+                    <div className='flex items-center justify-end w-full p-[20px] bg-blue-800 rounded-l-xl uppercase'>
+                        Fridge 3
                     </div>
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 '>
-                        F 2
+                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 uppercase '>
+                        Fridge 2
                     </div>
-                    <div className='flex items-center justify-start w-full p-[20px]  bg-blue-800 rounded-r-xl'>
-                        F 1
+                    <div className='flex items-center justify-start w-full p-[20px]  bg-blue-800 rounded-r-xl uppercase'>
+                        Fridge 1
                     </div>
 
                     <div className='flex items-center justify-end w-full mt-[20px]'>
@@ -510,23 +510,23 @@ export default function TempChart() {
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
             <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%] ">
                 <div className='font-bold text-2xl  grid grid-cols-5 place-items-center m-5 w-auto h-[90%]'>
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
-                        F 4
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase rounded-l-2xl'>
+                        Fridge 4
                     </div>
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
-                        F 5
-                    </div>
-
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
-                        F 6
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase'>
+                        Fridge 5
                     </div>
 
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
-                        F 7
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase'>
+                        Fridge 6
                     </div>
 
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
-                        F 8
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase'>
+                        Fridge 7
+                    </div>
+
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase rounded-r-2xl'>
+                        Fridge 8
                     </div>
 
                  
