@@ -427,7 +427,7 @@ export default function TempChart() {
         </>
 
     );
-    
+
     const greencup = () => (
         <>
             <div className="absolute right-8 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
@@ -526,16 +526,26 @@ export default function TempChart() {
     );
 
     const renderSuperDry3_4 = () => (
-        <div className='relative'>
-            <div ref={cardSuper3_4Ref} className="absolute -top-60 left-0 z-20 w-[15%]">
-                <div className='grid grid-cols-1 gap-4'>
-                    <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        SuperDry 3
-                    </button>
-                    <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        SuperDry 4
-                    </button>
+        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+            <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
 
+                <div className='font-bold text-2xl  grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
+
+                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-l-xl'>
+                        SUPER DRY 3
+                    </div>
+                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-r-xl'>
+                        SUPER DRY 4
+                    </div>
+
+                    <div className='flex items-center justify-end w-full mt-[20px]'>
+                        {SUPERDRYR()}
+                        {SUPERDRYL()}
+                    </div>
+                    <div className='flex items-center justify-start w-full mt-[20px]'>
+                        {SUPERDRYR()}
+                        {SUPERDRYL()}
+                    </div>
                 </div>
             </div>
         </div>
