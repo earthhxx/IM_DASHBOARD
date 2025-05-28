@@ -376,7 +376,7 @@ export default function TempChart() {
             <div className="w-44 h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
-                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full z-10"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
                     {partmsl()}
 
@@ -385,7 +385,7 @@ export default function TempChart() {
 
                 <div className="absolute top-1/3 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
-                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full z-10"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
                     {partmsl()}
 
@@ -394,7 +394,7 @@ export default function TempChart() {
 
                 <div className="absolute bottom-0 left-0 w-full h-1/3 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
-                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full z-10"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
                     {partmsl()}
 
@@ -480,128 +480,154 @@ export default function TempChart() {
 
     const renderFridge1_2_3 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
-            <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
-                <div className='font-bold text-2xl  grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
-                    <div className='flex items-center justify-end w-full p-[20px] bg-blue-800 rounded-l-xl uppercase'>
-                        Fridge 3
+            <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%]">
+                <div className='font-bold text-2xl grid grid-cols-3 place-items-center m-5 w-auto h-[90%] group'>
+                    {/* Icons */}
+                    <div onClick={() => { setState('location') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  rounded-l-xl uppercase
+                               transition-all duration-300'>
+                            Fridge 3
+                        </div>
+                        {FEEZNORMAL()}
                     </div>
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 uppercase '>
-                        Fridge 2
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase
+                               transition-all duration-300'>
+                            Fridge 2
+                        </div>
+                        {FEEZNORMAL()}
                     </div>
-                    <div className='flex items-center justify-start w-full p-[20px]  bg-blue-800 rounded-r-xl uppercase'>
-                        Fridge 1
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  rounded-r-xl uppercase
+                               transition-all duration-300 '>
+                            Fridge 1
+                        </div>
+                        {FEEZNORMAL()}
                     </div>
 
-                    <div className='flex items-center justify-end w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-                    <div className='flex items-center justify-center w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-                    <div className='flex items-end justify-start w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
                 </div>
             </div>
         </div>
     );
+
 
     const renderFridge4_5_6_7_8 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
-            <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%] ">
-                <div className='font-bold text-2xl  grid grid-cols-5 place-items-center m-5 w-auto h-[90%]'>
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase rounded-l-2xl'>
-                        Fridge 4
+            <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%]">
+                <div className='font-bold text-2xl grid grid-cols-5 place-items-center m-5 w-auto h-[90%] group'>
+                    {/* Icons */}
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase rounded-l-2xl transition-all duration-300 '>
+                            Fridge 4
+                        </div>
+                        {FEEZNORMAL()}
                     </div>
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase'>
-                        Fridge 5
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase transition-all duration-300 '>
+                            Fridge 5
+                        </div>
+                        {FEEZNORMAL()}
+                    </div>
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase transition-all duration-300 '>
+                            Fridge 6
+                        </div>
+                        {FEEZNORMAL()}
+                    </div>
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase transition-all duration-300 '>
+                            Fridge 7
+                        </div>
+                        {FEEZNORMAL()}
+                    </div>
+                    <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase rounded-r-2xl transition-all duration-300 '>
+                            Fridge 8
+                        </div>
+                        {FEEZNORMAL()}
                     </div>
 
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase'>
-                        Fridge 6
-                    </div>
-
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase'>
-                        Fridge 7
-                    </div>
-
-                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 uppercase rounded-r-2xl'>
-                        Fridge 8
-                    </div>
-
-                 
-                    <div className='flex items-center justify-center w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-                    <div className='flex items-center justify-center w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-                    <div className='flex items-end justify-center w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-                    <div className='flex items-center justify-center w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-                    <div className='flex items-center justify-center w-full mt-[20px]'>
-                        {FEEZNORMAL()}
-                    </div>
-              
                 </div>
             </div>
         </div>
     );
+
+
 
 
     const renderSuperDry1_2 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
             <div ref={cardSuper1_2Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
-                <div className='font-bold text-2xl  grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
+                <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-l-xl'>
-                        SUPER DRY 1
-                    </div>
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-r-xl'>
-                        SUPER DRY 2
+                    {/* Group Wrapper */}
+                    <div className="col-span-2 grid grid-cols-2 gap-2 w-full group">
+
+                        {/* Box 1 */}
+                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl
+                                   transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                            <div>SUPER DRY 1</div>
+                            <div className='mt-[20px] flex justify-end w-full'>
+                                {SUPERDRYR()}
+                                {SUPERDRYL()}
+                            </div>
+                        </div>
+
+                        {/* Box 2 */}
+                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl
+                                   transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                            <div>SUPER DRY 2</div>
+                            <div className='mt-[20px] flex justify-start w-full'>
+                                {SUPERDRYR()}
+                                {SUPERDRYL()}
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div className='flex items-center justify-end w-full mt-[20px]'>
-                        {SUPERDRYR()}
-                        {SUPERDRYL()}
-                    </div>
-                    <div className='flex items-center justify-start w-full mt-[20px]'>
-                        {SUPERDRYR()}
-                        {SUPERDRYL()}
-                    </div>
                 </div>
             </div>
         </div>
     );
+
 
     const renderSuperDry3_4 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
             <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
 
-                <div className='font-bold text-2xl  grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
+                <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-l-xl'>
-                        SUPER DRY 3
-                    </div>
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-r-xl'>
-                        SUPER DRY 4
+                    {/* Group Wrapper */}
+                    <div className="col-span-2 grid grid-cols-2 gap-2 w-full group">
+
+                        {/* Box 1 */}
+                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl 
+                                   transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                            <div>SUPER DRY 3</div>
+                            <div className='mt-[20px] flex justify-end w-full'>
+                                {SUPERDRYR()}
+                                {SUPERDRYL()}
+                            </div>
+                        </div>
+
+                        {/* Box 2 */}
+                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl 
+                                   transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                            <div>SUPER DRY 4</div>
+                            <div className='mt-[20px] flex justify-start w-full'>
+                                {SUPERDRYR()}
+                                {SUPERDRYL()}
+                            </div>
+                        </div>
                     </div>
 
-                    <div className='flex items-center justify-end w-full mt-[20px]'>
-                        {SUPERDRYR()}
-                        {SUPERDRYL()}
-                    </div>
-                    <div className='flex items-center justify-start w-full mt-[20px]'>
-                        {SUPERDRYR()}
-                        {SUPERDRYL()}
-                    </div>
                 </div>
             </div>
         </div>
     );
+
 
 
     return (
