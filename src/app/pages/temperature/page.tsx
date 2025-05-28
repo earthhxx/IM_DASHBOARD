@@ -105,7 +105,7 @@ export default function TempChart() {
 
     const Riple_effect = () => (
         <>
-            <div className='absolute size-5 md:size-5 lg:size-8 xl:size-12'>
+            <div className='absolute size-5 md:size-5 lg:size-8 xl:size-10'>
                 {/* Ripple Effect */}
                 <span
                     className="absolute top-0 left-0 w-full h-full rounded-full bg-sky-300/90 pointer-events-none"
@@ -333,13 +333,13 @@ export default function TempChart() {
                 {Riple_effect()}
             </div>
 
-            {/* F 4-5-6-7-8 */}
+            {/* Fridge 4-5-6-7-8 */}
             <div onClick={() => { setFridge4_5_6_7_8(true) }} className="absolute bottom-[5%] left-[6%] w-12 h-12 z-10 ">
                 {Riple_effect()}
             </div>
 
-            {/* F 1-2-3 */}
-            <div onClick={() => { setFridge1_2_3Card(true) }} className="absolute top-[4%] right-[5%] w-12 h-12 z-10 ">
+            {/* Fridge 1-2-3 */}
+            <div onClick={() => { setFridge1_2_3Card(true) }} className="absolute top-[6%] right-[5%] w-12 h-12 z-10 ">
                 {Riple_effect()}
             </div>
 
