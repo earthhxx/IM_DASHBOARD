@@ -182,7 +182,7 @@ const Production1_skill_Matrix = () => {
     } else if (locationto4m === "Automotive") {
       finalLocation = "W/H";
     } else if (locationto4m === "Finish Good") {
-      finalLocation = "FG";
+      finalLocation = "F/G";
     } 
 
     try {
@@ -302,7 +302,7 @@ const Production1_skill_Matrix = () => {
       finalLine = "ICT Heater Sensor";
     } else if (data.Line === "W/H") {
       finalLine = "Automotive";
-    } else if (locationto4m === "FG") {
+    } else if (locationto4m === "F/G") {
       finalLine = "Finish Good";
     } 
     
