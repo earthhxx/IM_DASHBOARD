@@ -31,8 +31,8 @@ const cleanedData = data.map((item) => ({
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-    const [Fridge1_2_3Card,setFridge1_2_3Card] = useState(false);
-    const [Fridge4_5_6_7_8Card,setFridge4_5_6_7_8] = useState(false);
+    const [Fridge1_2_3Card, setFridge1_2_3Card] = useState(false);
+    const [Fridge4_5_6_7_8Card, setFridge4_5_6_7_8] = useState(false);
     const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
     const [renderSuperDry3_4Card, setrenderSuperDry3_4] = useState(false);
     const [state, setState] = useState<'location' | 'mapnone' | 'mapProduction1' | 'mapProduction2' | 'mapProduction3' | 'mapProduction4' | 'mapProduction5' | 'mapWarehouse'>('mapnone');
@@ -101,7 +101,7 @@ export default function TempChart() {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [Fridge1_2_3Card,Fridge4_5_6_7_8Card, renderSuperDry1_2Card, renderSuperDry3_4Card]);
+    }, [Fridge1_2_3Card, Fridge4_5_6_7_8Card, renderSuperDry1_2Card, renderSuperDry3_4Card]);
 
     const Riple_effect = () => (
         <>
@@ -334,7 +334,7 @@ export default function TempChart() {
             </div>
 
             {/* F 4-5-6-7-8 */}
-            <div onClick={() => {setFridge4_5_6_7_8(true) }} className="absolute bottom-[5%] left-[6%] w-12 h-12 z-10 ">
+            <div onClick={() => { setFridge4_5_6_7_8(true) }} className="absolute bottom-[5%] left-[6%] w-12 h-12 z-10 ">
                 {Riple_effect()}
             </div>
 
@@ -508,27 +508,44 @@ export default function TempChart() {
 
     const renderFridge4_5_6_7_8 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
-            <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
-                <div className='font-bold text-2xl  grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
-                    <div className='flex items-center justify-end w-full p-[20px] bg-blue-800 rounded-l-xl'>
-                        F 3
+            <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%] ">
+                <div className='font-bold text-2xl  grid grid-cols-5 place-items-center m-5 w-auto h-[90%]'>
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
+                        F 4
                     </div>
-                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 '>
-                        F 2
-                    </div>
-                    <div className='flex items-center justify-start w-full p-[20px]  bg-blue-800 rounded-r-xl'>
-                        F 1
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
+                        F 5
                     </div>
 
-                    <div className='flex items-center justify-end w-full mt-[20px]'>
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
+                        F 6
+                    </div>
+
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
+                        F 7
+                    </div>
+
+                    <div className='flex items-center justify-center w-full p-[20px] bg-blue-800 '>
+                        F 8
+                    </div>
+
+                 
+                    <div className='flex items-center justify-center w-full mt-[20px]'>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex items-center justify-center w-full mt-[20px]'>
                         {FEEZNORMAL()}
                     </div>
-                    <div className='flex items-end justify-start w-full mt-[20px]'>
+                    <div className='flex items-end justify-center w-full mt-[20px]'>
                         {FEEZNORMAL()}
                     </div>
+                    <div className='flex items-center justify-center w-full mt-[20px]'>
+                        {FEEZNORMAL()}
+                    </div>
+                    <div className='flex items-center justify-center w-full mt-[20px]'>
+                        {FEEZNORMAL()}
+                    </div>
+              
                 </div>
             </div>
         </div>
