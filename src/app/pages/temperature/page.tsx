@@ -358,13 +358,13 @@ export default function TempChart() {
 
                 {/* POINT 1 */}
                 <button
-                    className="absolute bottom-20 right-40 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                    className="absolute bottom-2 right-40 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
                     onClick={() => setState('location')}
                 >
                     click
                 </button>
-                <div className='absolute bottom-20 right-40 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute bottom-2 right-40 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
 
@@ -394,37 +394,37 @@ export default function TempChart() {
 
                 {/* Super Dry 1-2 */}
                 <button
-                    className="absolute top-36 -right-1 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                    className="absolute top-36 right-11 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
                     onClick={() => setrenderSuperDry1_2(true)}
                 >
                     click
                 </button>
-                <div className='absolute top-36 -right-1 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute top-36 right-11 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
 
                 {/* Super Dry 3-4 */}
                 <button
-                    className="absolute bottom-71 left-1 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                    className="absolute bottom-71 left-13 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
                     onClick={() => setrenderSuperDry3_4(true)}
                 >
                     click
                 </button>
-                <div className='absolute bottom-71 left-1 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute bottom-71 left-13 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
 
                 {/* TEMPERATURE CHECKER */}
                 <button
-                    className="absolute -top-2 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                    className="absolute top-10 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
                     onClick={() => setrendertemperatureCheckerCard(true)}
                 >
                     click
                 </button>
-                <div className='absolute -top-2 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute top-10 right-19 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
                 {rendertemperatureCheckerCard && rendertemCheckerCard()}
@@ -456,7 +456,7 @@ export default function TempChart() {
 
     const renderSuperDry1_2 = () => (
         <div className='relative'>
-            <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[20%]">
+            <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[15%]">
                 <div   className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 1
@@ -472,7 +472,7 @@ export default function TempChart() {
 
     const renderSuperDry3_4 = () => (
         <div  className='relative'>
-            <div ref={cardSuper3_4Ref} className="absolute -top-60 left-0 z-20 w-[20%]">
+            <div ref={cardSuper3_4Ref} className="absolute -top-60 left-0 z-20 w-[15%]">
                 <div  className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry3_4(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 3
