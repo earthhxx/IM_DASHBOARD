@@ -381,7 +381,17 @@ export default function TempChart() {
     const rendertemCheckerCard = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
             <div ref={cardtemCheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
-                <div className='grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
+                <div className='font-bold text-2xl  grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
+                    <div className='flex items-center justify-end w-full p-[20px] bg-blue-800 rounded-l-xl'>
+                        SUPER DRY 3
+                    </div>
+                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 '>
+                        SUPER DRY 2
+                    </div>
+                    <div className='flex items-center justify-start w-full p-[20px]  bg-blue-800 rounded-r-xl'>
+                        SUPER DRY 1
+                    </div>
+
                     <div className='flex items-center justify-end w-full mt-[20px]'>
                         {SUPERDRY()}
                     </div>
