@@ -98,24 +98,24 @@ export default function TempChart() {
 
     const Riple_effect = () => (
         <>
-        <div className='absolute size-5 md:size-5 lg:size-8 xl:size-10'>
-             {/* Ripple Effect */}
-            <span
-                className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
-                style={{
-                    animation: 'ripple 2.5s ease-out infinite',
-                }}
-            ></span>
-            {/* Button */}
-            <button
-                className="absolute w-full h-full  bg-gradient-to-br from-fuchsia-300/70 to-fuchsia-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
+            <div className='absolute size-5 md:size-5 lg:size-8 xl:size-12'>
+                {/* Ripple Effect */}
+                <span
+                    className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
+                    style={{
+                        animation: 'ripple 2.5s ease-out infinite',
+                    }}
+                ></span>
+                {/* Button */}
+                <button
+                    className="absolute w-full h-full  bg-gradient-to-br from-fuchsia-300/70 to-fuchsia-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
                     ring-1 ring-black/10 flex items-center justify-center
                     transition-all duration-300 hover:scale-110 hover:shadow-pink-300/50 z-20"
-                onClick={() => setState('location')}
-            >
-                <CiTempHigh className="size-9" />
-            </button>
-        </div>
+                    onClick={() => setState('location')}
+                >
+                    <CiTempHigh className="size-9" />
+                </button>
+            </div>
         </>
     );
 
@@ -195,28 +195,11 @@ export default function TempChart() {
                     className="w-full h-auto mt-2"
                 />
 
-                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
-                <button
-                    className="absolute top-4 right-149 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute top-4 right-149 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => setState('location')} className="absolute top-[2%] right-[41%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
-
-                {/* ปุ่ม Overlay - ดูความชื้น */}
-                <button
-                    className="absolute -bottom-3 right-157 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute -bottom-3 right-157 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => setState('location')} className="absolute bottom-[0%] right-[43.5%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
             </div>
@@ -233,28 +216,15 @@ export default function TempChart() {
                     className="w-full h-auto mt-2"
                 />
 
-                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
-                <button
-                    className="absolute top-4 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute top-4 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
+                <div className='absolute -bottom-3 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
                 ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
                 </div>
 
-                {/* ปุ่ม Overlay - ดูความชื้น */}
-                <button
-                    className="absolute -bottom-3 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute -bottom-3 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => setState('location')} className="absolute top-[2%] right-[43%] w-12 h-12 z-10">
+                    {Riple_effect()}
+                </div>
+                <div onClick = {() => setState('location')} className="absolute bottom-[0%] right-[43%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
             </div>
@@ -271,30 +241,12 @@ export default function TempChart() {
                     className="w-full h-auto mt-2"
                 />
 
-                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
-                <button
-                    className="absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute top-4 left-151 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => setState('location')} className="absolute top-[2%] right-[55%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
-
-                {/* ปุ่ม Overlay - ดูความชื้น */}
-                <button
-                    className="absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-1 left-110 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => setState('location')} className="absolute bottom-[0%] left-[30%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
-
             </div>
         </div>
     );
@@ -309,28 +261,13 @@ export default function TempChart() {
                     className="w-full h-auto mt-2"
                 />
 
-                {/* ปุ่ม Overlay - ดูอุณหภูมิ */}
-                <button
-                    className="absolute top-4 right-77 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute top-4 right-77 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                
+                <div onClick = {() => setState('location')} className="absolute top-[2.5%] right-[21%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
-                {/* ปุ่ม Overlay - ดูความชื้น */}
-                <button
-                    className="absolute bottom-0 right-115 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-0 right-115 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick = {() => setState('location')} className="absolute bottom-[0%] right-[32%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
 
             </div>
@@ -348,29 +285,9 @@ export default function TempChart() {
                 />
 
 
-
-                <button
-                    className="absolute bottom-0 left-130 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-0 left-130 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
+                <div onClick={() => setState('location')} className="absolute bottom-[0%] left-[35%] w-12 h-12 z-10">
+                    {Riple_effect()}
                 </div>
-
-                <button
-                    className="absolute bottom-0 left-130 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-11"
-                    onClick={() => setState('location')}
-                >
-                    click
-                </button>
-                <div className='absolute bottom-0 left-130 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
-                </div>
-
             </div>
         </div>
     );
@@ -390,32 +307,32 @@ export default function TempChart() {
                 />
 
                 {/* POINT 1*/}
-                <div onClick={() => setState('location')} className="absolute bottom-[0%] right-[12%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[1%] right-[10%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* POINT 2*/}
-                <div onClick = {() => setState('location')} className="absolute bottom-[40%] right-[61%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[40%] right-[61%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* POINT 3*/}
-                <div onClick = {() => setState('location')} className="absolute top-[54%] right-[49%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute top-[54%] right-[49%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* Super Dry 1-2 */}
-                <div onClick = {() => {setrenderSuperDry1_2(true)}}  className="absolute top-[17%] right-[2%] w-12 h-12 z-10">
+                <div onClick={() => { setrenderSuperDry1_2(true) }} className="absolute top-[17%] right-[0.5%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* Super Dry 3-4 */}
-                <div onClick = {() => {setrenderSuperDry3_4(true)}}  className="absolute top-[60%] left-[4%] w-12 h-12 z-10">
+                <div onClick={() => { setrenderSuperDry3_4(true) }} className="absolute top-[60%] left-[1%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* TEMPERATURE CHECKER BUTTON */}
-                <div onClick = {() => {setrendertemperatureCheckerCard(true)}}  className="absolute top-[4%] right-[4.7%] w-12 h-12 z-10 ">
+                <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[4%] right-[3%] w-12 h-12 z-10 ">
                     {Riple_effect()}
                 </div>
 
