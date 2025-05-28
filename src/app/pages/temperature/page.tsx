@@ -98,7 +98,7 @@ export default function TempChart() {
 
     const Riple_effect = () => (
         <>
-        <div className='absolute size-10'>
+        <div className='absolute size-5 md:size-5 lg:size-8 xl:size-10'>
              {/* Ripple Effect */}
             <span
                 className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
@@ -116,7 +116,6 @@ export default function TempChart() {
                 <CiTempHigh className="size-9" />
             </button>
         </div>
-           
         </>
     );
 
