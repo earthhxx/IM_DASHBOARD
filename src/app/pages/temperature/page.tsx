@@ -292,73 +292,113 @@ export default function TempChart() {
 
 
     const renderMapWarehouse = () => (
-        <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-full max-w-7xl h-full mx-auto">
-                {/* ภาพพื้นหลัง */}
-                <img
-                    src="/images/Warehouse.png"
-                    alt="Warehouse"
-                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
-                />
 
-                {/* POINT 1*/}
-                <div onClick={() => setState('location')} className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
-                    {Riple_effect()}
-                </div>
+        <div className="relative w-full max-w-7xl h-full mx-auto">
+            {/* ภาพพื้นหลัง */}
+            <img
+                src="/images/Warehouse.png"
+                alt="Warehouse"
+                className="w-full h-auto lg:h-[670px] p-8 mt-2"
+            />
 
-                {/* POINT 2*/}
-                <div onClick={() => setState('location')} className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
-                    {Riple_effect()}
-                </div>
-
-                {/* POINT 3*/}
-                <div onClick={() => setState('location')} className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
-                    {Riple_effect()}
-                </div>
-
-                {/* Super Dry 1-2 */}
-                <div onClick={() => { setrenderSuperDry1_2(true) }} className="absolute top-[19%] right-[3%] w-12 h-12 z-10">
-                    {Riple_effect()}
-                </div>
-
-                {/* Super Dry 3-4 */}
-                <div onClick={() => { setrenderSuperDry3_4(true) }} className="absolute top-[57%] left-[3%] w-12 h-12 z-10">
-                    {Riple_effect()}
-                </div>
-
-                {/* F 4-5-6-7-8 */}
-                <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute bottom-[5%] left-[6%] w-12 h-12 z-10 ">
-                    {Riple_effect()}
-                </div>
-
-                {/* F 1-2-3 */}
-                <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[6%] right-[5%] w-12 h-12 z-10 ">
-                    {Riple_effect()}
-                </div>
-
-
+            {/* POINT 1*/}
+            <div onClick={() => setState('location')} className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
+                {Riple_effect()}
             </div>
 
+            {/* POINT 2*/}
+            <div onClick={() => setState('location')} className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
+                {Riple_effect()}
+            </div>
+
+            {/* POINT 3*/}
+            <div onClick={() => setState('location')} className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
+                {Riple_effect()}
+            </div>
+
+            {/* Super Dry 1-2 */}
+            <div onClick={() => { setrenderSuperDry1_2(true) }} className="absolute top-[19%] right-[3%] w-12 h-12 z-10">
+                {Riple_effect()}
+            </div>
+
+            {/* Super Dry 3-4 */}
+            <div onClick={() => { setrenderSuperDry3_4(true) }} className="absolute top-[57%] left-[3%] w-12 h-12 z-10">
+                {Riple_effect()}
+            </div>
+
+            {/* F 4-5-6-7-8 */}
+            <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute bottom-[5%] left-[6%] w-12 h-12 z-10 ">
+                {Riple_effect()}
+            </div>
+
+            {/* F 1-2-3 */}
+            <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[6%] right-[5%] w-12 h-12 z-10 ">
+                {Riple_effect()}
+            </div>
+
+
         </div>
+    );
+
+    const SUPERDRY = () => (
+        <>
+       
+                <div className="w-44 h-96 bg-white rounded-xl shadow-xl border-4 border-blue-300 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                        <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                        <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                        <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                        <div className="absolute center top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                        <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                        <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    </div>
+
+
+                    <div className="absolute top-1/3 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                        <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                        <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                        <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                        <div className="absolute left-4 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+
+                        <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    </div>
+
+
+                    <div className="absolute bottom-0 left-0 w-full h-1/3 flex items-center justify-center">
+                        <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                        <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                        <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                        <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                        <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                        <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    </div>
+                </div>
+       
+        </>
+
     );
 
     const rendertemCheckerCard = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
-            <div ref={cardtemCheckRef} className="bg-black/50 rounded-2xl w-[50%] h-[50%] ">
-                <div className='grid grid-cols-3 gap-4 place-items-center  w-full h-full'>
-                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Fridge 3
-                    </button>
-                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Fridge 2
-                    </button>
-                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Fridge 1
-                    </button>
+            <div ref={cardtemCheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
+                <div className='grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
+                    <div className='flex items-center justify-end w-full mt-[20px]'>
+                        {SUPERDRY()}
+                    </div>
+                    <div className='flex items-center justify-center w-full mt-[20px]'>
+                        {SUPERDRY()}
+                    </div>
+                    <div className='flex items-end justify-start w-full mt-[20px]'>
+                        {SUPERDRY()}
+                    </div>
                 </div>
             </div>
         </div>
     );
+
+
+
+
 
     const renderSuperDry1_2 = () => (
         <div className='relative'>
