@@ -378,28 +378,66 @@ export default function TempChart() {
 
     );
 
+    const FEEZNORMAL = () => (
+        <>
+
+            <div className="w-44 h-96 bg-gray-600 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute center top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                </div>
+
+
+                <div className="absolute top-1/3 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute left-4 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+
+                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                </div>
+
+
+                <div className="absolute bottom-0 left-0 w-full h-1/3 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                </div>
+            </div>
+
+        </>
+
+    );
+
     const rendertemCheckerCard = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10'>
             <div ref={cardtemCheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
                 <div className='font-bold text-2xl  grid grid-cols-3 place-items-center m-5 w-auto h-[90%]'>
                     <div className='flex items-center justify-end w-full p-[20px] bg-blue-800 rounded-l-xl'>
-                        SUPER DRY 3
+                        F 3
                     </div>
                     <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 '>
-                        SUPER DRY 2
+                        F 2
                     </div>
                     <div className='flex items-center justify-start w-full p-[20px]  bg-blue-800 rounded-r-xl'>
-                        SUPER DRY 1
+                        F 1
                     </div>
 
                     <div className='flex items-center justify-end w-full mt-[20px]'>
-                        {SUPERDRY()}
+                        {FEEZNORMAL()}
                     </div>
                     <div className='flex items-center justify-center w-full mt-[20px]'>
-                        {SUPERDRY()}
+                        {FEEZNORMAL()}
                     </div>
                     <div className='flex items-end justify-start w-full mt-[20px]'>
-                        {SUPERDRY()}
+                        {FEEZNORMAL()}
                     </div>
                 </div>
             </div>
@@ -407,20 +445,26 @@ export default function TempChart() {
     );
 
 
-
-
-
     const renderSuperDry1_2 = () => (
-        <div className='relative'>
-            <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[35%]">
-                <div className='grid grid-cols-1 gap-4'>
-                    <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        SuperDry 1
-                    </button>
-                    <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        SuperDry 2
-                    </button>
+        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+            <div ref={cardSuper1_2Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
+                <div className='font-bold text-2xl  grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
+                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-l-xl'>
+                        SUPER DRY 1
+                    </div>
+                    <div className='flex items-center justify-center w-full p-[20px]  bg-blue-800 rounded-r-xl'>
+                        SUPER DRY 2
+                    </div>
+
+                    <div className='flex items-center justify-end w-full mt-[20px]'>
+                        {SUPERDRY()}
+                        {SUPERDRY()}
+                    </div>
+                    <div className='flex items-center justify-start w-full mt-[20px]'>
+                        {SUPERDRY()}
+                        {SUPERDRY()}
+                    </div>
                 </div>
             </div>
         </div>
