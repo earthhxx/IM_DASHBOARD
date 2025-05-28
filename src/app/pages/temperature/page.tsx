@@ -101,17 +101,16 @@ export default function TempChart() {
             <div className='absolute size-5 md:size-5 lg:size-8 xl:size-12'>
                 {/* Ripple Effect */}
                 <span
-                    className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
+                    className="absolute top-0 left-0 w-full h-full rounded-full bg-sky-300/90 pointer-events-none"
                     style={{
                         animation: 'ripple 2.5s ease-out infinite',
                     }}
                 ></span>
                 {/* Button */}
                 <button
-                    className="absolute w-full h-full  bg-gradient-to-br from-fuchsia-300/70 to-fuchsia-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
+                    className="absolute w-full h-full  bg-gradient-to-br from-sky-300/70 to-sky-500/80 hover:bg-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-xl
                     ring-1 ring-black/10 flex items-center justify-center
                     transition-all duration-300 hover:scale-110 hover:shadow-pink-300/50 z-20"
-                    onClick={() => setState('location')}
                 >
                     <CiTempHigh className="size-9" />
                 </button>
@@ -187,18 +186,18 @@ export default function TempChart() {
 
     const renderMapProduction1 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-[75%]">
+            <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Production1.png"
                     alt="Production1"
-                    className="w-full h-auto mt-2"
+                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick = {() => setState('location')} className="absolute top-[2%] right-[41%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute top-[6%] right-[41%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick = {() => setState('location')} className="absolute bottom-[0%] right-[43.5%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[4%] right-[43.5%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
@@ -208,22 +207,18 @@ export default function TempChart() {
 
     const renderMapProduction2 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-[75%]">
+            <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Production2.png"
                     alt="Production2"
-                    className="w-full h-auto mt-2"
+                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div className='absolute -bottom-3 right-155 bg-pink-400 hover:bg-pink-700 text-white font-semibold rounded-full shadow-lg
-                ring-2 ring-red-500 ring-opacity-80 size-10 z-10 animate-ping'>
-                </div>
-
-                <div onClick = {() => setState('location')} className="absolute top-[2%] right-[43%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute top-[7%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick = {() => setState('location')} className="absolute bottom-[0%] right-[43%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[5%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
@@ -233,18 +228,18 @@ export default function TempChart() {
 
     const renderMapProduction3 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-[75%]">
+            <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Production3.png"
                     alt="Production3"
-                    className="w-full h-auto mt-2"
+                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick = {() => setState('location')} className="absolute top-[2%] right-[55%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute top-[6%] right-[60%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick = {() => setState('location')} className="absolute bottom-[0%] left-[30%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[4%] left-[30%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
             </div>
@@ -253,20 +248,20 @@ export default function TempChart() {
 
     const renderMapProduction4 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-[75%]">
+            <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Production4.png"
                     alt="Production4"
-                    className="w-full h-auto mt-2"
+                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                
-                <div onClick = {() => setState('location')} className="absolute top-[2.5%] right-[21%] w-12 h-12 z-10">
+
+                <div onClick={() => setState('location')} className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
-                <div onClick = {() => setState('location')} className="absolute bottom-[0%] right-[32%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[4.5%] right-[30%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
@@ -276,16 +271,16 @@ export default function TempChart() {
 
     const renderMapProduction5 = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-[75%]">
+            <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Production5.png"
                     alt="Production5"
-                    className="w-full h-auto mt-2"
+                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
 
-                <div onClick={() => setState('location')} className="absolute bottom-[0%] left-[35%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[4.5%] left-[35%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
             </div>
@@ -298,68 +293,68 @@ export default function TempChart() {
 
     const renderMapWarehouse = () => (
         <div className='flex items-center justify-center w-full mt-[20px]'>
-            <div className="relative w-full max-w-7xl mx-auto">
+            <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
                     src="/images/Warehouse.png"
                     alt="Warehouse"
-                    className="w-full h-auto mt-2"
+                    className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
                 {/* POINT 1*/}
-                <div onClick={() => setState('location')} className="absolute bottom-[1%] right-[10%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* POINT 2*/}
-                <div onClick={() => setState('location')} className="absolute bottom-[40%] right-[61%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* POINT 3*/}
-                <div onClick={() => setState('location')} className="absolute top-[54%] right-[49%] w-12 h-12 z-10">
+                <div onClick={() => setState('location')} className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* Super Dry 1-2 */}
-                <div onClick={() => { setrenderSuperDry1_2(true) }} className="absolute top-[17%] right-[0.5%] w-12 h-12 z-10">
+                <div onClick={() => { setrenderSuperDry1_2(true) }} className="absolute top-[19%] right-[3%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
                 {/* Super Dry 3-4 */}
-                <div onClick={() => { setrenderSuperDry3_4(true) }} className="absolute top-[60%] left-[1%] w-12 h-12 z-10">
+                <div onClick={() => { setrenderSuperDry3_4(true) }} className="absolute top-[57%] left-[3%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
-                {/* TEMPERATURE CHECKER BUTTON */}
-                <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[4%] right-[3%] w-12 h-12 z-10 ">
+                {/* F 4-5-6-7-8 */}
+                <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute bottom-[5%] left-[6%] w-12 h-12 z-10 ">
                     {Riple_effect()}
                 </div>
 
-                {/* renderALLCard */}
-                {rendertemperatureCheckerCard && rendertemCheckerCard()}
-                {renderSuperDry1_2Card && renderSuperDry1_2()}
-                {renderSuperDry3_4Card && renderSuperDry3_4()}
+                {/* F 1-2-3 */}
+                <div onClick={() => { setrendertemperatureCheckerCard(true) }} className="absolute top-[6%] right-[5%] w-12 h-12 z-10 ">
+                    {Riple_effect()}
+                </div>
+
+
             </div>
-
-
-
 
         </div>
     );
 
     const rendertemCheckerCard = () => (
-        <div className=''>
-            <div ref={cardtemCheckRef} className="absolute top-15 -right-45 z-20 w-[40%]">
-                <div className='grid grid-cols-3 gap-4'>
-                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Temperature Checker 3
+        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+            <div ref={cardtemCheckRef} className="bg-black/50 rounded-2xl w-[50%] h-[50%] ">
+                <div className='grid grid-cols-3 gap-4 place-items-center  w-full h-full'>
+                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        Fridge 3
                     </button>
-                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Temperature Checker 2
+                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        Fridge 2
                     </button>
-                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
-                        Temperature Checker 1                    </button>
+                    <button onClick={() => setrendertemperatureCheckerCard(false)} className='flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
+                        Fridge 1
+                    </button>
                 </div>
             </div>
         </div>
@@ -367,7 +362,7 @@ export default function TempChart() {
 
     const renderSuperDry1_2 = () => (
         <div className='relative'>
-            <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[15%]">
+            <div ref={cardSuper1_2Ref} className="absolute -top-142 -right-0 z-20 w-[35%]">
                 <div className='grid grid-cols-1 gap-4'>
                     <button onClick={() => setrenderSuperDry1_2(false)} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ring-2 ring-blue-300 ring-opacity-80'>
                         SuperDry 1
@@ -425,9 +420,13 @@ export default function TempChart() {
                 {state === 'mapProduction5' && renderMapProduction5()}
                 {state === 'mapWarehouse' && renderMapWarehouse()}
                 {state === 'location' && renderGraph()}
-
             </div>
+            {/* renderALLCard */}
+            {rendertemperatureCheckerCard && rendertemCheckerCard()}
+            {renderSuperDry1_2Card && renderSuperDry1_2()}
+            {renderSuperDry3_4Card && renderSuperDry3_4()}
         </div>
+
     );
 }
 
