@@ -422,10 +422,10 @@ export default function TempChart() {
                 {/* TEMPERATURE CHECKER BUTTON */}
 
                 {/* Wrapping container with relative positioning and fixed size */}
-                <div className="absolute top-10 right-20 w-12 h-12 z-10 ">
+                <div className="absolute top-10 right-18 w-12 h-12 z-10 ">
                     {/* Ripple Effect */}
                     <span
-                        className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300 opacity-70 pointer-events-none"
+                        className="absolute top-0 left-0 w-full h-full rounded-full bg-fuchsia-300/90 pointer-events-none"
                         style={{
                             animation: 'ripple 2.5s ease-out infinite',
                         }}
