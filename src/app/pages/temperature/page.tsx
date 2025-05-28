@@ -340,17 +340,39 @@ export default function TempChart() {
         </div>
     );
 
-    const SUPERDRY = () => (
+    const partmsl = () => (
+        <>
+            <div className="absolute left-10 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-18 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-28 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-14 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-22 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-6 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-32 top-[20%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+
+            <div className="absolute left-10 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-18 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-28 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-14 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-22 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-6 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+            <div className="absolute left-32 top-[62%] w-[12px] h-[38px] rounded-[2px] bg-gradient-to-b from-gray-200 via-gray-400 to-gray-700 shadow-sm"></div>
+
+
+        </>
+
+    );
+
+    const SUPERDRYR = () => (
         <>
 
-            <div className="w-44 h-96 bg-white rounded-xl shadow-xl border-4 border-blue-300 relative overflow-hidden">
+            <div className="w-44 h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                    <div className="absolute center top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    {partmsl()}
+
                 </div>
 
 
@@ -358,9 +380,8 @@ export default function TempChart() {
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                    <div className="absolute left-4 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    {partmsl()}
 
-                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                 </div>
 
 
@@ -368,9 +389,38 @@ export default function TempChart() {
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                    <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-                    <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    {partmsl()}
+
+
+                </div>
+            </div>
+
+        </>
+
+    );
+    const SUPERDRYL = () => (
+        <>
+            <div className="w-44 h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute left-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    {partmsl()}
+                </div>
+
+
+                <div className="absolute top-1/3 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute left-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    {partmsl()}                </div>
+
+
+                <div className="absolute bottom-0 left-0 w-full h-1/3 flex items-center justify-center">
+                    <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute left-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
+                    <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    {partmsl()}
                 </div>
             </div>
 
@@ -384,11 +434,14 @@ export default function TempChart() {
             <div className="w-44 h-96 bg-gray-600 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
+                    <div className="absolute left-8 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
+                    <div className="absolute right-8 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute center top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                 </div>
 
 
@@ -396,9 +449,12 @@ export default function TempChart() {
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
-                    <div className="absolute left-4 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
-
+                    <div className="absolute left-8 top-2/6 w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-27 top-[36%] w-[29px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-17 top-[36%] w-[29px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-18 top-[80%] w-[29px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-9 top-[82%] w-[29px] h-3 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                 </div>
 
 
@@ -408,6 +464,9 @@ export default function TempChart() {
                     <div className="absolute center top-3/6 w-[148px] h-1 bg-gray-600/30 "></div>
                     <div className="absolute left-8 top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute center top-[75%] w-[28px] h-5 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-7 top-[36%] w-[29px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-17 top-[36%] w-[29px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
+                    <div className="absolute left-27 top-[36%] w-[29px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                     <div className="absolute right-8 top-[78%] w-[28px] h-4 bg-green-600 rounded-b-[4px] border-t-4 border-green-950 "></div>
                 </div>
             </div>
@@ -458,12 +517,12 @@ export default function TempChart() {
                     </div>
 
                     <div className='flex items-center justify-end w-full mt-[20px]'>
-                        {SUPERDRY()}
-                        {SUPERDRY()}
+                        {SUPERDRYR()}
+                        {SUPERDRYL()}
                     </div>
                     <div className='flex items-center justify-start w-full mt-[20px]'>
-                        {SUPERDRY()}
-                        {SUPERDRY()}
+                        {SUPERDRYR()}
+                        {SUPERDRYL()}
                     </div>
                 </div>
             </div>
