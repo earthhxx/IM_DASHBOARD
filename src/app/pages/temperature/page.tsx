@@ -344,7 +344,7 @@ export default function TempChart() {
                                             <YAxis
                                                 label={{ value: '°C', position: 'insideLeft' }}
                                                 domain={yAxisDomain}
-                                                ticks={[-1,0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} // <<-- บังคับแกน Y โชว์ค่าตามนี้
+                                                ticks={[-1,0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11]} // <<-- บังคับแกน Y โชว์ค่าตามนี้
                                             />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
