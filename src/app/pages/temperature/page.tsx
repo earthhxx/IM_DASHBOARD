@@ -195,9 +195,9 @@ export default function TempChart() {
     }
         , [param]);
 
-    useEffect(() => {
-        console.log(graphData);
-    }, [graphData]);
+    // useEffect(() => {
+    //     console.log(graphData);
+    // }, [graphData]);
 
     const handleClickGraphDry = async (loc: string) => {
         if (renderSuperDry1_2Card === true) {
@@ -215,8 +215,6 @@ export default function TempChart() {
 
         setGraphSuperD(true);
     };
-
-
 
     const fetchDataSuperDry = async (loc: string) => {
 
@@ -245,14 +243,9 @@ export default function TempChart() {
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
             }
 
-            // ตอนจะใช้ sortedControls ที่ scope นี้ ก็จะไม่มี error แล้ว
             setsortControl(sortedControls)
             console.log('sorted', sortedControls);
             console.log('Yaxis', yAxisDomain)
-
-
-
-
 
         } catch (err) {
             console.log('Error fetch fail', err);
