@@ -484,12 +484,12 @@ export default function TempChart() {
             </div>
 
             {/* POINT 2*/}
-            <div  className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
+            <div className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 3*/}
-            <div  className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
+            <div className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
@@ -748,7 +748,10 @@ export default function TempChart() {
                         </div>
 
                         {/* Box 2 */}
-                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl
+                        <div onClick={() => {
+                            handleClickGraphDry('2');
+                        }}
+                            className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 2</div>
                             <div className='mt-[20px] flex justify-start w-full'>
@@ -775,7 +778,10 @@ export default function TempChart() {
                     <div className="col-span-3 grid grid-cols-3 gap-2 w-full group">
 
                         {/* Box 1 */}
-                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl 
+                        <div onClick={() => {
+                            handleClickGraphDry('3');
+                        }}
+                            className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 3</div>
                             <div className='mt-[20px] flex justify-center w-full'>
@@ -785,7 +791,10 @@ export default function TempChart() {
                         </div>
 
                         {/* Box 2 */}
-                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl 
+                        <div onClick={() => {
+                            handleClickGraphDry('4');
+                        }}
+                            className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 4</div>
                             <div className='mt-[20px] flex justify-center w-full'>
