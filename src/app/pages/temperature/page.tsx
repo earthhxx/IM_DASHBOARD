@@ -288,20 +288,22 @@ export default function TempChart() {
         <>
             <div className='fixed bg-amber-50 z-10 w-full h-full'>
                 <div className=' flex flex-col justify-center items-center w-full h-full mt-16'>
-                    <div className='flex flex-row justify-start items-center w-full px-10 '>
+                    <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
-                            className="flex bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
+                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
                             onClick={() => setGraphSuperD(false)}
                         >
                             กลับไปดูแผนที่
                         </button>
-                        {/* Content Date +*/}
+                        <div className='flex w-[20%] justify-center items-center rounded-full bg-black/70 p-2 uppercase'>
+                            <div className='flex text-4xl text-white text-center font-kanit '>{Datatemp[0].Line}</div>
+                        </div>
+
 
                     </div>
 
                     <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
-
                         <div className='flex text-center text-2xl text-black mb-2'>Temperature Control</div>
                         <div className="w-[100%] h-[300px] backdrop-blur-xl">
                             {graphData.length > 0 && (
