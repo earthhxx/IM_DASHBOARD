@@ -152,7 +152,7 @@ export default function TempChart() {
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={cleanedData}>
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="date" />
+                                    <XAxis dataKey="date"  />
                                     <YAxis
                                         label={{ value: '°C', angle: -90, position: 'insideLeft' }}
                                         domain={[0, 15]} // กำหนด min/max ของแกน Y
@@ -168,7 +168,18 @@ export default function TempChart() {
                         </div>
 
                     </div>
-                    <div>Min Temp Max Temp</div>
+                    <div className='flex justify-center items-center '>
+                        <div className='w-4 h-4 border-2 bg-[#8884d8] me-2' ></div>
+                        <div className='text-[#8884d8]'>
+
+                            Min Temp
+                        </div>
+                        <div className='w-20'></div>
+                        <div className='w-4 h-4 border-2 bg-[#82ca9d] me-2' ></div>
+                        <div className='text-[#82ca9d]'>
+                            Max Temp
+                        </div>
+                    </div>
                     <div className='flex flex-col justify-center items-center w-full pe-10 ps-10'>
                         <div className="w-[100%] h-[300px] backdrop-blur-xl">
                             <ResponsiveContainer width="100%" height="100%">

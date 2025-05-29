@@ -183,7 +183,14 @@ const Production1_skill_Matrix = () => {
       finalLocation = "W/H";
     } else if (locationto4m === "Finish Good") {
       finalLocation = "F/G";
-    } 
+    }
+    else if (locationto4m === "Touch_up") {
+      finalLocation = "Touch Up";
+    }
+
+
+
+    
 
     try {
       const response = await fetch(`/api/4M?S_team=${selectedTeam}&locationto4m=${encodeURIComponent(finalLocation)}`);
@@ -304,7 +311,9 @@ const Production1_skill_Matrix = () => {
       finalLine = "Automotive";
     } else if (locationto4m === "F/G") {
       finalLine = "Finish Good";
-    } 
+    }   else if (locationto4m === "Touch Up") {
+      finalLine = "Touch_up";
+    }
     
 
     return (
