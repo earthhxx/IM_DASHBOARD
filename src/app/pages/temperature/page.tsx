@@ -3,8 +3,6 @@
 import React, { useState, Suspense, useEffect, use } from 'react';
 import ParamListener from '../../components/UseParams';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
-
-
 import { CiTempHigh } from "react-icons/ci"; // commented out originally
 
 type DataSuperDry = {
