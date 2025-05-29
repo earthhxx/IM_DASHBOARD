@@ -1,12 +1,19 @@
 // TempChart.tsx
 'use client';
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense, useEffect, use } from 'react';
 import ParamListener from '../../components/UseParams';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import { CiTempHigh } from "react-icons/ci"; // commented out originally
 
+type DataSuperDry = {
+    room: string;
+    team: string;
+    department: string;
+    location: string;
+    base64Pdf: string;
+};
 
 
 const data = Array.from({ length: 31 }, (_, i) => {
@@ -29,7 +36,7 @@ const cleanedData = data.map((item) => ({
 }));
 
 
-export default function TempChart() {
+export default async function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
     const [Graph, setGraph] = useState(false);
     const [Fridge1_2_3Card, setFridge1_2_3Card] = useState(false);
@@ -43,6 +50,11 @@ export default function TempChart() {
     const Fridge4_5_6_7_8CardCheckRef = React.useRef<HTMLDivElement>(null);
     const cardSuper1_2Ref = React.useRef<HTMLDivElement>(null);
     const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
+
+    //datatemperature Superdry
+    const [location, setlocation] = useState('');
+    const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
+
 
 
     useEffect(() => {
@@ -72,6 +84,31 @@ export default function TempChart() {
         }
     }
         , [param]);
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
+
+    const fetchDataSuperDry = async () => {
+        if (!location) {
+            console.error("no location");
+            return;
+        }
+    }
+    try {
+        const response = await fetch(`/api/temperature/superdry?=${location}`);
+        if (!response.ok) {
+            console.log('response fail');
+            return;
+        }
+        const result = await response.json();
+        console.log(result);
+        setDatatemp(result.data);
+    } catch (err) {
+        console.log('Error fetch faill', err);
+    };
+
+
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -133,8 +170,8 @@ export default function TempChart() {
     const renderGraph = () => (
         <>
             <div className='fixed bg-amber-50 z-10 w-full h-full'>
-                <div className=' flex flex-col justify-center items-center w-full h-full mt-20'>
-                    <div className='flex flex-row justify-start items-center w-full px-10 mt-4'>
+                <div className=' flex flex-col justify-center items-center w-full h-full mt-16'>
+                    <div className='flex flex-row justify-start items-center w-full px-10 '>
                         <button
                             className="flex bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
@@ -142,26 +179,28 @@ export default function TempChart() {
                         >
                             กลับไปดูแผนที่
                         </button>
+                        {/* Content Date +*/}
 
                     </div>
 
                     <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
 
-                        <div className='flex text-center text-2xl text-black'>Temperature Control</div>
+                        <div className='flex text-center text-2xl text-black mb-2'>Temperature Control</div>
                         <div className="w-[100%] h-[300px] backdrop-blur-xl">
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={cleanedData}>
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="date"  />
+                                    <XAxis dataKey="date" />
+
                                     <YAxis
-                                        label={{ value: '°C', angle: -90, position: 'insideLeft' }}
+                                        label={{ value: '°C', position: 'insideLeft' }}
                                         domain={[0, 15]} // กำหนด min/max ของแกน Y
                                     />
 
 
 
-                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" />
-                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" />
+                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" strokeWidth={4} />
+                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" strokeWidth={4} />
                                 </LineChart>
 
                             </ResponsiveContainer>
@@ -186,11 +225,11 @@ export default function TempChart() {
                                 <LineChart data={data}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="date" />
-                                    <YAxis label={{ value: '°C', angle: -90, position: 'insideLeft' }} />
+                                    <YAxis label={{ value: '°C', position: 'insideLeft' }} />
                                     <Tooltip />
                                     <Legend />
-                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" />
-                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" />
+                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" strokeWidth={4} />
+                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" strokeWidth={4} />
 
                                 </LineChart>
                             </ResponsiveContainer>
