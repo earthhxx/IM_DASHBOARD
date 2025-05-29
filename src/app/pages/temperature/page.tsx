@@ -2,7 +2,8 @@
 'use client';
 import React, { useState, Suspense, useEffect, use } from 'react';
 import ParamListener from '../../components/UseParams';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, DotProps } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
+
 
 import { CiTempHigh } from "react-icons/ci"; // commented out originally
 
@@ -62,6 +63,7 @@ type TransformedResult = {
     yAxisDomain: [number, number];
 };
 
+
 function transformSuperDryData(entry: DataSuperDry): TransformedResult {
     const points: GraphPoint[] = [];
     const baseDate = new Date(entry.Date);
@@ -81,6 +83,9 @@ function transformSuperDryData(entry: DataSuperDry): TransformedResult {
             }
         }
     }
+
+    const controlMin = controlValues.length = 0;
+    const controlMax = controlValues.length > 0 ? Math.ceil(Math.max(...controlValues)) : 10;
 
     const YAxis: number | null = controlValues.length > 0 ? controlValues[0] : null;
 
@@ -107,14 +112,28 @@ function transformSuperDryData(entry: DataSuperDry): TransformedResult {
         });
     }
 
-    const yAxisDomain: [number, number] = controlValues.length > 0
-        ? [Math.floor(Math.min(...controlValues)), Math.ceil(Math.max(...controlValues))]
-        : [0, 15];
+    const yAxisDomain: [number, number] = [controlMin, controlMax];
 
     return {
         points,
-        yAxisDomain,
+        yAxisDomain
     };
+}
+
+
+function getFilteredHControls(entry: DataSuperDry): number[] {
+    return [1, 2, 3, 4, 5]
+        .map(i => {
+            const key = `HControl${i}` as keyof DataSuperDry;
+            const raw = entry[key];
+            if (raw === undefined || raw === null) return NaN;
+
+            const str = (typeof raw === 'string') ? raw.trim() : String(raw);
+            const num = parseFloat(str);
+            return num;
+        })
+        .filter(num => !isNaN(num));
+
 }
 
 
@@ -138,6 +157,10 @@ export default function TempChart() {
     const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
     const [yAxisDomain, setYAxisDomain] = useState<[number, number]>([0, 15]);
+    let sortedControls: number[] = [];
+    const [sortedControl, setsortControl] = useState<number[]>([]);
+
+
 
 
 
@@ -216,11 +239,22 @@ export default function TempChart() {
             setDatatemp(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
-                const sampleEntry: DataSuperDry = result.data[0]; // ✅ ประกาศตัวแปรก่อนใช้
-                const { points, yAxisDomain } = transformSuperDryData(sampleEntry); // ✅ ส่งเข้าไป
+                const sampleEntry: DataSuperDry = result.data[0];
+                const { points, yAxisDomain } = transformSuperDryData(sampleEntry);
                 setGraphData(points);
-                setYAxisDomain(yAxisDomain); // ✅ ถ้าคุณมี useState ไว้แล้ว
+                setYAxisDomain(yAxisDomain);
+
+                sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
             }
+
+            // ตอนจะใช้ sortedControls ที่ scope นี้ ก็จะไม่มี error แล้ว
+            setsortControl(sortedControls)
+            console.log('sorted', sortedControls);
+            console.log('Yaxis', yAxisDomain)
+
+
+
+
 
         } catch (err) {
             console.log('Error fetch fail', err);
@@ -284,6 +318,7 @@ export default function TempChart() {
     );
 
 
+
     const renderGraphSuperDry = () => (
         <>
             <div className='fixed bg-amber-50 z-10 w-full h-full'>
@@ -305,8 +340,8 @@ export default function TempChart() {
                     </div>
                     <div className='flex h-full w-full'>
                         <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
-                            <div className='flex h-[20%]'></div>
-                            <div className='flex text-center text-2xl text-black mb-2'>Temperature Control</div>
+                            <div className='flex h-[10%]'></div>
+                            <div className='flex text-center text-2xl text-black mb-2'>HControl {Datatemp?.[0]?.Date ? new Date(Datatemp[0].Date).toISOString().split("T")[0] : '-'}</div>
 
                             <div className="w-[100%] h-[60%] backdrop-blur-xl">
                                 {graphData.length > 0 && (
@@ -317,10 +352,15 @@ export default function TempChart() {
 
                                             <YAxis
                                                 label={{ value: '°C', position: 'insideLeft' }}
-                                                domain={yAxisDomain} // กำหนด min/max ของแกน Y
+                                                domain={yAxisDomain}
+                                                ticks={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} // <<-- บังคับแกน Y โชว์ค่าตามนี้
                                             />
 
-
+                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
+                                            <ReferenceLine y={sortedControl[1]} stroke="red" strokeDasharray="3 3" />
+                                            <ReferenceLine y={sortedControl[2]} stroke="red" strokeDasharray="3 3" />
+                                            <ReferenceLine y={sortedControl[3]} stroke="red" strokeDasharray="3 3" />
+                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="3 3" />
 
                                             <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                             <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
@@ -331,7 +371,7 @@ export default function TempChart() {
                                     </ResponsiveContainer>
                                 )}
                             </div>
-                            <div className='flex h-[20%]'></div>
+                            <div className='flex h-[30%]'></div>
                         </div>
                     </div>
                 </div>
