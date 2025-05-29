@@ -2,38 +2,87 @@
 'use client';
 import React, { useState, Suspense, useEffect, use } from 'react';
 import ParamListener from '../../components/UseParams';
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-} from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, DotProps } from 'recharts';
+
 import { CiTempHigh } from "react-icons/ci"; // commented out originally
 
 type DataSuperDry = {
-    room: string;
-    team: string;
-    department: string;
-    location: string;
-    base64Pdf: string;
+    ID: number;
+    Date: string;
+    Doc_Name: string;
+    Area: string;
+    Line: string;
+    HMax1: string;
+    HMax2: string;
+    HMax3: string;
+    HMax4: string;
+    HMax5: string;
+    HMax6: string;
+    HMax7: string;
+    HMax8: string;
+    HMax9: string;
+    HMax10: string;
+    HMax11: string;
+    HMax12: string;
+    HMax13: string;
+    HMax14: string;
+    HMax15: string;
+    HMax16: string;
+    HMax17: string;
+    HMax18: string;
+    HMax19: string;
+    HMax20: string;
+    HMax21: string;
+    HMax22: string;
+    HMax23: string;
+    HMax24: string;
+    HMax25: string;
+    HMax26: string;
+    HMax27: string;
+    HMax28: string;
+    HMax29: string;
+    HMax30: string;
+    HMax31: string;
+};
+
+type GraphPoint = {
+    date: string;
+    max: number | null;
+    min: number | null;
 };
 
 
-const data = Array.from({ length: 31 }, (_, i) => {
-    // สร้างวันที่เองโดยไม่ใช้ไลบรารี
-    const date = (i + 1).toString(); // วันที่ 1 ถึง 31 เป็น string
-    // Fixed min and max values for demonstration
-    const min = (1);
-    const max = 10;      // Always 5 degrees higher than min
-    return {
-        date,
-        min,
-        max,
-    };
-});
+function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
+    const points: GraphPoint[] = [];
+    const baseDate = new Date(entry.Date);
+    const month = baseDate.getMonth() + 1;
 
-const cleanedData = data.map((item) => ({
-    ...item,
-    min: item.min === 0 || item.min === 0 ? null : item.min,
-    max: item.max === 0 || item.max === 0 ? null : item.max,
-}));
+    for (let day = 1; day <= 31; day++) {
+        const key = `HMax${day}` as keyof DataSuperDry;
+        const rawValue = entry[key];
+        const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+
+        let maxValue: number | null = null;
+        if (valStr !== '') {
+            const parsed = parseFloat(valStr);
+            // ถ้าไม่ใช่ NaN และไม่ใช่ 0 ค่อยใส่ค่า
+            if (!isNaN(parsed) && parsed !== 0) {
+                maxValue = parsed;
+            }
+        }
+
+        const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        points.push({
+            date: dateStr,
+            max: maxValue,
+            min: maxValue !== null ? maxValue - 1.5 : null,
+        });
+    }
+
+    return points;
+}
+
+
 
 
 export default function TempChart() {
@@ -53,6 +102,11 @@ export default function TempChart() {
 
     //datatemperature Superdry
     const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
+    const [graphData, setGraphData] = useState<GraphPoint[]>([]);
+
+
+
+
 
 
 
@@ -85,21 +139,22 @@ export default function TempChart() {
         , [param]);
 
     useEffect(() => {
-        console.log(data);
-    }, [data]);
+        console.log(graphData);
+    }, [graphData]);
 
     const handleClickGraph = async (loc: string) => {
-        // ปิดการ์ดก่อน
         if (Fridge1_2_3Card === true) {
             setFridge1_2_3Card(false);
         } else if (Fridge4_5_6_7_8Card === true) {
             setFridge4_5_6_7_8(false);
         } else if (renderSuperDry1_2Card === true) {
             setrenderSuperDry1_2(false);
-            await fetchDataSuperDry(loc); // ✅ รอให้โหลดข้อมูลก่อน
+            await fetchDataSuperDry(loc); // รอโหลดข้อมูล
+
+            // อัปเดต state ที่เก็บ graph data ถ้ามี เช่น setGraphData(graphData)
         } else if (renderSuperDry3_4Card === true) {
             setrenderSuperDry3_4(false);
-            await fetchDataSuperDry(loc); // ✅
+            await fetchDataSuperDry(loc);
         } else {
             setrenderSuperDry1_2(false);
             setrenderSuperDry3_4(false);
@@ -107,9 +162,9 @@ export default function TempChart() {
             setFridge4_5_6_7_8(false);
         }
 
-        // ✅ แสดงกราฟเมื่อโหลดข้อมูลเสร็จ
         setGraph(true);
     };
+
 
 
     const fetchDataSuperDry = async (loc: string) => {
@@ -129,6 +184,12 @@ export default function TempChart() {
             const result = await response.json();
             console.log(result);
             setDatatemp(result.data);
+
+            if (Array.isArray(result.data) && result.data.length > 0) {
+                const sampleEntry: DataSuperDry = result.data[0];
+                const points = transformSuperDryData(sampleEntry);
+                setGraphData(points); // ✅ ตั้งค่าข้อมูลกราฟ
+            }
         } catch (err) {
             console.log('Error fetch fail', err);
         }
@@ -192,6 +253,24 @@ export default function TempChart() {
 
 
 
+    const CustomDot = (props: any) => {
+        const { cx, cy, index, data } = props;
+        const isLast = index === data.length - 1;
+
+        if (!cx || !cy) return null;
+
+        return (
+            <>
+                {/* จุดจริง */}
+                <circle cx={cx} cy={cy} r={4} fill="#82ca9d" />
+                {isLast && (
+                    <foreignObject x={cx - 10} y={cy - 10} width={20} height={20}>
+                        <div className="w-4 h-4 rounded-full bg-green-500 animate-ping"></div>
+                    </foreignObject>
+                )}
+            </>
+        );
+    };
 
 
     const renderGraph = () => (
@@ -214,23 +293,27 @@ export default function TempChart() {
 
                         <div className='flex text-center text-2xl text-black mb-2'>Temperature Control</div>
                         <div className="w-[100%] h-[300px] backdrop-blur-xl">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={cleanedData}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="date" />
+                            {graphData.length > 0 && (
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={graphData}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="date" />
 
-                                    <YAxis
-                                        label={{ value: '°C', position: 'insideLeft' }}
-                                        domain={[0, 15]} // กำหนด min/max ของแกน Y
-                                    />
+                                        <YAxis
+                                            label={{ value: '°C', position: 'insideLeft' }}
+                                            domain={[0, 15]} // กำหนด min/max ของแกน Y
+                                        />
 
 
 
-                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" strokeWidth={4} />
-                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" strokeWidth={4} />
-                                </LineChart>
+                                        <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={4} />
+                                        <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={4} />
 
-                            </ResponsiveContainer>
+
+                                    </LineChart>
+
+                                </ResponsiveContainer>
+                            )}
                         </div>
 
                     </div>
@@ -249,15 +332,13 @@ export default function TempChart() {
                     <div className='flex flex-col justify-center items-center w-full pe-10 ps-10'>
                         <div className="w-[100%] h-[300px] backdrop-blur-xl">
                             <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={data}>
+                                <LineChart data={graphData}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="date" />
                                     <YAxis label={{ value: '°C', position: 'insideLeft' }} />
                                     <Tooltip />
-                                    <Legend />
-                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" strokeWidth={4} />
-                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" strokeWidth={4} />
-
+                                    <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={4} />
+                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={4} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
@@ -347,7 +428,6 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-
                 <div onClick={() => setState('location')} className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
@@ -378,12 +458,7 @@ export default function TempChart() {
         </div>
     );
 
-
-
-
-
     const renderMapWarehouse = () => (
-
         <div className="relative w-full max-w-7xl h-full mx-auto">
             {/* ภาพพื้นหลัง */}
             <img
