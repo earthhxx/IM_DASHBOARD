@@ -121,7 +121,7 @@ function transformSuperDryData(entry: DataSuperDry): TransformedResult {
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-    const [Graph, setGraph] = useState(false);
+    const [GraphSuperD, setGraphSuperD] = useState(false);
     const [Fridge1_2_3Card, setFridge1_2_3Card] = useState(false);
     const [Fridge4_5_6_7_8Card, setFridge4_5_6_7_8] = useState(false);
     const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
@@ -178,12 +178,8 @@ export default function TempChart() {
         console.log(graphData);
     }, [graphData]);
 
-    const handleClickGraph = async (loc: string) => {
-        if (Fridge1_2_3Card === true) {
-            setFridge1_2_3Card(false);
-        } else if (Fridge4_5_6_7_8Card === true) {
-            setFridge4_5_6_7_8(false);
-        } else if (renderSuperDry1_2Card === true) {
+    const handleClickGraphDry = async (loc: string) => {
+        if (renderSuperDry1_2Card === true) {
             setrenderSuperDry1_2(false);
             await fetchDataSuperDry(loc); // รอโหลดข้อมูล
 
@@ -194,11 +190,9 @@ export default function TempChart() {
         } else {
             setrenderSuperDry1_2(false);
             setrenderSuperDry3_4(false);
-            setFridge1_2_3Card(false);
-            setFridge4_5_6_7_8(false);
         }
 
-        setGraph(true);
+        setGraphSuperD(true);
     };
 
 
@@ -290,7 +284,7 @@ export default function TempChart() {
     );
 
 
-    const renderGraph = () => (
+    const renderGraphSuperDry = () => (
         <>
             <div className='fixed bg-amber-50 z-10 w-full h-full'>
                 <div className=' flex flex-col justify-center items-center w-full h-full mt-16'>
@@ -298,7 +292,7 @@ export default function TempChart() {
                         <button
                             className="flex bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                            onClick={() => setGraph(false)}
+                            onClick={() => setGraphSuperD(false)}
                         >
                             กลับไปดูแผนที่
                         </button>
@@ -485,17 +479,17 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div onClick={() => setGraph(true)} className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
+            <div className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 2*/}
-            <div onClick={() => setGraph(true)} className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
+            <div  className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 3*/}
-            <div onClick={() => setGraph(true)} className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
+            <div  className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
@@ -743,7 +737,7 @@ export default function TempChart() {
 
                         {/* Box 1 */}
                         <div onClick={() => {
-                            handleClickGraph('1');
+                            handleClickGraphDry('1');
                         }} className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 1</div>
@@ -850,7 +844,7 @@ export default function TempChart() {
                 </div>
             </div>
             {/* renderALLCard */}
-            {Graph && renderGraph()}
+            {GraphSuperD && renderGraphSuperDry()}
             {Fridge1_2_3Card && renderFridge1_2_3()}
             {Fridge4_5_6_7_8Card && renderFridge4_5_6_7_8()}
             {renderSuperDry1_2Card && renderSuperDry1_2()}
