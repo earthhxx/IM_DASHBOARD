@@ -13,8 +13,8 @@ const data = Array.from({ length: 31 }, (_, i) => {
     // สร้างวันที่เองโดยไม่ใช้ไลบรารี
     const date = (i + 1).toString(); // วันที่ 1 ถึง 31 เป็น string
     // Fixed min and max values for demonstration
-    const min = ((i + 1) % 11);
-    const max = min + 5;      // Always 5 degrees higher than min
+    const min = (1);
+    const max = 10;      // Always 5 degrees higher than min
     return {
         date,
         min,
@@ -31,6 +31,7 @@ const cleanedData = data.map((item) => ({
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
+    const [Graph, setGraph] = useState(false);
     const [Fridge1_2_3Card, setFridge1_2_3Card] = useState(false);
     const [Fridge4_5_6_7_8Card, setFridge4_5_6_7_8] = useState(false);
     const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
@@ -46,7 +47,7 @@ export default function TempChart() {
 
     useEffect(() => {
         if (param) {
-            console.log("ProductOrderNo updated:", param);
+            console.log("State updated:", param);
             if (param === 'PRODUCTION1') {
                 setState('mapProduction1')
             }
@@ -131,57 +132,63 @@ export default function TempChart() {
 
     const renderGraph = () => (
         <>
-            <div className='flex flex-col justify-start items-center mt-10 w-full'>
-                <div className='flex flex-row justify-end items-center w-full h-[10%] px-10'>
-                    <button
-                        className="flex bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
+            <div className='fixed bg-amber-50 z-10 w-full h-full'>
+                <div className=' flex flex-col justify-center items-center w-full h-full mt-20'>
+                    <div className='flex flex-row justify-start items-center w-full px-10 mt-4'>
+                        <button
+                            className="flex bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                        onClick={() => setState('mapProduction1')}
-                    >
-                        กลับไปดูแผนที่
-                    </button>
+                            onClick={() => setGraph(false)}
+                        >
+                            กลับไปดูแผนที่
+                        </button>
 
-                </div>
-
-                <div className='flex flex-row justify-center items-center w-full px-10 mt-5'>
-
-                    <div className='flex text-center text-2xl text-black w-[15%]'>Temperature Control</div>
-                    <div className="w-[100%] h-[300px] p-4 backdrop-blur-xl">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={cleanedData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="date" />
-                                <YAxis
-                                    label={{ value: '°C', angle: -90, position: 'insideLeft' }}
-                                    domain={[0, 15]} // กำหนด min/max ของแกน Y
-                                />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone" dataKey="min" stroke="#8884d8" name="Min Temp" />
-                                <Line type="monotone" dataKey="max" stroke="#82ca9d" name="Max Temp" />
-                            </LineChart>
-                        </ResponsiveContainer>
                     </div>
 
-                </div>
-                <div className='flex flex-row justify-center items-center w-full px-10'>
-                    <div className='flex text-center text-2xl  text-black w-[15%]'>Humidity Control</div>
-                    <div className="w-[100%] h-[300px] p-4 backdrop-blur-xl">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={data}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="date" />
-                                <YAxis label={{ value: '°C', angle: -90, position: 'insideLeft' }} />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone" dataKey="min" stroke="#8884d8" name="Min Temp" />
-                                <Line type="monotone" dataKey="max" stroke="#82ca9d" name="Max Temp" />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
+                    <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
 
+                        <div className='flex text-center text-2xl text-black'>Temperature Control</div>
+                        <div className="w-[100%] h-[300px] backdrop-blur-xl">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={cleanedData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis
+                                        label={{ value: '°C', angle: -90, position: 'insideLeft' }}
+                                        domain={[0, 15]} // กำหนด min/max ของแกน Y
+                                    />
+
+
+
+                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" />
+                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" />
+                                </LineChart>
+
+                            </ResponsiveContainer>
+                        </div>
+
+                    </div>
+                    <div>Min Temp Max Temp</div>
+                    <div className='flex flex-col justify-center items-center w-full pe-10 ps-10'>
+                        <div className="w-[100%] h-[300px] backdrop-blur-xl">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={data}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis label={{ value: '°C', angle: -90, position: 'insideLeft' }} />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone" dataKey="min" stroke="#8884d8" legendType="none" />
+                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" legendType="none" />
+
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className=' text-2xl text-center  text-black'>Humidity Control</div>
+                    </div>
                 </div>
             </div>
+
         </>
     );
 
@@ -309,17 +316,17 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div onClick={() => setState('location')} className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
+            <div onClick={() => setGraph(true)} className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 2*/}
-            <div onClick={() => setState('location')} className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
+            <div onClick={() => setGraph(true)} className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 3*/}
-            <div onClick={() => setState('location')} className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
+            <div onClick={() => setGraph(true)} className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
@@ -622,7 +629,7 @@ export default function TempChart() {
                             </div>
                         </div>
 
-                         {/* Box 3 */}
+                        {/* Box 3 */}
                         <div className='flex flex-col items-center justify-center w-full p-[20px]  uppercase rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>Fridge 9</div>
@@ -643,8 +650,11 @@ export default function TempChart() {
 
     return (
         <div className='flex flex-col bg-white w-full h-screen'>
+            <Suspense fallback={<div>Loading...</div>}>
+                <ParamListener onGetParam={setParam} />
+            </Suspense>
             {/* Header ใหม่ */}
-            <header className="fixed w-full bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl px-10 mt-22 py-4">
+            <header className="fixed w-full bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl px-10 mt-22 py-4 z-11">
                 <div className="flex flex-col items-end text-white">
                     <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg tracking-wide">
                         {param}
@@ -659,9 +669,6 @@ export default function TempChart() {
             <div className="flex-1">
                 <div className='h-[25%]'></div>
                 <div className=''>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <ParamListener onGetParam={setParam} />
-                    </Suspense>
                     {state === 'mapnone' && renderMapnone()}
                     {state === 'mapProduction1' && renderMapProduction1()}
                     {state === 'mapProduction2' && renderMapProduction2()}
@@ -669,10 +676,10 @@ export default function TempChart() {
                     {state === 'mapProduction4' && renderMapProduction4()}
                     {state === 'mapProduction5' && renderMapProduction5()}
                     {state === 'mapWarehouse' && renderMapWarehouse()}
-                    {state === 'location' && renderGraph()}
                 </div>
             </div>
             {/* renderALLCard */}
+            {Graph && renderGraph()}
             {Fridge1_2_3Card && renderFridge1_2_3()}
             {Fridge4_5_6_7_8Card && renderFridge4_5_6_7_8()}
             {renderSuperDry1_2Card && renderSuperDry1_2()}
