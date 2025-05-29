@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
             .input('num', sql.NVarChar, `ตู้ Supper Dry ${num}` )
             .query(`           
                     SELECT [ID], [Date], [Doc_Name], [Area], [Line],
+                                [HControl1],[HControl2],[HControl3],[HControl4],[HControl5],
                                 [HMax1], [HMax2], [HMax3], [HMax4], [HMax5], [HMax6], [HMax7], [HMax8], [HMax9], [HMax10],
                                 [HMax11], [HMax12], [HMax13], [HMax14], [HMax15], [HMax16], [HMax17], [HMax18], [HMax19], [HMax20],
                                 [HMax21], [HMax22], [HMax23], [HMax24], [HMax25], [HMax26], [HMax27], [HMax28], [HMax29], [HMax30],

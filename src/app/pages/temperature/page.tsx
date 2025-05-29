@@ -12,6 +12,11 @@ type DataSuperDry = {
     Doc_Name: string;
     Area: string;
     Line: string;
+    HControl1: string;
+    HControl2: string;
+    HControl3: string;
+    HControl4: string;
+    HControl5: string;
     HMax1: string;
     HMax2: string;
     HMax3: string;
@@ -47,16 +52,39 @@ type DataSuperDry = {
 
 type GraphPoint = {
     date: string;
+    Yangle: number | null;
     max: number | null;
     min: number | null;
 };
 
+type TransformedResult = {
+    points: GraphPoint[];
+    yAxisDomain: [number, number];
+};
 
-function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
+function transformSuperDryData(entry: DataSuperDry): TransformedResult {
     const points: GraphPoint[] = [];
     const baseDate = new Date(entry.Date);
     const month = baseDate.getMonth() + 1;
 
+    const controlValues: number[] = [];
+
+    // อ่านค่า HControl1-5 และเก็บไว้หาค่า domain
+    for (let i = 1; i <= 5; i++) {
+        const key = `HControl${i}` as keyof DataSuperDry;
+        const raw = entry[key];
+        const str = raw !== undefined && raw !== null ? String(raw).trim() : '';
+        if (str !== '') {
+            const parsed = parseFloat(str);
+            if (!isNaN(parsed) && parsed !== 0) {
+                controlValues.push(parsed);
+            }
+        }
+    }
+
+    const YAxis: number | null = controlValues.length > 0 ? controlValues[0] : null;
+
+    // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
     for (let day = 1; day <= 31; day++) {
         const key = `HMax${day}` as keyof DataSuperDry;
         const rawValue = entry[key];
@@ -65,7 +93,6 @@ function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
         let maxValue: number | null = null;
         if (valStr !== '') {
             const parsed = parseFloat(valStr);
-            // ถ้าไม่ใช่ NaN และไม่ใช่ 0 ค่อยใส่ค่า
             if (!isNaN(parsed) && parsed !== 0) {
                 maxValue = parsed;
             }
@@ -74,14 +101,21 @@ function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
         const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         points.push({
             date: dateStr,
+            Yangle: YAxis,
             max: maxValue,
             min: maxValue !== null ? maxValue - 1.5 : null,
         });
     }
 
-    return points;
-}
+    const yAxisDomain: [number, number] = controlValues.length > 0
+        ? [Math.floor(Math.min(...controlValues)), Math.ceil(Math.max(...controlValues))]
+        : [0, 15];
 
+    return {
+        points,
+        yAxisDomain,
+    };
+}
 
 
 
@@ -103,6 +137,8 @@ export default function TempChart() {
     //datatemperature Superdry
     const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
+    const [yAxisDomain, setYAxisDomain] = useState<[number, number]>([0, 15]);
+
 
 
 
@@ -186,10 +222,12 @@ export default function TempChart() {
             setDatatemp(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
-                const sampleEntry: DataSuperDry = result.data[0];
-                const points = transformSuperDryData(sampleEntry);
-                setGraphData(points); // ✅ ตั้งค่าข้อมูลกราฟ
+                const sampleEntry: DataSuperDry = result.data[0]; // ✅ ประกาศตัวแปรก่อนใช้
+                const { points, yAxisDomain } = transformSuperDryData(sampleEntry); // ✅ ส่งเข้าไป
+                setGraphData(points);
+                setYAxisDomain(yAxisDomain); // ✅ ถ้าคุณมี useState ไว้แล้ว
             }
+
         } catch (err) {
             console.log('Error fetch fail', err);
         }
@@ -252,27 +290,6 @@ export default function TempChart() {
     );
 
 
-
-    const CustomDot = (props: any) => {
-        const { cx, cy, index, data } = props;
-        const isLast = index === data.length - 1;
-
-        if (!cx || !cy) return null;
-
-        return (
-            <>
-                {/* จุดจริง */}
-                <circle cx={cx} cy={cy} r={4} fill="#82ca9d" />
-                {isLast && (
-                    <foreignObject x={cx - 10} y={cy - 10} width={20} height={20}>
-                        <div className="w-4 h-4 rounded-full bg-green-500 animate-ping"></div>
-                    </foreignObject>
-                )}
-            </>
-        );
-    };
-
-
     const renderGraph = () => (
         <>
             <div className='fixed bg-amber-50 z-10 w-full h-full'>
@@ -301,13 +318,13 @@ export default function TempChart() {
 
                                         <YAxis
                                             label={{ value: '°C', position: 'insideLeft' }}
-                                            domain={[0, 15]} // กำหนด min/max ของแกน Y
+                                            domain={yAxisDomain} // กำหนด min/max ของแกน Y
                                         />
 
 
 
-                                        <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={4} />
-                                        <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={4} />
+                                        <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                        <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
 
 
                                     </LineChart>
@@ -335,10 +352,10 @@ export default function TempChart() {
                                 <LineChart data={graphData}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="date" />
-                                    <YAxis label={{ value: '°C', position: 'insideLeft' }} />
+                                    <YAxis label={{ value: '°C', position: 'insideLeft' }} domain={yAxisDomain} />
                                     <Tooltip />
-                                    <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={4} />
-                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={4} />
+                                    <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
