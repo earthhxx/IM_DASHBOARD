@@ -287,7 +287,8 @@ export default function TempChart() {
     const renderGraphSuperDry = () => (
         <>
             <div className='fixed bg-amber-50 z-10 w-full h-full'>
-                <div className=' flex flex-col justify-center items-center w-full h-full mt-16'>
+                <div className=' flex flex-col justify-start items-center w-full h-full mt-6'>
+                    <div className='flex h-[25%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
                             className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
@@ -302,64 +303,39 @@ export default function TempChart() {
 
 
                     </div>
+                    <div className='flex h-full w-full'>
+                        <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
+                            <div className='flex h-[20%]'></div>
+                            <div className='flex text-center text-2xl text-black mb-2'>Temperature Control</div>
 
-                    <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
-                        <div className='flex text-center text-2xl text-black mb-2'>Temperature Control</div>
-                        <div className="w-[100%] h-[300px] backdrop-blur-xl">
-                            {graphData.length > 0 && (
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={graphData}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="date" />
+                            <div className="w-[100%] h-[60%] backdrop-blur-xl">
+                                {graphData.length > 0 && (
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={graphData}>
+                                            <CartesianGrid strokeDasharray="3 3" />
+                                            <XAxis dataKey="date" />
 
-                                        <YAxis
-                                            label={{ value: '°C', position: 'insideLeft' }}
-                                            domain={yAxisDomain} // กำหนด min/max ของแกน Y
-                                        />
-
-
-
-                                        <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                        <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
+                                            <YAxis
+                                                label={{ value: '°C', position: 'insideLeft' }}
+                                                domain={yAxisDomain} // กำหนด min/max ของแกน Y
+                                            />
 
 
-                                    </LineChart>
 
-                                </ResponsiveContainer>
-                            )}
+                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
+
+
+                                        </LineChart>
+
+                                    </ResponsiveContainer>
+                                )}
+                            </div>
+                            <div className='flex h-[20%]'></div>
                         </div>
-
-                    </div>
-                    <div className='flex justify-center items-center '>
-                        <div className='w-4 h-4 border-2 bg-[#8884d8] me-2' ></div>
-                        <div className='text-[#8884d8]'>
-
-                            Min Temp
-                        </div>
-                        <div className='w-20'></div>
-                        <div className='w-4 h-4 border-2 bg-[#82ca9d] me-2' ></div>
-                        <div className='text-[#82ca9d]'>
-                            Max Temp
-                        </div>
-                    </div>
-                    <div className='flex flex-col justify-center items-center w-full pe-10 ps-10'>
-                        <div className="w-[100%] h-[300px] backdrop-blur-xl">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={graphData}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="date" />
-                                    <YAxis label={{ value: '°C', position: 'insideLeft' }} domain={yAxisDomain} />
-                                    <Tooltip />
-                                    <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                    <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
-                        <div className=' text-2xl text-center  text-black'>Humidity Control</div>
                     </div>
                 </div>
             </div>
-
         </>
     );
 
