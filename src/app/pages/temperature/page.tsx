@@ -36,7 +36,7 @@ const cleanedData = data.map((item) => ({
 }));
 
 
-export default async function TempChart() {
+export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
     const [Graph, setGraph] = useState(false);
     const [Fridge1_2_3Card, setFridge1_2_3Card] = useState(false);
@@ -52,7 +52,6 @@ export default async function TempChart() {
     const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
 
     //datatemperature Superdry
-    const [location, setlocation] = useState('');
     const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
 
 
@@ -89,24 +88,52 @@ export default async function TempChart() {
         console.log(data);
     }, [data]);
 
-    const fetchDataSuperDry = async () => {
-        if (!location) {
+    const handleClickGraph = async (loc: string) => {
+        // ปิดการ์ดก่อน
+        if (Fridge1_2_3Card === true) {
+            setFridge1_2_3Card(false);
+        } else if (Fridge4_5_6_7_8Card === true) {
+            setFridge4_5_6_7_8(false);
+        } else if (renderSuperDry1_2Card === true) {
+            setrenderSuperDry1_2(false);
+            await fetchDataSuperDry(loc); // ✅ รอให้โหลดข้อมูลก่อน
+        } else if (renderSuperDry3_4Card === true) {
+            setrenderSuperDry3_4(false);
+            await fetchDataSuperDry(loc); // ✅
+        } else {
+            setrenderSuperDry1_2(false);
+            setrenderSuperDry3_4(false);
+            setFridge1_2_3Card(false);
+            setFridge4_5_6_7_8(false);
+        }
+
+        // ✅ แสดงกราฟเมื่อโหลดข้อมูลเสร็จ
+        setGraph(true);
+    };
+
+
+    const fetchDataSuperDry = async (loc: string) => {
+
+        if (!loc) {
             console.error("no location");
             return;
         }
-    }
-    try {
-        const response = await fetch(`/api/temperature/superdry?=${location}`);
-        if (!response.ok) {
-            console.log('response fail');
-            return;
+
+        try {
+            const response = await fetch(`/api/temperature/superdry?location=${loc}`);
+            if (!response.ok) {
+                console.log('response fail');
+                return;
+            }
+
+            const result = await response.json();
+            console.log(result);
+            setDatatemp(result.data);
+        } catch (err) {
+            console.log('Error fetch fail', err);
         }
-        const result = await response.json();
-        console.log(result);
-        setDatatemp(result.data);
-    } catch (err) {
-        console.log('Error fetch faill', err);
     };
+
 
 
 
@@ -623,7 +650,9 @@ export default async function TempChart() {
                     <div className="col-span-2 grid grid-cols-2 gap-2 w-full group">
 
                         {/* Box 1 */}
-                        <div className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl
+                        <div onClick={() => {
+                            handleClickGraph('1');
+                        }} className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                             <div>SUPER DRY 1</div>
                             <div className='mt-[20px] flex justify-end w-full'>
