@@ -321,7 +321,7 @@ export default function TempChart() {
 
     const renderGraphSuperDry = () => (
         <>
-            <div className='fixed bg-amber-50 z-10 w-full h-full'>
+            <div className='fixed bg-white z-10 w-full h-full'>
                 <div className=' flex flex-col justify-start items-center w-full h-full mt-6'>
                     <div className='flex h-[25%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
@@ -341,7 +341,7 @@ export default function TempChart() {
                     <div className='flex h-full w-full'>
                         <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
                             <div className='flex h-[10%]'></div>
-                            <div className='flex text-center text-2xl text-black mb-2'>HControl {Datatemp?.[0]?.Date ? new Date(Datatemp[0].Date).toISOString().split("T")[0] : '-'}</div>
+                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {Datatemp?.[0]?.Date ? new Date(Datatemp[0].Date).toISOString().split("T")[0] : '-'}</div>
 
                             <div className="w-[100%] h-[60%] backdrop-blur-xl">
                                 {graphData.length > 0 && (
@@ -357,9 +357,9 @@ export default function TempChart() {
                                             />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
-                                            <ReferenceLine y={sortedControl[1]} stroke="red" strokeDasharray="3 3" />
+                                            <ReferenceLine y={sortedControl[1]} stroke="yellow" strokeDasharray="3 3" />
                                             <ReferenceLine y={sortedControl[2]} stroke="red" strokeDasharray="3 3" />
-                                            <ReferenceLine y={sortedControl[3]} stroke="red" strokeDasharray="3 3" />
+                                            <ReferenceLine y={sortedControl[3]} stroke="yellow" strokeDasharray="3 3" />
                                             <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="3 3" />
 
                                             <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
