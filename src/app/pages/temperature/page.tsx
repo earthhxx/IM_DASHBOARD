@@ -128,14 +128,14 @@ function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
     return points;
 }
 
-function transformFridgeData(entry: DataSuperDry): GraphPoint[] {
+function transformFridgeData(entry: DataFridge): GraphPoint[] {
     const points: GraphPoint[] = [];
     const baseDate = new Date(entry.Date);
     const month = baseDate.getMonth() + 1;
 
     // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
     for (let day = 1; day <= 31; day++) {
-        const key = `TMax${day}` as keyof DataSuperDry;
+        const key = `TMax${day}` as keyof DataFridge;
         const rawValue = entry[key];
         const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
 
@@ -176,7 +176,7 @@ function getFilteredHControlsDry(entry: DataSuperDry): number[] {
 function getFilteredTControlsFridge(entry: DataFridge): number[] {
     return [1, 2, 3, 4, 5]
         .map(i => {
-            const key = `HControl${i}` as keyof DataSuperDry;
+            const key = `TControl${i}` as keyof DataFridge;
             const raw = entry[key];
             if (raw === undefined || raw === null) return NaN;
 
