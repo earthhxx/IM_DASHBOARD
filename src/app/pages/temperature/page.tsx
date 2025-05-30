@@ -929,7 +929,7 @@ export default function TempChart() {
     const SUPERDRYR = () => (
         <>
 
-            <div className="w-44 h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
+            <div className="w-22 h-46 xl:w-34 xl:h-96 2xl:w-44 2xl:h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full z-10"></div>
@@ -963,7 +963,7 @@ export default function TempChart() {
     );
     const SUPERDRYL = () => (
         <>
-            <div className="w-44 h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
+            <div className="w-22 h-46 xl:w-34 xl:h-96 2xl:w-44 2xl:h-96 bg-gray-800 rounded-xl shadow-xl border-4 border-gray-800 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute left-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
@@ -1005,7 +1005,7 @@ export default function TempChart() {
     const FEEZNORMAL = () => (
         <>
 
-            <div className="w-44 h-96 bg-gray-200 rounded-xl shadow-xl border-4 border-white relative overflow-hidden">
+            <div className="w-22 h-46 xl:w-34 xl:h-96 2xl:w-44 2xl:h-96 bg-gray-200 rounded-xl shadow-xl border-4 border-white relative overflow-hidden ">
                 <div className="absolute top-0 left-0 w-full h-1/3 border-b border-blue-300 flex items-center justify-center">
                     <div className="w-[90%] h-[85%] bg-sky-200/80 backdrop-blur-sm border border-white/50 rounded-md shadow-inner"></div>
                     <div className="absolute right-2 top-1/6 w-2 h-10 bg-blue-600 rounded-full"></div>
@@ -1042,7 +1042,7 @@ export default function TempChart() {
                     <div onClick={() => { handleClickGraphFridge('3') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  rounded-l-xl uppercase
-                              text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                              text-sky-400 text-[12px]  xl:text-[26px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 3
                         </div>
                         {FEEZNORMAL()}
@@ -1050,7 +1050,7 @@ export default function TempChart() {
                     <div onClick={() => { handleClickGraphFridge('2') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  uppercase
-                               text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                               text-sky-400 text-[12px]  xl:text-[26px]  2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 2
                         </div>
                         {FEEZNORMAL()}
@@ -1058,7 +1058,7 @@ export default function TempChart() {
                     <div onClick={() => { handleClickGraphFridge('1') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  rounded-r-xl uppercase
-                              text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide  '>
+                              text-sky-400 text-[12px]  xl:text-[26px]  2xl:text-3xl font-extrabold drop-shadow-md tracking-wide  '>
                             Fridge 1
                         </div>
                         {FEEZNORMAL()}
@@ -1077,21 +1077,21 @@ export default function TempChart() {
                     {/* Icons */}
                     <div onClick={() => { handleClickGraphFridge('4') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 4
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div onClick={() => { handleClickGraphFridge('5') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                        <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 5
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div onClick={() => { handleClickGraphFridge('6') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                        <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 6
                         </div>
                         {FEEZNORMAL()}
@@ -1099,14 +1099,14 @@ export default function TempChart() {
                     <div onClick={() => { handleClickGraphFridge('7') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
 
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 7
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div onClick={() => { handleClickGraphFridge('8') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 8
                         </div>
                         {FEEZNORMAL()}
@@ -1133,7 +1133,7 @@ export default function TempChart() {
                             handleClickGraphDry('1');
                         }} className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">
+                            <div className="text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide">
                                 SUPER DRY 1
                             </div>
 
@@ -1149,7 +1149,7 @@ export default function TempChart() {
                         }}
                             className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">
+                            <div className="text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide">
                                 SUPER DRY 2
                             </div>
                             <div className='mt-[20px] flex justify-start w-full'>
@@ -1170,18 +1170,18 @@ export default function TempChart() {
         <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
             <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[60%] h-auto ">
 
-                <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
+                <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 '>
 
                     {/* Group Wrapper */}
-                    <div className="col-span-3 grid grid-cols-3 gap-2 w-full group">
+                    <div className="col-span-3 grid grid-cols-3 gap-2 group">
 
                         {/* Box 1 */}
                         <div onClick={() => {
                             handleClickGraphDry('3');
                         }}
-                            className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl 
+                            className='flex flex-col items-center justify-center w-full h-auto p-[20px]  rounded-l-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">SUPER DRY 3</div>
+                            <div className="text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide ">SUPER DRY 3</div>
                             <div className='mt-[20px] flex justify-center w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
@@ -1192,9 +1192,9 @@ export default function TempChart() {
                         <div onClick={() => {
                             handleClickGraphDry('4');
                         }}
-                            className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl 
+                            className='flex flex-col items-center justify-center w-full h-auto p-[20px]  rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">SUPER DRY 4</div>
+                            <div className="text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide">SUPER DRY 4</div>
                             <div className='mt-[20px] flex justify-center w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
@@ -1204,9 +1204,9 @@ export default function TempChart() {
                         {/* Box 3 */}
                         <div onClick={() => {
                             handleClickGraphFridge('9');
-                        }} className='flex flex-col items-center justify-center w-full p-[20px]  uppercase rounded-r-xl 
+                        }} className='flex flex-col items-center justify-center w-full h-auto p-[20px]  uppercase rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div className='text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide'>Fridge 9</div>
+                            <div className='text-sky-400 text-[12px]  xl:text-[28px] 2xl:text-3xl font-extrabold drop-shadow-md tracking-wide'>Fridge 9</div>
                             <div className='mt-[20px] flex justify-center w-full'>
                                 {FEEZNORMAL()}
                             </div>
