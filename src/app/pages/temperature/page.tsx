@@ -205,10 +205,8 @@ export default function TempChart() {
                 setGraphData(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
+                setsortControl(sortedControls)
             }
-
-            setsortControl(sortedControls)
-            console.log('sorted', sortedControls);
 
         } catch (err) {
             console.log('Error fetch fail', err);
