@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
                     [Doc_Name],
                     [Area],
                     [Line],
+                     [TControl1],[TControl2],[TControl3],[TControl4],[TControl5],
                     [TMax1],  [TMax2],  [TMax3],  [TMax4],  [TMax5],  [TMax6],
                     [TMax7],  [TMax8],  [TMax9],  [TMax10], [TMax11], [TMax12],
                     [TMax13], [TMax14], [TMax15], [TMax16], [TMax17], [TMax18],

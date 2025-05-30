@@ -128,7 +128,52 @@ function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
     return points;
 }
 
-function getFilteredHControls(entry: DataSuperDry): number[] {
+function transformFridgeData(entry: DataSuperDry): GraphPoint[] {
+    const points: GraphPoint[] = [];
+    const baseDate = new Date(entry.Date);
+    const month = baseDate.getMonth() + 1;
+
+    // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
+    for (let day = 1; day <= 31; day++) {
+        const key = `TMax${day}` as keyof DataSuperDry;
+        const rawValue = entry[key];
+        const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+
+        let maxValue: number | null = null;
+        if (valStr !== '') {
+            const parsed = parseFloat(valStr);
+            if (!isNaN(parsed) && parsed !== 0) {
+                maxValue = parsed;
+            }
+        }
+
+        const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        points.push({
+            date: dateStr,
+            max: maxValue
+        });
+    }
+
+    return points;
+}
+
+
+
+function getFilteredHControlsDry(entry: DataSuperDry): number[] {
+    return [1, 2, 3, 4, 5]
+        .map(i => {
+            const key = `HControl${i}` as keyof DataSuperDry;
+            const raw = entry[key];
+            if (raw === undefined || raw === null) return NaN;
+
+            const str = (typeof raw === 'string') ? raw.trim() : String(raw);
+            const num = parseFloat(str);
+            return num;
+        })
+        .filter(num => !isNaN(num));
+}
+
+function getFilteredTControlsFridge(entry: DataFridge): number[] {
     return [1, 2, 3, 4, 5]
         .map(i => {
             const key = `HControl${i}` as keyof DataSuperDry;
@@ -238,6 +283,28 @@ export default function TempChart() {
         setGraphSuperD(true);
     };
 
+    const handleClickGraphFridge = async (loc: string) => {
+        if (Fridge1_2_3Card === true) {
+            setFridge1_2_3Card(false);
+            await fetchDataFridge(loc); // รอโหลดข้อมูล
+
+            // อัปเดต state ที่เก็บ graph data ถ้ามี เช่น setGraphData(graphData)
+        } else if (Fridge4_5_6_7_8Card === true) {
+            setFridge4_5_6_7_8(false);
+            await fetchDataFridge(loc);
+        } else if (renderSuperDry3_4Card === true) {
+            setrenderSuperDry3_4(false);
+            await fetchDataFridge(loc);
+        } else {
+            setFridge1_2_3Card(false);
+            setFridge1_2_3Card(false);
+        }
+
+        // setGraphSuperD(true);
+    };
+
+
+
     const fetchDataSuperDry = async (loc: string) => {
 
         if (!loc) {
@@ -262,7 +329,7 @@ export default function TempChart() {
                 setGraphData(GraphPointss);
                 console.log(GraphPointss);
 
-                sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
+                sortedControls = getFilteredHControlsDry(sampleEntry).sort((a, b) => a - b);
                 setsortControl(sortedControls)
             }
 
@@ -287,15 +354,15 @@ export default function TempChart() {
 
             const result = await response.json();
             console.log(result);
-            setDatatempDry(result.data);
+            setDatatempFridge(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataFridge = result.data[0];
-                const GraphPointss = transformSuperDryData(sampleEntry);
+                const GraphPointss = transformFridgeData(sampleEntry);
                 setGraphData(GraphPointss);
                 console.log(GraphPointss);
 
-                sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
+                sortedControls = getFilteredTControlsFridge(sampleEntry).sort((a, b) => a - b);
                 setsortControl(sortedControls)
             }
 
