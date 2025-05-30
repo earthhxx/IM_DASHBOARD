@@ -688,12 +688,11 @@ export default function TempChart() {
     const renderGraphRoom = () => (
         <>
             <div className='fixed bg-white z-10 w-full h-full'>
-                <div className=' flex flex-col justify-start items-center w-full h-full '>
-                    <div className='flex h-[35%]'></div>
+                <div className=' flex flex-col justify-start items-start w-full h-full '>
+                    <div className='flex h-[25%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
-                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
-                ring-2 ring-blue-100 ring-opacity-80 scale-105"
+                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
                             onClick={() => setGraphSFridge(false)}
                         >
                             กลับไปดูแผนที่
@@ -702,10 +701,10 @@ export default function TempChart() {
                             <div className='flex text-4xl text-white text-center font-kanit '></div>
                         </div>
                     </div>
-                    <div className='flex h-full w-full'>
+                    <div className='flex h-[70%] w-full'>
                         <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 '>
 
-                            <div className="overflow-x-auto w-full">
+                            <div className=" w-full h-full">
                                 <div className='flex justify-end text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ</div>
                                 <div className="w-full h-[45%]">
                                     <ResponsiveContainer width="100%" height="100%" >
