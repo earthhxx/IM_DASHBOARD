@@ -670,21 +670,21 @@ export default function TempChart() {
                     <div onClick={() => { setState('location') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  rounded-l-xl uppercase
-                               transition-all duration-300'>
+                              text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 3
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  uppercase
-                               transition-all duration-300'>
+                               text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 2
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  rounded-r-xl uppercase
-                               transition-all duration-300 '>
+                              text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide  '>
                             Fridge 1
                         </div>
                         {FEEZNORMAL()}
@@ -702,32 +702,32 @@ export default function TempChart() {
                 <div className='font-bold text-2xl grid grid-cols-5 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase rounded-l-2xl transition-all duration-300 '>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 4
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase transition-all duration-300 '>
+                        <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 5
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase transition-all duration-300 '>
+                        <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 6
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
 
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase transition-all duration-300 '>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 7
                         </div>
                         {FEEZNORMAL()}
                     </div>
                     <div className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                        <div className='flex items-center justify-center w-full p-[20px]  uppercase rounded-r-2xl transition-all duration-300 '>
+                        <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 8
                         </div>
                         {FEEZNORMAL()}
@@ -754,7 +754,10 @@ export default function TempChart() {
                             handleClickGraphDry('1');
                         }} className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div>SUPER DRY 1</div>
+                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">
+                                SUPER DRY 1
+                            </div>
+
                             <div className='mt-[20px] flex justify-end w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
@@ -767,7 +770,9 @@ export default function TempChart() {
                         }}
                             className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div>SUPER DRY 2</div>
+                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">
+                                SUPER DRY 2
+                            </div>
                             <div className='mt-[20px] flex justify-start w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
@@ -797,7 +802,7 @@ export default function TempChart() {
                         }}
                             className='flex flex-col items-center justify-center w-full p-[20px]  rounded-l-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div>SUPER DRY 3</div>
+                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">SUPER DRY 3</div>
                             <div className='mt-[20px] flex justify-center w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
@@ -810,7 +815,7 @@ export default function TempChart() {
                         }}
                             className='flex flex-col items-center justify-center w-full p-[20px]  rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div>SUPER DRY 4</div>
+                            <div className="text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide">SUPER DRY 4</div>
                             <div className='mt-[20px] flex justify-center w-full'>
                                 {SUPERDRYR()}
                                 {SUPERDRYL()}
@@ -820,7 +825,7 @@ export default function TempChart() {
                         {/* Box 3 */}
                         <div className='flex flex-col items-center justify-center w-full p-[20px]  uppercase rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
-                            <div>Fridge 9</div>
+                            <div className='text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide'>Fridge 9</div>
                             <div className='mt-[20px] flex justify-center w-full'>
                                 {FEEZNORMAL()}
                             </div>
