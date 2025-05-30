@@ -116,7 +116,7 @@ export default function TempChart() {
     const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
 
     //datatemperature Superdry
-    const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
+    const [DatatempDry, setDatatempDry] = useState<DataSuperDry[]>([]);
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
     let sortedControls: number[] = [];
     const [sortedControl, setsortControl] = useState<number[]>([]);
@@ -125,6 +125,9 @@ export default function TempChart() {
         ...graphData,                       // ✅ ใส่ข้อมูลจริงเข้า array
         { date: '', max: null, min: null }, // Padding ด้านหลัง
     ];
+
+
+    //datatemperature Fridge
 
 
 
@@ -204,7 +207,40 @@ export default function TempChart() {
 
             const result = await response.json();
             console.log(result);
-            setDatatemp(result.data);
+            setDatatempDry(result.data);
+
+            if (Array.isArray(result.data) && result.data.length > 0) {
+                const sampleEntry: DataSuperDry = result.data[0];
+                const GraphPointss = transformSuperDryData(sampleEntry);
+                setGraphData(GraphPointss);
+                console.log(GraphPointss);
+
+                sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
+                setsortControl(sortedControls)
+            }
+
+        } catch (err) {
+            console.log('Error fetch fail', err);
+        }
+    };
+
+    const fetchDataFridge = async (loc: string) => {
+
+        if (!loc) {
+            console.error("no location");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/temperature/fridge?location=${loc}`);
+            if (!response.ok) {
+                console.log('response fail');
+                return;
+            }
+
+            const result = await response.json();
+            console.log(result);
+            setDatatempDry(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataSuperDry = result.data[0];
@@ -312,12 +348,12 @@ export default function TempChart() {
                             กลับไปดูแผนที่
                         </button>
                         <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
-                            <div className='flex text-4xl text-white text-center font-kanit '>{Datatemp[0].Line}</div>
+                            <div className='flex text-4xl text-white text-center font-kanit '>{DatatempDry[0].Line}</div>
                         </div>
                     </div>
                     <div className='flex h-full w-full'>
                         <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
-                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {Datatemp?.[0]?.Date ? new Date(Datatemp[0].Date).toISOString().split("T")[0] : '-'}</div>
+                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {DatatempDry?.[0]?.Date ? new Date(DatatempDry[0].Date).toISOString().split("T")[0] : '-'}</div>
                             <div className="overflow-x-auto">
                                 <div className="min-w-[1800px] h-[400px]">
                                     {graphData.length > 0 && (
