@@ -311,7 +311,7 @@ export default function TempChart() {
                         >
                             กลับไปดูแผนที่
                         </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-full bg-black/70 p-2 uppercase'>
+                        <div className='flex w-[20%] justify-center items-center rounded-full bg-blue-800/70 p-2 uppercase'>
                             <div className='flex text-4xl text-white text-center font-kanit '>{Datatemp[0].Line}</div>
                         </div>
                     </div>
