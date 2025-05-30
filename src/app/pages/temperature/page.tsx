@@ -52,7 +52,6 @@ type DataSuperDry = {
 type GraphPoint = {
     date: string | null;
     max: number | null;
-    min: number | null;
 };
 
 
@@ -78,12 +77,11 @@ function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
         const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         points.push({
             date: dateStr,
-            max: maxValue,
-            min: maxValue !== null ? maxValue - 1.5 : null,
+            max: maxValue
         });
     }
 
-    return  points;
+    return points;
 }
 
 function getFilteredHControls(entry: DataSuperDry): number[] {
@@ -122,6 +120,8 @@ export default function TempChart() {
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
     let sortedControls: number[] = [];
     const [sortedControl, setsortControl] = useState<number[]>([]);
+
+
 
 
 
@@ -203,6 +203,7 @@ export default function TempChart() {
                 const sampleEntry: DataSuperDry = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
                 setGraphData(GraphPointss);
+                console.log(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
                 setsortControl(sortedControls)
@@ -268,6 +269,27 @@ export default function TempChart() {
     );
 
 
+    const divtempsuperD = () => (
+
+        <>
+            <div className="grid grid-cols-11 gap-4 p-4 w-full ">
+                {graphData.map((point, index) => (
+                    <div
+                        key={index}
+                        className="p-4 w-[100%] border rounded-xl shadow-sm bg-white hover:shadow-md transition-all"
+                    >
+                        <div className="text-sm text-gray-500">{point.date}</div>
+                        <div className="text-lg font-semibold text-blue-600">
+                            {point.max !== null ? `${point.max} °C` : 'ไม่มีข้อมูล'}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+        </>
+
+    );
+
 
     const renderGraphSuperDry = () => (
         <>
@@ -285,44 +307,48 @@ export default function TempChart() {
                         <div className='flex w-[20%] justify-center items-center rounded-full bg-black/70 p-2 uppercase'>
                             <div className='flex text-4xl text-white text-center font-kanit '>{Datatemp[0].Line}</div>
                         </div>
-
-
                     </div>
                     <div className='flex h-full w-full'>
-                        <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 mt-5'>
-                            <div className='flex h-[10%]'></div>
+                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 mt-5'>
                             <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {Datatemp?.[0]?.Date ? new Date(Datatemp[0].Date).toISOString().split("T")[0] : '-'}</div>
+                            <div className="overflow-x-auto">
+                                <div className="min-w-[1800px] h-[400px]">
+                                    {graphData.length > 0 && (
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <LineChart data={graphData}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis
+                                                    dataKey="date"
+                                                    interval={0}
+                                                    tick={{ fontSize: 10 }}
+                                                    angle={-45}
+                                                    padding={{ left: 50, right: 50 }}
+                                                />
 
-                            <div className="w-[100%] h-[60%] backdrop-blur-xl">
-                                {graphData.length > 0 && (
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={graphData}>
-                                            <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis dataKey="date" />
-
-                                            <YAxis
-                                                label={{ value: '°C', position: 'insideLeft' }}
-                                                ticks={[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]} // <<-- บังคับแกน Y โชว์ค่าตามนี้
-                                                interval={0}
-                                                domain={[-1, 11]} 
-                                            />
-
-                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
-                                            <ReferenceLine y={sortedControl[1]} stroke="yellow" strokeDasharray="3 3" />
-                                            <ReferenceLine y={sortedControl[2]} stroke="red" strokeDasharray="3 3" />
-                                            <ReferenceLine y={sortedControl[3]} stroke="yellow" strokeDasharray="3 3" />
-                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="3 3" />
-
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
+                                                <YAxis
+                                                    label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                    ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                                    interval={0}
+                                                    domain={[-1, 11]}
+                                                />
 
 
-                                        </LineChart>
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
+                                                <ReferenceLine y={sortedControl[1]} stroke="yellow" strokeDasharray="3 3" />
+                                                <ReferenceLine y={sortedControl[2]} stroke="red" strokeDasharray="3 3" />
+                                                <ReferenceLine y={sortedControl[3]} stroke="yellow" strokeDasharray="3 3" />
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="3 3" />
 
-                                    </ResponsiveContainer>
-                                )}
+                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                                <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
+
+
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    )}
+                                </div>
                             </div>
-                            <div className='flex h-[30%]'></div>
+                            {divtempsuperD()}
                         </div>
                     </div>
                 </div>
