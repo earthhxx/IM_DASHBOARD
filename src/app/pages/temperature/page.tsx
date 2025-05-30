@@ -1069,7 +1069,8 @@ export default function TempChart() {
                 />
 
 
-                <div onClick={() => setState('location')} className="absolute bottom-[4.5%] left-[35%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('SMT-19') }}
+                    className="absolute bottom-[4.5%] left-[35%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
             </div>
@@ -1086,18 +1087,20 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div onClick={() => { handleClickGraphRoom('Consumer') }}
+            <div onClick={() => { handleClickGraphRoom('Automotive') }}
                 className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 2*/}
-            <div className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
+            <div onClick={() => { handleClickGraphRoom('Consumer') }}
+                className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 3*/}
-            <div className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
+            <div onClick={() => { handleClickGraphRoom('IQA') }}
+                className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
