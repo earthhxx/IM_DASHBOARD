@@ -331,7 +331,7 @@ export default function TempChart() {
                                                 <XAxis
                                                     dataKey="date"
                                                     interval={0}
-                                                    tick={{ fontSize: 10 }}
+                                                    tick={{ fontSize: 14 }}
                                                     angle={-45}
 
                                                 />
@@ -344,17 +344,17 @@ export default function TempChart() {
                                                 />
 
 
-                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
-                                                <ReferenceLine y={sortedControl[1]} stroke="yellow" strokeDasharray="3 3" />
-                                                <ReferenceLine y={sortedControl[2]} stroke="red" strokeDasharray="3 3" />
-                                                <ReferenceLine y={sortedControl[3]} stroke="yellow" strokeDasharray="3 3" />
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="3 3" />
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" />
+                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" />
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" />
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" />
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" />
 
                                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                                 <Line
                                                     type="monotone"
                                                     dataKey="max"
-                                                    stroke="#2e7d32"
+                                                    stroke="#0369a1"
                                                     strokeWidth={3}
                                                     dot={{ r: 3 }}
                                                     activeDot={{ r: 6 }}
