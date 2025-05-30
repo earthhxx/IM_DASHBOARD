@@ -1046,11 +1046,13 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => setState('location')} className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('Qa Automotive2') }}
+                className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
-                <div onClick={() => setState('location')} className="absolute bottom-[4.5%] right-[30%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('Qa Automotive2') }}
+                className="absolute bottom-[4.5%] right-[30%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
