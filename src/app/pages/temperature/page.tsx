@@ -120,6 +120,13 @@ export default function TempChart() {
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
     let sortedControls: number[] = [];
     const [sortedControl, setsortControl] = useState<number[]>([]);
+    const paddedGraphData = [
+        { date: '', max: null, min: null }, // Padding ด้านหน้า
+        ...graphData,                       // ✅ ใส่ข้อมูลจริงเข้า array
+        { date: '', max: null, min: null }, // Padding ด้านหลัง
+    ];
+
+
 
 
 
@@ -309,20 +316,24 @@ export default function TempChart() {
                         </div>
                     </div>
                     <div className='flex h-full w-full'>
-                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 mt-5'>
+                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
                             <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {Datatemp?.[0]?.Date ? new Date(Datatemp[0].Date).toISOString().split("T")[0] : '-'}</div>
                             <div className="overflow-x-auto">
                                 <div className="min-w-[1800px] h-[400px]">
                                     {graphData.length > 0 && (
                                         <ResponsiveContainer width="100%" height="100%">
-                                            <LineChart data={graphData}>
-                                                <CartesianGrid strokeDasharray="3 3" />
+                                            <LineChart data={paddedGraphData}>
+                                                <CartesianGrid
+                                                    stroke="#999999"         // เปลี่ยนสีเส้น
+                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
+                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
+                                                />
                                                 <XAxis
                                                     dataKey="date"
                                                     interval={0}
                                                     tick={{ fontSize: 10 }}
                                                     angle={-45}
-                                                    padding={{ left: 50, right: 50 }}
+
                                                 />
 
                                                 <YAxis
@@ -340,7 +351,15 @@ export default function TempChart() {
                                                 <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="3 3" />
 
                                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                                <Line type="monotone" dataKey="max" stroke="#82ca9d" strokeWidth={2} />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="max"
+                                                    stroke="#2e7d32"
+                                                    strokeWidth={3}
+                                                    dot={{ r: 3 }}
+                                                    activeDot={{ r: 6 }}
+                                                />
+
 
 
                                             </LineChart>
