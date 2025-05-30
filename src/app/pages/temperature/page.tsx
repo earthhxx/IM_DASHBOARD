@@ -82,7 +82,7 @@ function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
             min: maxValue !== null ? maxValue - 1.5 : null,
         });
     }
-    
+
     return  points;
 }
 
@@ -214,8 +214,6 @@ export default function TempChart() {
             console.log('Error fetch fail', err);
         }
     };
-
-
 
 
     useEffect(() => {
