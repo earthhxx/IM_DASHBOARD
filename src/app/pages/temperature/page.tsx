@@ -207,7 +207,7 @@ export default function TempChart() {
 
     const [GraphSuperD, setGraphSuperD] = useState(false);
     const [GraphFridge, setGraphSFridge] = useState(false);
-
+    const [GraphRoom, setGraphRoom] = useState(false);
 
     //group data
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
@@ -501,11 +501,11 @@ export default function TempChart() {
                                                 />
 
 
-                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
                                                 <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5}/>
-                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5}/>
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
 
                                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                                 <Line
@@ -556,7 +556,7 @@ export default function TempChart() {
                                 <div className="min-w-[1800px] h-[400px] p-4">
                                     {graphData.length > 0 && (
                                         <ResponsiveContainer width="100%" height="100%" >
-                                            <LineChart  data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+                                            <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
                                                 <CartesianGrid
                                                     stroke="#999999"         // เปลี่ยนสีเส้น
                                                     strokeWidth={0.2}       // เพิ่มความหนาเส้น
@@ -584,10 +584,10 @@ export default function TempChart() {
 
 
                                                 <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5}/>
-                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10"strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5}/>
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
 
                                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                                 <Line
@@ -606,6 +606,130 @@ export default function TempChart() {
 
                                         </ResponsiveContainer>
                                     )}
+                                </div>
+                            </div>
+                            {/* {divtempsuperD()} */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+
+    const renderGraphRoom = () => (
+        <>
+            <div className='fixed bg-white z-10 w-full h-full'>
+                <div className=' flex flex-col justify-start items-center w-full h-full '>
+                    <div className='flex h-[35%]'></div>
+                    <div className='flex flex-row justify-between items-center w-full px-10 '>
+                        <button
+                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
+                ring-2 ring-blue-100 ring-opacity-80 scale-105"
+                            onClick={() => setGraphSFridge(false)}
+                        >
+                            กลับไปดูแผนที่
+                        </button>
+                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
+                            <div className='flex text-4xl text-white text-center font-kanit '></div>
+                        </div>
+                    </div>
+                    <div className='flex h-full w-full'>
+                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
+                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ</div>
+                            <div className="overflow-x-auto">
+                                <div className="min-w-[1800px] h-[400px]">
+                                    <ResponsiveContainer width="100%" height="100%" >
+                                        <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+                                            <CartesianGrid
+                                                stroke="#999999"         // เปลี่ยนสีเส้น
+                                                strokeWidth={0.2}       // เพิ่มความหนาเส้น
+                                                strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
+                                            />
+                                            <XAxis
+                                                dataKey="date"
+                                                interval={0}
+                                                tick={{ fontSize: 15 }}
+                                                label={{
+                                                    value: 'MONTH-DATE',
+                                                    position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
+                                                    dy: 20,                    // เลื่อน label ลงล่างอีกนิด
+                                                    fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
+                                                }}
+
+                                            />
+
+                                            <YAxis
+                                                label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                                interval={0}
+                                                domain={[-1, 11]}
+                                            />
+
+
+                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+
+                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                            <Line
+                                                type="monotone"
+                                                dataKey="max"
+                                                stroke="#0369a1"
+                                                strokeWidth={3}
+                                                dot={{ r: 3 }}
+                                                activeDot={{ r: 6 }}
+                                            />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                                 <div className="min-w-[1800px] h-[400px]">
+                                        <ResponsiveContainer width="100%" height="100%" >
+                                            <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+                                                <CartesianGrid
+                                                    stroke="#999999"         // เปลี่ยนสีเส้น
+                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
+                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
+                                                />
+                                                <XAxis
+                                                    dataKey="date"
+                                                    interval={0}
+                                                    tick={{ fontSize: 15 }}
+                                                    label={{
+                                                        value: 'MONTH-DATE',
+                                                        position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
+                                                        dy: 20,                    // เลื่อน label ลงล่างอีกนิด
+                                                        fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
+                                                    }}
+
+                                                />
+
+                                                <YAxis
+                                                    label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                    ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                                    interval={0}
+                                                    domain={[-1, 11]}
+                                                />
+
+
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+
+                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="max"
+                                                    stroke="#0369a1"
+                                                    strokeWidth={3}
+                                                    dot={{ r: 3 }}
+                                                    activeDot={{ r: 6 }}
+                                                />
+                                            </LineChart>
+                                        </ResponsiveContainer>
                                 </div>
                             </div>
                             {/* {divtempsuperD()} */}
@@ -736,7 +860,8 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
+            <div onClick={() => { setGraphRoom(true) }}
+                className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
@@ -1124,6 +1249,7 @@ export default function TempChart() {
                 </div>
             </div>
             {/* renderALLCard */}
+            {GraphRoom && renderGraphRoom()}
             {GraphSuperD && renderGraphSuperDry()}
             {GraphFridge && renderGraphFridge()}
             {Fridge1_2_3Card && renderFridge1_2_3()}
