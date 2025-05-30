@@ -323,7 +323,7 @@ export default function TempChart() {
 
             const result = await response.json();
             console.log(result);
-            setDatatempFridge(result.data);
+            setDatatempDry(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataSuperDry = result.data[0];
@@ -546,7 +546,7 @@ export default function TempChart() {
                     </div>
                     <div className='flex h-full w-full'>
                         <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
-                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {DatatempFridge?.[0]?.Date ? new Date(DatatempFridge[0].Date).toISOString().split("T")[0] : '-'}</div>
+                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ {DatatempFridge?.[0]?.Date ? new Date(DatatempFridge[0].Date).toISOString().split("T")[0] : '-'}</div>
                             <div className="overflow-x-auto">
                                 <div className="min-w-[1800px] h-[400px]">
                                     {graphData.length > 0 && (
