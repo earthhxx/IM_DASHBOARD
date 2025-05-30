@@ -49,6 +49,50 @@ type DataSuperDry = {
     HMax31: string;
 };
 
+type DataFridge = {
+    ID: number;
+    Date: string;
+    Doc_Name: string;
+    Area: string;
+    Line: string;
+    HControl1: string;
+    HControl2: string;
+    HControl3: string;
+    HControl4: string;
+    HControl5: string;
+    HMax1: string;
+    HMax2: string;
+    HMax3: string;
+    HMax4: string;
+    HMax5: string;
+    HMax6: string;
+    HMax7: string;
+    HMax8: string;
+    HMax9: string;
+    HMax10: string;
+    HMax11: string;
+    HMax12: string;
+    HMax13: string;
+    HMax14: string;
+    HMax15: string;
+    HMax16: string;
+    HMax17: string;
+    HMax18: string;
+    HMax19: string;
+    HMax20: string;
+    HMax21: string;
+    HMax22: string;
+    HMax23: string;
+    HMax24: string;
+    HMax25: string;
+    HMax26: string;
+    HMax27: string;
+    HMax28: string;
+    HMax29: string;
+    HMax30: string;
+    HMax31: string;
+};
+
 type GraphPoint = {
     date: string | null;
     max: number | null;
@@ -115,28 +159,23 @@ export default function TempChart() {
     const cardSuper1_2Ref = React.useRef<HTMLDivElement>(null);
     const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
 
-    //datatemperature Superdry
-    const [DatatempDry, setDatatempDry] = useState<DataSuperDry[]>([]);
-    const [graphDataDry, setGraphDataDry] = useState<GraphPoint[]>([]);
-    let sortedControls: number[] = [];
-    const [sortedControl, setsortControl] = useState<number[]>([]);
+
+
+    //group data
+    const [graphData, setGraphData] = useState<GraphPoint[]>([]);
     const paddedGraphData = [
         { date: '', max: null, min: null }, // Padding ด้านหน้า
-        ...graphDataDry,                       // ✅ ใส่ข้อมูลจริงเข้า array
+        ...graphData,                       // ✅ ใส่ข้อมูลจริงเข้า array
         { date: '', max: null, min: null }, // Padding ด้านหลัง
     ];
+    let sortedControls: number[] = [];
+    const [sortedControl, setsortControl] = useState<number[]>([]);
 
+    //datatemperature Superdry
+    const [DatatempDry, setDatatempDry] = useState<DataSuperDry[]>([]);
 
     //datatemperature Fridge
-    const [DatatempFridge, setDatatempFridge] = useState<DataSuperDry[]>([]);
-    const [graphDataFridge, setGraphDataFridge] = useState<GraphPoint[]>([]);
-    let sortedControlsFridge: number[] = [];
-    const [sortedControlFridge, setsortControlFridge] = useState<number[]>([]);
-    const paddedGraphDataFridge = [
-        { date: '', max: null, min: null }, // Padding ด้านหน้า
-        ...graphDataFridge,                       // ✅ ใส่ข้อมูลจริงเข้า array
-        { date: '', max: null, min: null }, // Padding ด้านหลัง
-    ];
+    const [DatatempFridge, setDatatempFridge] = useState<DataFridge[]>([]);
 
 
 
@@ -215,12 +254,12 @@ export default function TempChart() {
 
             const result = await response.json();
             console.log(result);
-            setDatatempDry(result.data);
+            setDatatempFridge(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
-                const sampleEntry: DataSuperDry = result.data[0];
+                const sampleEntry: DataFridge = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
-                setGraphDataDry(GraphPointss);
+                setGraphData(GraphPointss);
                 console.log(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
@@ -253,7 +292,7 @@ export default function TempChart() {
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataSuperDry = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
-                setGraphDataFridge(GraphPointss);
+                setGraphData(GraphPointss);
                 console.log(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
@@ -324,7 +363,7 @@ export default function TempChart() {
 
         <>
             <div className="grid grid-cols-11 gap-4 p-4 w-full ">
-                {graphDataDry.map((point, index) => (
+                {graphData.map((point, index) => (
                     <div
                         key={index}
                         className="p-4 w-[100%] border rounded-xl shadow-sm bg-white hover:shadow-md transition-all"
@@ -364,7 +403,7 @@ export default function TempChart() {
                             <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {DatatempDry?.[0]?.Date ? new Date(DatatempDry[0].Date).toISOString().split("T")[0] : '-'}</div>
                             <div className="overflow-x-auto">
                                 <div className="min-w-[1800px] h-[400px]">
-                                    {graphDataDry.length > 0 && (
+                                    {graphData.length > 0 && (
                                         <ResponsiveContainer width="100%" height="100%">
                                             <LineChart data={paddedGraphData}>
                                                 <CartesianGrid
