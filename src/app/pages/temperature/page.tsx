@@ -984,10 +984,12 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => setState('location')} className="absolute top-[6%] right-[41%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('SMT-13') }}
+                className="absolute top-[6%] right-[41%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick={() => setState('location')} className="absolute bottom-[4%] right-[43.5%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('SMT-12') }}
+                className="absolute bottom-[4%] right-[43.5%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
@@ -1005,10 +1007,12 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => setState('location')} className="absolute top-[7%] right-[43%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('Laser') }}
+                className="absolute top-[7%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick={() => setState('location')} className="absolute bottom-[5%] right-[43%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('SMT-6') }}
+                className="absolute bottom-[5%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
@@ -1026,10 +1030,12 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => setState('location')} className="absolute top-[6%] right-[60%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('After') }}
+                className="absolute top-[6%] right-[60%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick={() => setState('location')} className="absolute bottom-[4%] left-[30%] w-12 h-12 z-10">
+                <div onClick={() => { handleClickGraphRoom('Qa Consumer') }}
+                 className="absolute bottom-[4%] left-[30%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
             </div>
@@ -1046,7 +1052,7 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => { handleClickGraphRoom('Qa Automotive2') }}
+                <div onClick={() => { handleClickGraphRoom('Qa Automotive1') }}
                 className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
