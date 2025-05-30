@@ -94,6 +94,37 @@ type DataFridge = {
     TMax31: string;
 };
 
+export interface DataRoom {
+    ID: number;
+    Date: string; // หรือใช้ Date ก็ได้ถ้า parse แล้ว
+    Doc_Name: string;
+    Area: string;
+    Line: string;
+
+    // Temperature Controls
+    TControl1: number | null;
+    TControl2: number | null;
+    TControl3: number | null;
+    TControl4: number | null;
+    TControl5: number | null;
+
+    // Tmax และ Tmin (1 - 31)
+    [key: `TMax${number}`]: number | null;
+    [key: `TMin${number}`]: number | null;
+
+    // Humidity Controls
+    HControl1: number | null;
+    HControl2: number | null;
+    HControl3: number | null;
+    HControl4: number | null;
+    HControl5: number | null;
+
+    // HMax และ HMin (1 - 31)
+    [key: `HMax${number}`]: number | null;
+    [key: `HMin${number}`]: number | null;
+}
+
+
 type GraphPoint = {
     date: string | null;
     max: number | null;
@@ -227,6 +258,9 @@ export default function TempChart() {
     //datatemperature Fridge
     const [DatatempFridge, setDatatempFridge] = useState<DataFridge[]>([]);
 
+    //datatemperature Room
+    const [DatatempRoom, setDatatempRoom] = useState<DataRoom[]>([]);
+
 
 
 
@@ -308,6 +342,39 @@ export default function TempChart() {
         setGraphSFridge(true);
     };
 
+
+    const fetchDataRoom = async (loc: string) => {
+
+        if (!loc) {
+            console.error("no location");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/temperature/location?location=${loc}`);
+            if (!response.ok) {
+                console.log('response fail');
+                return;
+            }
+
+            const result = await response.json();
+            console.log(result);
+            setDatatempDry(result.data);
+
+            if (Array.isArray(result.data) && result.data.length > 0) {
+                const sampleEntry: DataSuperDry = result.data[0];
+                const GraphPointss = transformSuperDryData(sampleEntry);
+                setGraphData(GraphPointss);
+                console.log(GraphPointss);
+
+                sortedControls = getFilteredHControlsDry(sampleEntry).sort((a, b) => a - b);
+                setsortControl(sortedControls)
+            }
+
+        } catch (err) {
+            console.log('Error fetch fail', err);
+        }
+    };
 
 
     const fetchDataSuperDry = async (loc: string) => {
