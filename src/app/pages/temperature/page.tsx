@@ -453,8 +453,8 @@ export default function TempChart() {
     const renderGraphSuperDry = () => (
         <>
             <div className='fixed bg-white z-10 w-full h-full'>
-                <div className=' flex flex-col justify-start items-center w-full h-full mt-6'>
-                    <div className='flex h-[25%]'></div>
+                <div className=' flex flex-col justify-start items-center w-full h-full '>
+                    <div className='flex h-[35%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
                             className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
@@ -483,13 +483,14 @@ export default function TempChart() {
                                                 <XAxis
                                                     dataKey="date"
                                                     interval={0}
-                                                    tick={{ fontSize: 14 }}
-                                                    angle={-45}
+                                                    tick={{ fontSize: 15 }}
+                                                    
+                                                    // angle={-45}
 
                                                 />
 
                                                 <YAxis
-                                                    label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                    label={{ value: '°H', angle: -90, position: 'outsideLeft', offset: 0 }}
                                                     ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
                                                     interval={0}
                                                     domain={[-1, 11]}
@@ -519,7 +520,7 @@ export default function TempChart() {
                                     )}
                                 </div>
                             </div>
-                            {divtempsuperD()}
+                            {/* {divtempsuperD()} */}
                         </div>
                     </div>
                 </div>
@@ -530,8 +531,8 @@ export default function TempChart() {
     const renderGraphFridge = () => (
         <>
             <div className='fixed bg-white z-10 w-full h-full'>
-                <div className=' flex flex-col justify-start items-center w-full h-full mt-6'>
-                    <div className='flex h-[25%]'></div>
+                <div className=' flex flex-col justify-start items-center w-full h-full '>
+                    <div className='flex h-[35%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
                             className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
@@ -560,8 +561,9 @@ export default function TempChart() {
                                                 <XAxis
                                                     dataKey="date"
                                                     interval={0}
-                                                    tick={{ fontSize: 14 }}
-                                                    angle={-45}
+                                                    tick={{ fontSize: 15 }}
+                                                  
+                                                    // angle={-45}
 
                                                 />
 
@@ -596,7 +598,7 @@ export default function TempChart() {
                                     )}
                                 </div>
                             </div>
-                            {divtempsuperD()}
+                            {/* {divtempsuperD()} */}
                         </div>
                     </div>
                 </div>
