@@ -2,8 +2,9 @@
 'use client';
 import React, { useState, Suspense, useEffect, use } from 'react';
 import ParamListener from '../../components/UseParams';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine, Legend } from 'recharts';
 import { CiTempHigh } from "react-icons/ci"; // commented out originally
+
 
 type DataSuperDry = {
     ID: number;
@@ -474,7 +475,7 @@ export default function TempChart() {
                                 <div className="min-w-[1800px] h-[400px]">
                                     {graphData.length > 0 && (
                                         <ResponsiveContainer width="100%" height="100%">
-                                            <LineChart data={paddedGraphData}>
+                                            <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
                                                 <CartesianGrid
                                                     stroke="#999999"         // เปลี่ยนสีเส้น
                                                     strokeWidth={0.2}       // เพิ่มความหนาเส้น
@@ -484,9 +485,12 @@ export default function TempChart() {
                                                     dataKey="date"
                                                     interval={0}
                                                     tick={{ fontSize: 15 }}
-                                                    
-                                                    // angle={-45}
-
+                                                    label={{
+                                                        value: 'MONTH-DATE',
+                                                        position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
+                                                        dy: 20,                    // เลื่อน label ลงล่างอีกนิด
+                                                        fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
+                                                    }}
                                                 />
 
                                                 <YAxis
@@ -497,11 +501,11 @@ export default function TempChart() {
                                                 />
 
 
-                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" />
-                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" />
-                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" />
-                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" />
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" />
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5}/>
 
                                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                                 <Line
@@ -549,10 +553,10 @@ export default function TempChart() {
                         <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
                             <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ {DatatempFridge?.[0]?.Date ? new Date(DatatempFridge[0].Date).toISOString().split("T")[0] : '-'}</div>
                             <div className="overflow-x-auto">
-                                <div className="min-w-[1800px] h-[400px]">
+                                <div className="min-w-[1800px] h-[400px] p-4">
                                     {graphData.length > 0 && (
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <LineChart data={paddedGraphData}>
+                                        <ResponsiveContainer width="100%" height="100%" >
+                                            <LineChart  data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
                                                 <CartesianGrid
                                                     stroke="#999999"         // เปลี่ยนสีเส้น
                                                     strokeWidth={0.2}       // เพิ่มความหนาเส้น
@@ -562,8 +566,12 @@ export default function TempChart() {
                                                     dataKey="date"
                                                     interval={0}
                                                     tick={{ fontSize: 15 }}
-                                                  
-                                                    // angle={-45}
+                                                    label={{
+                                                        value: 'MONTH-DATE',
+                                                        position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
+                                                        dy: 20,                    // เลื่อน label ลงล่างอีกนิด
+                                                        fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
+                                                    }}
 
                                                 />
 
@@ -575,11 +583,11 @@ export default function TempChart() {
                                                 />
 
 
-                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" />
-                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" />
-                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" />
-                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" />
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" />
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10"strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5}/>
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5}/>
 
                                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                                 <Line
@@ -593,7 +601,9 @@ export default function TempChart() {
 
 
 
+
                                             </LineChart>
+
                                         </ResponsiveContainer>
                                     )}
                                 </div>
@@ -897,7 +907,7 @@ export default function TempChart() {
 
     const renderFridge1_2_3 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
-            <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%]">
+            <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-auto">
                 <div className='font-bold text-2xl grid grid-cols-3 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
                     <div onClick={() => { handleClickGraphFridge('3') }}
@@ -933,7 +943,7 @@ export default function TempChart() {
 
     const renderFridge4_5_6_7_8 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
-            <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%]">
+            <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-auto">
                 <div className='font-bold text-2xl grid grid-cols-5 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
                     <div onClick={() => { handleClickGraphFridge('4') }}
@@ -983,7 +993,7 @@ export default function TempChart() {
 
     const renderSuperDry1_2 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
-            <div ref={cardSuper1_2Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
+            <div ref={cardSuper1_2Ref} className="bg-black/50 rounded-2xl w-[40%] h-auto ">
                 <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
                     {/* Group Wrapper */}
@@ -1029,7 +1039,7 @@ export default function TempChart() {
 
     const renderSuperDry3_4 = () => (
         <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
-            <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[60%] h-[50%] ">
+            <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[60%] h-auto ">
 
                 <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
