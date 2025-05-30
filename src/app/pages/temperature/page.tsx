@@ -673,7 +673,7 @@ export default function TempChart() {
                     <div className='flex h-[35%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
-                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
+                            className="flex w-[8%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
                             onClick={() => setGraphSuperD(false)}
                         >
@@ -755,7 +755,7 @@ export default function TempChart() {
                     <div className='flex h-[35%]'></div>
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
-                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
+                            className="flex w-[8%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
                 ring-2 ring-blue-100 ring-opacity-80 scale-105"
                             onClick={() => setGraphSFridge(false)}
                         >
@@ -840,13 +840,13 @@ export default function TempChart() {
                         <div className='flex h-[25%]'></div>
                         <div className='flex flex-row justify-between items-center w-full px-10 '>
                             <button
-                                className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
+                                className="flex w-[8%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
                                 onClick={() => setGraphRoom(false)}
                             >
                                 กลับไปดูแผนที่
                             </button>
 
-                            <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-sky-500 via-blue-700 to-blue-900 p-2 uppercase'>
+                            <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-sky-600 via-blue-700 to-blue-900 p-2 uppercase'>
                                 <div className='flex text-4xl text-white text-center font-kanit '>{DatatempRoom[0].Line} </div>
 
                             </div>
@@ -856,7 +856,7 @@ export default function TempChart() {
 
                                 <div className=" w-full h-full">
 
-                                    <div className='flex justify-center text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ </div>
+                                    <div className='absolute justify-center text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ </div>
                                     <div className="w-full h-[45%]">
                                         <ResponsiveContainer width="100%" height="100%" >
                                             <LineChart data={paddedGraphDataT} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
@@ -906,7 +906,7 @@ export default function TempChart() {
                                             </LineChart>
                                         </ResponsiveContainer>
                                     </div>
-                                    <div className='flex justify-center text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น</div>
+                                    <div className='absolute justify-center text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น</div>
                                     <div className="w-full h-[45%]">
                                         <ResponsiveContainer width="100%" height="100%" >
                                             <LineChart data={paddedGraphDataH} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
