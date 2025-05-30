@@ -311,7 +311,7 @@ export default function TempChart() {
                         >
                             กลับไปดูแผนที่
                         </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-full bg-blue-800/70 p-2 uppercase'>
+                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
                             <div className='flex text-4xl text-white text-center font-kanit '>{Datatemp[0].Line}</div>
                         </div>
                     </div>
@@ -663,7 +663,7 @@ export default function TempChart() {
     );
 
     const renderFridge1_2_3 = () => (
-        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+        <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
             <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%]">
                 <div className='font-bold text-2xl grid grid-cols-3 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
@@ -697,7 +697,7 @@ export default function TempChart() {
 
 
     const renderFridge4_5_6_7_8 = () => (
-        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+        <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
             <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%]">
                 <div className='font-bold text-2xl grid grid-cols-5 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
@@ -742,7 +742,7 @@ export default function TempChart() {
 
 
     const renderSuperDry1_2 = () => (
-        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+        <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
             <div ref={cardSuper1_2Ref} className="bg-black/50 rounded-2xl w-[40%] h-[50%] ">
                 <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
 
@@ -783,7 +783,7 @@ export default function TempChart() {
 
 
     const renderSuperDry3_4 = () => (
-        <div className='fixed flex w-full h-full justify-center items-center z-10'>
+        <div className='fixed flex w-full h-full justify-center items-center z-10 backdrop-blur-sm'>
             <div ref={cardSuper3_4Ref} className="bg-black/50 rounded-2xl w-[60%] h-[50%] ">
 
                 <div className='font-bold text-2xl grid grid-cols-2 place-items-center m-5 w-auto h-[90%]'>
