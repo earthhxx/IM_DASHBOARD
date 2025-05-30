@@ -117,18 +117,26 @@ export default function TempChart() {
 
     //datatemperature Superdry
     const [DatatempDry, setDatatempDry] = useState<DataSuperDry[]>([]);
-    const [graphData, setGraphData] = useState<GraphPoint[]>([]);
+    const [graphDataDry, setGraphDataDry] = useState<GraphPoint[]>([]);
     let sortedControls: number[] = [];
     const [sortedControl, setsortControl] = useState<number[]>([]);
     const paddedGraphData = [
         { date: '', max: null, min: null }, // Padding ด้านหน้า
-        ...graphData,                       // ✅ ใส่ข้อมูลจริงเข้า array
+        ...graphDataDry,                       // ✅ ใส่ข้อมูลจริงเข้า array
         { date: '', max: null, min: null }, // Padding ด้านหลัง
     ];
 
 
     //datatemperature Fridge
-
+    const [DatatempFridge, setDatatempFridge] = useState<DataSuperDry[]>([]);
+    const [graphDataFridge, setGraphDataFridge] = useState<GraphPoint[]>([]);
+    let sortedControlsFridge: number[] = [];
+    const [sortedControlFridge, setsortControlFridge] = useState<number[]>([]);
+    const paddedGraphDataFridge = [
+        { date: '', max: null, min: null }, // Padding ด้านหน้า
+        ...graphDataFridge,                       // ✅ ใส่ข้อมูลจริงเข้า array
+        { date: '', max: null, min: null }, // Padding ด้านหลัง
+    ];
 
 
 
@@ -212,7 +220,7 @@ export default function TempChart() {
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataSuperDry = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
-                setGraphData(GraphPointss);
+                setGraphDataDry(GraphPointss);
                 console.log(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
@@ -245,7 +253,7 @@ export default function TempChart() {
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataSuperDry = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
-                setGraphData(GraphPointss);
+                setGraphDataFridge(GraphPointss);
                 console.log(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
@@ -316,7 +324,7 @@ export default function TempChart() {
 
         <>
             <div className="grid grid-cols-11 gap-4 p-4 w-full ">
-                {graphData.map((point, index) => (
+                {graphDataDry.map((point, index) => (
                     <div
                         key={index}
                         className="p-4 w-[100%] border rounded-xl shadow-sm bg-white hover:shadow-md transition-all"
@@ -356,7 +364,7 @@ export default function TempChart() {
                             <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {DatatempDry?.[0]?.Date ? new Date(DatatempDry[0].Date).toISOString().split("T")[0] : '-'}</div>
                             <div className="overflow-x-auto">
                                 <div className="min-w-[1800px] h-[400px]">
-                                    {graphData.length > 0 && (
+                                    {graphDataDry.length > 0 && (
                                         <ResponsiveContainer width="100%" height="100%">
                                             <LineChart data={paddedGraphData}>
                                                 <CartesianGrid
