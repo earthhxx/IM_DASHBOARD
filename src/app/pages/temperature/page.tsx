@@ -50,42 +50,16 @@ type DataSuperDry = {
 };
 
 type GraphPoint = {
-    date: string;
-    Yangle: number | null;
+    date: string | null;
     max: number | null;
     min: number | null;
 };
 
-type TransformedResult = {
-    points: GraphPoint[];
-    yAxisDomain: [number, number];
-};
 
-
-function transformSuperDryData(entry: DataSuperDry): TransformedResult {
+function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
     const points: GraphPoint[] = [];
     const baseDate = new Date(entry.Date);
     const month = baseDate.getMonth() + 1;
-
-    const controlValues: number[] = [];
-
-    // อ่านค่า HControl1-5 และเก็บไว้หาค่า domain
-    for (let i = 1; i <= 5; i++) {
-        const key = `HControl${i}` as keyof DataSuperDry;
-        const raw = entry[key];
-        const str = raw !== undefined && raw !== null ? String(raw).trim() : '';
-        if (str !== '') {
-            const parsed = parseFloat(str);
-            if (!isNaN(parsed) && parsed !== 0) {
-                controlValues.push(parsed);
-            }
-        }
-    }
-
-    const controlMin = controlValues.length = 0;
-    const controlMax = controlValues.length > 0 ? Math.ceil(Math.max(...controlValues)) : 10;
-
-    const YAxis: number | null = controlValues.length > 0 ? controlValues[0] : null;
 
     // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
     for (let day = 1; day <= 31; day++) {
@@ -104,20 +78,13 @@ function transformSuperDryData(entry: DataSuperDry): TransformedResult {
         const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         points.push({
             date: dateStr,
-            Yangle: YAxis,
             max: maxValue,
             min: maxValue !== null ? maxValue - 1.5 : null,
         });
     }
-
-    const yAxisDomain: [number, number] = [controlMin, controlMax];
-
-    return {
-        points,
-        yAxisDomain
-    };
+    
+    return  points;
 }
-
 
 function getFilteredHControls(entry: DataSuperDry): number[] {
     return [1, 2, 3, 4, 5]
@@ -131,7 +98,6 @@ function getFilteredHControls(entry: DataSuperDry): number[] {
             return num;
         })
         .filter(num => !isNaN(num));
-
 }
 
 
@@ -154,7 +120,6 @@ export default function TempChart() {
     //datatemperature Superdry
     const [Datatemp, setDatatemp] = useState<DataSuperDry[]>([]);
     const [graphData, setGraphData] = useState<GraphPoint[]>([]);
-    const [yAxisDomain, setYAxisDomain] = useState<[number, number]>([0, 15]);
     let sortedControls: number[] = [];
     const [sortedControl, setsortControl] = useState<number[]>([]);
 
@@ -236,16 +201,14 @@ export default function TempChart() {
 
             if (Array.isArray(result.data) && result.data.length > 0) {
                 const sampleEntry: DataSuperDry = result.data[0];
-                const { points, yAxisDomain } = transformSuperDryData(sampleEntry);
-                setGraphData(points);
-                setYAxisDomain(yAxisDomain);
+                const GraphPointss = transformSuperDryData(sampleEntry);
+                setGraphData(GraphPointss);
 
                 sortedControls = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
             }
 
             setsortControl(sortedControls)
             console.log('sorted', sortedControls);
-            console.log('Yaxis', yAxisDomain)
 
         } catch (err) {
             console.log('Error fetch fail', err);
@@ -343,8 +306,9 @@ export default function TempChart() {
 
                                             <YAxis
                                                 label={{ value: '°C', position: 'insideLeft' }}
-                                                domain={yAxisDomain}
-                                                ticks={[-1,0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11]} // <<-- บังคับแกน Y โชว์ค่าตามนี้
+                                                ticks={[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]} // <<-- บังคับแกน Y โชว์ค่าตามนี้
+                                                interval={0}
+                                                domain={[-1, 11]} 
                                             />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="3 3" />
