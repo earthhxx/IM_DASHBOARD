@@ -175,7 +175,7 @@ function transformRoomH(entry: DataRoom): GraphPointH[] {
         const rawValue = entry[key];
         const rawValue2 = entry[key2];
         const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
-        const valStr2 = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+        const valStr2 = rawValue2 !== undefined && rawValue2 !== null ? String(rawValue2).trim() : '';
 
         let minValue: number | null = null;
         let maxValue: number | null = null;
@@ -216,7 +216,7 @@ function transformRoomT(entry: DataRoom): GraphPointT[] {
         const rawValue = entry[key];
         const rawValue2 = entry[key2];
         const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
-        const valStr2 = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+        const valStr2 = rawValue2 !== undefined && rawValue2 !== null ? String(rawValue2).trim() : '';
 
         let minValue: number | null = null;
         let maxValue: number | null = null;
@@ -227,9 +227,9 @@ function transformRoomT(entry: DataRoom): GraphPointT[] {
             }
         }
         if (valStr2 !== '') {
-            const parsed = parseFloat(valStr2);
-            if (!isNaN(parsed) && parsed !== 0) {
-                minValue = parsed;
+            const parsed2 = parseFloat(valStr2);
+            if (!isNaN(parsed2) && parsed2 !== 0) {
+                minValue = parsed2;
             }
         }
 
@@ -393,7 +393,7 @@ export default function TempChart() {
         ...graphDataH,                       // ✅ ใส่ข้อมูลจริงเข้า array
         { date: '', max: null, min: null }, // Padding ด้านหลัง
     ];
-     let sortedControlsH: number[] = [];
+    let sortedControlsH: number[] = [];
     const [sortedControlH, setsortControlH] = useState<number[]>([]);
 
 
@@ -514,7 +514,7 @@ export default function TempChart() {
 
                 sortedControlsT = getFilteredTControls(sampleEntry).sort((a, b) => a - b);
                 setsortControlT(sortedControlsT);
-                
+
             }
 
         } catch (err) {
@@ -734,6 +734,7 @@ export default function TempChart() {
 
 
 
+
                                             </LineChart>
                                         </ResponsiveContainer>
                                     )}
@@ -833,126 +834,135 @@ export default function TempChart() {
 
     const renderGraphRoom = () => (
         <>
-            <div className='fixed bg-white z-10 w-full h-full'>
-                <div className=' flex flex-col justify-start items-start w-full h-full '>
-                    <div className='flex h-[25%]'></div>
-                    <div className='flex flex-row justify-between items-center w-full px-10 '>
-                        <button
-                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                            onClick={() => setGraphRoom(false)}
-                        >
-                            กลับไปดูแผนที่
-                        </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
-                            <div className='flex text-4xl text-white text-center font-kanit '></div>
-                        </div>
-                    </div>
-                    <div className='flex h-[70%] w-full'>
-                        <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 '>
+            {graphDataH.length > 0 && (
+                <div className='fixed bg-white z-10 w-full h-full'>
+                    <div className=' flex flex-col justify-start items-start w-full h-full '>
+                        <div className='flex h-[25%]'></div>
+                        <div className='flex flex-row justify-between items-center w-full px-10 '>
+                            <button
+                                className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
+                                onClick={() => setGraphRoom(false)}
+                            >
+                                กลับไปดูแผนที่
+                            </button>
 
-                            <div className=" w-full h-full">
-                                <div className='flex justify-end text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ</div>
-                                <div className="w-full h-[45%]">
-                                    <ResponsiveContainer width="100%" height="100%" >
-                                        <LineChart data={paddedGraphDataT} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
-                                            <CartesianGrid
-                                                stroke="#999999"         // เปลี่ยนสีเส้น
-                                                strokeWidth={0.2}       // เพิ่มความหนาเส้น
-                                                strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
-                                            />
-                                            <XAxis
-                                                dataKey="date"
-                                                interval={0}
-                                                tick={{ fontSize: 15 }}
-                                                label={{
-                                                    value: 'DATE',
-                                                    position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
-                                                    dy: 20,                    // เลื่อน label ลงล่างอีกนิด
-                                                    fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
-                                                }}
+                            <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-sky-500 via-blue-700 to-blue-900 p-2 uppercase'>
+                                <div className='flex text-4xl text-white text-center font-kanit '>{DatatempRoom[0].Line} </div>
 
-                                            />
-
-                                            <YAxis
-                                                label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
-                                                ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                                                interval={0}
-                                                domain={[-1, 11]}
-                                            />
-
-
-                                            <ReferenceLine y={sortedControlT[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlT[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlT[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlT[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlT[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line
-                                                type="monotone"
-                                                dataKey="max"
-                                                stroke="#0369a1"
-                                                strokeWidth={3}
-                                                dot={{ r: 3 }}
-                                                activeDot={{ r: 6 }}
-                                            />
-                                        </LineChart>
-                                    </ResponsiveContainer>
-                                </div>
-                                <div className='flex justify-end text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น</div>
-                                <div className="w-full h-[45%]">
-                                    <ResponsiveContainer width="100%" height="100%" >
-                                        <LineChart data={paddedGraphDataH} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
-                                            <CartesianGrid
-                                                stroke="#999999"         // เปลี่ยนสีเส้น
-                                                strokeWidth={0.2}       // เพิ่มความหนาเส้น
-                                                strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
-                                            />
-                                            <XAxis
-                                                dataKey="date"
-                                                interval={0}
-                                                tick={{ fontSize: 15 }}
-                                                label={{
-                                                    value: 'DATE',
-                                                    position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
-                                                    dy: 20,                    // เลื่อน label ลงล่างอีกนิด
-                                                    fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
-                                                }}
-
-                                            />
-
-                                            <YAxis
-                                                label={{ value: '°H', angle: -90, position: 'outsideLeft', offset: 0 }}
-                                                ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                                                interval={0}
-                                                domain={[-1, 11]}
-                                            />
-
-
-                                            <ReferenceLine y={sortedControlH[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlH[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlH[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlH[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControlH[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line
-                                                type="monotone"
-                                                dataKey="max"
-                                                stroke="#0369a1"
-                                                strokeWidth={3}
-                                                dot={{ r: 3 }}
-                                                activeDot={{ r: 6 }}
-                                            />
-                                        </LineChart>
-                                    </ResponsiveContainer>
-                                </div>
                             </div>
-                            {/* {divtempsuperD()} */}
+                        </div>
+                        <div className='flex h-[70%] w-full'>
+                            <div className='flex flex-col justify-center items-center w-full pe-10 ps-10 '>
+
+                                <div className=" w-full h-full">
+
+                                    <div className='flex justify-center text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ </div>
+                                    <div className="w-full h-[45%]">
+                                        <ResponsiveContainer width="100%" height="100%" >
+                                            <LineChart data={paddedGraphDataT} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
+                                                <Legend verticalAlign="top" height={36} /> {/* ✅ ใส่ legend ตรงนี้ */}
+                                                <CartesianGrid
+                                                    stroke="#999999"         // เปลี่ยนสีเส้น
+                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
+                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
+                                                />
+                                                <XAxis
+                                                    dataKey="date"
+                                                    interval={0}
+                                                    tick={{ fontSize: 15 }}
+                                                    label={{
+                                                        value: 'DATE',
+                                                        position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
+                                                        dy: 20,                    // เลื่อน label ลงล่างอีกนิด
+                                                        fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
+                                                    }}
+
+                                                />
+
+                                                <YAxis
+                                                    label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                    ticks={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+                                                    tick={{ fontSize: 15 }}
+                                                    interval={0}
+                                                    domain={[0, 40]}
+                                                />
+
+
+                                                <ReferenceLine y={sortedControlT[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlT[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlT[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlT[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlT[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+
+                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="max"
+                                                    stroke="#0369a1"
+                                                    strokeWidth={3}
+                                                    dot={{ r: 3 }}
+                                                    activeDot={{ r: 6 }}
+                                                />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                    <div className='flex justify-center text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น</div>
+                                    <div className="w-full h-[45%]">
+                                        <ResponsiveContainer width="100%" height="100%" >
+                                            <LineChart data={paddedGraphDataH} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
+                                                <Legend verticalAlign="top" height={36} /> {/* ✅ ใส่ legend ตรงนี้ */}
+                                                <CartesianGrid
+                                                    stroke="#999999"         // เปลี่ยนสีเส้น
+                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
+                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
+                                                />
+                                                <XAxis
+                                                    dataKey="date"
+                                                    interval={0}
+                                                    tick={{ fontSize: 15 }}
+                                                    label={{
+                                                        value: 'DATE',
+                                                        position: 'outsideBottom', // แกน X อยู่ล่าง ให้ label อยู่ข้างล่างนอกกราฟ
+                                                        dy: 20,                    // เลื่อน label ลงล่างอีกนิด
+                                                        fontSize: 16,              // ขนาดฟอนต์ (ใช้ fontSize ไม่ใช่ font)
+                                                    }}
+
+                                                />
+
+                                                <YAxis
+                                                    label={{ value: '°H', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                    ticks={[20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80]}
+                                                    tick={{ fontSize: 13 }}
+                                                    interval={0}
+                                                    domain={[20, 80]}
+                                                />
+
+
+                                                <ReferenceLine y={sortedControlH[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlH[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlH[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlH[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                                <ReferenceLine y={sortedControlH[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+
+                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="max"
+                                                    stroke="#0369a1"
+                                                    strokeWidth={3}
+                                                    dot={{ r: 3 }}
+                                                    activeDot={{ r: 6 }}
+                                                />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </div>
+                                {/* {divtempsuperD()} */}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </>
     );
 
@@ -1076,7 +1086,7 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div onClick={() => {handleClickGraphRoom('Consumer') }}
+            <div onClick={() => { handleClickGraphRoom('Consumer') }}
                 className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
