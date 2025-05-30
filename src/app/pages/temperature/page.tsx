@@ -191,7 +191,6 @@ function getFilteredTControlsFridge(entry: DataFridge): number[] {
 
 export default function TempChart() {
     const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
-    const [GraphSuperD, setGraphSuperD] = useState(false);
     const [Fridge1_2_3Card, setFridge1_2_3Card] = useState(false);
     const [Fridge4_5_6_7_8Card, setFridge4_5_6_7_8] = useState(false);
     const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
@@ -204,6 +203,9 @@ export default function TempChart() {
     const cardSuper1_2Ref = React.useRef<HTMLDivElement>(null);
     const cardSuper3_4Ref = React.useRef<HTMLDivElement>(null);
 
+
+    const [GraphSuperD, setGraphSuperD] = useState(false);
+    const [GraphFridge, setGraphSFridge] = useState(false);
 
 
     //group data
@@ -300,7 +302,7 @@ export default function TempChart() {
             setFridge1_2_3Card(false);
         }
 
-        // setGraphSuperD(true);
+        setGraphSFridge(true);
     };
 
 
@@ -524,6 +526,85 @@ export default function TempChart() {
             </div>
         </>
     );
+
+    const renderGraphFridge = () => (
+        <>
+            <div className='fixed bg-white z-10 w-full h-full'>
+                <div className=' flex flex-col justify-start items-center w-full h-full mt-6'>
+                    <div className='flex h-[25%]'></div>
+                    <div className='flex flex-row justify-between items-center w-full px-10 '>
+                        <button
+                            className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
+                ring-2 ring-blue-100 ring-opacity-80 scale-105"
+                            onClick={() => setGraphSFridge(false)}
+                        >
+                            กลับไปดูแผนที่
+                        </button>
+                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
+                            <div className='flex text-4xl text-white text-center font-kanit '>{DatatempFridge[0].Line}</div>
+                        </div>
+                    </div>
+                    <div className='flex h-full w-full'>
+                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
+                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น {DatatempFridge?.[0]?.Date ? new Date(DatatempFridge[0].Date).toISOString().split("T")[0] : '-'}</div>
+                            <div className="overflow-x-auto">
+                                <div className="min-w-[1800px] h-[400px]">
+                                    {graphData.length > 0 && (
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <LineChart data={paddedGraphData}>
+                                                <CartesianGrid
+                                                    stroke="#999999"         // เปลี่ยนสีเส้น
+                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
+                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
+                                                />
+                                                <XAxis
+                                                    dataKey="date"
+                                                    interval={0}
+                                                    tick={{ fontSize: 14 }}
+                                                    angle={-45}
+
+                                                />
+
+                                                <YAxis
+                                                    label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0 }}
+                                                    ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                                    interval={0}
+                                                    domain={[-1, 11]}
+                                                />
+
+
+                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" />
+                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" />
+                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" />
+                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" />
+                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" />
+
+                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="max"
+                                                    stroke="#0369a1"
+                                                    strokeWidth={3}
+                                                    dot={{ r: 3 }}
+                                                    activeDot={{ r: 6 }}
+                                                />
+
+
+
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    )}
+                                </div>
+                            </div>
+                            {divtempsuperD()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+
+
 
     const renderMapnone = () => (
         <>
@@ -817,7 +898,7 @@ export default function TempChart() {
             <div ref={Fridge1_2_3CardcheckRef} className="bg-black/50 rounded-2xl w-[40%] h-[50%]">
                 <div className='font-bold text-2xl grid grid-cols-3 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
-                    <div onClick={()=> {handleClickGraphFridge('3')}}
+                    <div onClick={() => { handleClickGraphFridge('3') }}
                         className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  rounded-l-xl uppercase
                               text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
@@ -825,16 +906,16 @@ export default function TempChart() {
                         </div>
                         {FEEZNORMAL()}
                     </div>
-                    <div onClick={()=> {handleClickGraphFridge('2')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('2') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  uppercase
                                text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 2
                         </div>
                         {FEEZNORMAL()}
                     </div>
-                    <div onClick={()=> {handleClickGraphFridge('1')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('1') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  rounded-r-xl uppercase
                               text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide  '>
                             Fridge 1
@@ -853,37 +934,37 @@ export default function TempChart() {
             <div ref={Fridge4_5_6_7_8CardCheckRef} className="bg-black/50 rounded-2xl w-[70%] h-[50%]">
                 <div className='font-bold text-2xl grid grid-cols-5 place-items-center m-5 w-auto h-[90%] group'>
                     {/* Icons */}
-                    <div onClick={()=> {handleClickGraphFridge('4')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('4') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 4
                         </div>
                         {FEEZNORMAL()}
                     </div>
-                    <div onClick={()=> {handleClickGraphFridge('5')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('5') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 5
                         </div>
                         {FEEZNORMAL()}
                     </div>
-                    <div onClick={()=> {handleClickGraphFridge('6')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('6') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px] uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 6
                         </div>
                         {FEEZNORMAL()}
                     </div>
-                    <div onClick={()=> {handleClickGraphFridge('7')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('7') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
 
                         <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 7
                         </div>
                         {FEEZNORMAL()}
                     </div>
-                    <div onClick={()=> {handleClickGraphFridge('8')}}
-                    className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
+                    <div onClick={() => { handleClickGraphFridge('8') }}
+                        className='flex flex-col items-center justify-center w-full mt-[20px] transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
                         <div className='flex items-center justify-center w-full p-[20px]  uppercase text-sky-400 text-3xl font-extrabold drop-shadow-md tracking-wide '>
                             Fridge 8
                         </div>
@@ -980,7 +1061,7 @@ export default function TempChart() {
                         </div>
 
                         {/* Box 3 */}
-                        <div onClick={()=> {
+                        <div onClick={() => {
                             handleClickGraphFridge('9');
                         }} className='flex flex-col items-center justify-center w-full p-[20px]  uppercase rounded-r-xl 
                                    transition-all duration-300 hover:scale-105 group-hover:opacity-50 hover:!opacity-100'>
@@ -1032,6 +1113,7 @@ export default function TempChart() {
             </div>
             {/* renderALLCard */}
             {GraphSuperD && renderGraphSuperDry()}
+            {GraphFridge && renderGraphFridge()}
             {Fridge1_2_3Card && renderFridge1_2_3()}
             {Fridge4_5_6_7_8Card && renderFridge4_5_6_7_8()}
             {renderSuperDry1_2Card && renderSuperDry1_2()}
