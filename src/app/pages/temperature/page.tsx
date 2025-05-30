@@ -679,9 +679,9 @@ export default function TempChart() {
                         >
                             กลับไปดูแผนที่
                         </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
+                        {/* <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
                             <div className='flex text-4xl text-white text-center font-kanit '>{DatatempDry[0].Line}</div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='flex h-full w-full'>
                         <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
@@ -761,9 +761,9 @@ export default function TempChart() {
                         >
                             กลับไปดูแผนที่
                         </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
+                        {/* <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
                             <div className='flex text-4xl text-white text-center font-kanit '>{DatatempFridge[0].Line}</div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='flex h-full w-full'>
                         <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
