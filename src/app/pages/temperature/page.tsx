@@ -130,6 +130,58 @@ type GraphPoint = {
     max: number | null;
 };
 
+type GraphPointT = {
+    date: string | null;
+    max: number | null;
+    min: number | null;
+};
+
+type GraphPointH = {
+    date: string | null;
+    max: number | null;
+};
+
+function transformRoom(entry: DataRoom): GraphPointT[] {
+    const points: GraphPointT[] = [];
+    const baseDate = new Date(entry.Date);
+    const month = baseDate.getMonth() + 1;
+
+    // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
+    for (let day = 1; day <= 31; day++) {
+        const key = `HMax${day}` as keyof DataSuperDry;
+        const key2 = `HMin${day}` as keyof DataSuperDry;
+        const rawValue = entry[key];
+        const rawValue2 = entry[key2];
+        const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+        const valStr2 = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+
+        let minValue: number | null = null;
+        let maxValue: number | null = null;
+        if (valStr !== '') {
+            const parsed = parseFloat(valStr);
+            if (!isNaN(parsed) && parsed !== 0) {
+                maxValue = parsed;
+            }
+        }
+        if (valStr2 !== '') {
+            const parsed = parseFloat(valStr2);
+            if (!isNaN(parsed) && parsed !== 0) {
+                minValue = parsed;
+            }
+        }
+
+        // const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dateStr = String(day).padStart(2, '0'); // เฉพาะวัน
+        points.push({
+            date: dateStr,
+            max: maxValue,
+            min: minValue
+        });
+    }
+
+    return points;
+}
+
 
 function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
     const points: GraphPoint[] = [];
