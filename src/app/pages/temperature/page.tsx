@@ -139,17 +139,39 @@ type GraphPointT = {
 type GraphPointH = {
     date: string | null;
     max: number | null;
+    min: number | null;
 };
 
-function transformRoom(entry: DataRoom): GraphPointT[] {
-    const points: GraphPointT[] = [];
+function getFilteredTControls(entry: DataRoom): number[] {
+    return [1, 2, 3, 4, 5].map(i => {
+        const key = `TControl${i}` as keyof DataSuperDry;
+        const raw = entry[key];
+        const str = raw !== undefined && raw !== null ? String(raw).trim() : '';
+        const num = parseFloat(str);
+        return !isNaN(num) ? num : 0;
+    });
+}
+
+function getFilteredHControls(entry: DataRoom): number[] {
+    return [1, 2, 3, 4, 5].map(i => {
+        const key = `HControl${i}` as keyof DataSuperDry;
+        const raw = entry[key];
+        const str = raw !== undefined && raw !== null ? String(raw).trim() : '';
+        const num = parseFloat(str);
+        return !isNaN(num) ? num : 0;
+    });
+}
+
+
+function transformRoomH(entry: DataRoom): GraphPointH[] {
+    const points: GraphPointH[] = [];
     const baseDate = new Date(entry.Date);
     const month = baseDate.getMonth() + 1;
 
     // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
     for (let day = 1; day <= 31; day++) {
-        const key = `HMax${day}` as keyof DataSuperDry;
-        const key2 = `HMin${day}` as keyof DataSuperDry;
+        const key = `HMax${day}` as keyof DataRoom;
+        const key2 = `HMin${day}` as keyof DataRoom;
         const rawValue = entry[key];
         const rawValue2 = entry[key2];
         const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
@@ -182,6 +204,46 @@ function transformRoom(entry: DataRoom): GraphPointT[] {
     return points;
 }
 
+function transformRoomT(entry: DataRoom): GraphPointT[] {
+    const points: GraphPointT[] = [];
+    const baseDate = new Date(entry.Date);
+    const month = baseDate.getMonth() + 1;
+
+    // อ่านค่า HMax1-31 และสร้างจุดกราฟให้ครบทุกวัน
+    for (let day = 1; day <= 31; day++) {
+        const key = `TMax${day}` as keyof DataRoom;
+        const key2 = `TMin${day}` as keyof DataRoom;
+        const rawValue = entry[key];
+        const rawValue2 = entry[key2];
+        const valStr = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+        const valStr2 = rawValue !== undefined && rawValue !== null ? String(rawValue).trim() : '';
+
+        let minValue: number | null = null;
+        let maxValue: number | null = null;
+        if (valStr !== '') {
+            const parsed = parseFloat(valStr);
+            if (!isNaN(parsed) && parsed !== 0) {
+                maxValue = parsed;
+            }
+        }
+        if (valStr2 !== '') {
+            const parsed = parseFloat(valStr2);
+            if (!isNaN(parsed) && parsed !== 0) {
+                minValue = parsed;
+            }
+        }
+
+        // const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dateStr = String(day).padStart(2, '0'); // เฉพาะวัน
+        points.push({
+            date: dateStr,
+            max: maxValue,
+            min: minValue
+        });
+    }
+
+    return points;
+}
 
 function transformSuperDryData(entry: DataSuperDry): GraphPoint[] {
     const points: GraphPoint[] = [];
@@ -246,32 +308,32 @@ function transformFridgeData(entry: DataFridge): GraphPoint[] {
 
 
 function getFilteredHControlsDry(entry: DataSuperDry): number[] {
-    return [1, 2, 3, 4, 5]
-        .map(i => {
-            const key = `HControl${i}` as keyof DataSuperDry;
-            const raw = entry[key];
-            if (raw === undefined || raw === null) return NaN;
+    return [1, 2, 3, 4, 5].map(i => {
+        const key = `HControl${i}` as keyof DataSuperDry;
+        const raw = entry[key];
 
-            const str = (typeof raw === 'string') ? raw.trim() : String(raw);
-            const num = parseFloat(str);
-            return num;
-        })
-        .filter(num => !isNaN(num));
+        const str = raw !== undefined && raw !== null ? String(raw).trim() : '';
+        const num = parseFloat(str);
+
+        return !isNaN(num) ? num : 0; // ถ้าไม่ใช่ NaN คืนค่าจริง, ถ้า NaN คืน 0
+    });
 }
+
 
 function getFilteredTControlsFridge(entry: DataFridge): number[] {
-    return [1, 2, 3, 4, 5]
-        .map(i => {
-            const key = `TControl${i}` as keyof DataFridge;
-            const raw = entry[key];
-            if (raw === undefined || raw === null) return NaN;
+    return [1, 2, 3, 4, 5].map(i => {
+        const key = `TControl${i}` as keyof DataFridge;
+        const raw = entry[key];
 
-            const str = (typeof raw === 'string') ? raw.trim() : String(raw);
-            const num = parseFloat(str);
-            return num;
-        })
-        .filter(num => !isNaN(num));
+        const str = raw !== undefined && raw !== null ? String(raw).trim() : '';
+        const num = parseFloat(str);
+
+        return !isNaN(num) ? num : 0; // ถ้าไม่ใช่ NaN คืนค่าจริง, ถ้า NaN คืน 0
+    });
 }
+
+
+
 
 
 
@@ -314,7 +376,25 @@ export default function TempChart() {
     const [DatatempRoom, setDatatempRoom] = useState<DataRoom[]>([]);
 
 
+    //group data TRoom
+    const [graphDataT, setGraphDataT] = useState<GraphPoint[]>([]);
+    const paddedGraphDataT = [
+        { date: '', max: null, min: null }, // Padding ด้านหน้า
+        ...graphDataT,                       // ✅ ใส่ข้อมูลจริงเข้า array
+        { date: '', max: null, min: null }, // Padding ด้านหลัง
+    ];
+    let sortedControlsT: number[] = [];
+    const [sortedControlT, setsortControlT] = useState<number[]>([]);
 
+    //group data HRoom
+    const [graphDataH, setGraphDataH] = useState<GraphPoint[]>([]);
+    const paddedGraphDataH = [
+        { date: '', max: null, min: null }, // Padding ด้านหน้า
+        ...graphDataH,                       // ✅ ใส่ข้อมูลจริงเข้า array
+        { date: '', max: null, min: null }, // Padding ด้านหลัง
+    ];
+     let sortedControlsH: number[] = [];
+    const [sortedControlH, setsortControlH] = useState<number[]>([]);
 
 
 
@@ -394,6 +474,11 @@ export default function TempChart() {
         setGraphSFridge(true);
     };
 
+    const handleClickGraphRoom = async (loc: string) => {
+        setGraphRoom(true);
+        await fetchDataRoom(loc)
+    };
+
 
     const fetchDataRoom = async (loc: string) => {
 
@@ -411,16 +496,25 @@ export default function TempChart() {
 
             const result = await response.json();
             console.log(result);
-            setDatatempDry(result.data);
+            setDatatempRoom(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
-                const sampleEntry: DataSuperDry = result.data[0];
-                const GraphPointss = transformSuperDryData(sampleEntry);
-                setGraphData(GraphPointss);
-                console.log(GraphPointss);
+                const sampleEntry: DataRoom = result.data[0];
 
-                sortedControls = getFilteredHControlsDry(sampleEntry).sort((a, b) => a - b);
-                setsortControl(sortedControls)
+                const GraphPointsT = transformRoomT(sampleEntry);
+                setGraphDataT(GraphPointsT);
+                console.log(GraphPointsT);
+
+                const GraphPointsH = transformRoomH(sampleEntry);
+                setGraphDataH(GraphPointsH);
+                console.log(GraphPointsH);
+
+                sortedControlsH = getFilteredHControls(sampleEntry).sort((a, b) => a - b);
+                setsortControlH(sortedControlsH);
+
+                sortedControlsT = getFilteredTControls(sampleEntry).sort((a, b) => a - b);
+                setsortControlT(sortedControlsT);
+                
             }
 
         } catch (err) {
@@ -745,7 +839,7 @@ export default function TempChart() {
                     <div className='flex flex-row justify-between items-center w-full px-10 '>
                         <button
                             className="flex w-[10%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                            onClick={() => setGraphSFridge(false)}
+                            onClick={() => setGraphRoom(false)}
                         >
                             กลับไปดูแผนที่
                         </button>
@@ -760,7 +854,7 @@ export default function TempChart() {
                                 <div className='flex justify-end text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ</div>
                                 <div className="w-full h-[45%]">
                                     <ResponsiveContainer width="100%" height="100%" >
-                                        <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
+                                        <LineChart data={paddedGraphDataT} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
                                             <CartesianGrid
                                                 stroke="#999999"         // เปลี่ยนสีเส้น
                                                 strokeWidth={0.2}       // เพิ่มความหนาเส้น
@@ -787,11 +881,11 @@ export default function TempChart() {
                                             />
 
 
-                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlT[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlT[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlT[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlT[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlT[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
 
                                             <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                             <Line
@@ -808,7 +902,7 @@ export default function TempChart() {
                                 <div className='flex justify-end text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น</div>
                                 <div className="w-full h-[45%]">
                                     <ResponsiveContainer width="100%" height="100%" >
-                                        <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
+                                        <LineChart data={paddedGraphDataH} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
                                             <CartesianGrid
                                                 stroke="#999999"         // เปลี่ยนสีเส้น
                                                 strokeWidth={0.2}       // เพิ่มความหนาเส้น
@@ -835,11 +929,11 @@ export default function TempChart() {
                                             />
 
 
-                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
-                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlH[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlH[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlH[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlH[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControlH[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
 
                                             <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
                                             <Line
@@ -982,7 +1076,7 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div onClick={() => { setGraphRoom(true) }}
+            <div onClick={() => {handleClickGraphRoom('Consumer') }}
                 className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
