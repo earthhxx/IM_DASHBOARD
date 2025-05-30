@@ -257,7 +257,7 @@ export default function TempChart() {
             setDatatempFridge(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
-                const sampleEntry: DataFridge = result.data[0];
+                const sampleEntry: DataSuperDry = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
                 setGraphData(GraphPointss);
                 console.log(GraphPointss);
@@ -290,7 +290,7 @@ export default function TempChart() {
             setDatatempDry(result.data);
 
             if (Array.isArray(result.data) && result.data.length > 0) {
-                const sampleEntry: DataSuperDry = result.data[0];
+                const sampleEntry: DataFridge = result.data[0];
                 const GraphPointss = transformSuperDryData(sampleEntry);
                 setGraphData(GraphPointss);
                 console.log(GraphPointss);
