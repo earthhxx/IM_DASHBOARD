@@ -719,7 +719,7 @@ export default function TempChart() {
                             </button>
 
                             <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-xl sm:text-2xl md:text-3xl font-kanit tracking-wide shadow-md text-center'>
-                                {DatatempDry[0]?.Line}
+                                 POINT: {point}
                             </div>
                         </div>
 
@@ -810,7 +810,7 @@ export default function TempChart() {
                             </button>
 
                             <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-xl sm:text-2xl md:text-3xl font-kanit tracking-wide shadow-md text-center'>
-                                {DatatempFridge[0]?.Line}
+                                POINT: {point}
                             </div>
                         </div>
                         {/* Graph Section */}
