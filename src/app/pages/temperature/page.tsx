@@ -732,11 +732,11 @@ export default function TempChart() {
                                 {/* Custom Legend */}
                                 <div className="flex items-center gap-6 justify-center mb-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-[#38bdf8] block rounded-sm" />
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
@@ -822,11 +822,11 @@ export default function TempChart() {
                                 {/* Custom Legend */}
                                 <div className="flex items-center gap-6 justify-center mb-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-[#38bdf8] block rounded-sm" />
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
