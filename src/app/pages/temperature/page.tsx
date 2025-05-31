@@ -698,411 +698,315 @@ export default function TempChart() {
     };
 
 
+
+
+
+
+
+
     const renderGraphSuperDry = () => (
         <>
-            <div className='fixed bg-white z-10 w-full h-full'>
-                <div className=' flex flex-col justify-start items-center w-full h-full '>
-                    <div className='flex h-[35%]'></div>
-                    <div className='flex flex-row justify-between items-center w-full px-10 '>
-                        <button
-                            className="flex w-[8%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
-                ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                            onClick={() => setGraphSuperD(false)}
-                        >
-                            กลับไปดูแผนที่
-                        </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
-                            <div className='flex text-4xl text-white text-center font-kanit '>{DatatempDry[0].Line}</div>
-                        </div>
-                    </div>
-                    <div className='flex h-full w-full'>
-                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
-                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าความชื้น</div>
-                            <div className="overflow-x-auto w-full">
-                                <div className="w-full h-[400px]">
-                                    {graphData.length > 0 && (
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
-                                                <CartesianGrid
-                                                    stroke="#999999"         // เปลี่ยนสีเส้น
-                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
-                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
-                                                />
-                                                <XAxis
-                                                    dataKey="date"
-                                                    interval={0}
-                                                    label={{
-                                                        value: 'DATE',
-                                                        position: 'outsideBottom',
-                                                        dy: 20,
-                                                        dx: -25,
-                                                        fontSize: 13,
-                                                    }}
-                                                    tickLine={false}
-                                                    tick={<CustomTick />}
-                                                />
+            {graphData.length > 0 && (
+                <div className='fixed inset-0 flex flex-col backdrop-blur-2xl z-50 2xl:z-20 overflow-y-auto'>
 
-                                                <YAxis
-                                                    label={{ value: '°H', angle: -90, position: 'outsideLeft', offset: 0, dx: -20 }}
-                                                    ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                                                    interval={0}
-                                                    tick={{ fontSize: 16 }}
-                                                    domain={[-1, 11]}
-                                                />
-
-
-                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="10 10" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-
-                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                                <Line
-                                                    type="monotone"
-                                                    dataKey="max"
-                                                    stroke="#0369a1"
-                                                    strokeWidth={3}
-                                                    dot={{ r: 3 }}
-                                                    activeDot={{ r: 6 }}
-                                                />
-
-
-
-
-                                            </LineChart>
-                                        </ResponsiveContainer>
-                                    )}
-                                </div>
-                            </div>
-                            {/* {divtempsuperD()} */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-
-    const renderGraphFridge = () => (
-        <>
-            <div className='fixed bg-white z-10 w-full h-full'>
-                <div className=' flex flex-col justify-start items-center w-full h-full '>
-                    <div className='flex h-[35%]'></div>
-                    <div className='flex flex-row justify-between items-center w-full px-10 '>
-                        <button
-                            className="flex w-[8%] bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg
-                ring-2 ring-blue-100 ring-opacity-80 scale-105"
-                            onClick={() => setGraphSFridge(false)}
-                        >
-                            กลับไปดูแผนที่
-                        </button>
-                        <div className='flex w-[20%] justify-center items-center rounded-lg bg-gradient-to-b from-gray-300 via-gray-400 to-gray-700 p-2 uppercase'>
-                            <div className='flex text-4xl text-white text-center font-kanit '>{DatatempFridge[0].Line}</div>
-                        </div>
-                    </div>
-                    <div className='flex h-full w-full'>
-                        <div className='flex flex-col justify-start items-center w-full pe-10 ps-10 '>
-                            <div className='flex text-center text-2xl text-black mb-2 font-kanit'>ค่าอุณหภูมิ </div>
-                            <div className="overflow-x-auto w-full">
-                                <div className="w-full h-[400px] p-4">
-                                    {graphData.length > 0 && (
-                                        <ResponsiveContainer width="100%" height="100%" >
-                                            <LineChart data={paddedGraphData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
-                                                <CartesianGrid
-                                                    stroke="#999999"         // เปลี่ยนสีเส้น
-                                                    strokeWidth={0.2}       // เพิ่มความหนาเส้น
-                                                    strokeDasharray="1 0" // ทำเป็นเส้นทึบ (ไม่ dash)
-                                                />
-                                                <XAxis
-                                                    dataKey="date"
-                                                    interval={0}
-                                                    label={{
-                                                        value: 'DATE',
-                                                        position: 'outsideBottom',
-                                                        dy: 32,
-                                                        dx: -25,
-                                                        fontSize: 13,
-                                                    }}
-                                                    tickLine={false}
-                                                    tick={<CustomTick />}
-                                                />
-
-
-                                                <YAxis
-                                                    label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0, dx: -20 }}
-                                                    ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                                                    interval={0}
-                                                    tick={{ fontSize: 16 }}
-                                                    domain={[-1, 11]}
-                                                />
-
-
-                                                <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
-                                                <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
-
-                                                <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                                <Line
-                                                    type="monotone"
-                                                    dataKey="max"
-                                                    stroke="#0369a1"
-                                                    strokeWidth={3}
-                                                    dot={{ r: 3 }}
-                                                    activeDot={{ r: 6 }}
-                                                />
-
-
-
-
-                                            </LineChart>
-
-                                        </ResponsiveContainer>
-                                    )}
-                                </div>
-                            </div>
-                            {/* {divtempsuperD()} */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-
-    // const renderGraphRoom = () => (
-    //     <>
-    //         {graphDataH.length > 0 && (
-    //             <div className='absolute top-0 left-0 bg-white z-10 w-full h-full overflow-y-auto pt-32 px-4'>
-    //                 <div className='flex flex-col gap-4'>
-    //                     {/* Header กลับไปหน้าแผนที่ */}
-    //                     <div className='flex flex-row justify-between items-center z-50 mt-20'>
-    //                         <button
-    //                             className="w-fit bg-blue-800 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded shadow-lg ring-2 ring-blue-100 ring-opacity-80 scale-105"
-    //                             onClick={() => setGraphRoom(false)}
-    //                         >
-    //                             กลับไปดูแผนที่
-    //                         </button>
-    //                         <div className='flex w-fit justify-center items-center rounded-lg bg-gradient-to-b from-sky-600 via-blue-700 to-blue-900 p-2 uppercase'>
-    //                             <div className='text-4xl text-white text-center font-kanit'>
-    //                                 {DatatempRoom[0].Line}
-    //                             </div>
-    //                         </div>
-    //                     </div>
-
-    //                     {/* กราฟอุณหภูมิ */}
-    //                     <div className='text-center text-2xl text-black font-kanit'>ค่าอุณหภูมิ</div>
-    //                     <div className="w-full h-[350px]">
-    //                         <ResponsiveContainer width="100%" height="100%">
-    //                             <LineChart data={paddedGraphDataT} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
-    //                                 <Legend verticalAlign="top" height={36} />
-    //                                 <CartesianGrid stroke="#999999" strokeWidth={0.2} strokeDasharray="1 0" />
-    //                                 <XAxis
-    //                                     dataKey="date"
-    //                                     interval={0}
-    //                                     label={{
-    //                                         value: 'DATE',
-    //                                         position: 'outsideBottom',
-    //                                         dy: 20,
-    //                                         dx: -25,
-    //                                         fontSize: 13,
-    //                                     }}
-    //                                     tickLine={false}
-    //                                     tick={<CustomTick />}
-    //                                 />
-    //                                 <YAxis
-    //                                     label={{ value: '°C', angle: -90, position: 'outsideLeft', offset: 0, dx: -20 }}
-    //                                     ticks={[20, 21, 25, 29, 30]}
-    //                                     tick={{ fontSize: 16 }}
-    //                                     interval={0}
-    //                                     domain={[19, 31]}
-    //                                 />
-    //                                 {/* ReferenceLines */}
-    //                                 {[31, 28, 27, 26, 24, 23, 22, 21, 35, 15].map((y) => (
-    //                                     <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
-    //                                 ))}
-    //                                 {sortedControlT.map((y, idx) => (
-    //                                     <ReferenceLine
-    //                                         key={idx}
-    //                                         y={y}
-    //                                         stroke={idx === 0 || idx === 4 ? 'red' : idx === 1 || idx === 3 ? '#FFD700' : 'black'}
-    //                                         strokeDasharray={idx === 2 ? '10 10' : '7 7'}
-    //                                         strokeWidth={0.5}
-    //                                     />
-    //                                 ))}
-    //                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-    //                                 <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
-    //                             </LineChart>
-    //                         </ResponsiveContainer>
-    //                     </div>
-
-    //                     {/* กราฟความชื้น */}
-    //                     <div className='text-center text-2xl text-black font-kanit'>ค่าความชื้น</div>
-    //                     <div className="w-full h-[350px]">
-    //                         <ResponsiveContainer width="100%" height="100%">
-    //                             <LineChart data={paddedGraphDataH} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
-    //                                 <Legend verticalAlign="top" height={36} />
-    //                                 <CartesianGrid stroke="#999999" strokeWidth={0.2} strokeDasharray="1 0" />
-    //                                 <XAxis
-    //                                     dataKey="date"
-    //                                     interval={0}
-    //                                     tickLine={false}
-    //                                     tick={<CustomTick />}
-    //                                     label={{
-    //                                         value: 'DATE',
-    //                                         position: 'outsideBottom',
-    //                                         dy: 20,
-    //                                         dx: -25,
-    //                                         fontSize: 13,
-    //                                     }}
-    //                                 />
-    //                                 <YAxis
-    //                                     label={{ value: '°H', angle: -90, position: 'outsideLeft', offset: 0, dx: -20 }}
-    //                                     ticks={[30, 40, 50, 60, 70]}
-    //                                     tick={{ fontSize: 16 }}
-    //                                     interval={0}
-    //                                     domain={[25, 75]}
-    //                                 />
-    //                                 {[55, 45].map((y) => (
-    //                                     <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
-    //                                 ))}
-    //                                 {sortedControlH.map((y, idx) => (
-    //                                     <ReferenceLine
-    //                                         key={idx}
-    //                                         y={y}
-    //                                         stroke={idx === 0 || idx === 4 ? 'red' : idx === 1 || idx === 3 ? '#FFD700' : 'black'}
-    //                                         strokeDasharray={idx === 2 ? '10 10' : '7 7'}
-    //                                         strokeWidth={0.5}
-    //                                     />
-    //                                 ))}
-    //                                 <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-    //                                 <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
-    //                             </LineChart>
-    //                         </ResponsiveContainer>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         )}
-
-    //     </>
-    // );
-
-    const renderGraphRoom = () => (
-        <>
-            {graphDataH.length > 0 && (
-                <div className='fixed backdrop-blur-2xl z-20 w-full h-full overflow-y-auto '>
-                    <div className='flex flex-col w-full h-full p-6 gap-6 justify-center items-center'>
-
-                        {/* Top Bar */}
-                        <div className='flex justify-between items-center w-full'>
+                    <div className='flex flex-col w-full flex-1 justify-center items-center p-6 gap-6'>
+                        <div className='z-30 w-full flex flex-wrap justify-between items-center gap-4 px-4 sm:px-6 md:px-10 py-4'>
                             <button
-                                className="bg-blue-800 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded shadow "
-                                onClick={() => setGraphRoom(false)}
+                                className="bg-blue-800 hover:bg-blue-500 text-white font-semibold py-2 px-4 sm:px-6 rounded shadow text-sm sm:text-base"
+                                onClick={() => setGraphSuperD(false)}
                             >
                                 ← กลับไปดูแผนที่
                             </button>
 
-                            <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-6 py-3 rounded-lg text-3xl font-kanit tracking-wide shadow-md'>
-                                {DatatempRoom[0]?.Line}
+                            <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-xl sm:text-2xl md:text-3xl font-kanit tracking-wide shadow-md text-center'>
+                                {DatatempDry[0]?.Line}
                             </div>
-
-
                         </div>
 
-                        {/* Temperature Chart */}
-                        <div className='w-full flex flex-col gap-3 bg-white rounded-lg shadow border '>
-                            <div className='w-full h-[750px] '>
-                                <ResponsiveContainer width="100%" height="47%">
-                                    <LineChart data={paddedGraphDataT} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
+                        {/* Graph Section */}
+                        <div className='w-full flex flex-col gap-6'>
+                            {/* Humidity */}
+                            <div className='bg-white rounded-lg shadow border px-4 py-6'>
+                                <h2 className="text-xl font-semibold text-gray-700 mb-2 text-center">ความชื้น (Humidity)</h2>
 
-                                        <CartesianGrid stroke="#999" strokeWidth={0.2} strokeDasharray="1 0" />
-                                        <XAxis
-                                            dataKey="date"
-                                            interval={0}
-                                            label={{
-                                                value: 'DATE',
-                                                position: 'outsideBottom',
-                                                dy: 20,
-                                                dx: -25,
-                                                fontSize: 13,
-                                            }}
-                                            tickLine={false}
-                                            tick={<CustomTick />}
-                                        />
-                                        <YAxis
-                                            label={{ value: '°C', angle: -90, position: 'outsideLeft', dx: -20 }}
-                                            ticks={[20, 21, 25, 29, 30]}
-                                            tick={{ fontSize: 16 }}
-                                            domain={[19, 31]}
-                                        />
-                                        {[31, 28, 27, 26, 24, 23, 22, 21, 35, 15].map(y => (
-                                            <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
-                                        ))}
-                                        {sortedControlT.map((y, i) => (
-                                            <ReferenceLine
-                                                key={i}
-                                                y={y}
-                                                stroke={i === 0 || i === 4 ? "red" : i === 2 ? "black" : "#FFD700"}
-                                                strokeDasharray={i === 2 ? "10 10" : i % 2 === 0 ? "7 7" : "5 10"}
-                                                strokeWidth={0.5}
-                                            />
-                                        ))}
-                                        <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                        <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
-                                    </LineChart>
-                                </ResponsiveContainer>
-                                <div className="flex items-center gap-4 justify-center mb-2 h-[5%]">
-                                    <div className="flex items-center gap-1">
-                                        <span className="w-4 h-1.5 bg-[#8884d8] block rounded-sm" />
-                                        <span className="text-sm">Min</span>
+                                {/* Custom Legend */}
+                                <div className="flex items-center gap-6 justify-center mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Min</span>
                                     </div>
-                                    <div className="flex items-center gap-1">
-                                        <span className="w-4 h-1.5 bg-[#0369a1] block rounded-sm" />
-                                        <span className="text-sm">Max</span>
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
-                                <ResponsiveContainer width="100%" height="47%">
-                                    <LineChart data={paddedGraphDataH} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
 
-                                        <CartesianGrid stroke="#999" strokeWidth={0.2} strokeDasharray="1 0" />
-                                        <XAxis
-                                            dataKey="date"
-                                            interval={0}
-                                            label={{ value: 'DATE', position: 'outsideBottom', dy: 20, dx: -25, fontSize: 13 }}
-                                            tickLine={false}
-                                            tick={<CustomTick />}
-                                        />
-                                        <YAxis
-                                            label={{ value: '°H', angle: -90, position: 'outsideLeft', dx: -20 }}
-                                            ticks={[30, 40, 50, 60, 70]}
-                                            tick={{ fontSize: 16 }}
-                                            domain={[25, 75]}
-                                        />
-                                        {[55, 45].map(y => (
-                                            <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
-                                        ))}
-                                        {sortedControlH.map((y, i) => (
-                                            <ReferenceLine
-                                                key={i}
-                                                y={y}
-                                                stroke={i === 0 || i === 4 ? "red" : i === 2 ? "black" : "#FFD700"}
-                                                strokeDasharray={i === 2 ? "10 10" : i % 2 === 0 ? "7 7" : "5 10"}
-                                                strokeWidth={0.5}
+                                <div className='w-full h-[500px]'>
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={paddedGraphData} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
+                                            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                                            <XAxis
+                                                dataKey="date"
+                                                interval={0}
+                                                label={{ value: 'DATE', position: 'outsideBottom', dy: 20, dx: -25, fontSize: 13 }}
+                                                tickLine={false}
+                                                tick={<CustomTick />}
                                             />
-                                        ))}
-                                        <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                        <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
-                                    </LineChart>
-                                </ResponsiveContainer>
+                                            <YAxis
+                                                label={{ value: '°H', angle: -90, position: 'outsideLeft', offset: 0, dx: -20 }}
+                                                ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                                interval={0}
+                                                tick={{ fontSize: 16 }}
+                                                domain={[-1, 11]}
+                                            />
+                                            {[55, 45].map(y => (
+                                                <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
+                                            ))}
+                                            {sortedControl.map((y, i) => (
+                                                <ReferenceLine
+                                                    key={i}
+                                                    y={y}
+                                                    stroke={i === 0 || i === 4 ? "red" : i === 2 ? "black" : "#FFD700"}
+                                                    strokeDasharray={i === 2 ? "10 10" : i % 2 === 0 ? "7 7" : "5 10"}
+                                                    strokeWidth={0.5}
+                                                />
+                                            ))}
+                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+
+                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+
+
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+
+
+
+
+    const renderGraphFridge = () => (
+        <>
+            {graphData.length > 0 && (
+                <div className='fixed inset-0 flex flex-col backdrop-blur-2xl z-50 2xl:z-20 overflow-y-auto'>
+                    <div className='flex flex-col w-full flex-1 justify-center items-center p-6 gap-6'>
+                        <div className='top-20 z-30 w-full flex flex-wrap justify-between items-center gap-4 px-4 sm:px-6 md:px-10 py-4'>
+                            <button
+                                className="bg-blue-800 hover:bg-blue-500 text-white font-semibold py-2 px-4 sm:px-6 rounded shadow text-sm sm:text-base"
+                                onClick={() => setGraphSFridge(false)}
+                            >
+                                ← กลับไปดูแผนที่
+                            </button>
+
+                            <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-xl sm:text-2xl md:text-3xl font-kanit tracking-wide shadow-md text-center'>
+                                {DatatempFridge[0]?.Line}
                             </div>
                         </div>
+                        {/* Graph Section */}
+                        <div className='w-full flex flex-col gap-6'>
+                            {/* Humidity */}
+                            <div className='bg-white rounded-lg shadow border px-4 py-6'>
+                                <h2 className="text-xl font-semibold text-gray-700 mb-2 text-center">อุณหภูมิ (Temperature)</h2>
 
-                        {/* Humidity Chart
-                    <div className='w-full flex flex-col gap-3'>
-                        <div className='w-full h-[350px] bg-white rounded-lg shadow border'>
-                           
+                                {/* Custom Legend */}
+                                <div className="flex items-center gap-6 justify-center mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Min</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Max</span>
+                                    </div>
+                                </div>
+
+                                <div className='w-full h-[500px]'>
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={paddedGraphData} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
+                                            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                                            <XAxis
+                                                dataKey="date"
+                                                interval={0}
+                                                label={{ value: 'DATE', position: 'outsideBottom', dy: 20, dx: -25, fontSize: 13 }}
+                                                tickLine={false}
+                                                tick={<CustomTick />}
+                                            />
+                                            <YAxis
+                                                label={{ value: '°C', angle: -90, position: 'outsideLeft', dx: -20 }}
+                                                ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                                                tick={{ fontSize: 16 }}
+                                                domain={[-1, 11]}
+                                            />
+                                            {[55, 45].map(y => (
+                                                <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
+                                            ))}
+                                            {sortedControl.map((y, i) => (
+                                                <ReferenceLine
+                                                    key={i}
+                                                    y={y}
+                                                    stroke={i === 0 || i === 4 ? "red" : i === 2 ? "black" : "#FFD700"}
+                                                    strokeDasharray={i === 2 ? "10 10" : i % 2 === 0 ? "7 7" : "5 10"}
+                                                    strokeWidth={0.5}
+                                                />
+                                            ))}
+                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+
+                                            <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[2]} stroke="black" strokeDasharray="10 10" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[3]} stroke="#FFD700" strokeDasharray="7 7" strokeWidth={0.5} />
+                                            <ReferenceLine y={sortedControl[4]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
+
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </div>
+
                         </div>
-                    </div> */}
+                    </div>
+                </div>
+            )}
+        </>
+    );
+
+
+    const renderGraphRoom = () => (
+        <>
+            {graphDataH.length > 0 && (
+                <div className='fixed backdrop-blur-2xl z-50 2xl:z-20 w-full h-full overflow-y-auto'>
+                    {/* Top Bar */}
+                    <div className='sticky top-20 z-30 w-full flex justify-between items-center px-10 py-4'>
+                        <button
+                            className="bg-blue-800 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded shadow"
+                            onClick={() => setGraphRoom(false)}
+                        >
+                            ← กลับไปดูแผนที่
+                        </button>
+
+                        <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-6 py-3 rounded-lg text-3xl font-kanit tracking-wide shadow-md'>
+                            {DatatempRoom[0]?.Line}
+                        </div>
+                    </div>
+                    <div className=' w-full p-6 gap-6 justify-start items-center mt-15'>
+                        {/* Graph Section */}
+                        <div className='w-full flex flex-col gap-6'>
+                            {/* Temperature */}
+                            <div className='bg-white rounded-lg shadow border px-4 py-6'>
+                                <h2 className="text-xl font-semibold text-gray-700 mb-2 text-center">อุณหภูมิ (Temperature)</h2>
+
+                                {/* Custom Legend */}
+                                <div className="flex items-center gap-6 justify-center mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Min</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Max</span>
+                                    </div>
+                                </div>
+
+                                <div className='w-full h-[400px]'>
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={paddedGraphDataT} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
+                                            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                                            <XAxis
+                                                dataKey="date"
+                                                interval={0}
+                                                label={{ value: 'DATE', position: 'outsideBottom', dy: 20, dx: -25, fontSize: 13 }}
+                                                tickLine={false}
+                                                tick={<CustomTick />}
+                                            />
+                                            <YAxis
+                                                label={{ value: '°C', angle: -90, position: 'outsideLeft', dx: -20 }}
+                                                ticks={[20, 21, 25, 29, 30]}
+                                                tick={{ fontSize: 14 }}
+                                                domain={[19, 31]}
+                                            />
+                                            {[31, 28, 27, 26, 24, 23, 22, 21, 35, 15].map(y => (
+                                                <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
+                                            ))}
+                                            {sortedControlT.map((y, i) => (
+                                                <ReferenceLine
+                                                    key={i}
+                                                    y={y}
+                                                    stroke={i === 0 || i === 4 ? "red" : i === 2 ? "black" : "#FFD700"}
+                                                    strokeDasharray={i === 2 ? "10 10" : i % 2 === 0 ? "7 7" : "5 10"}
+                                                    strokeWidth={0.5}
+                                                />
+                                            ))}
+                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </div>
+
+                            {/* Humidity */}
+                            <div className='bg-white rounded-lg shadow border px-4 py-6'>
+                                <h2 className="text-xl font-semibold text-gray-700 mb-2 text-center">ความชื้น (Humidity)</h2>
+
+                                {/* Custom Legend */}
+                                <div className="flex items-center gap-6 justify-center mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Min</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="text-sm text-gray-700">Max</span>
+                                    </div>
+                                </div>
+
+                                <div className='w-full h-[400px]'>
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={paddedGraphDataH} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
+                                            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                                            <XAxis
+                                                dataKey="date"
+                                                interval={0}
+                                                label={{ value: 'DATE', position: 'outsideBottom', dy: 20, dx: -25, fontSize: 13 }}
+                                                tickLine={false}
+                                                tick={<CustomTick />}
+                                            />
+                                            <YAxis
+                                                label={{ value: '%H', angle: -90, position: 'outsideLeft', dx: -20 }}
+                                                ticks={[30, 40, 50, 60, 70]}
+                                                tick={{ fontSize: 14 }}
+                                                domain={[25, 75]}
+                                            />
+                                            {[55, 45].map(y => (
+                                                <ReferenceLine key={y} y={y} stroke="gray" strokeDasharray="0 0" strokeWidth={0.1} />
+                                            ))}
+                                            {sortedControlH.map((y, i) => (
+                                                <ReferenceLine
+                                                    key={i}
+                                                    y={y}
+                                                    stroke={i === 0 || i === 4 ? "red" : i === 2 ? "black" : "#FFD700"}
+                                                    strokeDasharray={i === 2 ? "10 10" : i % 2 === 0 ? "7 7" : "5 10"}
+                                                    strokeWidth={0.5}
+                                                />
+                                            ))}
+                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             )}
