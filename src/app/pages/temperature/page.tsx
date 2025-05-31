@@ -400,7 +400,7 @@ export default function TempChart() {
 
 
 
-
+    const [point, setpoint] = useState('')
 
 
 
@@ -896,7 +896,7 @@ export default function TempChart() {
                         </button>
 
                         <div className='text-white bg-gradient-to-r from-sky-600 via-blue-700 to-blue-900 px-6 py-3 rounded-lg text-3xl font-kanit tracking-wide shadow-md'>
-                            {DatatempRoom[0]?.Line}
+                            POINT: {point}
                         </div>
                     </div>
                     <div className=' w-full p-6 gap-6 justify-start items-center mt-15'>
@@ -1030,11 +1030,18 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => { handleClickGraphRoom('SMT-13') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('SMT-13')
+                    setpoint('1')
+                }}
                     className="absolute top-[6%] right-[41%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick={() => { handleClickGraphRoom('SMT-12') }}
+                <div
+                    onClick={() => {
+                        handleClickGraphRoom('SMT-12')
+                        setpoint('2')
+                    }}
                     className="absolute bottom-[4%] right-[43.5%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
@@ -1053,11 +1060,17 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => { handleClickGraphRoom('Laser') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('Laser')
+                    setpoint('1')
+                }}
                     className="absolute top-[7%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick={() => { handleClickGraphRoom('SMT-6') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('SMT-6')
+                    setpoint('2')
+                }}
                     className="absolute bottom-[5%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
@@ -1076,11 +1089,18 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => { handleClickGraphRoom('After') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('After')
+                    setpoint('1')
+
+                }}
                     className="absolute top-[6%] right-[60%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
-                <div onClick={() => { handleClickGraphRoom('Qa Consumer') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('Qa Consumer')
+                    setpoint('2')
+                }}
                     className="absolute bottom-[4%] left-[30%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
@@ -1098,12 +1118,18 @@ export default function TempChart() {
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
 
-                <div onClick={() => { handleClickGraphRoom('Qa Automotive1') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('Qa Automotive1')
+                    setpoint('1')
+                }}
                     className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
 
-                <div onClick={() => { handleClickGraphRoom('Qa Automotive2') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('Qa Automotive2')
+                    setpoint('2')
+                }}
                     className="absolute bottom-[4.5%] right-[30%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
@@ -1123,7 +1149,10 @@ export default function TempChart() {
                 />
 
 
-                <div onClick={() => { handleClickGraphRoom('SMT-19') }}
+                <div onClick={() => {
+                    handleClickGraphRoom('SMT-19')
+                    setpoint('CHECK')
+                }}
                     className="absolute bottom-[4.5%] left-[35%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
@@ -1141,25 +1170,37 @@ export default function TempChart() {
             />
 
             {/* POINT 1*/}
-            <div onClick={() => { handleClickGraphRoom('Automotive') }}
+            <div onClick={() => {
+                handleClickGraphRoom('Automotive')
+                setpoint('1')
+            }}
                 className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* POINT 2*/}
-            <div onClick={() => { handleClickGraphRoom('Consumer') }}
+            <div onClick={() => {
+                handleClickGraphRoom('Consumer')
+                setpoint('2')
+            }}
                 className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
                 {Riple_effect()}
+
             </div>
 
             {/* POINT 3*/}
-            <div onClick={() => { handleClickGraphRoom('IQA') }}
+            <div onClick={() => {
+                handleClickGraphRoom('IQA')
+                setpoint('3')
+            }}
                 className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
             {/* Super Dry 1-2 */}
-            <div onClick={() => { setrenderSuperDry1_2(true) }} className="absolute top-[19%] right-[3%] w-12 h-12 z-10">
+            <div onClick={() => {
+                setrenderSuperDry1_2(true)
+            }} className="absolute top-[19%] right-[3%] w-12 h-12 z-10">
                 {Riple_effect()}
             </div>
 
