@@ -736,7 +736,7 @@ export default function TempChart() {
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-500 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
@@ -826,7 +826,7 @@ export default function TempChart() {
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-500 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
@@ -913,7 +913,7 @@ export default function TempChart() {
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-500 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
@@ -965,7 +965,7 @@ export default function TempChart() {
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-500 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
