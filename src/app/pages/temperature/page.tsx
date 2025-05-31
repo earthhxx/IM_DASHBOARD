@@ -772,7 +772,7 @@ export default function TempChart() {
                                                 />
                                             ))}
                                             <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={2} />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
                                             <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
@@ -861,7 +861,7 @@ export default function TempChart() {
                                                 />
                                             ))}
                                             <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={2}  />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
                                             <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
@@ -948,7 +948,7 @@ export default function TempChart() {
                                                 />
                                             ))}
                                             <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={2} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -1000,7 +1000,7 @@ export default function TempChart() {
                                                 />
                                             ))}
                                             <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={2} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
