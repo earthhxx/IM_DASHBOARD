@@ -707,7 +707,7 @@ export default function TempChart() {
     const renderGraphSuperDry = () => (
         <>
             {graphData.length > 0 && (
-                <div className='fixed inset-0 flex flex-col backdrop-blur-2xl z-50 2xl:z-20 overflow-y-auto'>
+                <div className='fixed inset-0 flex flex-col bg-white z-50 2xl:z-20 overflow-y-auto'>
 
                     <div className='flex flex-col w-full flex-1 justify-center items-center p-6 gap-6'>
                         <div className='z-30 w-full flex flex-wrap justify-between items-center gap-4 px-4 sm:px-6 md:px-10 py-4'>
@@ -799,7 +799,7 @@ export default function TempChart() {
     const renderGraphFridge = () => (
         <>
             {graphData.length > 0 && (
-                <div className='fixed inset-0 flex flex-col backdrop-blur-2xl z-50 2xl:z-20 overflow-y-auto'>
+                <div className='fixed inset-0 flex flex-col bg-white z-50 2xl:z-20 overflow-y-auto'>
                     <div className='flex flex-col w-full flex-1 justify-center items-center p-6 gap-6'>
                         <div className='top-20 z-30 w-full flex flex-wrap justify-between items-center gap-4 px-4 sm:px-6 md:px-10 py-4'>
                             <button
@@ -885,7 +885,7 @@ export default function TempChart() {
     const renderGraphRoom = () => (
         <>
             {graphDataH.length > 0 && (
-                <div className='fixed backdrop-blur-2xl z-50 2xl:z-20 w-full h-full overflow-y-auto'>
+                <div className='fixed bg-white z-50 2xl:z-20 w-full h-full overflow-y-auto'>
                     {/* Top Bar */}
                     <div className='sticky top-20 z-30 w-full flex justify-between items-center px-10 py-4'>
                         <button
