@@ -887,7 +887,7 @@ export default function TempChart() {
             {graphDataH.length > 0 && (
                 <div className='fixed bg-white z-50 2xl:z-20 w-full h-full '>
                     {/* Top Bar */}
-                    <div className='fixed top-20 z-30 w-full flex justify-between items-center px-10 py-4'>
+                    <div className='fixed top-25 z-30 w-full flex flex-wrap justify-between items-center px-10 py-4'>
                         <button
                             className="bg-blue-800 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded shadow"
                             onClick={() => setGraphRoom(false)}
@@ -899,11 +899,11 @@ export default function TempChart() {
                             POINT: {point}
                         </div>
                     </div>
-                    <div className=' w-full p-6 gap-6 justify-start items-center mt-15'>
+                    <div className=' w-full gap-2 justify-start items-center mt-15'>
                         {/* Graph Section */}
                         <div className='w-full flex flex-col gap-6'>
                             {/* Temperature */}
-                            <div className='bg-white rounded-lg shadow border px-4 py-6'>
+                            <div className='bg-white rounded-lg shadow border px-4 py-6 mt-10'>
                                 <h2 className="text-xl font-semibold text-gray-700 mb-2 text-center">อุณหภูมิ (Temperature)</h2>
 
                                 {/* Custom Legend */}
@@ -918,9 +918,9 @@ export default function TempChart() {
                                     </div>
                                 </div>
 
-                                <div className='w-full h-[300px]'>
+                                <div className='w-full h-[280px]'>
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={paddedGraphDataT} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
+                                        <LineChart data={paddedGraphDataT} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
                                             <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
                                             <XAxis
                                                 dataKey="date"
@@ -970,9 +970,9 @@ export default function TempChart() {
                                     </div>
                                 </div>
 
-                                <div className='w-full h-[300px]'>
+                                <div className='w-full h-[280px]'>
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={paddedGraphDataH} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
+                                        <LineChart data={paddedGraphDataH} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
                                             <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
                                             <XAxis
                                                 dataKey="date"
