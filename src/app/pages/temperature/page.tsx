@@ -771,8 +771,8 @@ export default function TempChart() {
                                                     strokeWidth={0.5}
                                                 />
                                             ))}
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
                                             <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
@@ -860,8 +860,8 @@ export default function TempChart() {
                                                     strokeWidth={0.5}
                                                 />
                                             ))}
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
                                             <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
@@ -885,9 +885,9 @@ export default function TempChart() {
     const renderGraphRoom = () => (
         <>
             {graphDataH.length > 0 && (
-                <div className='fixed bg-white z-50 2xl:z-20 w-full h-full overflow-y-auto'>
+                <div className='fixed bg-white z-50 2xl:z-20 w-full h-full '>
                     {/* Top Bar */}
-                    <div className='sticky top-20 z-30 w-full flex justify-between items-center px-10 py-4'>
+                    <div className='fixed top-20 z-30 w-full flex justify-between items-center px-10 py-4'>
                         <button
                             className="bg-blue-800 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded shadow"
                             onClick={() => setGraphRoom(false)}
@@ -909,16 +909,16 @@ export default function TempChart() {
                                 {/* Custom Legend */}
                                 <div className="flex items-center gap-6 justify-center mb-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-[#38bdf8] block rounded-sm" />
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
 
-                                <div className='w-full h-[400px]'>
+                                <div className='w-full h-[300px]'>
                                     <ResponsiveContainer width="100%" height="100%">
                                         <LineChart data={paddedGraphDataT} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
                                             <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
@@ -947,8 +947,8 @@ export default function TempChart() {
                                                     strokeWidth={0.5}
                                                 />
                                             ))}
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -961,16 +961,16 @@ export default function TempChart() {
                                 {/* Custom Legend */}
                                 <div className="flex items-center gap-6 justify-center mb-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#8884d8] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-[#38bdf8] block rounded-sm" />
                                         <span className="text-sm text-gray-700">Min</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="w-5 h-2 bg-[#0369a1] block rounded-sm" />
+                                        <span className="w-5 h-2 bg-blue-600 block rounded-sm" />
                                         <span className="text-sm text-gray-700">Max</span>
                                     </div>
                                 </div>
 
-                                <div className='w-full h-[400px]'>
+                                <div className='w-full h-[300px]'>
                                     <ResponsiveContainer width="100%" height="100%">
                                         <LineChart data={paddedGraphDataH} margin={{ top: 10, right: 30, left: 20, bottom: 40 }}>
                                             <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
@@ -999,8 +999,8 @@ export default function TempChart() {
                                                     strokeWidth={0.5}
                                                 />
                                             ))}
-                                            <Line type="monotone" dataKey="min" stroke="#8884d8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="#0369a1" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
