@@ -345,6 +345,7 @@ export default function TempChart() {
     const [Fridge4_5_6_7_8Card, setFridge4_5_6_7_8] = useState(false);
     const [renderSuperDry1_2Card, setrenderSuperDry1_2] = useState(false);
     const [renderSuperDry3_4Card, setrenderSuperDry3_4] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const [state, setState] = useState<'location' | 'mapnone' | 'mapProduction1' | 'mapProduction2' | 'mapProduction3' | 'mapProduction4' | 'mapProduction5' | 'mapWarehouse'>('mapnone');
 
     // Define refs for the cards
@@ -493,6 +494,8 @@ export default function TempChart() {
             const response = await fetch(`/api/temperature/location?location=${loc}`);
             if (!response.ok) {
                 console.log('response fail');
+                
+                setShowAlert(true);
                 return;
             }
 
@@ -536,6 +539,8 @@ export default function TempChart() {
             const response = await fetch(`/api/temperature/superdry?location=${loc}`);
             if (!response.ok) {
                 console.log('response fail');
+                
+                setShowAlert(true);
                 return;
             }
 
@@ -569,6 +574,8 @@ export default function TempChart() {
             const response = await fetch(`/api/temperature/fridge?location=${loc}`);
             if (!response.ok) {
                 console.log('response fail');
+                
+                setShowAlert(true);
                 return;
             }
 
@@ -666,6 +673,29 @@ export default function TempChart() {
         </>
 
     );
+
+    const renderalert = () => (
+        <>
+            <div className='w-full h-full fixed flex flex-col items-center justify-center p-6 gap-6'>
+                <div id="alert-card" className=" flex justify-center items-center z-50 p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                    <svg className="flex-shrink-0 w-10 h-10 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M18 10A8 8 0 1 1 2 10a8 8 0 0 1 16 0Zm-8-4a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 10 6Zm0 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+                    </svg>
+                    <div className="ms-2 text-xl font-kanit ">
+                        ไม่พบข้อมูลสำหรับสถานที่นี้ หรือยังไม่ได้บันทึกข้อมูล
+                    </div>
+                    <button onClick={() => setShowAlert(false)} className="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-100 inline-flex items-center justify-center h-12 w-12 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" aria-label="Close">
+                        <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1l12 12M13 1L1 13" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+
+        </>
+    );
+
 
     const CustomTick = (props: any): ReactElement => {
         const { x, y, payload } = props;
@@ -861,7 +891,7 @@ export default function TempChart() {
                                                 />
                                             ))}
                                             <Line type="monotone" dataKey="min" stroke="#38bdf8" strokeWidth={2} />
-                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={2}  />
+                                            <Line type="monotone" dataKey="max" stroke="blue" strokeWidth={2} />
 
                                             <ReferenceLine y={sortedControl[0]} stroke="red" strokeDasharray="7 7" strokeWidth={0.5} />
                                             <ReferenceLine y={sortedControl[1]} stroke="#FFD700" strokeDasharray="5 10" strokeWidth={0.5} />
@@ -1578,6 +1608,7 @@ export default function TempChart() {
                 </div>
             </div>
             {/* renderALLCard */}
+            {showAlert && renderalert()}
             {GraphRoom && renderGraphRoom()}
             {GraphSuperD && renderGraphSuperDry()}
             {GraphFridge && renderGraphFridge()}
