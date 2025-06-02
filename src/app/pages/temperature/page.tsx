@@ -1058,7 +1058,7 @@ export default function TempChart() {
             <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
-                    src="/images/Production1.png"
+                    src="/images/production1.png"
                     alt="Production1"
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
@@ -1088,7 +1088,7 @@ export default function TempChart() {
             <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
-                    src="/images/Production2.png"
+                    src="/images/production2.png"
                     alt="Production2"
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
@@ -1117,7 +1117,7 @@ export default function TempChart() {
             <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
-                    src="/images/Production3.png"
+                    src="/images/production3.png"
                     alt="Production3"
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
@@ -1146,7 +1146,7 @@ export default function TempChart() {
             <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
-                    src="/images/Production4.png"
+                    src="/images/production4.png"
                     alt="Production4"
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
@@ -1176,7 +1176,7 @@ export default function TempChart() {
             <div className="relative w-full max-w-7xl h-full mx-auto">
                 {/* ภาพพื้นหลัง */}
                 <img
-                    src="/images/Production5.png"
+                    src="/images/production5.png"
                     alt="Production5"
                     className="w-full h-auto lg:h-[670px] p-8 mt-2"
                 />
