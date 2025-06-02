@@ -679,7 +679,7 @@ export default function TempChart() {
 
     const renderalert = () => (
         <>
-            <div className='w-full h-full fixed flex flex-col mt-25 items-center justify-center p-6 gap-6'>
+            <div className='w-full h-full fixed flex flex-col mt-25 items-center justify-center p-6 gap-6 z-50'>
                 <div id="alert-card" className=" flex justify-center w-[50%] h-[20%] items-center z-50 p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
                     <svg className="flex-shrink-0 w-10 h-10 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M18 10A8 8 0 1 1 2 10a8 8 0 0 1 16 0Zm-8-4a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 10 6Zm0 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
