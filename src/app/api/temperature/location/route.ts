@@ -5,9 +5,10 @@ import sql from 'mssql';
 export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
     const num = searchParams.get('location');
+    const area = searchParams.get('area');
 
-    if (!num) {
-        return NextResponse.json({ message: 'Missing location parameter' }, { status: 400 });
+    if (!num && !area) {
+        return NextResponse.json({ message: 'Missing location or area parameter' }, { status: 400 });
     }
 
     try {
@@ -15,6 +16,7 @@ export async function GET(req: NextRequest) {
         const result = await pool
             .request()
             .input('line', sql.NVarChar, num)
+            .input('area', sql.NVarChar, area)
             .query(`
                 SELECT 
                     [ID],
@@ -60,7 +62,7 @@ export async function GET(req: NextRequest) {
                 FROM 
                     [DASHBOARD].[dbo].[Temperature]
                 WHERE 
-                    [Line] = @line;
+                    [Line] = @line AND [Area] = @area 
             `);
 
         if (result.recordset.length === 0) {

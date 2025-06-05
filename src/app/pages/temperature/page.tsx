@@ -4,8 +4,7 @@ import React, { useState, Suspense, useEffect, ReactElement } from 'react';
 import ParamListener from '../../components/UseParams';
 import { LineChart, Line, XAxis, XAxisProps, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine, Legend } from 'recharts';
 import { CiTempHigh } from "react-icons/ci"; // commented out originally
-import { start } from 'repl';
-import { TextBox } from '@react-pdf-viewer/core';
+
 
 
 type DataSuperDry = {
@@ -477,15 +476,15 @@ export default function TempChart() {
         setGraphSFridge(true);
     };
 
-    const handleClickGraphRoom = async (loc: string) => {
-        await fetchDataRoom(loc)
+    const handleClickGraphRoom = async (loc: string,area:string) => {
+        await fetchDataRoom(loc,area)
         if (graphDataH || graphDataT) {
                 setGraphRoom(true);
         }
     };
 
 
-    const fetchDataRoom = async (loc: string) => {
+    const fetchDataRoom = async (loc: string,area:string) => {
 
         if (!loc) {
             console.error("no location");
@@ -493,7 +492,7 @@ export default function TempChart() {
         }
 
         try {
-            const response = await fetch(`/api/temperature/location?location=${loc}`);
+            const response = await fetch(`/api/temperature/location?location=${loc}&area=${area}`);
             if (!response.ok) {
                 console.log('response fail');
                 
@@ -1064,7 +1063,7 @@ export default function TempChart() {
                 />
 
                 <div onClick={() => {
-                    handleClickGraphRoom('SMT-13')
+                    handleClickGraphRoom('SMT-13','SMT1')
                     setpoint('1')
                 }}
                     className="absolute top-[6%] right-[41%] w-12 h-12 z-10">
@@ -1072,7 +1071,7 @@ export default function TempChart() {
                 </div>
                 <div
                     onClick={() => {
-                        handleClickGraphRoom('SMT-12')
+                        handleClickGraphRoom('SMT-12', 'SMT1')
                         setpoint('2')
                     }}
                     className="absolute bottom-[4%] right-[43.5%] w-12 h-12 z-10">
@@ -1094,14 +1093,14 @@ export default function TempChart() {
                 />
 
                 <div onClick={() => {
-                    handleClickGraphRoom('Laser')
+                    handleClickGraphRoom('Laser','SMT2')
                     setpoint('1')
                 }}
                     className="absolute top-[7%] right-[43%] w-12 h-12 z-10">
                     {Riple_effect()}
                 </div>
                 <div onClick={() => {
-                    handleClickGraphRoom('SMT-6')
+                    handleClickGraphRoom('SMT-6','SMT2')
                     setpoint('2')
                 }}
                     className="absolute bottom-[5%] right-[43%] w-12 h-12 z-10">
@@ -1123,7 +1122,7 @@ export default function TempChart() {
                 />
 
                 <div onClick={() => {
-                    handleClickGraphRoom('After')
+                    handleClickGraphRoom('After','Assembly3')
                     setpoint('1')
 
                 }}
@@ -1131,7 +1130,7 @@ export default function TempChart() {
                     {Riple_effect()}
                 </div>
                 <div onClick={() => {
-                    handleClickGraphRoom('Qa Consumer')
+                    handleClickGraphRoom('Qa Consumer', 'Assembly3')
                     setpoint('2')
                 }}
                     className="absolute bottom-[4%] left-[30%] w-12 h-12 z-10">
@@ -1152,7 +1151,7 @@ export default function TempChart() {
                 />
 
                 <div onClick={() => {
-                    handleClickGraphRoom('Qa Automotive1')
+                    handleClickGraphRoom('Qa Automotive1','Assembly2')
                     setpoint('1')
                 }}
                     className="absolute top-[5.5%] right-[28%] w-12 h-12 z-10">
@@ -1160,7 +1159,7 @@ export default function TempChart() {
                 </div>
 
                 <div onClick={() => {
-                    handleClickGraphRoom('Qa Automotive2')
+                    handleClickGraphRoom('Qa Automotive2','Assembly2')
                     setpoint('2')
                 }}
                     className="absolute bottom-[4.5%] right-[30%] w-12 h-12 z-10">
@@ -1183,7 +1182,7 @@ export default function TempChart() {
 
 
                 <div onClick={() => {
-                    handleClickGraphRoom('SMT-19')
+                    handleClickGraphRoom('SMT-19','Assembly3')
                     setpoint('CHECK')
                 }}
                     className="absolute bottom-[4.5%] left-[35%] w-12 h-12 z-10">
@@ -1204,7 +1203,7 @@ export default function TempChart() {
 
             {/* POINT 1*/}
             <div onClick={() => {
-                handleClickGraphRoom('Automotive')
+                handleClickGraphRoom('Automotive','Warehouse')
                 setpoint('1')
             }}
                 className="absolute bottom-[5%] right-[10%] w-12 h-12 z-10">
@@ -1213,7 +1212,7 @@ export default function TempChart() {
 
             {/* POINT 2*/}
             <div onClick={() => {
-                handleClickGraphRoom('Consumer')
+                handleClickGraphRoom('Consumer','Warehouse')
                 setpoint('2')
             }}
                 className="absolute bottom-[32%] right-[61%] w-12 h-12 z-10">
@@ -1223,7 +1222,7 @@ export default function TempChart() {
 
             {/* POINT 3*/}
             <div onClick={() => {
-                handleClickGraphRoom('IQA')
+                handleClickGraphRoom('IQA','Warehouse')
                 setpoint('3')
             }}
                 className="absolute top-[52%] right-[49%] w-12 h-12 z-10">
