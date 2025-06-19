@@ -1,14 +1,16 @@
 import sql from 'mssql';
 import dotenv from 'dotenv';
 
-dotenv.config(); // โหลดค่าจาก .env
+
+dotenv.config();
 
 export const createConnection = async () => {
+  console.log('DB_SERVER:', process.env.DB_SERVER); // debug
   try {
     const pool = await sql.connect({
       user: process.env.DB_USER!,
       password: process.env.DB_PASSWORD!,
-      server: process.env.DB_SERVER!,
+      server: process.env.DB_SERVER!, // ต้องมีค่าเป็น string
       database: process.env.DB_NAME!,
       options: {
         encrypt: true,
