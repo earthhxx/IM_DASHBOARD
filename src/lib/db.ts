@@ -1,23 +1,27 @@
 import sql from 'mssql';
+import dotenv from 'dotenv';
+
+dotenv.config(); // โหลดค่าจาก .env
 
 export const createConnection = async () => {
   try {
     const pool = await sql.connect({
-      user: 'sa',                    // ชื่อผู้ใช้
-      password: 'B1mUmNU9',          // รหัสผ่าน
-      server: '192.168.120.9',       // IP หรือ hostname ของเซิร์ฟเวอร์ SQL Server
-      database: 'DASHBOARD',         // ชื่อฐานข้อมูล
+      user: process.env.DB_USER!,
+      password: process.env.DB_PASSWORD!,
+      server: process.env.DB_SERVER!,
+      database: process.env.DB_NAME!,
       options: {
-        encrypt: true,               // ใช้การเข้ารหัส SSL หากใช้งานบน Azure หรือเซิร์ฟเวอร์ที่รองรับ
-        trustServerCertificate: true, // เชื่อมต่อ SSL โดยไม่ต้องใช้ใบรับรอง
+        encrypt: true,
+        trustServerCertificate: true,
       },
-      connectionTimeout: 10000,      // ตั้งค่า timeout ของการเชื่อมต่อ
-      requestTimeout: 15000,         // ตั้งค่า timeout ของการส่งคำขอ (query)
+      connectionTimeout: 10000,
+      requestTimeout: 15000,
     });
 
+    console.log('✅ Connected to DB:', process.env.DB_NAME);
     return pool;
   } catch (err) {
-    console.error('Database connection error:', err);
+    console.error('❌ Database connection error:', err);
     throw err;
   }
 };
