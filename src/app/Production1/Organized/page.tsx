@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { MdClose } from "react-icons/md";
+import React, { useState, useEffect ,Suspense} from "react";
 import Image from "next/image";
 import { SpecialZoomLevel, Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import ParamListener from '../../components/UseParams';
 
 type TeamData = {
   room: string;
@@ -25,31 +25,32 @@ const Production1_Organized = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-  const O_room: string = "PRODUCTION1";
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const [param, setParam] = useState<string | null>(''); // ไม่อนุญาตให้เป็น null
 
   useEffect(() => {
-    setLoading(true);
-    setError("");
 
-    fetch(`/api/Organized?O_team=${selectedTeam}&O_room=${O_room}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Failed to fetch data. Status: ${res.status}`);
+    const fetchTeamData = async () => {
+      if (!param) return; // ✅ รอจนกว่า param จะมีค่า
+      if (!selectedTeam) return; // ✅ รอจนกว่า selectedTeam จะมีค่า
+
+      try {
+        const response = await fetch(`/api/Organized?O_team=${selectedTeam}&O_room=${param}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("fetch data", data);
-        setTeamData(data.data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
+        const result = await response.json();
+        setTeamData(result.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+      } finally {
         setLoading(false);
-      });
-  }, [selectedTeam]);
+      }
+    };
+
+    fetchTeamData();
+  }, [selectedTeam, param, ParamListener]);
 
   const loadPdf = (base64: string) => {
     // แปลง base64 เป็น Blob
@@ -80,6 +81,9 @@ const Production1_Organized = () => {
 
   return (
     <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
+      <Suspense fallback={<div>Loading...</div>}>
+        <ParamListener onGetParam={setParam} />
+      </Suspense>
       {/* 1 */}
       <div className="flex h-[92px] mt-22 bg-gradient-to-r from-blue-800 to-blue-900 w-full drop-shadow-2xl ">
         <div className="flex flex-1 justify-end">
@@ -135,17 +139,17 @@ const Production1_Organized = () => {
                 <div
                   key={`${data.room}_${data.department}_${data.location}`}
                   onClick={() => {
-                    console.log('after map data',data)
-                    console.log('after map',data.base64Pdf);
+                    console.log('after map data', data)
+                    console.log('after map', data.base64Pdf);
                     handleLoadPdf(data.base64Pdf);
                   }}
                   className="group flex w-65 h-25 rounded-l-lg items-center border border-solid border-blue-100 justify-center bg-white shadow-lg hover:bg-white transition-all"
                 >
                   <div className="flex w-[35%] h-full text-blue-900 bg-blue-100 rounded-l-lg justify-center items-center group-hover:text-white group-hover:bg-blue-800 text-wrap">
                     {data.location}
-                    
+
                   </div>
-               
+
                   <div className="flex w-[65%] justify-center items-center pe-2 ps-2 group-hover:bg-white">
                     <Image
                       src="/images/Organized.png"
