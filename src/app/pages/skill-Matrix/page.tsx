@@ -91,12 +91,12 @@ const Production1_skill_Matrix = () => {
   const isMock = false;
   const sampleBase64Pdf = "data:application/pdf;base64,JVBERi0xLjUKJeLjz9MKMSAwIG9iago8PAovVGl0bGUgKP7/AEMAbwBuAHQAZQBuAHQAKQovQ3JlYXRvciAoUHl0aG9uIFBERiBHZW5lcmF0b3IpCi9Qcm9kdWNlciAoUHl0aG9uIFBERiBMaWJyYXJ5IDMuMy4xKQovQ3JlYXRpb25EYXRlIChEOjIwMjUwNTE5MDkyNzI4KzAwJzAwJykKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0xlbmd0aCAzNwo+PgpcbHN0cmVhbQpCBiAwIDAgMCAwIDAgMCBzCkJUCi9GMQAxMiBUZgovVGQKKDEwMCA3MDApIFRkCihIZWxsbywgUERGISkgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgNCAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgNSAwIFIKPj4KPj4KL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KL0NvbnRlbnRzIDIgMCBSCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovTmFtZSAvRjEKL0Jhc2VGb250IC9IZWx2ZXRpY2EKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKPj4KZW5kb2JqCnhyZWYKMCA2CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDExNiAwMDAwMCBuIAowMDAwMDAwMjgxIDAwMDAwIG4gCjAwMDAwMDAzNzkgMDAwMDAgbiAKMDAwMDAwMDUzMiAwMDAwMCBuIAowMDAwMDAwNjMyIDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgNgovUm9vdCAxIDAgUgo+PgpzdGFydHhyZWYKNzM2CiUlRU9G";
 
-  useEffect(() => {
-    if (param) {
-      console.log("ProductOrderNo updated:", param);
-      // You can add additional logic here, such as fetching data based on ProductOrderNo
-    }
-  }, [param]);
+  // useEffect(() => {
+  //   if (param) {
+  //     console.log("ProductOrderNo updated:", param);
+  //     // You can add additional logic here, such as fetching data based on ProductOrderNo
+  //   }
+  // }, [param]);
 
   useEffect(() => {
     const fetchTeamData = async () => {
