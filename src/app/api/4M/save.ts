@@ -4,8 +4,8 @@ import sql from 'mssql';
 
 export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
-    const team = searchParams.get('S_team');
-    const locationto4m = searchParams.get('locationto4m');
+    const team = searchParams.get('S_team'); // 'A' หรือ 'B'
+    const locationto4m = searchParams.get('locationto4m'); // เช่น 'SMT-6'
 
     if (!team || !locationto4m) {
         return NextResponse.json({ message: 'Missing team or location parameter' }, { status: 400 });
@@ -14,32 +14,15 @@ export async function GET(req: NextRequest) {
     try {
         const pool = await createConnection();
 
-        // คำนวณวันที่ที่ใช้ query
-        const now = new Date(); // เวลา server ปัจจุบัน
-        const currentHour = now.getHours();
-        const currentMinute = now.getMinutes();
-
-        // เช็คว่าช่วงเวลาอยู่ใน 00:00 - 07:45
-        const isBefore745 = (currentHour < 7) || (currentHour === 7 && currentMinute < 45);
-
-        if (isBefore745) {
-            now.setDate(now.getDate() - 1); // -1 วัน
-        }
-
-        // แปลงเป็นรูปแบบ 'YYYY-MM-DD' สำหรับ SQL
-        const queryDate = now.toISOString().split('T')[0];
-
         const result = await pool
             .request()
             .input('locationto4m', sql.VarChar, locationto4m)
-            .input('shiftPattern', sql.VarChar, `${team}/%`)
-            .input('queryDate', sql.Date, queryDate)
+            .input('shiftPattern', sql.VarChar, `${team}/%`) // เช่น A/% หรือ B/%
             .query(`
                 SELECT TOP 1 *
                 FROM [DASHBOARD].[dbo].[4M_Change]
                 WHERE [Line] = @locationto4m
                   AND [Shift] LIKE @shiftPattern
-                  AND CAST([Date] AS DATE) = @queryDate
                 ORDER BY [Date] DESC
             `);
 
