@@ -20,7 +20,7 @@ export const createConnection = async () => {
       requestTimeout: 15000,
     });
 
-    console.log('✅ Connected to DB:', process.env.DB_NAME);
+    // console.log('✅ Connected to DB:', process.env.DB_NAME);
     return pool;
   } catch (err) {
     console.error('❌ Database connection error:', err);
