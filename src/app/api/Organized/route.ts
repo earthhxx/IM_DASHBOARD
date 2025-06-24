@@ -20,9 +20,9 @@ export async function GET(req: NextRequest) {
       .request()
       .input('team', sql.VarChar, team)
       .input('room', sql.VarChar, room)
-      .query(`SELECT O_Room, O_Team, O_Dep, O_Loc, O_PDFs FROM ORGANIZATION WHERE O_Room = @room AND O_Team = @team Order by O_Loc desc`);
+      .query(`SELECT O_Room, O_Team, O_Dep, O_Loc FROM ORGANIZATION WHERE O_Room = @room AND O_Team = @team Order by O_Loc desc`);
 
-    console.log('Query result:', result.recordset); // ตรวจสอบผลลัพธ์จากฐานข้อมูล
+
 
     if (result.recordset.length === 0) {
       return NextResponse.json({ message: 'No data found' }, { status: 404 });
@@ -33,20 +33,15 @@ export async function GET(req: NextRequest) {
     const pdfBase64List = [];
     
     for (const row of result.recordset) {
-      const { O_Room, O_Team, O_Dep, O_Loc, O_PDFs } = row;
+      const { O_Room, O_Team, O_Dep, O_Loc } = row;
       // console.log(pdfUrls)
 
-      if (!O_PDFs) continue; 
-      
-
-      const base64PDF = Buffer.from(O_PDFs).toString('base64');
 
       pdfBase64List.push({
         room: O_Room,
         team: O_Team,
         department: O_Dep,
         location: O_Loc,
-        base64Pdf: `data:application/pdf;base64,${base64PDF}`,
       });
     }
 

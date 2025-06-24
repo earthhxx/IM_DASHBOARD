@@ -244,12 +244,12 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Production2/Organized">
+                      <Link onClick={() => { handleCardToggle(2) }} href="/pages/Organized?Param=PRODUCTION2">
                         ORGANIZED
                       </Link>
                     </li>
                     <li>
-                      <Link href="/pages/temperature?Param=PRODUCTION2">
+                      <Link onClick={() => { handleCardToggle(2) }} href="/pages/temperature?Param=PRODUCTION2">
                         TEMPERATURE
                       </Link>
                     </li>
@@ -275,15 +275,15 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Production3/Organized">
+                      <Link onClick={() => handleCardToggle(3)} href="/pages/Organized?Param=PRODUCTION3">
                         ORGANIZED
                       </Link>
                     </li>
                     <li>
-                        <Link href="/pages/temperature?Param=PRODUCTION3">
-                          TEMPERATURE
-                        </Link>
-                      </li>
+                      <Link onClick={() => handleCardToggle(3)} href="/pages/temperature?Param=PRODUCTION3">
+                        TEMPERATURE
+                      </Link>
+                    </li>
                   </div>
                 </div>
               </div>
@@ -306,15 +306,15 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Production4/Organized">
+                      <Link onClick={() => handleCardToggle(4)} href="/pages/Organized?Param=PRODUCTION4">
                         ORGANIZED
                       </Link>
                     </li>
                     <li>
-                        <Link href="/pages/temperature?Param=PRODUCTION4">
-                          TEMPERATURE
-                        </Link>
-                      </li>
+                      <Link onClick={() => handleCardToggle(4)} href="/pages/temperature?Param=PRODUCTION4">
+                        TEMPERATURE
+                      </Link>
+                    </li>
                   </div>
                 </div>
               </div>
@@ -337,15 +337,15 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Production5/Organized">
+                      <Link onClick={() => handleCardToggle(5)} href="/pages/Organized?Param=PRODUCTION5">
                         ORGANIZED
                       </Link>
                     </li>
                     <li>
-                        <Link href="/pages/temperature?Param=PRODUCTION5">
-                          TEMPERATURE
-                        </Link>
-                      </li>
+                      <Link onClick={() => handleCardToggle(5)} href="/pages/temperature?Param=PRODUCTION5">
+                        TEMPERATURE
+                      </Link>
+                    </li>
                   </div>
                 </div>
               </div>
@@ -368,15 +368,15 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Warehouse/Organized">
+                      <Link onClick={() => handleCardToggle(6)} href="/pages/Organized?Param=Warehouse">
                         ORGANIZED
                       </Link>
                     </li>
                     <li>
-                        <Link href="/pages/temperature?Param=WAREHOUSE">
-                          TEMPERATURE
-                        </Link>
-                      </li>
+                      <Link onClick={() => handleCardToggle(6)} href="/pages/temperature?Param=WAREHOUSE">
+                        TEMPERATURE
+                      </Link>
+                    </li>
                   </div>
                 </div>
               </div>
@@ -399,11 +399,11 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Maintenance/Organized">
+                      <Link onClick={() => handleCardToggle(7)} href="/pages/Organized?Param=Maintenance">
                         ORGANIZED
                       </Link>
                     </li>
-               
+
                   </div>
                 </div>
               </div>

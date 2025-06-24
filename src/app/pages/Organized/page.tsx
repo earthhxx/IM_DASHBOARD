@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect ,Suspense} from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import { SpecialZoomLevel, Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
@@ -72,11 +72,25 @@ const Production1_Organized = () => {
   };
 
 
+  const handleLoadPdf = async (room: string, team: string, location: string) => {
+    try {
+      const res = await fetch(
+        `/api/OrganizedPdf?O_team=${team}&O_room=${room}&O_location=${location}`
+      );
 
-  const handleLoadPdf = (base64: string) => {
-    console.log("pdfUrl clicked:", base64);
-    loadPdf(base64);
+      if (!res.ok) throw new Error("Failed to load PDF");
+
+      const result = await res.json();
+      setPdfUrl(result.base64Pdf);
+    } catch (err) {
+      console.error("Error loading PDF:", err);
+    }
   };
+
+  // const handleLoadPdf = (base64: string) => {
+  //   console.log("pdfUrl clicked:", base64);
+  //   loadPdf(base64);
+  // };
 
 
   return (
@@ -138,11 +152,8 @@ const Production1_Organized = () => {
               .map((data) => (
                 <div
                   key={`${data.room}_${data.department}_${data.location}`}
-                  onClick={() => {
-                    console.log('after map data', data)
-                    console.log('after map', data.base64Pdf);
-                    handleLoadPdf(data.base64Pdf);
-                  }}
+                  onClick={() => handleLoadPdf(data.room, data.team, data.location)}
+
                   className="group flex w-65 h-25 rounded-l-lg items-center border border-solid border-blue-100 justify-center bg-white shadow-lg hover:bg-white transition-all"
                 >
                   <div className="flex w-[35%] h-full text-blue-900 bg-blue-100 rounded-l-lg justify-center items-center group-hover:text-white group-hover:bg-blue-800 text-wrap">
@@ -183,7 +194,8 @@ const Production1_Organized = () => {
               .map((data) => (
                 <div
                   key={`${data.room}_${data.department}_${data.location}`}
-                  onClick={() => handleLoadPdf(data.base64Pdf)}
+                  onClick={() => handleLoadPdf(data.room, data.team, data.location)}
+
                   className="group flex w-65 h-25 rounded-l-lg items-center border border-solid border-blue-100 justify-center bg-white shadow-lg hover:bg-white transition-all"
                 >
                   <div className="flex w-[35%] h-full text-blue-900 bg-blue-100 rounded-l-lg justify-center items-center group-hover:text-white group-hover:bg-blue-800 text-wrap">
@@ -227,7 +239,8 @@ const Production1_Organized = () => {
               .map((data) => (
                 <div
                   key={`${data.room}_${data.department}_${data.location}`}
-                  onClick={() => handleLoadPdf(data.base64Pdf)}
+                  onClick={() => handleLoadPdf(data.room, data.team, data.location)}
+
                   className="group flex w-65 h-25 rounded-l-lg items-center border border-solid border-blue-100 justify-center bg-white shadow-lg hover:bg-white transition-all"
                 >
                   <div className="flex w-[35%] h-full text-blue-900 bg-blue-100 rounded-l-lg justify-center items-center group-hover:text-white group-hover:bg-blue-800 text-wrap">
