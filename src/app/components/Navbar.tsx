@@ -213,7 +213,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={() => { handleCardToggle(1) }} href="/Production1/Organized?Param=PRODUCTION1">
+                      <Link onClick={() => { handleCardToggle(1) }} href="/pages/Organized?Param=PRODUCTION1">
                         ORGANIZED
                       </Link>
                     </li>
@@ -368,7 +368,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={() => handleCardToggle(6)} href="/pages/Organized?Param=Warehouse">
+                      <Link onClick={() => handleCardToggle(6)} href="/pages/Organized?Param=WAREHOUSE">
                         ORGANIZED
                       </Link>
                     </li>
@@ -399,11 +399,10 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={() => handleCardToggle(7)} href="/pages/Organized?Param=Maintenance">
+                      <Link onClick={() => handleCardToggle(7)} href="/pages/Organized?Param=MAINTENANCE">
                         ORGANIZED
                       </Link>
                     </li>
-
                   </div>
                 </div>
               </div>
