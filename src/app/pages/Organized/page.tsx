@@ -52,25 +52,6 @@ const Production1_Organized = () => {
     fetchTeamData();
   }, [selectedTeam, param, ParamListener]);
 
-  const loadPdf = (base64: string) => {
-    // แปลง base64 เป็น Blob
-    const byteCharacters = atob(base64.split(',')[1]); // แยกส่วน base64 ออกจาก prefix 'data:application/pdf;base64,'
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
-      const slice = byteCharacters.slice(offset, offset + 1024);
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      byteArrays.push(new Uint8Array(byteNumbers));
-    }
-
-    const blob = new Blob(byteArrays, { type: 'application/pdf' });
-    const pdfUrl = URL.createObjectURL(blob);  // สร้าง URL จาก Blob
-    setPdfUrl(pdfUrl);  // ตั้งค่า pdfUrl ให้เป็น URL ที่สร้างจาก Blob
-  };
-
 
   const handleLoadPdf = async (room: string, team: string, location: string) => {
     try {
@@ -86,11 +67,6 @@ const Production1_Organized = () => {
       console.error("Error loading PDF:", err);
     }
   };
-
-  // const handleLoadPdf = (base64: string) => {
-  //   console.log("pdfUrl clicked:", base64);
-  //   loadPdf(base64);
-  // };
 
 
   return (

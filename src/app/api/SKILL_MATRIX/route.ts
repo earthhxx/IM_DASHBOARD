@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       .input('team', sql.VarChar, team)
       .input('room', sql.VarChar, room)
       .query(`
-                SELECT S_Room, S_Team, S_Dep, S_Loc, S_PDF 
+                SELECT S_Room, S_Team, S_Dep, S_Loc
           FROM SKILL_MATRIX
           WHERE S_Room = @room AND S_Team = @team
           ORDER BY 
@@ -62,18 +62,15 @@ export async function GET(req: NextRequest) {
     const pdfBase64List = [];
 
     for (const row of result.recordset) {
-      const { S_Room, S_Team, S_Dep, S_Loc, S_PDF } = row;
+      const { S_Room, S_Team, S_Dep, S_Loc} = row;
 
-      if (!S_PDF) continue;
 
-      const base64PDF = Buffer.from(S_PDF).toString('base64');
 
       pdfBase64List.push({
         room: S_Room,
         team: S_Team,
         department: S_Dep,
         location: S_Loc,
-        base64Pdf: `data:application/pdf;base64,${base64PDF}`,
       });
     }
 
