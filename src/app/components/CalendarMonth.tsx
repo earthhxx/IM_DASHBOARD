@@ -4,7 +4,7 @@ interface CalendarMonthProps {
   title?: string; // ใส่ชื่อแผนกหรือชื่อหัวข้อ
 }
 
-const departments = ['ผลิต', 'QC', 'บรรจุ'];
+const departments = [0];
 const totalDays = 31;
 
 const today = new Date();
