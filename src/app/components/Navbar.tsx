@@ -222,6 +222,11 @@ const Navbar = () => {
                         TEMPERATURE
                       </Link>
                     </li>
+                    <li>
+                      <Link onClick={() => { handleCardToggle(1) }} href="/pages/checksheets">
+                        CHECKSHEETS
+                      </Link>
+                    </li>
                   </div>
                 </div>
               </div>

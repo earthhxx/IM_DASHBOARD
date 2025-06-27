@@ -115,7 +115,7 @@ const Production1_Organized = () => {
   const departments = [...new Set(teamData.map(data => data.department))];
 
   return (
-    <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center justify-start h-full w-full">
+    <div className="flex-1 min-h-screen bg-white overflow-y-auto flex flex-col items-center font justify-start h-full w-full">
       <Suspense fallback={<div>Loading...</div>}>
         <ParamListener onGetParam={setParam} />
       </Suspense>
