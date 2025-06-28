@@ -4,13 +4,13 @@ interface DepartmentStatus {
     department: string;
     lastCheckedDay: number; // วันที่ล่าสุดที่แผนกเช็คเอกสาร (1-31)
 }
-
+//pro .qa .en .wh .hr and admin,
 const departmentsStatus: DepartmentStatus[] = [
-    { department: 'Production', lastCheckedDay: 20 },
+    { department: 'PRODUCTION', lastCheckedDay: 20 },
     { department: 'QA', lastCheckedDay: 22 },
-    { department: 'IT', lastCheckedDay: 10 },
-    { department: 'Maintenane', lastCheckedDay: 10 },
-    { department: 'Engineer', lastCheckedDay: 30 },
+    { department: 'ENGINEER', lastCheckedDay: 10 },
+    { department: 'WAREHOUSE', lastCheckedDay: 10 },
+    { department: 'HR AND ADMIN', lastCheckedDay: 30 },
 ];
 
 const today = new Date().getDate();
