@@ -19,7 +19,7 @@ const CornerPosts = () => {
 const Desktop = () => {
     return (
         <>
-            <div className="flex justify-center  ms-20">
+            <div className="flex justify-center  me-25">
                 <div className="relative w-[180px] h-[40px] bg-gray-200 border-2 border-gray-800 rounded-md shadow-inner">
 
                     {/* หน้าจอ */}
