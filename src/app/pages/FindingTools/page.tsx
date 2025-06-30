@@ -16,6 +16,54 @@ const CornerPosts = () => {
     );
 };
 
+const Desktop = () => {
+    return (
+        <>
+            <div className="flex justify-center  ms-20">
+                <div className="relative w-[180px] h-[40px] bg-gray-200 border-2 border-gray-800 rounded-md shadow-inner">
+
+                    {/* หน้าจอ */}
+                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-gray-800 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
+                        Monitor
+                    </div>
+
+                    {/* เมาส์ */}
+                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-gray-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
+                        🖱
+                    </div>
+
+                    {/* เสาโต๊ะ (ขาโต๊ะ) */}
+                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
+                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
+                    <div className="absolute top-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
+
+                </div>
+                 <div className="relative w-[180px] h-[40px] bg-gray-200 border-2 border-gray-800 rounded-md shadow-inner">
+
+                    {/* หน้าจอ */}
+                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-gray-800 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
+                        Monitor
+                    </div>
+
+                    {/* เมาส์ */}
+                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-gray-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
+                        🖱
+                    </div>
+
+                    {/* เสาโต๊ะ (ขาโต๊ะ) */}
+                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
+                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
+                    <div className="absolute top-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
+
+                </div>
+            </div>
+
+        </>
+    )
+}
+
 
 const StorageRoomLayout = () => {
     return (
@@ -33,6 +81,12 @@ const StorageRoomLayout = () => {
                         </div>
                     </div>
 
+                    <div className="flex justify-center ms-40 p-2">
+                       <Desktop /> 
+                    </div>
+
+
+
                     {/* ชั้นวาง */}
                     <div className="flex w-full justify-between mt-6 flex-wrap">
                         {/* A */}
@@ -46,7 +100,7 @@ const StorageRoomLayout = () => {
                             {/* เสา */}
                             <CornerPosts />
 
-                  
+
                         </div>
 
                         <div className="w-5" />
@@ -56,7 +110,7 @@ const StorageRoomLayout = () => {
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
                             <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">B</div>
                             <CornerPosts />
-                        
+
                         </div>
                         <div className="w-5" />
 
@@ -65,7 +119,7 @@ const StorageRoomLayout = () => {
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
                             <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">C</div>
                             <CornerPosts />
-                        
+
                         </div>
                         <div className="w-5" />
 
@@ -76,14 +130,14 @@ const StorageRoomLayout = () => {
                                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">D</div>
                                 <CornerPosts />
-                          
+
                             </div>
                             <div className={shelfClass}>
                                 <div className="absolute top-1/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">E</div>
                                 <CornerPosts />
-                          
+
                             </div>
                         </div>
 
@@ -94,12 +148,12 @@ const StorageRoomLayout = () => {
                                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">F</div>
                                 <CornerPosts />
-                             
+
                             </div>
                             <div className={shelfClass}>
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">G</div>
                                 <CornerPosts />
-                              
+
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center">
@@ -125,7 +179,7 @@ const StorageRoomLayout = () => {
                         <div className={shelfClass}>
                             <div className="absolute top-20 w-full text-center font-semibold text-gray-700">I</div>
                             <CornerPosts />
-                        
+
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
                             <div className="absolute bottom-6 w-full text-center font-semibold text-gray-700">H</div>
                         </div>
