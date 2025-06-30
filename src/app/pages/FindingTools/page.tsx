@@ -1,5 +1,5 @@
 const shelfClass =
-  "w-20 sm:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md";
+  "w-20 sm:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md text-[10px] sm:text-xl lg:text-2xl font-semibold text-gray-700 font-sans tracking-wide hover:scale-105 transition-transform duration-200";
 
 const StorageRoomLayout = () => { 
   return (
@@ -22,21 +22,21 @@ const StorageRoomLayout = () => {
             {/* A */}
             <div className={shelfClass}>
               <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
-              <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">A</div>
+              <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">A</div>
             </div>
             <div className="w-5" />
 
             {/* B */}
             <div className={shelfClass}>
               <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
-              <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">B</div>
+              <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">B</div>
             </div>
             <div className="w-5" />
 
             {/* C */}
             <div className={shelfClass}>
               <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
-              <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">C</div>
+              <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">C</div>
             </div>
             <div className="w-5" />
 
@@ -45,12 +45,12 @@ const StorageRoomLayout = () => {
               <div className={shelfClass}>
                 <div className="absolute top-1/3 w-full h-[3px] bg-gray-400" />
                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
-                <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">D</div>
+                <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">D</div>
               </div>
               <div className={shelfClass}>
                 <div className="absolute top-1/3 w-full h-[3px] bg-gray-400" />
                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
-                <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">E</div>
+                <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">E</div>
               </div>
             </div>
 
@@ -59,10 +59,10 @@ const StorageRoomLayout = () => {
               <div className={shelfClass}>
                 <div className="absolute top-1/3 w-full h-[3px] bg-gray-400" />
                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
-                <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">F</div>
+                <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">F</div>
               </div>
               <div className={shelfClass}>
-                <div className="absolute bottom-4 w-full text-center text-sm font-semibold text-gray-700">G</div>
+                <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">G</div>
               </div>
             </div>
 
@@ -71,11 +71,11 @@ const StorageRoomLayout = () => {
               ทางเดิน
             </div>
 
-            {/* H */}
+            {/* H+I */}
             <div className={shelfClass}>
-              <div className="absolute top-6 w-full text-center text-sm font-semibold text-gray-700">I</div>
+              <div className="absolute top-20 w-full text-center font-semibold text-gray-700">I</div>
               <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
-              <div className="absolute bottom-6 w-full text-center text-sm font-semibold text-gray-700">H</div>
+              <div className="absolute bottom-6 w-full text-center font-semibold text-gray-700">H</div>
             </div>
           </div>
 
