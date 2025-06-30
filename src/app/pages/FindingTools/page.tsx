@@ -1,5 +1,5 @@
 const shelfClass =
-  "w-20 sm:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md text-[10px] sm:text-xl lg:text-2xl font-semibold text-gray-700 font-sans tracking-wide hover:scale-105 transition-transform duration-200";
+  "w-10 sm:w-[50px] lg:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md text-[10px] sm:text-xl lg:text-2xl font-semibold text-gray-700 font-sans tracking-wide hover:scale-105 transition-transform duration-200";
 
 const StorageRoomLayout = () => { 
   return (
