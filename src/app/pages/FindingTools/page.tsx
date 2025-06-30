@@ -1,7 +1,7 @@
 const shelfClass =
   "w-20 sm:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md";
 
-const StorageRoomLayout = () => {
+const StorageRoomLayout = () => { 
   return (
     <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
       <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-screen-xl">
