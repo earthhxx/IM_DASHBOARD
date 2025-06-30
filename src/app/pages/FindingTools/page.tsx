@@ -22,7 +22,7 @@ const StorageRoomLayout = () => {
         <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
             <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-screen-xl">
                 <h2 className="text-xl text-black font-semibold text-center mb-4">
-                    Tooling Finder Function
+                    Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
 
                 <div className="relative flex flex-col w-full border border-dashed border-gray-400 rounded-md pt-4 mt-4 bg-gray-50">
@@ -39,13 +39,16 @@ const StorageRoomLayout = () => {
                         <div className={shelfClass}>
                             {/* เส้นตรงกลาง */}
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
-                            {/* ตัวอักษร */}
+
+                            {/* ตัวอักษรชื่อชั้น */}
                             <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">A</div>
 
+                            {/* เสา */}
                             <CornerPosts />
 
-
+                  
                         </div>
+
                         <div className="w-5" />
 
                         {/* B */}
@@ -53,6 +56,7 @@ const StorageRoomLayout = () => {
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
                             <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">B</div>
                             <CornerPosts />
+                        
                         </div>
                         <div className="w-5" />
 
@@ -61,6 +65,7 @@ const StorageRoomLayout = () => {
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
                             <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">C</div>
                             <CornerPosts />
+                        
                         </div>
                         <div className="w-5" />
 
@@ -71,12 +76,14 @@ const StorageRoomLayout = () => {
                                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">D</div>
                                 <CornerPosts />
+                          
                             </div>
                             <div className={shelfClass}>
                                 <div className="absolute top-1/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">E</div>
                                 <CornerPosts />
+                          
                             </div>
                         </div>
 
@@ -87,30 +94,59 @@ const StorageRoomLayout = () => {
                                 <div className="absolute top-2/3 w-full h-[3px] bg-gray-400" />
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">F</div>
                                 <CornerPosts />
+                             
                             </div>
                             <div className={shelfClass}>
                                 <div className="absolute bottom-4 w-full text-center font-semibold text-gray-700">G</div>
                                 <CornerPosts />
+                              
                             </div>
                         </div>
+                        <div className="flex flex-col items-center justify-center">
+                            {/* ลูกศร Unicode */}
+                            <div className="text-gray-700 text-4xl text-center">
+                                ↓
+                            </div>
 
-                        {/* ทางเดิน */}
-                        <div className="w-20 sm:w-[60px] h-70 flex items-center justify-center text-gray-700 font-medium italic border-gray-400 rounded-md">
-                            ทางเดิน
+                            {/* ทางเดิน */}
+                            <div className="w-20 sm:w-[60px] h-40 flex items-center justify-center text-gray-700 font-medium italic border-gray-400 rounded-md">
+                                ทางเดิน
+                            </div>
+                            {/* ลูกศร Unicode */}
+                            <div className="text-gray-700 text-4xl text-center">
+                                ↓
+                            </div>
+
                         </div>
+
+
 
                         {/* H+I */}
                         <div className={shelfClass}>
                             <div className="absolute top-20 w-full text-center font-semibold text-gray-700">I</div>
                             <CornerPosts />
+                        
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
                             <div className="absolute bottom-6 w-full text-center font-semibold text-gray-700">H</div>
                         </div>
                     </div>
+                    <div className="flex items-center justify-center text-center">
 
-                    {/* ทางเดินล่าง */}
-                    <div className="mt-6 w-full h-12 sm:h-16 flex items-center justify-center text-gray-700 font-medium italic border-gray-400 rounded-md">
-                        ทางเดิน
+                        {/* ลูกศรใหญ่ขึ้น */}
+                        <div className="text-gray-700 text-4xl text-center">
+                            ←
+                        </div>
+
+
+                        {/* ทางเดินล่าง */}
+                        <div className=" w-[50%] h-12 sm:h-16 flex items-center justify-center text-gray-700 font-medium italic border-gray-400 rounded-md">
+                            ทางเดิน
+                        </div>
+
+                        <div className="text-gray-700 text-4xl text-center">
+                            ←
+                        </div>
+
                     </div>
 
                     {/* เครื่องจักร */}
@@ -119,7 +155,7 @@ const StorageRoomLayout = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
