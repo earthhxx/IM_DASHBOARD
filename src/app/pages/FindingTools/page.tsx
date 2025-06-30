@@ -11,7 +11,7 @@ const StorageRoomLayout = () => {
 
         <div className="relative flex flex-col w-full border border-dashed border-gray-400 rounded-md pt-4 mt-4 bg-gray-50">
           {/* ประตู */}
-          <div className="absolute -top-4 right-4 sm:right-42">
+          <div className="absolute -top-4 right-14 lg:right-27">
             <div className="w-24 h-10 bg-gray-500 text-white flex items-center justify-center rounded-md shadow-inner text-sm">
               ประตูเข้า
             </div>
@@ -67,7 +67,7 @@ const StorageRoomLayout = () => {
             </div>
 
             {/* ทางเดิน */}
-            <div className="w-20 sm:w-[60px] h-70 flex items-center justify-center text-gray-700 font-medium italic border-2 border-dashed border-gray-400 bg-white rounded-md">
+            <div className="w-20 sm:w-[60px] h-70 flex items-center justify-center text-gray-700 font-medium italic border-gray-400 rounded-md">
               ทางเดิน
             </div>
 
@@ -80,7 +80,7 @@ const StorageRoomLayout = () => {
           </div>
 
           {/* ทางเดินล่าง */}
-          <div className="mt-6 w-full h-12 sm:h-16 flex items-center justify-center text-gray-700 font-medium italic border-2 border-dashed border-gray-400 bg-white rounded-md">
+          <div className="mt-6 w-full h-12 sm:h-16 flex items-center justify-center text-gray-700 font-medium italic border-gray-400 rounded-md">
             ทางเดิน
           </div>
 
