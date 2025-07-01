@@ -269,93 +269,96 @@ export default function StorageRoomLayout() {
 
 
             </div>
+            <div>
 
-            {showShelf && (
-                <div className=" z-50 flex items-center justify-center">
 
-                    <div className=" bg-white p-4 rounded-lg shadow-2xl">
-                        <div className="flex flex-col justify-center items-end">
-                            {/* ปุ่มปิด (X) ขวาบน */}
-                            <button
-                                onClick={() => setShowShelf(false)}
-                                className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
-                            >
-                                &times;
-                            </button>
+                {showShelf && (
+                    <div className=" z-50 flex items-center justify-center">
 
-                        </div>
+                        <div className=" bg-white p-4 rounded-lg shadow-2xl">
+                            <div className="flex flex-col justify-center items-end">
+                                {/* ปุ่มปิด (X) ขวาบน */}
+                                <button
+                                    onClick={() => setShowShelf(false)}
+                                    className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
+                                >
+                                    &times;
+                                </button>
 
-                        <ShelfWithWheels
-                            label="Shelf A"
-                            highlightedNumbers={[4, 10, 78]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
-                        />
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                            {/* ชื่อชั้น */}
-                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                    <FaProjectDiagram className="text-blue-400" />
-                                    ชื่อชั้น
-                                </div>
-                                <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
                             </div>
 
-                            {/* ชั้น */}
-                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                    <FaLayerGroup className="text-blue-400" />
-                                    ชั้น
-                                </div>
-                                <div className="text-lg font-semibold text-gray-800">{data.level}</div>
-                            </div>
+                            <ShelfWithWheels
+                                label="Shelf A"
+                                highlightedNumbers={[4]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
+                            />
 
-                            {/* ตำแหน่ง */}
-                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                    <FaMapMarkerAlt className="text-blue-400" />
-                                    ตำแหน่ง
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                                {/* ชื่อชั้น */}
+                                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                    <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                        <FaProjectDiagram className="text-blue-400" />
+                                        ชื่อชั้น
+                                    </div>
+                                    <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
                                 </div>
-                                <div className="text-lg font-semibold text-gray-800">{data.position}</div>
-                            </div>
 
-                            {/* สถานะ */}
-                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                    <FaCheckCircle className="text-blue-400" />
-                                    สถานะ
+                                {/* ชั้น */}
+                                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                    <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                        <FaLayerGroup className="text-blue-400" />
+                                        ชั้น
+                                    </div>
+                                    <div className="text-lg font-semibold text-gray-800">{data.level}</div>
                                 </div>
-                                <div className="text-lg font-semibold">
-                                    <span
-                                        className={`px-3 py-1 rounded-full text-white text-xs font-medium
+
+                                {/* ตำแหน่ง */}
+                                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                    <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                        <FaMapMarkerAlt className="text-blue-400" />
+                                        ตำแหน่ง
+                                    </div>
+                                    <div className="text-lg font-semibold text-gray-800">{data.position}</div>
+                                </div>
+
+                                {/* สถานะ */}
+                                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                    <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                        <FaCheckCircle className="text-blue-400" />
+                                        สถานะ
+                                    </div>
+                                    <div className="text-lg font-semibold">
+                                        <span
+                                            className={`px-3 py-1 rounded-full text-white text-xs font-medium
           ${data.status === 'OnStock'
-                                                ? 'bg-green-500'
-                                                : data.status === 'Empty'
-                                                    ? 'bg-yellow-500'
-                                                    : 'bg-gray-400'
-                                            }`}
-                                    >
-                                        {data.status}
-                                    </span>
+                                                    ? 'bg-green-500'
+                                                    : data.status === 'Empty'
+                                                        ? 'bg-yellow-500'
+                                                        : 'bg-gray-400'
+                                                }`}
+                                        >
+                                            {data.status}
+                                        </span>
+                                    </div>
                                 </div>
+
+                            </div>
+                            <div className="flex flex-col justify-center items-center mt-4 ">
+                                {/* ปุ่มปิด (X) ขวาบน */}
+                                <button
+                                    onClick={() => setShowShelf(false)}
+                                    className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
+                                >
+                                    <div>Withdraw </div>
+                                    <div>เบิกออก </div>
+                                </button>
+
                             </div>
 
-                        </div>
-                        <div className="flex flex-col justify-center items-center mt-4 ">
-                            {/* ปุ่มปิด (X) ขวาบน */}
-                            <button
-                                onClick={() => setShowShelf(false)}
-                                className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
-                            >
-                               <div>Withdraw </div>
-                               <div>เบิกออก </div>
-                            </button>
 
                         </div>
-
-
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }
