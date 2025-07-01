@@ -147,6 +147,18 @@ export default function StorageRoomLayout() {
         console.log(`Shelf ${label} clicked!`);
     };
 
+    const legendItems = [
+        { code: "A", label: "Stencil " },
+        { code: "B", label: "Stencil " },
+        { code: "C", label: "Stencil " },
+        { code: "D", label: "Jig ICT " },
+        { code: "E", label: "Jig ICT " },
+        { code: "F", label: "Jig ICT " },
+        { code: "G", label: "Support Block " },
+        { code: "H", label: "Support Block " },
+        { code: "I", label: "Squeegee " },
+    ];
+
 
 
     return (
@@ -240,53 +252,19 @@ export default function StorageRoomLayout() {
 
 
                 </div>
+
+
                 <div className="w-full bg-gradient-to-t from-gray-200 to-white border-t border-gray-300 py-4 px-6 rounded-t-2xl shadow-inner">
-                    <div className="grid grid-cols-5 gap-x-6 gap-y-2 text-[13px] uppercase font-bold">
-                        {/* A–C: Stencil */}
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">A = Stencil A</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">B = Stencil B</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">C = Stencil C</span>
-                        </div>
-
-                        {/* D–F: Jig ICT */}
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">D = Jig ICT D</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">E = Jig ICT E</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">F = Jig ICT F</span>
-                        </div>
-
-                        {/* G–H: Support Block */}
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">G = Support Block G</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">H = Support Block H</span>
-                        </div>
-
-                        {/* I: Squeegee */}
-                        <div className="flex items-center gap-2">
-                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
-                            <span className="text-gray-700">I = Squeegee I</span>
-                        </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2 text-[13px] font-bold text-gray-700 uppercase">
+                        {legendItems.map((item) => (
+                            <div key={item.code} className="flex items-center gap-2">
+                                <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                                <span>{item.code} = {item.label}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
+
 
 
 
@@ -294,7 +272,19 @@ export default function StorageRoomLayout() {
 
             {showShelf && (
                 <div className=" z-50 flex items-center justify-center">
-                    <div className="bg-white p-4 rounded-lg shadow-2xl">
+
+                    <div className=" bg-white p-4 rounded-lg shadow-2xl">
+                        <div className="flex flex-col justify-center items-end">
+                            {/* ปุ่มปิด (X) ขวาบน */}
+                            <button
+                                onClick={() => setShowShelf(false)}
+                                className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
+                            >
+                                &times;
+                            </button>
+
+                        </div>
+
                         <ShelfWithWheels
                             label="Shelf A"
                             highlightedNumbers={[4, 10, 78]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
@@ -348,8 +338,19 @@ export default function StorageRoomLayout() {
                                     </span>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
+                        <div className="flex flex-col justify-center items-center mt-4 ">
+                            {/* ปุ่มปิด (X) ขวาบน */}
+                            <button
+                                onClick={() => setShowShelf(false)}
+                                className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
+                            >
+                               <div>Withdraw </div>
+                               <div>เบิกออก </div>
+                            </button>
+
+                        </div>
 
 
                     </div>
