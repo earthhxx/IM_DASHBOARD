@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
 
 
@@ -78,11 +78,13 @@ const DoubleShelf: React.FC<DoubleShelfProps> = ({ labels, height, onClicks, lin
 // Components ที่มี text ด้านในแบบ custom
 const BoxWithText = ({ lines }: { lines: React.ReactNode }) => (
     <div className="relative h-[45px] bg-emerald-100 border-2 rounded-md shadow-inner flex items-center justify-center">
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 text-black flex flex-col items-center justify-center text-center leading-tight text-[12px]">
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 text-black flex flex-col items-center justify-center text-center font-kanit leading-tight text-[10px]">
             {lines}
         </div>
     </div>
 );
+
+
 
 const CornerWashing = () => <BoxWithText lines={<><span>Handwashing</span><span>station</span></>} />;
 const VisualCheckStencil = () => <BoxWithText lines={<><span>Visual Check</span><span>Stencil</span></>} />;
@@ -90,6 +92,10 @@ const StencilCleaning1 = () => <BoxWithText lines={<><span>Stencil Cleaning</spa
 const StencilCleaning2 = () => <BoxWithText lines={<><span>Stencil Cleaning</span><span>station 2</span></>} />;
 const SAWAClean1 = () => <BoxWithText lines={<><span>SAWA</span><span>Clean 1</span></>} />;
 const SAWAClean2 = () => <BoxWithText lines={<><span>SAWA</span><span>Clean 2</span></>} />;
+const Desklab = () => (<BoxWithText lines={<span>Nozzle Cleaning</span>} />);
+
+
+
 
 const Desktop = () => (
     <>
@@ -109,17 +115,9 @@ const Desktop = () => (
     </>
 );
 
-const Desklab = () => (
-    <BoxWithText lines={<span>Nozzle Cleaning</span>} />
-);
-
 export default function StorageRoomLayout() {
     const [toastVisible, setToastVisible] = useState(false);
 
-    // ฟังก์ชันโชว์ Toast และซ่อนไปเองหลัง 3 วินาที
-    const showToast = () => {
-        setToastVisible(true);
-    };
 
     // ใช้ useEffect รอ 3 วินาทีแล้วซ่อน Toast อัตโนมัติ
     useEffect(() => {
