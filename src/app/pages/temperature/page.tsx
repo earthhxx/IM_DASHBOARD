@@ -1182,7 +1182,7 @@ export default function TempChart() {
 
 
                 <div onClick={() => {
-                    handleClickGraphRoom('SMT-19','Assembly3')
+                    handleClickGraphRoom('SMT-19','Assembly1')
                     setpoint('CHECK')
                 }}
                     className="absolute bottom-[4.5%] left-[35%] w-12 h-12 z-10">
