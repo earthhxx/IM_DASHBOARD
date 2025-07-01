@@ -1,3 +1,10 @@
+"use client";
+
+import React, { useState } from 'react';
+import Toast from '../../components/Toast'; // เปลี่ยน path ตามจริง
+
+
+
 const shelfClass =
     "w-10 sm:w-[50px] lg:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md text-[10px] sm:text-xl lg:text-2xl font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200";
 
@@ -140,11 +147,7 @@ const Desktop = () => {
                     🖱
                 </div>
 
-                {/* เสา */}
-                {/* <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
-                <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" /> */}
+
             </div>
 
             <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-900 rounded-md shadow-inner">
@@ -158,11 +161,7 @@ const Desktop = () => {
                     🖱
                 </div>
 
-                {/* เสา */}
-                {/* <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
-                <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" /> */}
+
             </div>
 
 
@@ -190,7 +189,16 @@ const Desklab = () => {
 
 
 
+
+
 const StorageRoomLayout = () => {
+    const [toastVisible, setToastVisible] = useState(false);
+
+    const showToast = () => {
+        setToastVisible(true);
+    };
+
+
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
             <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-screen-xl">
@@ -216,7 +224,7 @@ const StorageRoomLayout = () => {
                     {/* ชั้นวาง */}
                     <div className="flex w-full justify-between mt-6 flex-wrap">
                         {/* A */}
-                        <div className={shelfClass}>
+                        <div className={shelfClass} onClick={showToast}>
                             {/* เส้นตรงกลาง */}
                             <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
 
@@ -348,6 +356,14 @@ const StorageRoomLayout = () => {
                         <Cornerwashing />
 
                     </div>
+
+
+                    {toastVisible && (
+                        <Toast
+                            message="บันทึกข้อมูลสำเร็จ!"
+                            onClose={() => setToastVisible(false)}
+                        />
+                    )}
 
                 </div>
             </div>
