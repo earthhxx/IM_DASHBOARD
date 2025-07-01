@@ -5,26 +5,37 @@ import React from "react";
 type ShelfWithWheelsProps = {
   visible?: boolean;
   label?: string;
+  highlightedNumbers?: number[]; // เพิ่ม prop นี้
 };
 
 const ShelfWithWheels: React.FC<ShelfWithWheelsProps> = ({
   visible = true,
   label,
+  highlightedNumbers = [], // default empty array
 }) => {
   if (!visible) return null;
 
   const renderVerticalSticks = (start: number) =>
-    Array.from({ length: 25 }, (_, i) => (
-      <div
-        key={start + i}
-        className="w-full h-full bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border border-white text-[8px] text-center text-black flex items-center justify-center"
-      >
-        {start + i}
-      </div>
-    ));
+    Array.from({ length: 25 }, (_, i) => {
+      const number = start + i;
+      const isHighlighted = highlightedNumbers.includes(number);
+
+      return (
+        <div
+          key={number}
+          className={`w-full h-full border text-[8px] text-center flex items-center justify-center
+            ${isHighlighted
+              ? "bg-yellow-300 text-white animate-pulse border-yellow-400"
+              : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 text-black border-white"
+            }`}
+        >
+          {number}
+        </div>
+      );
+    });
 
   const renderSquareSlot = (start: number) => (
-    <div className="w-full h-full border border-gray-500 rounded-md shadow-inner bg-gray-100 flex ">
+    <div className="w-full h-full border border-gray-500 rounded-md shadow-inner bg-gray-100 flex">
       {renderVerticalSticks(start)}
     </div>
   );
@@ -44,7 +55,7 @@ const ShelfWithWheels: React.FC<ShelfWithWheelsProps> = ({
       </div>
 
       {/* ล้อซ้ายขวา */}
-      <div className="flex justify-between w-full px-8 mt-2">
+      <div className="flex justify-between w-full px-8 mt-2 mb-4">
         <div className="w-4 h-4 bg-gray-700 rounded-full shadow-md" />
         <div className="w-4 h-4 bg-gray-700 rounded-full shadow-md" />
       </div>

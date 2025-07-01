@@ -3,7 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
 import ShelfWithWheels from "../../components/ShelfWithWheels";
+import { FaCalendarAlt, FaCheckCircle, FaClock, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
 
+const data = {
+    shelfName: "A1",
+    level: "ชั้นที่ 2",
+    position: "A24",
+    status: "OnStock", // หรือ "Empty"
+};
 
 
 // Common styles
@@ -148,8 +155,19 @@ export default function StorageRoomLayout() {
                 <h2 className="text-xl text-blue-900 font-semibold text-center mb-4">
                     Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
+                <div className="flex items-center justify-center w-full my-4">
+                    <div className="w-full lg:w-[40%]">
+                        <input
+                            type="text"
+                            placeholder="Search..."
 
-                <div className="relative flex flex-col w-full border border-dashed border-blue-800 rounded-md pt-4 mt-4 bg-gray-50">
+                            className="w-full p-4 text-lg text-gray-800 rounded-xl bg-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                        />
+                    </div>
+                </div>
+
+
+                <div className="relative flex flex-col w-full border border-dashed border-blue-800 rounded-md bg-gray-50">
                     {/* ประตู */}
                     <div className="absolute -top-4 right-14 lg:right-27">
                         <div className="w-24 h-10 bg-blue-900 text-white flex items-center justify-center rounded-md shadow-inner text-sm">
@@ -222,19 +240,121 @@ export default function StorageRoomLayout() {
 
 
                 </div>
-               
+                <div className="w-full bg-gradient-to-t from-gray-200 to-white border-t border-gray-300 py-4 px-6 rounded-t-2xl shadow-inner">
+                    <div className="grid grid-cols-5 gap-x-6 gap-y-2 text-[13px] uppercase font-bold">
+                        {/* A–C: Stencil */}
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">A = Stencil A</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">B = Stencil B</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">C = Stencil C</span>
+                        </div>
 
-            </div>
-             {showShelf && (
-                    <div className=" z-50 flex items-center justify-center">
-                        <div className="bg-white p-4 rounded-lg shadow-2xl">
-                            <ShelfWithWheels visible={true} label="Shelf A" />
-                            <div className=" bg-black/50 w-full h-20 mt-2 rounded-xl">
+                        {/* D–F: Jig ICT */}
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">D = Jig ICT D</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">E = Jig ICT E</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">F = Jig ICT F</span>
+                        </div>
 
-                            </div>
+                        {/* G–H: Support Block */}
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">G = Support Block G</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">H = Support Block H</span>
+                        </div>
+
+                        {/* I: Squeegee */}
+                        <div className="flex items-center gap-2">
+                            <div className="w-1 h-1 rounded-full bg-black shadow-sm" />
+                            <span className="text-gray-700">I = Squeegee I</span>
                         </div>
                     </div>
-                )}
+                </div>
+
+
+
+            </div>
+
+            {showShelf && (
+                <div className=" z-50 flex items-center justify-center">
+                    <div className="bg-white p-4 rounded-lg shadow-2xl">
+                        <ShelfWithWheels
+                            label="Shelf A"
+                            highlightedNumbers={[4, 10, 78]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
+                        />
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                            {/* ชื่อชั้น */}
+                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                    <FaProjectDiagram className="text-blue-400" />
+                                    ชื่อชั้น
+                                </div>
+                                <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
+                            </div>
+
+                            {/* ชั้น */}
+                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                    <FaLayerGroup className="text-blue-400" />
+                                    ชั้น
+                                </div>
+                                <div className="text-lg font-semibold text-gray-800">{data.level}</div>
+                            </div>
+
+                            {/* ตำแหน่ง */}
+                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                    <FaMapMarkerAlt className="text-blue-400" />
+                                    ตำแหน่ง
+                                </div>
+                                <div className="text-lg font-semibold text-gray-800">{data.position}</div>
+                            </div>
+
+                            {/* สถานะ */}
+                            <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                    <FaCheckCircle className="text-blue-400" />
+                                    สถานะ
+                                </div>
+                                <div className="text-lg font-semibold">
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-white text-xs font-medium
+          ${data.status === 'OnStock'
+                                                ? 'bg-green-500'
+                                                : data.status === 'Empty'
+                                                    ? 'bg-yellow-500'
+                                                    : 'bg-gray-400'
+                                            }`}
+                                    >
+                                        {data.status}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
