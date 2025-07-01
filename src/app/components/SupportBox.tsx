@@ -19,21 +19,32 @@ const ShelfRow: React.FC<{ row: number }> = ({ row }) => (
 
 const SupportBox: React.FC = () => {
     return (
-        <div className="flex flex-col items-center rounded-xl shadow-lg">
+        <div className="flex flex-col items-center rounded-xl ">
             <div className="flex flex-col gap-3 bg-gradient-to-r from-gray-200 to-white border border-gray-400 p-4 rounded-2xl ">
                 {/* 6 ชั้นวางกล่อง */}
-                <div className="bg-gray-400 p-2 border-gray-600 rounded-sm">
+                <div className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
                     <ShelfRow row={6} />
                 </div>
+                <div className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
+                    <ShelfRow row={5} />
+                </div>
+                <div className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
+                    <ShelfRow row={4} />
+                </div>
+                <div className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
+                    <ShelfRow row={3} />
+                </div>
+                <div className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
+                    <ShelfRow row={2} />
+                </div>
+                <div className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
+                    <ShelfRow row={1} />
+                </div>
 
-                <ShelfRow row={5} />
-                <ShelfRow row={4} />
-                <ShelfRow row={3} />
-                <ShelfRow row={2} />
-                <ShelfRow row={1} />
+
             </div>
             {/* ล้อชั้นวาง */}
-            <div className="flex justify-between w-full px-8 mt-4">
+            <div className="flex justify-between w-full px-8 mt-2">
                 <div className="w-5 h-5 bg-gray-700 rounded-full shadow-md" />
                 <div className="w-5 h-5 bg-gray-700 rounded-full shadow-md" />
             </div>
