@@ -1,8 +1,12 @@
 const shelfClass =
     "w-10 sm:w-[50px] lg:w-[60px] h-70 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md text-[10px] sm:text-xl lg:text-2xl font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200";
 
+
+const shelfClass2 =
+    "w-10 sm:w-[50px] lg:w-[60px] h-35 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md text-[10px] sm:text-xl lg:text-2xl font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200";
+
 // คลาสสำหรับเสา 1 ต้น
-const cornerPostStyle = "w-2 h-2 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-gray-400 border-2 rounded-full";
+const cornerPostStyle = "w-2 h-2 bg-gradient-to-t z-0 from-gray-300 via-gray-200 to-gray-100 border-gray-400 border-2 rounded-full";
 
 // เสามุม 4 ด้านของ shelf
 const CornerPosts = () => {
@@ -16,45 +20,167 @@ const CornerPosts = () => {
     );
 };
 
+const Cornerwashing = () => {
+    return (
+        <>
+            <div className="relative h-[45px] border-2 bg-emerald-100 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                {/* หน้าจอ */}
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px]  rounded-md text-black flex flex-col items-center justify-center">
+
+                    <span>Handwashing</span>
+                    <span>station</span>
+                </div>
+
+            </div>
+        </>
+    )
+}
+
+const VisualCheckStencil = () => {
+    return (
+        <>
+            <div className="relative  h-[45px] bg-emerald-100 border-2 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px]  rounded-md text-black flex flex-col items-center justify-center">
+
+                    <span>Visual Check</span>
+                    <span>Stencil</span>
+                </div>
+
+
+
+            </div>
+        </>
+    )
+}
+
+
+
+const StenCleaning = () => {
+    return (
+        <>
+            <div className="relative  h-[45px] bg-emerald-100 border-2  rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px]  rounded-md text-black text-[12px] flex flex-col items-center justify-center">
+
+                    <span>Stencil Cleaning</span>
+                    <span>station 1</span>
+                </div>
+
+
+
+            </div>
+        </>
+    )
+}
+const StenCleaning2 = () => {
+    return (
+        <>
+            <div className="relative 80px] h-[45px] bg-emerald-100 border-2 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px]  rounded-md text-black text-[12px] flex flex-col items-center justify-center">
+
+                    <span>Stencil Cleaning</span>
+                    <span>station 2</span>
+                </div>
+
+
+
+            </div>
+        </>
+    )
+}
+
+const SAWAClean1 = () => {
+    return (
+        <>
+            <div className="relative  h-[45px] bg-emerald-100 border-2 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] rounded-md text-black flex flex-col items-center justify-center text-center leading-tight">
+                    <span>SAWA</span>
+                    <span>Clean 1</span>
+                </div>
+
+
+            </div>
+        </>
+    )
+}
+
+const SAWAClean2 = () => {
+    return (
+        <>
+            <div className="relative  h-[45px] bg-emerald-100 border-2 rounded-md shadow-inner">
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] rounded-md text-black flex flex-col items-center justify-center text-center leading-tight">
+                    <span>SAWA</span>
+                    <span>Clean 2</span>
+                </div>
+
+
+
+            </div>
+        </>
+    )
+}
+
+
 const Desktop = () => {
     return (
         <>
-            <div className="flex justify-center  me-25">
-                <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-400 rounded-md shadow-inner">
-                    {/* หน้าจอ */}
-                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-sky-700 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
-                        Monitor
-                    </div>
 
-                    {/* เมาส์ */}
-                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-blue-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
-                        🖱
-                    </div>
-
-                    {/* เสา */}
-                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
-                    <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                    <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
+            <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-900 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-sky-700 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
+                    Monitor
                 </div>
 
-                <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-400 rounded-md shadow-inner">
-                    {/* หน้าจอ */}
-                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-sky-700 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
-                        Monitor
-                    </div>
-
-                    {/* เมาส์ */}
-                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-blue-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
-                        🖱
-                    </div>
-
-                    {/* เสา */}
-                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
-                    <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
-                    <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
+                {/* เมาส์ */}
+                <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-blue-900 rounded-full shadow text-white text-[8px] flex items-center justify-center">
+                    🖱
                 </div>
+
+                {/* เสา */}
+                {/* <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
+                <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" /> */}
+            </div>
+
+            <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-900 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-sky-700 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
+                    Monitor
+                </div>
+
+                {/* เมาส์ */}
+                <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-blue-900 rounded-full shadow text-white text-[8px] flex items-center justify-center">
+                    🖱
+                </div>
+
+                {/* เสา */}
+                {/* <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
+                <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" /> */}
+            </div>
+
+
+
+        </>
+    )
+}
+
+const Desklab = () => {
+    return (
+        <>
+
+            <div className="relative  h-[45px] bg-emerald-100 border-2 rounded-md shadow-inner">
+                {/* หน้าจอ */}
+                <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] rounded-md text-black flex flex-col items-center justify-center text-center leading-tight">
+                    <span>Nozzle Cleaning</span>
+                </div>
+
 
             </div>
 
@@ -63,18 +189,19 @@ const Desktop = () => {
 }
 
 
+
 const StorageRoomLayout = () => {
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
             <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-screen-xl">
-                <h2 className="text-xl text-black font-semibold text-center mb-4">
+                <h2 className="text-xl text-blue-900 font-semibold text-center mb-4">
                     Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
 
                 <div className="relative flex flex-col w-full border border-dashed border-blue-800 rounded-md pt-4 mt-4 bg-gray-50">
                     {/* ประตู */}
                     <div className="absolute -top-4 right-14 lg:right-27">
-                        <div className="w-24 h-10 bg-blue-400 text-white flex items-center justify-center rounded-md shadow-inner text-sm">
+                        <div className="w-24 h-10 bg-blue-900 text-white flex items-center justify-center rounded-md shadow-inner text-sm">
                             ประตูเข้า
                         </div>
 
@@ -174,14 +301,23 @@ const StorageRoomLayout = () => {
 
 
 
-                        {/* H+I */}
-                        <div className={shelfClass}>
-                            <div className="absolute top-20 w-full text-center font-semibold text-gray-700">I</div>
-                            <CornerPosts />
 
-                            <div className="absolute top-2/4 w-full h-[3px] bg-gray-400" />
-                            <div className="absolute bottom-6 w-full text-center font-semibold text-gray-700">H</div>
+                        {/* H+I */}
+                        <div className="flex flex-col items-center justify-center gap-1">
+                            {/* I */}
+                            <div className={`${shelfClass2} flex items-center justify-center relative`}>
+                                I
+                                <CornerPosts />
+                            </div>
+
+                            {/* H */}
+                            <div className={`${shelfClass2} flex items-center justify-center relative`}>
+                                H
+                                <CornerPosts />
+                            </div>
                         </div>
+
+
                     </div>
                     <div className="flex items-center justify-center text-center">
 
@@ -201,11 +337,18 @@ const StorageRoomLayout = () => {
                         </div>
 
                     </div>
+                    <div className="grid grid-cols-7 gap-4 text-[13px] font-kanit ">
 
-                    {/* เครื่องจักร */}
-                    <div className="mt-2 w-full h-[40px] bg-gray-700 text-white border border-gray-900 flex items-center justify-center text-xs font-semibold uppercase tracking-wide">
-                        MACHINE
+                        <Desklab />
+                        <VisualCheckStencil />
+                        <SAWAClean2 />
+                        <StenCleaning2 />
+                        <SAWAClean1 />
+                        <StenCleaning />
+                        <Cornerwashing />
+
                     </div>
+
                 </div>
             </div>
         </div >
