@@ -126,7 +126,7 @@ const ShelfWithJigs: React.FC = () => {
 
                     <div
 
-                        className="w-full h-35 bg-white border border-gray-400 rounded-md shadow-inner flex items-center justify-center text-gray-800 font-semibold"
+                        className="w-full h-35 bg-white border border-gray-400 rounded-md shadow-inner flex items-center justify-center text-gray-800 font-semibold gap-2"
                     >
                         <div className="relative w-[120px] h-[70px] border-gray-600 rounded-sm">
 
@@ -240,7 +240,7 @@ const ShelfWithJigs: React.FC = () => {
                     </div>
                     <div
 
-                        className="w-full h-35 bg-white border border-gray-400 rounded-md shadow-inner flex items-center justify-center text-gray-800 font-semibold"
+                        className="w-full h-35 bg-white border border-gray-400 rounded-md shadow-inner flex items-center justify-center text-gray-800 font-semibold gap-2"
                     >
                         <div className="relative w-[120px] h-[70px] border-gray-600 rounded-sm">
 
