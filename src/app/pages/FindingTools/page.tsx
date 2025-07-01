@@ -5,6 +5,7 @@ import Toast from "../../components/Toast";
 import ShelfWithWheels from "../../components/ShelfWithWheels";
 import { FaCalendarAlt, FaCheckCircle, FaClock, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
 import ShelfWithJigs from "@/app/components/ShelfWithJigs";
+import SupportBox from "@/app/components/SupportBox";
 
 const data = {
     shelfName: "A1",
@@ -161,7 +162,7 @@ export default function StorageRoomLayout() {
         { code: "I", label: "Squeegee " },
     ];
 
-    const shelfG = () => (
+    const shelfSupportBox = () => (
         <>
             <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 ">
                 <div className="flex flex-col justify-center items-end w-full">
@@ -177,7 +178,7 @@ export default function StorageRoomLayout() {
                 {/* ชื่อ Shelf */}
                 <div className="text-sm font-semibold text-gray-700 mb-2">{ }</div>
 
-                <ShelfWithJigs />
+                <SupportBox/>
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
@@ -535,7 +536,8 @@ export default function StorageRoomLayout() {
 
                 {showShelf && (
                     // shelfA()
-                    shelfD()
+                    // shelfD()
+                    shelfSupportBox()
                 )}
 
             </div>
