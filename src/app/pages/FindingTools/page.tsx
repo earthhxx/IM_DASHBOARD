@@ -20,44 +20,42 @@ const Desktop = () => {
     return (
         <>
             <div className="flex justify-center  me-25">
-                <div className="relative w-[180px] h-[40px] bg-gray-200 border-2 border-gray-800 rounded-md shadow-inner">
-
+                <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-400 rounded-md shadow-inner">
                     {/* หน้าจอ */}
-                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-gray-800 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
+                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-sky-700 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
                         Monitor
                     </div>
 
                     {/* เมาส์ */}
-                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-gray-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
+                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-blue-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
                         🖱
                     </div>
 
-                    {/* เสาโต๊ะ (ขาโต๊ะ) */}
-                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
-                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
-                    <div className="absolute top-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
-                    <div className="absolute top-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
-
+                    {/* เสา */}
+                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
+                    <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
                 </div>
-                 <div className="relative w-[180px] h-[40px] bg-gray-200 border-2 border-gray-800 rounded-md shadow-inner">
 
+                <div className="relative w-[180px] h-[40px] bg-cyan-100 border-2 border-blue-400 rounded-md shadow-inner">
                     {/* หน้าจอ */}
-                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-gray-800 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
+                    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90px] h-[24px] bg-sky-700 rounded-md shadow-md text-white text-[10px] flex items-center justify-center">
                         Monitor
                     </div>
 
                     {/* เมาส์ */}
-                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-gray-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
+                    <div className="absolute top-[25%] left-[145px] w-[16px] h-[24px] bg-blue-500 rounded-full shadow text-white text-[8px] flex items-center justify-center">
                         🖱
                     </div>
 
-                    {/* เสาโต๊ะ (ขาโต๊ะ) */}
-                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
-                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
-                    <div className="absolute top-1 left-1 w-2 h-2 bg-gray-700 rounded-full" />
-                    <div className="absolute top-1 right-1 w-2 h-2 bg-gray-700 rounded-full" />
-
+                    {/* เสา */}
+                    <div className="absolute bottom-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                    <div className="absolute bottom-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
+                    <div className="absolute top-1 left-1 w-2 h-2 bg-sky-600 rounded-full" />
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-sky-600 rounded-full" />
                 </div>
+
             </div>
 
         </>
@@ -73,16 +71,17 @@ const StorageRoomLayout = () => {
                     Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
 
-                <div className="relative flex flex-col w-full border border-dashed border-gray-400 rounded-md pt-4 mt-4 bg-gray-50">
+                <div className="relative flex flex-col w-full border border-dashed border-blue-800 rounded-md pt-4 mt-4 bg-gray-50">
                     {/* ประตู */}
                     <div className="absolute -top-4 right-14 lg:right-27">
-                        <div className="w-24 h-10 bg-gray-500 text-white flex items-center justify-center rounded-md shadow-inner text-sm">
+                        <div className="w-24 h-10 bg-blue-400 text-white flex items-center justify-center rounded-md shadow-inner text-sm">
                             ประตูเข้า
                         </div>
+
                     </div>
 
                     <div className="flex justify-center ms-40 p-2">
-                       <Desktop /> 
+                        <Desktop />
                     </div>
 
 
@@ -158,7 +157,7 @@ const StorageRoomLayout = () => {
                         </div>
                         <div className="flex flex-col items-center justify-center">
                             {/* ลูกศร Unicode */}
-                            <div className="text-gray-700 text-4xl text-center">
+                            <div className="text-sky-700 text-4xl text-center">
                                 ↓
                             </div>
 
@@ -167,7 +166,7 @@ const StorageRoomLayout = () => {
                                 ทางเดิน
                             </div>
                             {/* ลูกศร Unicode */}
-                            <div className="text-gray-700 text-4xl text-center">
+                            <div className="text-sky-700 text-4xl text-center">
                                 ↓
                             </div>
 
@@ -187,7 +186,7 @@ const StorageRoomLayout = () => {
                     <div className="flex items-center justify-center text-center">
 
                         {/* ลูกศรใหญ่ขึ้น */}
-                        <div className="text-gray-700 text-4xl text-center">
+                        <div className="text-sky-700 text-4xl text-center">
                             ←
                         </div>
 
@@ -197,7 +196,7 @@ const StorageRoomLayout = () => {
                             ทางเดิน
                         </div>
 
-                        <div className="text-gray-700 text-4xl text-center">
+                        <div className="text-sky-700 text-4xl text-center">
                             ←
                         </div>
 
