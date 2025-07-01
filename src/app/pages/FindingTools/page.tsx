@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
+import ShelfWithWheels from "../../components/ShelfWithWheels";
+
 
 
 // Common styles
@@ -117,6 +119,7 @@ const Desktop = () => (
 
 export default function StorageRoomLayout() {
     const [toastVisible, setToastVisible] = useState(false);
+    const [showShelf, setShowShelf] = React.useState(true);
 
 
     // ใช้ useEffect รอ 3 วินาทีแล้วซ่อน Toast อัตโนมัติ
@@ -133,8 +136,11 @@ export default function StorageRoomLayout() {
     // ตัวอย่าง onClick ที่แยกกันสำหรับแต่ละ shelf
     const onShelfClick = (label: string) => {
         setToastVisible(true);
+
         console.log(`Shelf ${label} clicked!`);
     };
+
+
 
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
@@ -157,7 +163,7 @@ export default function StorageRoomLayout() {
 
                     {/* ชั้นวาง */}
                     <div className="flex w-full justify-between mt-6 flex-wrap gap-4">
-                        <Shelf label="A" height="large" onClick={() => onShelfClick("A")} lines={[50]} />
+                        <Shelf label="A" height="large" onClick={() => { onShelfClick("A"); setShowShelf((prev) => !prev) }} lines={[50]} />
                         <Shelf label="B" height="large" onClick={() => onShelfClick("B")} lines={[50]} />
                         <Shelf label="C" height="large" onClick={() => onShelfClick("C")} lines={[50]} />
                         <DoubleShelf
@@ -213,8 +219,22 @@ export default function StorageRoomLayout() {
                     {toastVisible && (
                         <Toast message="บันทึกข้อมูลสำเร็จ!" onClose={() => setToastVisible(false)} />
                     )}
+
+
                 </div>
+               
+
             </div>
+             {showShelf && (
+                    <div className=" z-50 flex items-center justify-center">
+                        <div className="bg-white p-4 rounded-lg shadow-2xl">
+                            <ShelfWithWheels visible={true} label="Shelf A" />
+                            <div className=" bg-black/50 w-full h-20 mt-2 rounded-xl">
+
+                            </div>
+                        </div>
+                    </div>
+                )}
         </div>
     );
 }

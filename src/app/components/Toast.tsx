@@ -8,7 +8,7 @@ type ToastProps = {
 };
 
 const Toast: React.FC<ToastProps> = ({ message, onClose }) => (
-  <div className="fixed top-4 right-4 z-50 animate-slide-in">
+  <div className="fixed bottom-4 right-4 z-50 animate-slide-in">
     <div className="flex items-center max-w-xs p-4 mb-4 bg-white border border-blue-300 rounded-lg shadow-md text-gray-800">
       <svg
         className="w-6 h-6 text-blue-600"
