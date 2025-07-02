@@ -143,19 +143,25 @@ export default function StorageRoomLayout() {
     const [showShelfGH, setShowShelfGH] = React.useState(false);
     const [showShelfI, setShowShelfI] = React.useState(false);
 
+    const [query, setQuery] = useState(""); // สำหรับ input
     const [datasearch, setDatasearch] = useState<ToolingData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    const fetchTooling = async () => {
+    const handleSearch = async () => {
+        if (!query.trim()) return;
+
+        setLoading(true);
+        setError("");
         try {
-            const response = await fetch("http://localhost:3001/api/Toolingfinding?parameter=K");
-            if (!response.ok) {
-                throw new Error("Failed to fetch");
-            }
-            const json = await response.json();
-            setDatasearch(json.data); // สมมติว่า API คืน { data: [...] }
-        } catch (err) {
-            console.error("Error:", err);
+            const res = await fetch(`http://localhost:3001/api/Toolingfinding?parameter=${query}`);
+            if (!res.ok) throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
+
+            const json = await res.json();
+            setDatasearch(json.data); // ปรับตาม response จริง
+        } catch (err: any) {
+            setError(err.message || "เกิดข้อผิดพลาด");
+            setDatasearch([]);
         } finally {
             setLoading(false);
         }
