@@ -271,7 +271,12 @@ export default function StorageRoomLayout() {
                 {/* ชื่อ Shelf */}
                 <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                <ShelfWithJigs />
+                <ShelfWithJigs activeNumber={3} />
+                {/* ล้อ (Wheels) แยกออกมาด้านล่างชั้นวาง */}
+                <div className="flex justify-between w-48 mx-auto mt-6">
+                    <div className="w-6 h-6 bg-gray-700 rounded-full shadow-md" />
+                    <div className="w-6 h-6 bg-gray-700 rounded-full shadow-md" />
+                </div>
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
@@ -360,6 +365,7 @@ export default function StorageRoomLayout() {
                         highlightedNumbers={[4]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
 
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                         {/* ชื่อชั้น */}
                         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
@@ -429,7 +435,7 @@ export default function StorageRoomLayout() {
     )
 
 
-    const shelfSqueegee = (shelf: string ) => (
+    const shelfSqueegee = (shelf: string) => (
         <>
             <div className=" z-50 flex items-center justify-center">
 
