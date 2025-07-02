@@ -274,7 +274,7 @@ export default function StorageRoomLayout() {
 
                 <ShelfWithJigs activeNumber={3} />
                 {/* ล้อ (Wheels) แยกออกมาด้านล่างชั้นวาง */}
-                <div className="flex justify-between w-48 mx-auto mt-6">
+                <div className="flex justify-between w-full mx-auto mt-2 mb-4 ps-10 pe-10">
                     <div className="w-6 h-6 bg-gray-700 rounded-full shadow-md" />
                     <div className="w-6 h-6 bg-gray-700 rounded-full shadow-md" />
                 </div>
