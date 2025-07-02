@@ -17,9 +17,9 @@ const shelfSqueegee: React.FC<shelfSqueegeeProps> = ({ activeNumber }) => {
   }, []);
 
   return (
-    <div className="w-full mx-auto flex justify-center items-center">
+    <div className="w-full flex justify-center items-center">
       {/* โครงตู้ */}
-      <div className="relative bg-gray-100 border-4 border-gray-500 rounded-xl shadow-2xl p-4 w-full max-w-2xl">
+      <div className="relative bg-gray-100 border-4 border-gray-500 rounded-xl shadow-2xl p-4 w-190 h-120">
         {/* 5 ชั้นวาง */}
         <div className="flex flex-col gap-4">
           {[0, 1, 2, 3, 4].map((rowIndex) => {
@@ -56,7 +56,7 @@ const shelfSqueegee: React.FC<shelfSqueegeeProps> = ({ activeNumber }) => {
                           borderLeft: "10px solid transparent",
                           borderRight: "10px solid transparent",
                           borderBottom: `16px solid ${
-                            isActive && blink ? "#f87171" : "#4B5563"
+                            isActive && blink ? "#FACC15" : "#4B5563"
                           }`,
                         }}
                       >

@@ -13,8 +13,8 @@ const Box: React.FC<BoxProps> = ({ startNumber, active, blink }) => {
   const label = `${startNumber}-${endNumber}`;
   return (
     <div
-      className={`w-14 h-14 border rounded-sm shadow-md flex items-center justify-center text-xs font-bold text-gray-800
-        ${active ? (blink ? "bg-red-400" : "bg-red-300") : "bg-yellow-300 border-yellow-600"}
+      className={`w-15 h-11 border rounded-sm shadow-md flex items-center justify-center text-xs font-bold text-gray-800
+        ${active ? (blink ? "bg-yellow-300" : "bg-yellow-300-red-300") : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 text-black border-white"}
       `}
     >
       {label}
@@ -30,7 +30,7 @@ type ShelfRowProps = {
 };
 
 const ShelfRow: React.FC<ShelfRowProps> = ({ row, startNumber, activeNumber, blink }) => (
-  <div className="flex justify-center gap-2 mb-2">
+  <div className="flex justify-center gap-6 mb-2">
     {Array.from({ length: 8 }).map((_, i) => {
       const boxStart = startNumber + i * 2;
       const isActive = activeNumber === boxStart || activeNumber === boxStart + 1;
@@ -63,7 +63,7 @@ const SupportBox: React.FC<SupportBoxProps> = ({ activeNumber }) => {
 
   return (
     <div className="flex flex-col items-center rounded-xl ">
-      <div className="flex flex-col gap-3 bg-gradient-to-r from-gray-200 to-white border border-gray-400 p-4 rounded-2xl ">
+      <div className="flex flex-col gap-3 bg-gradient-to-r from-gray-200 to-white border border-gray-400 p-4 rounded-2xl h-126 w-190">
         {/* 6 ชั้นวางกล่อง = 6 แถว * 8 ช่อง = 48 ช่อง → 96 หมายเลข */}
         {[6, 5, 4, 3, 2, 1].map((row, index) => (
           <div key={row} className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">

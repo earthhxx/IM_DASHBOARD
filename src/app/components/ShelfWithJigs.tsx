@@ -17,12 +17,12 @@ const ShelfWithJigs: React.FC<ShelfWithJigsProps> = ({ activeNumber }) => {
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-r from-gray-200 to-white border border-gray-400 p-4 rounded-lg shadow-2xl max-w-3xl mx-auto">
+    <div className="relative bg-gradient-to-r from-gray-200 to-white border border-gray-400 p-4 rounded-lg shadow-2xl max-w-3xl mx-auto h-105 w-160">
       <div className="flex flex-col gap-3">
         {[0, 1, 2].map((row) => (
           <div
             key={row}
-            className="w-full bg-white border border-gray-400 rounded-md shadow-inner flex items-center justify-center gap-4 p-2"
+            className="w-full bg-white border border-gray-400 rounded-md shadow-inner flex items-center justify-center gap-14 p-2"
           >
             {[0, 1, 2].map((col) => {
               const jigNumber = row * 3 + col + 1;
@@ -31,12 +31,12 @@ const ShelfWithJigs: React.FC<ShelfWithJigsProps> = ({ activeNumber }) => {
               return (
                 <div
                   key={jigNumber}
-                  className={`relative w-[120px] h-[70px] border-gray-600 rounded-sm transition-all duration-200 ${
-                    isBlinking ? "bg-red-300" : "bg-white"
+                  className={`relative w-[120px] h-[100px] border-gray-600 rounded-sm transition-all duration-200 ${
+                    isBlinking ? "bg-yellow-300/70" : "bg-white"
                   }`}
                 >
                   {/* เส้นแบ่ง */}
-                  <div className="absolute top-[20%] left-0 right-0 h-[4px] bg-gray-500 rounded-4xl" />
+                  <div className="absolute top-[35%] left-0 right-0 h-[4px] bg-gray-500 rounded-4xl" />
                   <div className="absolute top-[49%] left-0 right-0 h-[4px] bg-amber-100 shadow-inner rounded-4xl" />
                   <div className="absolute top-[66%] left-0 right-0 h-[4px] bg-gray-500 rounded-4xl" />
                   <div className="absolute top-[100%] left-0 right-0 h-[4px] bg-gray-500 rounded-4xl" />

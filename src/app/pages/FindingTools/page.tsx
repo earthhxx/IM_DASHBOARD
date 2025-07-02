@@ -57,7 +57,7 @@ const Shelf: React.FC<ShelfProps> = ({ label, height, onClick, lines = [], highl
         ${shelfHeights[height]}
         
         relative
-        ${highlighted ? "bg-yellow-300/70 border-yellow-400/30 animate-pulse" : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100"}
+        ${highlighted ? "bg-yellow-300/70 border-yellow-800/30 animate-pulse" : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100"}
     `;
 
     return (
@@ -235,35 +235,33 @@ export default function StorageRoomLayout() {
                     </button>
 
                 </div>
-                {/* ชื่อ Shelf */}
-                <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
-
+                <div className="flex flex-col justify-center items-center mb-4">
+                    {/* ชื่อ Shelf */}
+                    <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
+                </div>
                 <SupportBox activeNumber={numonly} />
 
-
-
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm ">
                     {/* ชื่อชั้น */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaProjectDiagram className="text-blue-400" />
                             ชื่อชั้น
                         </div>
                         <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
-                    </div>
+                    </span>
 
-                    {/* ชั้น */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    {/* side */}
+                    <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaLayerGroup className="text-blue-400" />
-                            หน้า
+                            side
                         </div>
                         <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
                     </div>
 
                     {/* ตำแหน่ง */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaMapMarkerAlt className="text-blue-400" />
                             ตำแหน่ง
@@ -272,7 +270,7 @@ export default function StorageRoomLayout() {
                     </div>
 
                     {/* สถานะ */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaCheckCircle className="text-blue-400" />
                             สถานะ
@@ -322,8 +320,10 @@ export default function StorageRoomLayout() {
                     </button>
 
                 </div>
-                {/* ชื่อ Shelf */}
-                <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
+                <div className="flex flex-col justify-center items-center mb-4">
+                    {/* ชื่อ Shelf */}
+                    <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
+                </div>
 
                 <ShelfWithJigs activeNumber={numonly ? Number(numonly) : undefined} />
                 {/* ล้อ (Wheels) แยกออกมาด้านล่างชั้นวาง */}
@@ -333,18 +333,18 @@ export default function StorageRoomLayout() {
                 </div>
 
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-15">
                     {/* ชื่อชั้น */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaProjectDiagram className="text-blue-400" />
                             ชื่อชั้น
                         </div>
                         <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
-                    </div>
+                    </span>
 
                     {/* side */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaLayerGroup className="text-blue-400" />
                             side
@@ -353,7 +353,7 @@ export default function StorageRoomLayout() {
                     </div>
 
                     {/* ตำแหน่ง */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaMapMarkerAlt className="text-blue-400" />
                             ตำแหน่ง
@@ -362,7 +362,7 @@ export default function StorageRoomLayout() {
                     </div>
 
                     {/* สถานะ */}
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaCheckCircle className="text-blue-400" />
                             สถานะ
@@ -400,9 +400,9 @@ export default function StorageRoomLayout() {
 
     const shelfStencil = (shelf: string) => (
         <>
-            <div className=" z-50 flex items-center justify-center">
+            <div className=" z-50 flex items-center justify-center ">
 
-                <div className=" bg-white p-4 rounded-lg shadow-2xl">
+                <div className=" bg-white p-4 rounded-lg shadow-2xl ">
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
@@ -418,18 +418,18 @@ export default function StorageRoomLayout() {
                         highlightedNumbers={numonly ? [Number(numonly)] : []} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-15">
                         {/* ชื่อชั้น */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
                             </div>
                             <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
-                        </div>
+                        </span>
 
                         {/* side */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaLayerGroup className="text-blue-400" />
                                 side
@@ -438,7 +438,7 @@ export default function StorageRoomLayout() {
                         </div>
 
                         {/* ตำแหน่ง */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
@@ -447,7 +447,7 @@ export default function StorageRoomLayout() {
                         </div>
 
                         {/* สถานะ */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaCheckCircle className="text-blue-400" />
                                 สถานะ
@@ -489,9 +489,9 @@ export default function StorageRoomLayout() {
 
     const shelfSqueegee = (shelf: string) => (
         <>
-            <div className=" z-50 flex items-center justify-center">
+            <div className=" z-50 flex items-center justify-center ">
 
-                <div className=" bg-white p-4 rounded-lg shadow-2xl">
+                <div className=" p-4 rounded-lg ">
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
@@ -502,14 +502,16 @@ export default function StorageRoomLayout() {
                         </button>
 
                     </div>
-                    {/* ชื่อ Shelf */}
-                    <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
+                    <div className="flex flex-col justify-center items-center mb-4">
+                        {/* ชื่อ Shelf */}
+                        <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
+                    </div>
 
                     <ShelfSqueegee activeNumber={numonly ? Number(numonly) : undefined} />
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-15">
                         {/* ชื่อชั้น */}
-                        <span className="col-span-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
@@ -580,7 +582,7 @@ export default function StorageRoomLayout() {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
-            <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-screen-xl">
+            <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-[90%] m-4">
                 <h2 className="text-xl text-blue-900 font-semibold text-center mb-4">
                     Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
@@ -631,7 +633,7 @@ export default function StorageRoomLayout() {
 
                         <Shelf label="B" height="large" onClick={() => { onShelfClick("B"); setShowShelfABC((prev) => !prev); setShelf('B') }} lines={[50]} highlighted={lastCharshelf === "B"} />
 
-                        <Shelf label="C" height="large" onClick={() => { onShelfClick("C"); setShowShelfABC((prev) => !prev); setShelf('C') }} lines={[50]} highlighted={lastCharshelf === "C"}/>
+                        <Shelf label="C" height="large" onClick={() => { onShelfClick("C"); setShowShelfABC((prev) => !prev); setShelf('C') }} lines={[50]} highlighted={lastCharshelf === "C"} />
 
                         <DoubleShelf
                             labels={["D", "E"]}
