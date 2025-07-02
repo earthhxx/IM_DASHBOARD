@@ -185,7 +185,8 @@ export default function StorageRoomLayout() {
                 {/* ชื่อ Shelf */}
                 <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                <SupportBox />
+                <SupportBox activeNumber="B3-5" />
+
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
