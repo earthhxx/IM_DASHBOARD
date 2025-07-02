@@ -28,7 +28,7 @@ const shelfSqueegee: React.FC<shelfSqueegeeProps> = ({ activeNumber }) => {
             return (
               <div
                 key={rowIndex}
-                className="relative w-full h-[80px] bg-white border border-gray-400 rounded-md shadow-inner flex items-end justify-center"
+                className="relative w-full h-[75px] bg-white border border-gray-400 rounded-md shadow-inner flex items-end justify-center"
               >
                 {/* แถบฐานของชั้น */}
                 <div className="absolute bottom-0 h-[4px] w-[90%] bg-blue-800 rounded-full m-1.5" />

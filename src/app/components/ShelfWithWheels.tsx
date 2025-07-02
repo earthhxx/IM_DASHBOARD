@@ -47,7 +47,7 @@ const ShelfWithWheels: React.FC<ShelfWithWheelsProps> = ({
       )}
 
       {/* ชั้นวางหลักแบบจัตุรัส */}
-      <div className="w-190 h-120 grid grid-cols-2 gap-2 p-2 bg-white border-2 border-gray-600 rounded-md shadow-lg">
+      <div className="w-190 h-124 grid grid-cols-2 gap-2 p-2 bg-white border-2 border-gray-600 rounded-md shadow-lg">
         {renderSquareSlot(1)}
         {renderSquareSlot(26)}
         {renderSquareSlot(51)}

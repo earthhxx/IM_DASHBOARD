@@ -224,7 +224,7 @@ export default function StorageRoomLayout() {
 
     const shelfSupportBox = (shelf: string) => (
         <>
-            <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 ">
+            <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 h-210">
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
@@ -309,7 +309,7 @@ export default function StorageRoomLayout() {
 
     const shelfJIG = (shelf: string) => (
         <>
-            <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 ">
+            <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 h-210 ">
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
@@ -402,7 +402,7 @@ export default function StorageRoomLayout() {
         <>
             <div className=" z-50 flex items-center justify-center ">
 
-                <div className=" bg-white p-4 rounded-lg shadow-2xl ">
+                <div className=" bg-white p-4 rounded-lg shadow-2xl h-210">
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
@@ -489,7 +489,7 @@ export default function StorageRoomLayout() {
 
     const shelfSqueegee = (shelf: string) => (
         <>
-            <div className=" z-50 flex items-center justify-center ">
+            <div className=" z-50 flex items-center justify-center h-210 bg-white rounded-2xl">
 
                 <div className=" p-4 rounded-lg ">
                     <div className="flex flex-col justify-center items-end">
@@ -502,7 +502,7 @@ export default function StorageRoomLayout() {
                         </button>
 
                     </div>
-                    <div className="flex flex-col justify-center items-center mb-4">
+                    <div className="flex flex-col justify-center items-center mb-4 uppercase">
                         {/* ชื่อ Shelf */}
                         <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
                     </div>
@@ -582,7 +582,7 @@ export default function StorageRoomLayout() {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-100 flex items-center justify-center">
-            <div className="flex flex-col bg-white shadow-md rounded-lg p-4 sm:p-8 h-fit items-center justify-center w-full max-w-[90%] m-4">
+            <div className="flex flex-col bg-white shadow-md rounded-lg p-5 h-210 items-center justify-center w-full max-w-[90%] m-4">
                 <h2 className="text-xl text-blue-900 font-semibold text-center mb-4">
                     Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
@@ -713,7 +713,7 @@ export default function StorageRoomLayout() {
                 </div>
 
 
-                <div className="w-full bg-gradient-to-t from-gray-200 to-white border-t border-gray-300 py-4 px-6 rounded-t-2xl shadow-inner">
+                <div className="w-full bg-gradient-to-t from-gray-200 to-white border-t border-gray-300 py-4 px-6 rounded-sm shadow-inner mt-4">
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2 text-[13px] font-bold text-gray-700 uppercase">
                         {legendItems.map((item) => (
                             <div key={item.code} className="flex items-center gap-2">
