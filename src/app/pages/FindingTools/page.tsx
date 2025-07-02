@@ -7,6 +7,7 @@ import { FaCalendarAlt, FaCheckCircle, FaClock, FaLayerGroup, FaMapMarkerAlt, Fa
 import ShelfWithJigs from "@/app/components/ShelfWithJigs";
 import SupportBox from "@/app/components/SupportBox";
 import ShelfSqueegee from "@/app/components/shelfSqueegee";
+import FloatingTable from "@/app/components/FloatingTable";
 
 
 
@@ -138,10 +139,19 @@ export default function StorageRoomLayout() {
     const [showShelfGH, setShowShelfGH] = React.useState(false);
     const [showShelfI, setShowShelfI] = React.useState(false);
 
+    const [showFloat, setShowFloat] = useState(false);
+
     const [query, setQuery] = useState(""); // สำหรับ input
     const [datasearch, setDatasearch] = useState<ToolingData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const [selectedItem, setSelectedItem] = useState<ToolingData | null>(null);
+
+    const handleRowClick = (item: ToolingData) => {
+        setSelectedItem(item);
+        setShowFloat(false); // ปิดตาราง (ถ้าต้องการ)
+    };
 
     const handleSearch = async () => {
         if (!query.trim()) return;
@@ -154,6 +164,7 @@ export default function StorageRoomLayout() {
 
             const json = await res.json();
             setDatasearch(json.data); // ปรับตาม response จริง
+            setShowFloat(true);
         } catch (err: any) {
             setError(err.message || "เกิดข้อผิดพลาด");
             setDatasearch([]);
@@ -170,7 +181,7 @@ export default function StorageRoomLayout() {
         if (toastVisible) {
             const timer = setTimeout(() => {
                 setToastVisible(false);
-            }, 3000);
+            }, 5000);
 
             return () => clearTimeout(timer); // ล้าง timer เวลาคอมโพเนนต์ unmount หรือ toastVisible เปลี่ยน
         }
@@ -669,10 +680,7 @@ export default function StorageRoomLayout() {
                         <CornerWashing />
                     </div>
 
-                    {/* Toast */}
-                    {toastVisible && (
-                        <Toast message="บันทึกข้อมูลสำเร็จ!" onClose={() => setToastVisible(false)} />
-                    )}
+
 
 
                 </div>
@@ -709,6 +717,26 @@ export default function StorageRoomLayout() {
                 {showShelfI && shelf && (
                     shelfSqueegee(shelf)
                 )}
+                {showFloat && (
+                    <FloatingTable
+                        data={datasearch}
+                        onClose={() => setShowFloat(false)}
+                        onRowClick={(item) => {
+                            handleRowClick(item);
+                            setToastVisible(true);
+                        }}
+
+                    />
+                )}
+
+                {toastVisible && selectedItem && (
+                    <Toast
+                        message={`${selectedItem.toolingname} (${selectedItem.sheftname} - ${selectedItem.slot})`}
+                        onClose={() => setToastVisible(false)}
+                    />
+                )}
+
+
 
             </div>
         </div>

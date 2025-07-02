@@ -112,19 +112,20 @@ body {
 }
 
 @keyframes slide-in {
-  0% {
-    opacity: 0;
+  from {
     transform: translateX(100%);
+    opacity: 0;
   }
-  100% {
+  to {
+    transform: translateX(0);
     opacity: 1;
-    transform: translateX(0%);
   }
 }
 
 .animate-slide-in {
-  animation: slide-in 0.4s ease-out forwards;
+  animation: slide-in 1.5s ease forwards; /* ปรับ 1.5s เป็นเวลาที่ต้องการ */
 }
+
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
