@@ -15,6 +15,13 @@ const data = {
     status: "OnStock", // หรือ "Empty"
 };
 
+type ToolingData = {
+    sheftname: string;
+    slot: string;
+    toolingname: string;
+    side: string;
+    status: string;
+};
 
 // Common styles
 const shelfBase =
@@ -135,6 +142,24 @@ export default function StorageRoomLayout() {
     const [showShelfDEF, setShowShelfDEF] = React.useState(false);
     const [showShelfGH, setShowShelfGH] = React.useState(false);
     const [showShelfI, setShowShelfI] = React.useState(false);
+
+    const [datasearch, setDatasearch] = useState<ToolingData[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchTooling = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/api/Toolingfinding?parameter=K");
+            if (!response.ok) {
+                throw new Error("Failed to fetch");
+            }
+            const json = await response.json();
+            setDatasearch(json.data); // สมมติว่า API คืน { data: [...] }
+        } catch (err) {
+            console.error("Error:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const [shelf, setShelf] = React.useState<string | null>(null);
 
