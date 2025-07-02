@@ -57,7 +57,7 @@ const Shelf: React.FC<ShelfProps> = ({ label, height, onClick, lines = [], highl
         ${shelfHeights[height]}
         
         relative
-        ${highlighted ? "bg-yellow-300 border-yellow-500 animate-pulse" : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100"}
+        ${highlighted ? "bg-yellow-300/70 border-yellow-400/30 animate-pulse" : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100"}
     `;
 
     return (
