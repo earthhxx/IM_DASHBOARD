@@ -21,7 +21,7 @@ type ToolingData = {
 
 // Common styles
 const shelfBase =
-    "w-10 sm:w-[50px] lg:w-[60px] bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 border-2 border-gray-400 rounded-md relative shadow-md font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200 flex items-center justify-center select-none cursor-pointer";
+    "w-10 sm:w-[50px] lg:w-[60px] border-2 border-gray-400 rounded-md relative shadow-md font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200 flex items-center justify-center select-none cursor-pointer";
 
 // ความสูงต่างกันของ shelf
 const shelfHeights = {
@@ -48,16 +48,25 @@ type ShelfProps = {
     onClick: () => void;
     lines?: number[]; // ตำแหน่งเส้นแบ่ง (เป็นเปอร์เซ็นต์) เช่น [50] หรือ [33,66]
     shelf?: string; // สำหรับการระบุ shelf ที่เลือก
+    highlighted?: boolean; // เพิ่ม property highlighted
 };
 
-const Shelf: React.FC<ShelfProps> = ({ label, height, onClick, lines = [] }) => {
+const Shelf: React.FC<ShelfProps> = ({ label, height, onClick, lines = [], highlighted }) => {
+    const shelfClass = `
+        ${shelfBase}
+        ${shelfHeights[height]}
+        
+        relative
+        ${highlighted ? "bg-yellow-300 border-yellow-500 animate-pulse" : "bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100"}
+    `;
+
     return (
         <div
-            className={`${shelfBase} ${shelfHeights[height]} relative`}
+            className={shelfClass}
             onClick={onClick}
             role="button"
             tabIndex={0}
-            onKeyDown={e => e.key === "Enter" && onClick()}
+            onKeyDown={(e) => e.key === "Enter" && onClick()}
             aria-label={`Shelf ${label}`}
         >
             {/* เส้นแบ่งตามตำแหน่งใน lines */}
@@ -75,6 +84,7 @@ const Shelf: React.FC<ShelfProps> = ({ label, height, onClick, lines = [] }) => 
         </div>
     );
 };
+
 
 // Shelf component แบบคู่ (สำหรับ D+E, F+G)
 type DoubleShelfProps = {
@@ -147,6 +157,8 @@ export default function StorageRoomLayout() {
     const [error, setError] = useState("");
 
     const [selectedItem, setSelectedItem] = useState<ToolingData | null>(null);
+
+    const lastCharshelf = selectedItem?.sheftname.trim().slice(-1).toUpperCase();
 
     const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
 
@@ -372,7 +384,7 @@ export default function StorageRoomLayout() {
 
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
-                  
+
                     <button
                         onClick={() => setShowShelfDEF(false)}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
@@ -399,14 +411,12 @@ export default function StorageRoomLayout() {
                         >
                             &times;
                         </button>
-
                     </div>
 
                     <ShelfWithWheels
                         label={`Shelf ${shelf}`}
                         highlightedNumbers={numonly ? [Number(numonly)] : []} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
-
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                         {/* ชื่อชั้น */}
@@ -606,11 +616,22 @@ export default function StorageRoomLayout() {
                     </div>
 
                     {/* ชั้นวาง */}
-                    <div className="flex w-full justify-between mt-6 flex-wrap gap-4">
-                        <Shelf label="A" height="large" onClick={() => { onShelfClick("A"); setShowShelfABC((prev) => !prev); setShelf('A'); }} lines={[50]} />
-                        <Shelf label="B" height="large" onClick={() => { onShelfClick("B"); setShowShelfABC((prev) => !prev); setShelf('B') }} lines={[50]} />
+                    <div className="flex w-full justify-between mt-6 flex-wrap gap-4 ">
+                        <Shelf
+                            label="A"
+                            height="large"
+                            onClick={() => {
+                                onShelfClick("A");
+                                setShowShelfABC((prev) => !prev);
+                                setShelf('A');
+                            }}
+                            lines={[50]}
+                            highlighted={lastCharshelf === "A"}
+                        />
 
-                        <Shelf label="C" height="large" onClick={() => { onShelfClick("C"); setShowShelfABC((prev) => !prev); setShelf('C') }} lines={[50]} />
+                        <Shelf label="B" height="large" onClick={() => { onShelfClick("B"); setShowShelfABC((prev) => !prev); setShelf('B') }} lines={[50]} highlighted={lastCharshelf === "B"} />
+
+                        <Shelf label="C" height="large" onClick={() => { onShelfClick("C"); setShowShelfABC((prev) => !prev); setShelf('C') }} lines={[50]} highlighted={lastCharshelf === "C"}/>
 
                         <DoubleShelf
                             labels={["D", "E"]}
