@@ -724,6 +724,7 @@ export default function StorageRoomLayout() {
                         onRowClick={(item) => {
                             handleRowClick(item);
                             setToastVisible(true);
+                            console.log(`Selected item: ${item.sheftname} - ${item.slot}`);
                         }}
 
                     />
