@@ -429,7 +429,7 @@ export default function StorageRoomLayout() {
     )
 
 
-    const shelfSqueegee = (shelf: string) => (
+    const shelfSqueegee = (shelf: string ) => (
         <>
             <div className=" z-50 flex items-center justify-center">
 
@@ -447,7 +447,7 @@ export default function StorageRoomLayout() {
                     {/* ชื่อ Shelf */}
                     <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                    <ShelfSqueegee />
+                    <ShelfSqueegee activeNumber={17} />
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm mt-15">
                         {/* ชื่อชั้น */}
