@@ -154,7 +154,7 @@ export default function StorageRoomLayout() {
         setLoading(true);
         setError("");
         try {
-            const res = await fetch(`http://localhost:3001/api/Toolingfinding?parameter=${query}`);
+            const res = await fetch(`/api/Toolingfinding?parameter=${query}`);
             if (!res.ok) throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
 
             const json = await res.json();
@@ -564,15 +564,22 @@ export default function StorageRoomLayout() {
                 <h2 className="text-xl text-blue-900 font-semibold text-center mb-4">
                     Tooling Finder Function (MAINTENANCE ROOM)
                 </h2>
-                <div className="flex items-center justify-center w-full my-4">
+                <div className="flex items-center justify-center w-full my-4 gap-4">
                     <div className="w-full lg:w-[40%]">
                         <input
                             type="text"
-                            placeholder="Search..."
-
+                            placeholder="Tooling Name..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
                             className="w-full p-4 text-lg text-gray-800 rounded-xl bg-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
                         />
                     </div>
+                    <button
+                        onClick={handleSearch}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                    >
+                        Search
+                    </button>
                 </div>
 
 
