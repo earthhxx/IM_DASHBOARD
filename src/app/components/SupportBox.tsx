@@ -3,60 +3,76 @@
 import React, { useState, useEffect } from "react";
 
 type BoxProps = {
-  label?: string;
+  startNumber: number;
   active?: boolean;
   blink?: boolean;
 };
 
-const Box: React.FC<BoxProps> = ({ label, active, blink }) => {
+const Box: React.FC<BoxProps> = ({ startNumber, active, blink }) => {
+  const endNumber = startNumber + 1;
+  const label = `${startNumber}-${endNumber}`;
   return (
     <div
-      className={`w-10 h-14 border rounded-sm shadow-md flex items-center justify-center text-xs font-bold text-gray-800
+      className={`w-14 h-14 border rounded-sm shadow-md flex items-center justify-center text-xs font-bold text-gray-800
         ${active ? (blink ? "bg-red-400" : "bg-red-300") : "bg-yellow-300 border-yellow-600"}
       `}
     >
-      {label || "BOX"}
+      {label}
     </div>
   );
 };
 
 type ShelfRowProps = {
   row: number;
-  activeNumber?: string;
+  startNumber: number; // จุดเริ่มของแถวนี้
+  activeNumber?: number;
   blink?: boolean;
 };
 
-const ShelfRow: React.FC<ShelfRowProps> = ({ row, activeNumber, blink }) => (
+const ShelfRow: React.FC<ShelfRowProps> = ({ row, startNumber, activeNumber, blink }) => (
   <div className="flex justify-center gap-2 mb-2">
     {Array.from({ length: 8 }).map((_, i) => {
-      const label = `B${row}-${i + 1}`;
-      const isActive = activeNumber === label;
-      return <Box key={label} label={label} active={isActive} blink={blink} />;
+      const boxStart = startNumber + i * 2;
+      const isActive = activeNumber === boxStart || activeNumber === boxStart + 1;
+      return (
+        <Box key={boxStart} startNumber={boxStart} active={isActive} blink={blink} />
+      );
     })}
   </div>
 );
 
 type SupportBoxProps = {
-  activeNumber?: string; // ตัวอย่าง: "B3-5"
+  activeNumber?: string; // ตัวอย่าง "C43" หรือ "A120"
 };
 
 const SupportBox: React.FC<SupportBoxProps> = ({ activeNumber }) => {
   const [blink, setBlink] = useState(true);
+  const [numonly, setNumonly] = useState<number | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBlink((prev) => !prev);
-    }, 500);
+    const interval = setInterval(() => setBlink((prev) => !prev), 500);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (activeNumber) {
+      const match = activeNumber.match(/\d+/);
+      setNumonly(match ? parseInt(match[0], 10) : null);
+    }
+  }, [activeNumber]);
 
   return (
     <div className="flex flex-col items-center rounded-xl ">
       <div className="flex flex-col gap-3 bg-gradient-to-r from-gray-200 to-white border border-gray-400 p-4 rounded-2xl ">
-        {/* 6 ชั้นวางกล่อง */}
-        {[6, 5, 4, 3, 2, 1].map((row) => (
+        {/* 6 ชั้นวางกล่อง = 6 แถว * 8 ช่อง = 48 ช่อง → 96 หมายเลข */}
+        {[6, 5, 4, 3, 2, 1].map((row, index) => (
           <div key={row} className="bg-gray-400/40 p-2 border-gray-600 rounded-sm">
-            <ShelfRow row={row} activeNumber={activeNumber} blink={blink} />
+            <ShelfRow
+              row={row}
+              startNumber={index * 16 + 1} // แต่ละแถวมี 8 ช่อง * 2 เลข = 16
+              activeNumber={numonly || undefined}
+              blink={blink}
+            />
           </div>
         ))}
       </div>

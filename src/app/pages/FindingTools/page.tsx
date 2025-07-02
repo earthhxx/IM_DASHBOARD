@@ -496,7 +496,7 @@ export default function StorageRoomLayout() {
                     {/* ชื่อ Shelf */}
                     <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                    <ShelfSqueegee activeNumber={17} />
+                    <ShelfSqueegee activeNumber={numonly ? Number(numonly) : undefined} />
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm mt-15">
                         {/* ชื่อชั้น */}
@@ -744,6 +744,17 @@ export default function StorageRoomLayout() {
                                 setShowShelfGH(true);
                                 setShowShelfABC(false);
                                 setShowShelfDEF(false);
+                            }
+                            else if (lastChar === "I") {
+                                setShowShelfI(true);
+                                setShowShelfABC(false);
+                                setShowShelfDEF(false);
+                                setShowShelfGH(false);
+                            } else {
+                                setShowShelfABC(false);
+                                setShowShelfDEF(false);
+                                setShowShelfGH(false);
+                                setShowShelfI(false);
                             }
                         }}
                     />
