@@ -235,7 +235,7 @@ export default function StorageRoomLayout() {
                             <FaProjectDiagram className="text-blue-400" />
                             ชื่อชั้น
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
                     </div>
 
                     {/* ชั้น */}
@@ -244,7 +244,7 @@ export default function StorageRoomLayout() {
                             <FaLayerGroup className="text-blue-400" />
                             หน้า
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
                     </div>
 
                     {/* ตำแหน่ง */}
@@ -253,7 +253,7 @@ export default function StorageRoomLayout() {
                             <FaMapMarkerAlt className="text-blue-400" />
                             ตำแหน่ง
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
                     </div>
 
                     {/* สถานะ */}
@@ -326,7 +326,7 @@ export default function StorageRoomLayout() {
                             <FaProjectDiagram className="text-blue-400" />
                             ชื่อชั้น
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
                     </div>
 
                     {/* side */}
@@ -335,7 +335,7 @@ export default function StorageRoomLayout() {
                             <FaLayerGroup className="text-blue-400" />
                             side
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
                     </div>
 
                     {/* ตำแหน่ง */}
@@ -344,7 +344,7 @@ export default function StorageRoomLayout() {
                             <FaMapMarkerAlt className="text-blue-400" />
                             ตำแหน่ง
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
                     </div>
 
                     {/* สถานะ */}
@@ -413,7 +413,7 @@ export default function StorageRoomLayout() {
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
                         </div>
 
                         {/* side */}
@@ -422,7 +422,7 @@ export default function StorageRoomLayout() {
                                 <FaLayerGroup className="text-blue-400" />
                                 side
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
                         </div>
 
                         {/* ตำแหน่ง */}
@@ -431,7 +431,7 @@ export default function StorageRoomLayout() {
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
                         </div>
 
                         {/* สถานะ */}
@@ -502,7 +502,7 @@ export default function StorageRoomLayout() {
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
                         </div>
 
                         {/* side */}
@@ -511,7 +511,7 @@ export default function StorageRoomLayout() {
                                 <FaLayerGroup className="text-blue-400" />
                                 side
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
                         </div>
 
                         {/* ตำแหน่ง */}
@@ -520,7 +520,7 @@ export default function StorageRoomLayout() {
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
                         </div>
 
                         {/* สถานะ */}
