@@ -278,7 +278,7 @@ export default function StorageRoomLayout() {
                         <div className="text-lg font-semibold">
                             <span
                                 className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${datasearch[0].status === 'OnStock'
+          ${datasearch[0].status === 'Stock'
                                         ? 'bg-green-500'
                                         : datasearch[0].status === 'Empty'
                                             ? 'bg-yellow-500'
@@ -370,7 +370,7 @@ export default function StorageRoomLayout() {
                         <div className="text-lg font-semibold">
                             <span
                                 className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${datasearch[0].status === 'OnStock'
+          ${datasearch[0].status === 'Stock'
                                         ? 'bg-green-500'
                                         : datasearch[0].status === 'Empty'
                                             ? 'bg-yellow-500'
@@ -455,7 +455,7 @@ export default function StorageRoomLayout() {
                             <div className="text-lg font-semibold">
                                 <span
                                     className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${datasearch[0].status === 'OnStock'
+          ${datasearch[0].status === 'Stock'
                                             ? 'bg-green-500'
                                             : datasearch[0].status === 'Empty'
                                                 ? 'bg-yellow-500'
@@ -546,7 +546,7 @@ export default function StorageRoomLayout() {
                             <div className="text-lg font-semibold">
                                 <span
                                     className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${datasearch[0].status === 'OnStock'
+          ${datasearch[0].status === 'Stock'
                                             ? 'bg-green-500'
                                             : datasearch[0].status === 'Empty'
                                                 ? 'bg-yellow-500'
