@@ -147,6 +147,7 @@ export default function StorageRoomLayout() {
     const [error, setError] = useState("");
 
     const [selectedItem, setSelectedItem] = useState<ToolingData | null>(null);
+    const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
 
     const handleRowClick = (item: ToolingData) => {
         setSelectedItem(item);
@@ -222,7 +223,8 @@ export default function StorageRoomLayout() {
                 {/* ชื่อ Shelf */}
                 <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                <SupportBox activeNumber="B3-5" />
+                <SupportBox activeNumber={numonly} />
+
 
 
 
@@ -309,7 +311,7 @@ export default function StorageRoomLayout() {
                 {/* ชื่อ Shelf */}
                 <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                <ShelfWithJigs activeNumber={3} />
+                <ShelfWithJigs activeNumber={numonly ? Number(numonly) : undefined} />
                 {/* ล้อ (Wheels) แยกออกมาด้านล่างชั้นวาง */}
                 <div className="flex justify-between w-full mx-auto mt-2 mb-4 ps-10 pe-10">
                     <div className="w-6 h-6 bg-gray-700 rounded-full shadow-md" />
@@ -399,8 +401,8 @@ export default function StorageRoomLayout() {
                     </div>
 
                     <ShelfWithWheels
-                        label={`Shelf A ${shelf}`}
-                        highlightedNumbers={[4]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
+                        label={`Shelf ${shelf}`}
+                        highlightedNumbers={numonly ? [Number(numonly)] : []} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
 
 
@@ -725,8 +727,16 @@ export default function StorageRoomLayout() {
                             handleRowClick(item);
                             setToastVisible(true);
                             console.log(`Selected item: ${item.sheftname} - ${item.slot}`);
+                            if (item.sheftname.endsWith("A") || item.sheftname.endsWith("B") || item.sheftname.endsWith("C")) {
+                                setShowShelfABC(true);
+                            }
+                            else if (item.sheftname.endsWith("D") || item.sheftname.endsWith("E") || item.sheftname.endsWith("F") || item.sheftname.endsWith("G")) {
+                                setShowShelfDEF(true);
+                            }
+                            else if (item.sheftname.endsWith("H") || item.sheftname.endsWith("I")) {
+                                setShowShelfGH(true);
+                            }
                         }}
-
                     />
                 )}
 
