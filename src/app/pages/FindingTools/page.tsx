@@ -280,7 +280,7 @@ export default function StorageRoomLayout() {
                                 className={`px-3 py-1 rounded-full text-white text-xs font-medium
           ${datasearch[0].status === 'Stock'
                                         ? 'bg-green-500'
-                                        : datasearch[0].status === 'Empty'
+                                        : datasearch[0].status === 'Undifind' || null
                                             ? 'bg-yellow-500'
                                             : 'bg-gray-400'
                                     }`}
