@@ -64,7 +64,7 @@ const ShelfWithJigs: React.FC<ShelfWithJigsProps> = ({ activeNumber }) => {
 
                 {/* สามเหลี่ยม + วงกลม + หมายเลข */}
                 {Array.from({ length: 10 }).map((_, i) => {
-                    const number = i + 1;
+                    const number = i + 11;
                     const isActive = activeNumber === number;
                     return (
                         <div
@@ -104,7 +104,7 @@ const ShelfWithJigs: React.FC<ShelfWithJigsProps> = ({ activeNumber }) => {
 
                 {/* สามเหลี่ยม + วงกลม + หมายเลข */}
                 {Array.from({ length: 10 }).map((_, i) => {
-                    const number = i + 1;
+                    const number = i + 21;
                     const isActive = activeNumber === number;
                     return (
                         <div
@@ -144,7 +144,7 @@ const ShelfWithJigs: React.FC<ShelfWithJigsProps> = ({ activeNumber }) => {
 
                 {/* สามเหลี่ยม + วงกลม + หมายเลข */}
                 {Array.from({ length: 10 }).map((_, i) => {
-                    const number = i + 1;
+                    const number = i + 31;
                     const isActive = activeNumber === number;
                     return (
                         <div
@@ -186,7 +186,7 @@ const ShelfWithJigs: React.FC<ShelfWithJigsProps> = ({ activeNumber }) => {
 
                 {/* สามเหลี่ยม + วงกลม + หมายเลข */}
                 {Array.from({ length: 10 }).map((_, i) => {
-                    const number = i + 1;
+                    const number = i + 41;
                     const isActive = activeNumber === number;
                     return (
                         <div
