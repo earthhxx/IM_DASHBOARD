@@ -246,9 +246,9 @@ export default function StorageRoomLayout() {
                     <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaProjectDiagram className="text-blue-400" />
-                            ชื่อชั้น
+                            ชื่อ
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
                     </span>
 
                     {/* side */}
@@ -340,7 +340,7 @@ export default function StorageRoomLayout() {
                             <FaProjectDiagram className="text-blue-400" />
                             ชื่อชั้น
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
+                        <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
                     </span>
 
                     {/* side */}
@@ -423,9 +423,9 @@ export default function StorageRoomLayout() {
                         <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaProjectDiagram className="text-blue-400" />
-                                ชื่อชั้น
+                                ชื่อ
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
                         </span>
 
                         {/* side */}
@@ -514,9 +514,9 @@ export default function StorageRoomLayout() {
                         <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaProjectDiagram className="text-blue-400" />
-                                ชื่อชั้น
+                                ชื่อ
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
                         </span>
 
                         {/* side */}
