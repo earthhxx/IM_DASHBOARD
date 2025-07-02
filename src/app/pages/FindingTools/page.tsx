@@ -252,7 +252,7 @@ export default function StorageRoomLayout() {
                         <div className="text-lg font-semibold">
                             <span
                                 className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${data.status === 'OnStock'
+          ${datasearch[0].status === 'OnStock'
                                         ? 'bg-green-500'
                                         : datasearch[0].status === 'Empty'
                                             ? 'bg-yellow-500'
@@ -313,7 +313,7 @@ export default function StorageRoomLayout() {
                             <FaProjectDiagram className="text-blue-400" />
                             ชื่อชั้น
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
+                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
                     </div>
 
                     {/* ชั้น */}
@@ -322,7 +322,7 @@ export default function StorageRoomLayout() {
                             <FaLayerGroup className="text-blue-400" />
                             ชั้น
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{data.level}</div>
+                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
                     </div>
 
                     {/* ตำแหน่ง */}
@@ -331,7 +331,7 @@ export default function StorageRoomLayout() {
                             <FaMapMarkerAlt className="text-blue-400" />
                             ตำแหน่ง
                         </div>
-                        <div className="text-lg font-semibold text-gray-800">{data.position}</div>
+                        <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
                     </div>
 
                     {/* สถานะ */}
@@ -343,14 +343,14 @@ export default function StorageRoomLayout() {
                         <div className="text-lg font-semibold">
                             <span
                                 className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${data.status === 'OnStock'
+          ${datasearch[0].status === 'OnStock'
                                         ? 'bg-green-500'
-                                        : data.status === 'Empty'
+                                        : datasearch[0].status === 'Empty'
                                             ? 'bg-yellow-500'
                                             : 'bg-gray-400'
                                     }`}
                             >
-                                {data.status}
+                                {datasearch[0].status}
                             </span>
                         </div>
                     </div>
@@ -400,7 +400,7 @@ export default function StorageRoomLayout() {
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
+                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
                         </div>
 
                         {/* ชั้น */}
@@ -409,7 +409,7 @@ export default function StorageRoomLayout() {
                                 <FaLayerGroup className="text-blue-400" />
                                 ชั้น
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{data.level}</div>
+                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
                         </div>
 
                         {/* ตำแหน่ง */}
@@ -418,7 +418,7 @@ export default function StorageRoomLayout() {
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{data.position}</div>
+                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
                         </div>
 
                         {/* สถานะ */}
@@ -430,14 +430,14 @@ export default function StorageRoomLayout() {
                             <div className="text-lg font-semibold">
                                 <span
                                     className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${data.status === 'OnStock'
+          ${datasearch[0].status === 'OnStock'
                                             ? 'bg-green-500'
-                                            : data.status === 'Empty'
+                                            : datasearch[0].status === 'Empty'
                                                 ? 'bg-yellow-500'
                                                 : 'bg-gray-400'
                                         }`}
                                 >
-                                    {data.status}
+                                    {datasearch[0].status}
                                 </span>
                             </div>
                         </div>
@@ -489,7 +489,7 @@ export default function StorageRoomLayout() {
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
+                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
                         </div>
 
                         {/* ชั้น */}
@@ -498,7 +498,7 @@ export default function StorageRoomLayout() {
                                 <FaLayerGroup className="text-blue-400" />
                                 ชั้น
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{data.level}</div>
+                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
                         </div>
 
                         {/* ตำแหน่ง */}
@@ -507,7 +507,7 @@ export default function StorageRoomLayout() {
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{data.position}</div>
+                            <div className="text-lg font-semibold text-gray-800">{datasearch[0].slot}</div>
                         </div>
 
                         {/* สถานะ */}
@@ -519,14 +519,14 @@ export default function StorageRoomLayout() {
                             <div className="text-lg font-semibold">
                                 <span
                                     className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${data.status === 'OnStock'
+          ${datasearch[0].status === 'OnStock'
                                             ? 'bg-green-500'
-                                            : data.status === 'Empty'
+                                            : datasearch[0].status === 'Empty'
                                                 ? 'bg-yellow-500'
                                                 : 'bg-gray-400'
                                         }`}
                                 >
-                                    {data.status}
+                                    {datasearch[0].status}
                                 </span>
                             </div>
                         </div>
