@@ -6,6 +6,7 @@ import ShelfWithWheels from "../../components/ShelfWithWheels";
 import { FaCalendarAlt, FaCheckCircle, FaClock, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
 import ShelfWithJigs from "@/app/components/ShelfWithJigs";
 import SupportBox from "@/app/components/SupportBox";
+import ShelfSqueegee from "@/app/components/shelfSqueegee";
 
 const data = {
     shelfName: "A1",
@@ -43,6 +44,7 @@ type ShelfProps = {
     height: keyof typeof shelfHeights;
     onClick: () => void;
     lines?: number[]; // ตำแหน่งเส้นแบ่ง (เป็นเปอร์เซ็นต์) เช่น [50] หรือ [33,66]
+    shelf?: string; // สำหรับการระบุ shelf ที่เลือก
 };
 
 const Shelf: React.FC<ShelfProps> = ({ label, height, onClick, lines = [] }) => {
@@ -129,7 +131,12 @@ const Desktop = () => (
 
 export default function StorageRoomLayout() {
     const [toastVisible, setToastVisible] = useState(false);
-    const [showShelf, setShowShelf] = React.useState(true);
+    const [showShelfABC, setShowShelfABC] = React.useState(true);
+    const [showShelfDEF, setShowShelfDEF] = React.useState(false);
+    const [showShelfGH, setShowShelfGH] = React.useState(false);
+    const [showShelfI, setShowShelfI] = React.useState(false);
+
+    const [shelf, setShelf] = React.useState<string | null>(null);
 
 
     // ใช้ useEffect รอ 3 วินาทีแล้วซ่อน Toast อัตโนมัติ
@@ -162,13 +169,13 @@ export default function StorageRoomLayout() {
         { code: "I", label: "Squeegee " },
     ];
 
-    const shelfSupportBox = () => (
+    const shelfSupportBox = (shelf: string) => (
         <>
             <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 ">
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => setShowShelf(false)}
+                        onClick={() => setShowShelfGH(false)}
                         className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
                     >
                         &times;
@@ -176,9 +183,9 @@ export default function StorageRoomLayout() {
 
                 </div>
                 {/* ชื่อ Shelf */}
-                <div className="text-sm font-semibold text-gray-700 mb-2">{ }</div>
+                <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
-                <SupportBox/>
+                <SupportBox />
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
@@ -234,7 +241,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-center mt-4 ">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => setShowShelf(false)}
+                        onClick={() => setShowShelfGH(false)}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
@@ -248,13 +255,13 @@ export default function StorageRoomLayout() {
 
 
 
-    const shelfD = () => (
+    const shelfJIG = (shelf: string) => (
         <>
             <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 ">
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => setShowShelf(false)}
+                        onClick={() => setShowShelfDEF(false)}
                         className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
                     >
                         &times;
@@ -262,7 +269,7 @@ export default function StorageRoomLayout() {
 
                 </div>
                 {/* ชื่อ Shelf */}
-                <div className="text-sm font-semibold text-gray-700 mb-2">{ }</div>
+                <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
 
                 <ShelfWithJigs />
 
@@ -320,7 +327,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-center mt-4 ">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => setShowShelf(false)}
+                        onClick={() => setShowShelfDEF(false)}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
@@ -332,7 +339,7 @@ export default function StorageRoomLayout() {
         </>
     )
 
-    const shelfA = () => (
+    const shelfStencil = (shelf: string) => (
         <>
             <div className=" z-50 flex items-center justify-center">
 
@@ -340,7 +347,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelf(false)}
+                            onClick={() => setShowShelfABC(false)}
                             className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
                         >
                             &times;
@@ -349,7 +356,7 @@ export default function StorageRoomLayout() {
                     </div>
 
                     <ShelfWithWheels
-                        label="Shelf A"
+                        label={`Shelf A ${shelf}`}
                         highlightedNumbers={[4]} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
 
@@ -406,7 +413,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelf(false)}
+                            onClick={() => setShowShelfABC(false)}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
@@ -420,6 +427,96 @@ export default function StorageRoomLayout() {
             </div>
         </>
     )
+
+
+    const shelfSqueegee = (shelf: string) => (
+        <>
+            <div className=" z-50 flex items-center justify-center">
+
+                <div className=" bg-white p-4 rounded-lg shadow-2xl">
+                    <div className="flex flex-col justify-center items-end">
+                        {/* ปุ่มปิด (X) ขวาบน */}
+                        <button
+                            onClick={() => setShowShelfABC(false)}
+                            className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
+                        >
+                            &times;
+                        </button>
+
+                    </div>
+                    {/* ชื่อ Shelf */}
+                    <div className="text-sm font-semibold text-gray-700 mb-2">{shelf}</div>
+
+                    <ShelfSqueegee />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                        {/* ชื่อชั้น */}
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaProjectDiagram className="text-blue-400" />
+                                ชื่อชั้น
+                            </div>
+                            <div className="text-lg font-semibold text-gray-800">{data.shelfName}</div>
+                        </div>
+
+                        {/* ชั้น */}
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaLayerGroup className="text-blue-400" />
+                                ชั้น
+                            </div>
+                            <div className="text-lg font-semibold text-gray-800">{data.level}</div>
+                        </div>
+
+                        {/* ตำแหน่ง */}
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaMapMarkerAlt className="text-blue-400" />
+                                ตำแหน่ง
+                            </div>
+                            <div className="text-lg font-semibold text-gray-800">{data.position}</div>
+                        </div>
+
+                        {/* สถานะ */}
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaCheckCircle className="text-blue-400" />
+                                สถานะ
+                            </div>
+                            <div className="text-lg font-semibold">
+                                <span
+                                    className={`px-3 py-1 rounded-full text-white text-xs font-medium
+          ${data.status === 'OnStock'
+                                            ? 'bg-green-500'
+                                            : data.status === 'Empty'
+                                                ? 'bg-yellow-500'
+                                                : 'bg-gray-400'
+                                        }`}
+                                >
+                                    {data.status}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="flex flex-col justify-center items-center mt-4 ">
+                        {/* ปุ่มปิด (X) ขวาบน */}
+                        <button
+                            onClick={() => setShowShelfABC(false)}
+                            className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
+                        >
+                            <div>Withdraw </div>
+                            <div>เบิกออก </div>
+                        </button>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </>
+    );
+
 
 
 
@@ -455,19 +552,44 @@ export default function StorageRoomLayout() {
 
                     {/* ชั้นวาง */}
                     <div className="flex w-full justify-between mt-6 flex-wrap gap-4">
-                        <Shelf label="A" height="large" onClick={() => { onShelfClick("A"); setShowShelf((prev) => !prev) }} lines={[50]} />
-                        <Shelf label="B" height="large" onClick={() => onShelfClick("B")} lines={[50]} />
-                        <Shelf label="C" height="large" onClick={() => onShelfClick("C")} lines={[50]} />
+                        <Shelf label="A" height="large" onClick={() => { onShelfClick("A"); setShowShelfABC((prev) => !prev); setShelf('A'); }} lines={[50]} />
+                        <Shelf label="B" height="large" onClick={() => { onShelfClick("B"); setShowShelfABC((prev) => !prev); setShelf('B') }} lines={[50]} />
+
+                        <Shelf label="C" height="large" onClick={() => { onShelfClick("C"); setShowShelfABC((prev) => !prev); setShelf('C') }} lines={[50]} />
+
                         <DoubleShelf
                             labels={["D", "E"]}
                             height="large"
-                            onClicks={[() => onShelfClick("D"), () => onShelfClick("E")]}
+                            onClicks={[
+                                () => {
+                                    onShelfClick("D");
+                                    setShowShelfDEF((prev) => !prev);
+                                    setShelf("D");
+                                },
+                                () => {
+                                    onShelfClick("E");
+                                    setShowShelfDEF((prev) => !prev);
+                                    setShelf("E");
+                                },
+                            ]}
                             lines={[33, 66]}
                         />
+
                         <DoubleShelf
                             labels={["F", "G"]}
                             height="large"
-                            onClicks={[() => onShelfClick("F"), () => onShelfClick("G")]}
+                            onClicks={[
+                                () => {
+                                    onShelfClick("F");
+                                    setShowShelfDEF((prev) => !prev);
+                                    setShelf("F");
+                                },
+                                () => {
+                                    onShelfClick("G");
+                                    setShowShelfGH((prev) => !prev);
+                                    setShelf("G");
+                                },
+                            ]}
                             lines={[33, 66]}
                         />
 
@@ -482,8 +604,8 @@ export default function StorageRoomLayout() {
 
                         {/* H + I */}
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Shelf label="I" height="small" onClick={() => onShelfClick("I")} />
-                            <Shelf label="H" height="small" onClick={() => onShelfClick("H")} />
+                            <Shelf label="I" height="small" onClick={() => { onShelfClick("I"); setShowShelfI((prev) => !prev); setShelf('I') }} lines={[50]} />
+                            <Shelf label="H" height="small" onClick={() => { onShelfClick("H"); setShowShelfGH((prev) => !prev); setShelf('H') }} lines={[50]} />
                         </div>
                     </div>
 
@@ -534,10 +656,18 @@ export default function StorageRoomLayout() {
             <div>
 
 
-                {showShelf && (
-                    // shelfA()
-                    // shelfD()
-                    shelfSupportBox()
+                {showShelfABC && shelf && (
+                    shelfStencil(shelf)
+                )}
+
+                {showShelfDEF && shelf && (
+                    shelfJIG(shelf)
+                )}
+                {showShelfGH && shelf && (
+                    shelfSupportBox(shelf)
+                )}
+                {showShelfI && shelf && (
+                    shelfSqueegee(shelf)
                 )}
 
             </div>
