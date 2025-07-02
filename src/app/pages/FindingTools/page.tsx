@@ -316,11 +316,11 @@ export default function StorageRoomLayout() {
                         <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
                     </div>
 
-                    {/* ชั้น */}
+                    {/* side */}
                     <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                         <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                             <FaLayerGroup className="text-blue-400" />
-                            ชั้น
+                            side
                         </div>
                         <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
                     </div>
@@ -403,11 +403,11 @@ export default function StorageRoomLayout() {
                             <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
                         </div>
 
-                        {/* ชั้น */}
+                        {/* side */}
                         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaLayerGroup className="text-blue-400" />
-                                ชั้น
+                                side
                             </div>
                             <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
                         </div>
@@ -492,11 +492,11 @@ export default function StorageRoomLayout() {
                             <div className="text-lg font-semibold text-gray-800">{datasearch[0].sheftname}</div>
                         </div>
 
-                        {/* ชั้น */}
+                        {/* side */}
                         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaLayerGroup className="text-blue-400" />
-                                ชั้น
+                                side
                             </div>
                             <div className="text-lg font-semibold text-gray-800">{datasearch[0].side}</div>
                         </div>
