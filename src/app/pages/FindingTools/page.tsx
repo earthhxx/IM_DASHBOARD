@@ -134,10 +134,10 @@ const Desktop = () => (
 
 export default function StorageRoomLayout() {
     const [toastVisible, setToastVisible] = useState(false);
-    const [showShelfABC, setShowShelfABC] = React.useState(true);
-    const [showShelfDEF, setShowShelfDEF] = React.useState(false);
-    const [showShelfGH, setShowShelfGH] = React.useState(false);
-    const [showShelfI, setShowShelfI] = React.useState(false);
+    const [showShelfABC, setShowShelfABC] = useState(false);
+    const [showShelfDEF, setShowShelfDEF] = useState(false);
+    const [showShelfGH, setShowShelfGH] = useState(false);
+    const [showShelfI, setShowShelfI] = useState(false);
 
     const [showFloat, setShowFloat] = useState(false);
 
@@ -147,7 +147,10 @@ export default function StorageRoomLayout() {
     const [error, setError] = useState("");
 
     const [selectedItem, setSelectedItem] = useState<ToolingData | null>(null);
+
     const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
+
+
 
     const handleRowClick = (item: ToolingData) => {
         setSelectedItem(item);
@@ -706,18 +709,18 @@ export default function StorageRoomLayout() {
             <div>
 
 
-                {showShelfABC && shelf && (
-                    shelfStencil(shelf)
+                {showShelfABC && selectedItem && (
+                    shelfStencil(selectedItem.sheftname)
                 )}
 
-                {showShelfDEF && shelf && (
-                    shelfJIG(shelf)
+                {showShelfDEF && selectedItem && (
+                    shelfJIG(selectedItem.sheftname)
                 )}
-                {showShelfGH && shelf && (
-                    shelfSupportBox(shelf)
+                {showShelfGH && selectedItem && (
+                    shelfSupportBox(selectedItem.sheftname)
                 )}
-                {showShelfI && shelf && (
-                    shelfSqueegee(shelf)
+                {showShelfI && selectedItem && (
+                    shelfSqueegee(selectedItem.sheftname)
                 )}
                 {showFloat && (
                     <FloatingTable
@@ -727,14 +730,20 @@ export default function StorageRoomLayout() {
                             handleRowClick(item);
                             setToastVisible(true);
                             console.log(`Selected item: ${item.sheftname} - ${item.slot}`);
-                            if (item.sheftname.endsWith("A") || item.sheftname.endsWith("B") || item.sheftname.endsWith("C")) {
+                            const lastChar = item.sheftname.trim().slice(-1).toUpperCase();
+                            console.log(`Last character of sheftname: ${lastChar}`);
+                            if (["A", "B", "C"].includes(lastChar)) {
                                 setShowShelfABC(true);
-                            }
-                            else if (item.sheftname.endsWith("D") || item.sheftname.endsWith("E") || item.sheftname.endsWith("F") || item.sheftname.endsWith("G")) {
+                                setShowShelfDEF(false);
+                                setShowShelfGH(false);
+                            } else if (["D", "E", "F"].includes(lastChar)) {
                                 setShowShelfDEF(true);
-                            }
-                            else if (item.sheftname.endsWith("H") || item.sheftname.endsWith("I")) {
+                                setShowShelfABC(false);
+                                setShowShelfGH(false);
+                            } else if (["G", "H"].includes(lastChar)) {
                                 setShowShelfGH(true);
+                                setShowShelfABC(false);
+                                setShowShelfDEF(false);
                             }
                         }}
                     />
