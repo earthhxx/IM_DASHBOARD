@@ -282,7 +282,6 @@ export default function StorageRoomLayout() {
 
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
-                    {/* ปุ่มปิด (X) ขวาบน */}
                     <button
                         onClick={() => setShowShelfGH(false)}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
@@ -373,7 +372,7 @@ export default function StorageRoomLayout() {
 
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
-                    {/* ปุ่มปิด (X) ขวาบน */}
+                  
                     <button
                         onClick={() => setShowShelfDEF(false)}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
@@ -486,7 +485,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelfABC(false)}
+                            onClick={() => setShowShelfI(false)}
                             className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
                         >
                             &times;
@@ -498,18 +497,18 @@ export default function StorageRoomLayout() {
 
                     <ShelfSqueegee activeNumber={numonly ? Number(numonly) : undefined} />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm mt-15">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-15">
                         {/* ชื่อชั้น */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <span className="col-span-4 bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อชั้น
                             </div>
                             <div className="text-lg font-semibold text-gray-800">{selectedItem?.sheftname}</div>
-                        </div>
+                        </span>
 
                         {/* side */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaLayerGroup className="text-blue-400" />
                                 side
@@ -518,7 +517,7 @@ export default function StorageRoomLayout() {
                         </div>
 
                         {/* ตำแหน่ง */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
@@ -527,7 +526,7 @@ export default function StorageRoomLayout() {
                         </div>
 
                         {/* สถานะ */}
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaCheckCircle className="text-blue-400" />
                                 สถานะ
@@ -551,7 +550,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelfABC(false)}
+                            onClick={() => setShowShelfI(false)}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
