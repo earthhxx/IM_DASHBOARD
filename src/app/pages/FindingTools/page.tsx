@@ -358,13 +358,13 @@ export default function StorageRoomLayout() {
 
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
-                    <button
+                    {/* <button
                         onClick={() => { setShowShelfGH(false); setSelectedItem(null); }}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
                         <div>เบิกออก </div>
-                    </button>
+                    </button> */}
 
                 </div>
             </div>
@@ -451,13 +451,13 @@ export default function StorageRoomLayout() {
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
 
-                    <button
+                    {/* <button
                         onClick={() => { setShowShelfDEF(false); setSelectedItem(null); }}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
                         <div>เบิกออก </div>
-                    </button>
+                    </button> */}
 
                 </div>
             </div>
@@ -536,13 +536,13 @@ export default function StorageRoomLayout() {
                     </div>
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
-                        <button
+                        {/* <button
                             onClick={() => { setShowShelfABC(false); setSelectedItem(null); }}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
                             <div>เบิกออก </div>
-                        </button>
+                        </button> */}
 
                     </div>
 
@@ -627,13 +627,13 @@ export default function StorageRoomLayout() {
                     </div>
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
-                        <button
+                        {/* <button
                             onClick={() => { setShowShelfI(false); setSelectedItem(null); }}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
                             <div>เบิกออก </div>
-                        </button>
+                        </button> */}
 
                     </div>
 
@@ -656,7 +656,7 @@ export default function StorageRoomLayout() {
                     <div className="w-full lg:w-[40%]">
                         <input
                             type="text"
-                            placeholder="Tooling Name..."
+                            placeholder="ค้นหาชื่อ.."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             className="w-full p-4 text-lg text-gray-800 rounded-xl bg-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -666,7 +666,7 @@ export default function StorageRoomLayout() {
                         onClick={handleSearch}
                         className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
                     >
-                        Search
+                        ค้นหา
                     </button>
                 </div>
 
