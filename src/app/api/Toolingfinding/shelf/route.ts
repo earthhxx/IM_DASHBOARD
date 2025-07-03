@@ -4,27 +4,35 @@ import sql from 'mssql';
 
 export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
-    const parameter = searchParams.get('parameter'); // ✅ รับพารามิเตอร์จาก URL
+    const parameter = searchParams.get('parameter');
+    const num1 = searchParams.get('num1');
+    const num2 = searchParams.get('num2');
 
-    if (!parameter) {
-        return NextResponse.json({ message: 'Missing location parameter' }, { status: 400 });
+    if (!parameter || !num1 || !num2) {
+        return NextResponse.json({ message: 'Missing parameter(s)' }, { status: 400 });
     }
 
     try {
         const pool = await createConnection();
         const result = await pool
             .request()
-            .input('para', sql.NVarChar, `%${parameter}`) // ✅ ใส่ wildcard ที่นี่
+            .input('para', sql.NVarChar, `%${parameter}%`)
+            .input('num1', sql.Int, parseInt(num1))
+            .input('num2', sql.Int, parseInt(num2))
             .query(`
-                SELECT TOP (1000) [sheftname]
-                    ,[slot]
-                    ,[toolingname]
-                    ,[side]
-                    ,[status]
-                FROM 
-                    [DASHBOARD].[dbo].[im_tooling]
+                SELECT TOP (1000)
+                    [sheftname],
+                    [slot],
+                    [toolingname],
+                    [side],
+                    [status]
+                FROM [DASHBOARD].[dbo].[im_tooling]
                 WHERE 
                     [sheftname] LIKE @para
+                    AND TRY_CAST(SUBSTRING(slot, PATINDEX('%[0-9]%', slot), 10) AS INT) BETWEEN @num1 AND @num2
+                ORDER BY
+                    LEFT(slot, PATINDEX('%[0-9]%', slot) - 1),
+                    TRY_CAST(SUBSTRING(slot, PATINDEX('%[0-9]%', slot), 10) AS INT)
             `);
 
         if (result.recordset.length === 0) {
