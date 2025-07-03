@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createConnection } from '../../../lib/db';
+import { createConnection } from '../../../../lib/db';
 import sql from 'mssql';
 
 export async function GET(req: NextRequest) {
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         const pool = await createConnection();
         const result = await pool
             .request()
-            .input('para', sql.NVarChar, `%${parameter}%`) // ✅ ใส่ wildcard ที่นี่
+            .input('para', sql.NVarChar, `%${parameter}`) // ✅ ใส่ wildcard ที่นี่
             .query(`
                 SELECT TOP (1000) [sheftname]
                     ,[slot]
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
                 FROM 
                     [DASHBOARD].[dbo].[im_tooling]
                 WHERE 
-                    [toolingname] LIKE @para
+                    [sheftname] LIKE @para
             `);
 
         if (result.recordset.length === 0) {

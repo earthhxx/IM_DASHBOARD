@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
 import ShelfWithWheels from "../../components/ShelfWithWheels";
-import { FaCalendarAlt, FaCheckCircle, FaClock, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
+import { FaCheckCircle, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
 import ShelfWithJigs from "@/app/components/ShelfWithJigs";
 import SupportBox from "@/app/components/SupportBox";
 import ShelfSqueegee from "@/app/components/shelfSqueegee";
@@ -92,14 +92,35 @@ type DoubleShelfProps = {
     height: keyof typeof shelfHeights;
     onClicks: [() => void, () => void];
     lines?: number[];
+    highlighted?: [boolean, boolean]; // แยกเป็น 2 ช่อง
 };
 
-const DoubleShelf: React.FC<DoubleShelfProps> = ({ labels, height, onClicks, lines = [] }) => (
+const DoubleShelf: React.FC<DoubleShelfProps> = ({
+    labels,
+    height,
+    onClicks,
+    lines = [],
+    highlighted = [false, false], // ค่าเริ่มต้น
+}) => (
     <div className="flex gap-2">
-        <Shelf label={labels[0]} height={height} onClick={onClicks[0]} lines={lines} />
-        <Shelf label={labels[1]} height={height} onClick={onClicks[1]} lines={lines} />
+        <Shelf
+            label={labels[0]}
+            height={height}
+            onClick={onClicks[0]}
+            lines={lines}
+            highlighted={highlighted[0]}
+        />
+        <Shelf
+            label={labels[1]}
+            height={height}
+            onClick={onClicks[1]}
+            lines={lines}
+            highlighted={highlighted[1]}
+        />
     </div>
 );
+
+
 
 // Components ที่มี text ด้านในแบบ custom
 const BoxWithText = ({ lines }: { lines: React.ReactNode }) => (
@@ -175,7 +196,7 @@ export default function StorageRoomLayout() {
         setLoading(true);
         setError("");
         try {
-            const res = await fetch(`/api/Toolingfinding?parameter=${query}`);
+            const res = await fetch(`/api/Toolingfinding/searchbar?parameter=${query}`);
             if (!res.ok) throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
 
             const json = await res.json();
@@ -188,6 +209,52 @@ export default function StorageRoomLayout() {
             setLoading(false);
         }
     };
+
+    const handleSearchshelf = async () => {
+        if (!query.trim()) return;
+
+        setLoading(true);
+        setError("");
+        try {
+            const res = await fetch(`/api/Toolingfinding/shelf?parameter=${query}`);
+            if (!res.ok) throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
+
+            const json = await res.json();
+            setDatasearch(json.data); // ปรับตาม response จริง
+            setShowFloat(true);
+        } catch (err: any) {
+            setError(err.message || "เกิดข้อผิดพลาด");
+            setDatasearch([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleClickD = () => {
+        onShelfClick("D");
+        setShowShelfDEF(prev => !prev);
+        setShelf("D");
+    };
+
+    const handleClickE = () => {
+        onShelfClick("E");
+        setShowShelfDEF(prev => !prev);
+        setShelf("E");
+    };
+
+    const handleClickF = () => {
+        onShelfClick("D");
+        setShowShelfDEF(prev => !prev);
+        setShelf("D");
+    };
+
+    const handleClickG = () => {
+        onShelfClick("E");
+        setShowShelfDEF(prev => !prev);
+        setShelf("E");
+    };
+
+
 
     const [shelf, setShelf] = React.useState<string | null>(null);
 
@@ -222,13 +289,15 @@ export default function StorageRoomLayout() {
         { code: "I", label: "Squeegee " },
     ];
 
+
+
     const shelfSupportBox = (shelf: string) => (
         <>
             <div className="flex flex-col items-center gap-2 bg-white rounded-2xl m-4 p-6 h-210">
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => setShowShelfGH(false)}
+                        onClick={() => {setShowShelfGH(false); setSelectedItem(null);}}
                         className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
                     >
                         &times;
@@ -293,7 +362,7 @@ export default function StorageRoomLayout() {
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
                     <button
-                        onClick={() => setShowShelfGH(false)}
+                        onClick={() => {setShowShelfGH(false); setSelectedItem(null);}}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
@@ -313,7 +382,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => setShowShelfDEF(false)}
+                        onClick={() => {setShowShelfDEF(false); setSelectedItem(null);}}
                         className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
                     >
                         &times;
@@ -386,7 +455,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-center mt-4 ">
 
                     <button
-                        onClick={() => setShowShelfDEF(false)}
+                        onClick={() => {setShowShelfDEF(false); setSelectedItem(null);}}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
@@ -406,7 +475,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelfABC(false)}
+                            onClick={() => {setShowShelfABC(false); setSelectedItem(null);}}
                             className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
                         >
                             &times;
@@ -471,7 +540,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelfABC(false)}
+                            onClick={() => {setShowShelfABC(false); setSelectedItem(null);}}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
@@ -495,7 +564,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelfI(false)}
+                            onClick={() => {setShowShelfI(false); setSelectedItem(null);}}
                             className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
                         >
                             &times;
@@ -562,7 +631,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => setShowShelfI(false)}
+                            onClick={() => {setShowShelfI(false); setSelectedItem(null);}}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
@@ -638,38 +707,26 @@ export default function StorageRoomLayout() {
                         <DoubleShelf
                             labels={["D", "E"]}
                             height="large"
-                            onClicks={[
-                                () => {
-                                    onShelfClick("D");
-                                    setShowShelfDEF((prev) => !prev);
-                                    setShelf("D");
-                                },
-                                () => {
-                                    onShelfClick("E");
-                                    setShowShelfDEF((prev) => !prev);
-                                    setShelf("E");
-                                },
-                            ]}
+                            onClicks={[handleClickD, handleClickE]}
                             lines={[33, 66]}
+                            highlighted={[
+                                lastCharshelf === "D",
+                                lastCharshelf === "E"
+                            ]}
                         />
+
 
                         <DoubleShelf
                             labels={["F", "G"]}
                             height="large"
-                            onClicks={[
-                                () => {
-                                    onShelfClick("F");
-                                    setShowShelfDEF((prev) => !prev);
-                                    setShelf("F");
-                                },
-                                () => {
-                                    onShelfClick("G");
-                                    setShowShelfGH((prev) => !prev);
-                                    setShelf("G");
-                                },
-                            ]}
+                            onClicks={[handleClickF, handleClickG]}
                             lines={[33, 66]}
+                            highlighted={[
+                                lastCharshelf === "F",
+                                lastCharshelf === "G"
+                            ]}
                         />
+
 
                         {/* ทางเดิน + ลูกศร */}
                         <div className="flex flex-col items-center justify-center gap-1">
@@ -682,8 +739,8 @@ export default function StorageRoomLayout() {
 
                         {/* H + I */}
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Shelf label="I" height="small" onClick={() => { onShelfClick("I"); setShowShelfI((prev) => !prev); setShelf('I') }} lines={[50]} />
-                            <Shelf label="H" height="small" onClick={() => { onShelfClick("H"); setShowShelfGH((prev) => !prev); setShelf('H') }} lines={[50]} />
+                            <Shelf label="I" height="small" onClick={() => { onShelfClick("I"); setShowShelfI((prev) => !prev); setShelf('I') }} lines={[50]} highlighted={lastCharshelf === "I"} />
+                            <Shelf label="H" height="small" onClick={() => { onShelfClick("H"); setShowShelfGH((prev) => !prev); setShelf('H') }} lines={[50]} highlighted={lastCharshelf === "H"} />
                         </div>
                     </div>
 
