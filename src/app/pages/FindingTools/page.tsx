@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
-import ShelfWithWheels from "../../components/ShelfWithWheels";
+import ShelfWithWheels from "../../toolscomponents/ShelfWithWheels";
 import { FaCheckCircle, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
-import ShelfWithJigs from "@/app/components/ShelfWithJigs";
-import SupportBox from "@/app/components/SupportBox";
-import ShelfSqueegee from "@/app/components/shelfSqueegee";
-import FloatingTable from "@/app/components/FloatingTable";
+import ShelfWithJigs from "@/app/toolscomponents/ShelfWithJigs";
+import SupportBox from "@/app/toolscomponents/SupportBox";
+import ShelfSqueegee from "@/app/toolscomponents/shelfSqueegee";
+import FloatingTable from "@/app/toolscomponents/FloatingTable";
 
 
 
@@ -184,9 +184,7 @@ export default function StorageRoomLayout() {
 
     const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
 
-    const [selectedShelf, setSelectedShelf] = useState<string | null>(null);
-    const [showBox, setShowBox] = useState(false);
-    const [showFloating, setShowFloating] = useState(false);
+
 
     const handleshelfClick = async (shelfchoose: string, num1: number, num2: number) => {
         try {
