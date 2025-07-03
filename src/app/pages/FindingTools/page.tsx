@@ -273,12 +273,6 @@ export default function StorageRoomLayout() {
         }
     }, [toastVisible,toastError]);
 
-    // ตัวอย่าง onClick ที่แยกกันสำหรับแต่ละ shelf
-    const onShelfClick = (label: string) => {
-        setToastVisible(true);
-
-        console.log(`Shelf ${label} clicked!`);
-    };
 
     const legendItems = [
         { code: "A", label: "Stencil " },
