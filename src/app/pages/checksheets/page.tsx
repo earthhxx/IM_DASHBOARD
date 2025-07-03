@@ -1,125 +1,253 @@
-import React from 'react';
+"use client";
+import React from "react";
 
-interface DepartmentStatus {
-    department: string;
-    lastCheckedDay: number; // วันที่ล่าสุดที่แผนกเช็คเอกสาร (1-31)
-}
-//pro .qa .en .wh .hr and admin,
-const departmentsStatus: DepartmentStatus[] = [
-    { department: 'PRODUCTION', lastCheckedDay: 20 },
-    { department: 'QA', lastCheckedDay: 22 },
-    { department: 'ENGINEER', lastCheckedDay: 10 },
-    { department: 'WAREHOUSE', lastCheckedDay: 10 },
-    { department: 'HR AND ADMIN', lastCheckedDay: 30 },
+type DepartmentData = {
+    name: string;
+    checked: number[];
+    onPlan: number[];
+    overdue: number[];
+};
+
+const departments: DepartmentData[] = [
+    {
+        name: "Engineer",
+        checked: [1, 2, 4, 5, 6, 7, 8, 9, 11, 13, 15, 16, 17, 18, 20, 21, 22, 23, 25, 28],
+        onPlan: [1, 2, 4, 5, 6, 7, 8, 9, 11, 13, 15],
+        overdue: [16, 17, 18, 20, 21],
+    },
+    {
+        name: "Production",
+        checked: Array.from({ length: 30 }, (_, i) => i + 1),
+        onPlan: Array.from({ length: 30 }, (_, i) => i + 1),
+        overdue: [],
+    },
+    {
+        name: "Warehouse",
+        checked: [1, 2, 3, 5, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 28],
+        onPlan: [1, 2, 3, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 28, 26, 21],
+        overdue: [9, 15],
+    },
+    {
+        name: "IT",
+        checked: [1, 2, 3, 5, 6, 8, 9, 10, 12, 14, 15, 16, 17, 19, 20, 21, 23, 25, 26, 28],
+        onPlan: [1, 2, 3, 5, 6, 8, 10, 12, 14, 16, 17, 19, 20, 23, 25, 28, 26, 21, 9],
+        overdue: [15],
+    },
 ];
 
-const today = new Date().getDate();
-
-interface DepartmentCalendarCardProps {
-    department: string;
-    lastCheckedDay: number;
-}
-
-const statusColors = {
-    checked: 'bg-green-400',
-    today: 'bg-yellow-400',
-    upcoming: 'bg-yellow-200',
-    overdue: 'bg-red-400',
+const getStatus = (dept: DepartmentData, day: number) => {
+    if (dept.onPlan.includes(day)) return "onPlan";
+    if (dept.overdue.includes(day)) return "overdue";
+    if (dept.checked.includes(day)) return "checked";
+    return "none";
 };
 
-const DepartmentCalendarCard: React.FC<DepartmentCalendarCardProps> = ({
-    department,
-    lastCheckedDay,
-}) => {
-    const daysInMonth = 31;
+const getColor = (status: string) => {
+    switch (status) {
+        case "onPlan":
+            return "bg-green-400";
+        case "overdue":
+            return "bg-red-400";
+        case "checked":
+            return "bg-yellow-300";
+        default:
+            return "bg-gray-100";
+    }
+};
 
-    // เตรียมช่องปฏิทิน 35 ช่อง (5 แถว 7 คอลัมน์)
-    const firstDayIndex = 0; // สมมติวันที่ 1 เริ่มจันทร์
-    const calendarCells: (number | null)[] = [];
-
-    for (let i = 0; i < firstDayIndex; i++) calendarCells.push(null);
-    for (let day = 1; day <= daysInMonth; day++) calendarCells.push(day);
-    while (calendarCells.length < 35) calendarCells.push(null);
-
-    // คำนวณจำนวนสถานะแต่ละแบบ
-    const checkedCount = lastCheckedDay > today ? today - 1 : lastCheckedDay; // เช็คแล้ว (ก่อนหรือเท่ากับวันนี้ที่เช็คได้)
-    const todayCount = 1; // วันนี้
-    const upcomingCount = daysInMonth - today; // ยังไม่ถึงวัน
-    const overdueCount = today - 1 - checkedCount > 0 ? today - 1 - checkedCount : 0; // เลยวันวันนี้ แต่ยังไม่เช็ค
-
-    const getStatusColor = (day: number | null) => {
-        if (day === null) return 'bg-transparent';
-        if (day <= lastCheckedDay) return statusColors.checked;
-        if (day === today) return statusColors.today;
-        if (day > today) return statusColors.upcoming;
-        return statusColors.overdue;
-    };
+const TimelineMatrix = () => {
+    const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
     return (
-        <div className="bg-white rounded-xl shadow-md p-4 max-w-[320px] w-full flex flex-col">
-            <h3 className="text-xl font-semibold mb-3 text-center text-gray-700">{department}</h3>
+        <div className="min-h-screen bg-gray-50 p-8 flex flex-col justify-center items-center text-black">
+            {/* Header */}
+            <header className="mb-10 text-center mt-[5%]">
+                <h1 className="text-5xl font-extrabold text-gray-800">
+                    สรุปการเช็คเอกสารรายวัน (Timeline View)
+                </h1>
+            </header>
 
-            <div className="grid grid-cols-7 gap-1 text-xs text-center font-semibold text-gray-600 select-none">
-                {/* หัววัน */}
-                {['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'].map((d) => (
-                    <div key={d} className="border-b pb-1">
-                        {d}
+            {/* Summary + Lists */}
+            <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-10 w-full">
+                {/* Summary Card */}
+                <div className="bg-white shadow rounded-2xl p-8 border border-gray-300 h-[450px] w-full">
+                    <h2 className="text-3xl font-bold mb-6 text-gray-800">สรุปภาพรวมรายแผนก</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {departments.map((dept) => {
+                            const notChecked = 31 - new Set(dept.checked).size;
+                            return (
+                                <div
+                                    key={dept.name}
+                                    className="h-full border rounded-xl p-5 bg-gray-100 shadow-sm hover:shadow-md transition cursor-default"
+                                >
+                                    <h3 className="font-semibold text-xl mb-3">{dept.name}</h3>
+                                    <ul className="text-base space-y-2">
+                                        <li>
+                                            <span className="inline-block w-4 h-4 rounded bg-green-400 mr-2 align-middle" />
+                                            On Plan: <strong>{dept.onPlan.length}</strong>
+                                        </li>
+                                        <li>
+                                            <span className="inline-block w-4 h-4 rounded bg-yellow-300 mr-2 align-middle" />
+                                            Checked: <strong>{dept.checked.length}</strong>
+                                        </li>
+                                        <li>
+                                            <span className="inline-block w-4 h-4 rounded bg-red-400 mr-2 align-middle" />
+                                            Overdue: <strong>{dept.overdue.length}</strong>
+                                        </li>
+                                        <li>
+                                            <span className="inline-block w-4 h-4 rounded bg-gray-200 mr-2 align-middle" />
+                                            Not Checked: <strong>{notChecked}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            );
+                        })}
                     </div>
-                ))}
+                </div>
+
+                {/* Overdue & Not Checked Lists */}
+                <div className="flex gap-6 h-[450px] justify-start">
+                    {/* Overdue */}
+                    <section className="bg-white shadow rounded-2xl p-6 border border-red-200 w-[320px] h-full">
+                        <h2 className="text-2xl font-semibold mb-4 text-red-600 flex items-center gap-2">
+                            ⚠️ 5 Overdue ล่าสุด
+                        </h2>
+                        <table className="w-full text-base border-collapse">
+                            <thead>
+                                <tr className="border-b">
+                                    <th className="text-left py-2">แผนก</th>
+                                    <th className="text-center py-2">วันที่</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {departments
+                                    .flatMap((dept) =>
+                                        dept.overdue
+                                            .slice()
+                                            .sort((a, b) => b - a)
+                                            .slice(0, 5)
+                                            .map((day) => (
+                                                <tr
+                                                    key={`${dept.name}-over-${day}`}
+                                                    className="border-b last:border-none hover:bg-red-50 transition"
+                                                >
+                                                    <td className="py-2">{dept.name}</td>
+                                                    <td className="text-center">{day}</td>
+                                                </tr>
+                                            ))
+                                    )
+                                    .slice(0, 5)}
+                            </tbody>
+                        </table>
+                    </section>
+
+                    {/* Not Checked */}
+                    <section className="bg-white shadow rounded-2xl p-6 border border-gray-300 w-[320px] h-full">
+                        <h2 className="text-2xl font-semibold mb-4 text-gray-700 flex items-center gap-2">
+                            ❌ 5 Not Checked ล่าสุด
+                        </h2>
+                        <table className="w-full text-base border-collapse">
+                            <thead>
+                                <tr className="border-b">
+                                    <th className="text-left py-2">แผนก</th>
+                                    <th className="text-center py-2">วันที่</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {departments
+                                    .flatMap((dept) => {
+                                        const notCheckedDays = Array.from({ length: 31 }, (_, i) => i + 1).filter(
+                                            (d) => !dept.checked.includes(d)
+                                        );
+                                        return notCheckedDays
+                                            .slice()
+                                            .sort((a, b) => b - a)
+                                            .slice(0, 5)
+                                            .map((day) => (
+                                                <tr
+                                                    key={`${dept.name}-nc-${day}`}
+                                                    className="border-b last:border-none hover:bg-gray-100 transition"
+                                                >
+                                                    <td className="py-2">{dept.name}</td>
+                                                    <td className="text-center">{day}</td>
+                                                </tr>
+                                            ));
+                                    })
+                                    .slice(0, 5)}
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </section>
+
+            {/* Timeline Table */}
+            <div className="p-6 border-b border-gray-200 rounded-2xl bg-white shadow w-full overflow-x-auto">
+                <table className="min-w-[1000px] w-full border-collapse text-sm">
+                    <thead className="bg-gray-100 sticky top-0 z-20">
+                        <tr>
+                            <th className="sticky left-0 bg-gray-100 border p-3 text-left text-base font-semibold z-30 min-w-[120px]">
+                                แผนก
+                            </th>
+                            {days.map((day) => (
+                                <th
+                                    key={day}
+                                    className="border p-2 text-sm w-10 text-center select-none"
+                                    title={`Day ${day}`}
+                                >
+                                    {day}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {departments.map((dept) => {
+                            return (
+                                <tr
+                                    key={dept.name}
+                                    className="bg-white even:bg-gray-50 hover:bg-yellow-50 transition-colors duration-150"
+                                >
+                                    <td className="sticky left-0 bg-white border px-3 py-2 font-semibold whitespace-nowrap z-10">
+                                        {dept.name}
+                                    </td>
+                                    {days.map((day) => {
+                                        const status = getStatus(dept, day);
+                                        const bg = getColor(status);
+                                        return (
+                                            <td
+                                                key={day}
+                                                className={`border w-10 h-10 cursor-default ${bg} rounded-sm`}
+                                                title={`${status !== "none" ? status : "not checked"} - day ${day}`}
+                                            />
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 mt-1 text-center flex-grow">
-                {calendarCells.map((day, idx) => {
-                    const bgColor = getStatusColor(day);
-                    return (
-                        <div
-                            key={idx}
-                            className={`${bgColor} rounded-lg h-10 flex items-center justify-center cursor-default
-                ${day === today ? 'border-2 border-yellow-600' : ''}
-              `}
-                            title={day ? `วันที่ ${day}` : ''}
-                        >
-                            {day ?? ''}
-                        </div>
-                    );
-                })}
-            </div>
-
-            {/* Summary */}
-            <div className="mt-4 border-t pt-3 text-sm space-y-1 text-gray-700">
-                <div>
-                    <span className="inline-block w-4 h-4 bg-green-400 rounded mr-2 align-middle"></span>
-                    เช็คไปแล้ว: <strong>{checkedCount}</strong> วัน
+            {/* Legend */}
+            <div className="flex justify-center items-center space-x-8 text-base mt-8 text-gray-700 rounded-full p-5 bg-gray-50 shadow">
+                <div className="flex items-center space-x-2">
+                    <span className="w-6 h-6 rounded bg-green-400 shadow" />
+                    <span>On Plan</span>
                 </div>
-                <div>
-                    <span className="inline-block w-4 h-4 bg-yellow-200 rounded mr-2 align-middle"></span>
-                    ยังไม่เช็ค (วันอนาคต): <strong>{upcomingCount}</strong> วัน
+                <div className="flex items-center space-x-2">
+                    <span className="w-6 h-6 rounded bg-yellow-300 shadow" />
+                    <span>Checked</span>
                 </div>
-                <div>
-                    <span className="inline-block w-4 h-4 bg-red-400 rounded mr-2 align-middle"></span>
-                    ไม่เช็คผ่านมาแล้ว: <strong>{overdueCount}</strong> วัน
+                <div className="flex items-center space-x-2">
+                    <span className="w-6 h-6 rounded bg-red-400 shadow" />
+                    <span>Overdue</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <span className="w-6 h-6 rounded bg-gray-200 border border-gray-300" />
+                    <span>Not Checked</span>
                 </div>
             </div>
         </div>
     );
 };
 
-const MultiDepartmentCalendar = () => {
-    return (
-        <div className="min-h-screen p-6 bg-gray-100">
-            <h1 className="text-4xl font-bold mb-8 text-center mt-22 text-black">ปฏิทินเช็คเอกสารรายแผนก Checksheets</h1>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 justify-center">
-                {departmentsStatus.map(({ department, lastCheckedDay }) => (
-                    <DepartmentCalendarCard
-                        key={department}
-                        department={department}
-                        lastCheckedDay={lastCheckedDay}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
-
-export default MultiDepartmentCalendar;
+export default TimelineMatrix;
