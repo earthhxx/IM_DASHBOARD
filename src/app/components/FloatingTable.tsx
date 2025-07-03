@@ -62,14 +62,15 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
                                     onClick={() => onRowClick(item)}
                                     className="border-b hover:bg-blue-100 cursor-pointer transition"
                                 >
-                                    <td className="px-4 py-2">{item.sheftname}</td>
-                                    <td className="px-4 py-2">{item.slot}</td>
-                                    <td className="px-4 py-2">{item.toolingname}</td>
-                                    <td className="px-4 py-2">{item.side}</td>
+                                    <td className="px-4 py-2">{item.sheftname || "ไม่ระบุ"}</td>
+                                    <td className="px-4 py-2">{item.slot || "ไม่ระบุ"}</td>
+                                    <td className="px-4 py-2">{item.toolingname || "ไม่ระบุ"}</td>
+                                    <td className="px-4 py-2">{item.side || "ไม่ระบุ"}</td>
                                     <td className="px-4 py-2">{item.status || "ไม่ระบุ"}</td>
                                 </tr>
                             ))}
                         </tbody>
+
                     </table>
                 </div>
 

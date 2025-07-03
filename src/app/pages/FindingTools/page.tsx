@@ -8,6 +8,8 @@ import ShelfWithJigs from "@/app/components/ShelfWithJigs";
 import SupportBox from "@/app/components/SupportBox";
 import ShelfSqueegee from "@/app/components/shelfSqueegee";
 import FloatingTable from "@/app/components/FloatingTable";
+import ShelfBoxFloating from "@/app/components/ShelfBoxFloating";
+import ShelfICTFloating from "@/app/components/ShelfICTFloating";
 
 
 
@@ -183,6 +185,20 @@ export default function StorageRoomLayout() {
 
     const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
 
+    const [selectedShelf, setSelectedShelf] = useState<string | null>(null);
+    const [showBox, setShowBox] = useState(false);
+    const [showFloating, setShowFloating] = useState(false);
+
+    const handleShelfClick = (shelf: string) => {
+        setSelectedShelf(shelf);   // เก็บ shelf ที่เลือก
+        setShowBox(true);          // แสดง ShelfBoxFloating
+    };
+
+    const handleShelfClickDEF = (shelf: string) => {
+        setSelectedShelf(shelf); 
+        setShowFloating(true); // แสดง ShelfICTFloating
+    };
+
 
 
     const handleRowClick = (item: ToolingData) => {
@@ -201,6 +217,7 @@ export default function StorageRoomLayout() {
 
             const json = await res.json();
             setDatasearch(json.data); // ปรับตาม response จริง
+            console.log("Search results:", json.data);
             setShowFloat(true);
         } catch (err: any) {
             setError(err.message || "เกิดข้อผิดพลาด");
@@ -210,48 +227,22 @@ export default function StorageRoomLayout() {
         }
     };
 
-    const handleSearchshelf = async () => {
-        if (!query.trim()) return;
 
-        setLoading(true);
-        setError("");
-        try {
-            const res = await fetch(`/api/Toolingfinding/shelf?parameter=${query}`);
-            if (!res.ok) throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
-
-            const json = await res.json();
-            setDatasearch(json.data); // ปรับตาม response จริง
-            setShowFloat(true);
-        } catch (err: any) {
-            setError(err.message || "เกิดข้อผิดพลาด");
-            setDatasearch([]);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleClickD = () => {
-        onShelfClick("D");
-        setShowShelfDEF(prev => !prev);
-        setShelf("D");
+        handleShelfClickDEF("D");
     };
 
     const handleClickE = () => {
-        onShelfClick("E");
-        setShowShelfDEF(prev => !prev);
-        setShelf("E");
+        handleShelfClickDEF("E");
     };
 
     const handleClickF = () => {
-        onShelfClick("D");
-        setShowShelfDEF(prev => !prev);
-        setShelf("D");
+        handleShelfClickDEF("F");
     };
 
     const handleClickG = () => {
-        onShelfClick("E");
-        setShowShelfDEF(prev => !prev);
-        setShelf("E");
+        handleShelfClick("G")
     };
 
 
@@ -297,7 +288,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => {setShowShelfGH(false); setSelectedItem(null);}}
+                        onClick={() => { setShowShelfGH(false); setSelectedItem(null); }}
                         className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
                     >
                         &times;
@@ -362,7 +353,7 @@ export default function StorageRoomLayout() {
                 </div>
                 <div className="flex flex-col justify-center items-center mt-4 ">
                     <button
-                        onClick={() => {setShowShelfGH(false); setSelectedItem(null);}}
+                        onClick={() => { setShowShelfGH(false); setSelectedItem(null); }}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
@@ -382,7 +373,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-end w-full">
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
-                        onClick={() => {setShowShelfDEF(false); setSelectedItem(null);}}
+                        onClick={() => { setShowShelfDEF(false); setSelectedItem(null); }}
                         className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
                     >
                         &times;
@@ -455,7 +446,7 @@ export default function StorageRoomLayout() {
                 <div className="flex flex-col justify-center items-center mt-4 ">
 
                     <button
-                        onClick={() => {setShowShelfDEF(false); setSelectedItem(null);}}
+                        onClick={() => { setShowShelfDEF(false); setSelectedItem(null); }}
                         className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                     >
                         <div>Withdraw </div>
@@ -475,7 +466,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => {setShowShelfABC(false); setSelectedItem(null);}}
+                            onClick={() => { setShowShelfABC(false); setSelectedItem(null); }}
                             className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
                         >
                             &times;
@@ -540,7 +531,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => {setShowShelfABC(false); setSelectedItem(null);}}
+                            onClick={() => { setShowShelfABC(false); setSelectedItem(null); }}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
@@ -564,7 +555,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-end">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => {setShowShelfI(false); setSelectedItem(null);}}
+                            onClick={() => { setShowShelfI(false); setSelectedItem(null); }}
                             className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
                         >
                             &times;
@@ -631,7 +622,7 @@ export default function StorageRoomLayout() {
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
-                            onClick={() => {setShowShelfI(false); setSelectedItem(null);}}
+                            onClick={() => { setShowShelfI(false); setSelectedItem(null); }}
                             className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
                         >
                             <div>Withdraw </div>
@@ -692,17 +683,15 @@ export default function StorageRoomLayout() {
                             label="A"
                             height="large"
                             onClick={() => {
-                                onShelfClick("A");
-                                setShowShelfABC((prev) => !prev);
-                                setShelf('A');
+                                handleShelfClick("A");
                             }}
                             lines={[50]}
                             highlighted={lastCharshelf === "A"}
                         />
 
-                        <Shelf label="B" height="large" onClick={() => { onShelfClick("B"); setShowShelfABC((prev) => !prev); setShelf('B') }} lines={[50]} highlighted={lastCharshelf === "B"} />
+                        <Shelf label="B" height="large" onClick={() => { handleShelfClick("B"); }} lines={[50]} highlighted={lastCharshelf === "B"} />
 
-                        <Shelf label="C" height="large" onClick={() => { onShelfClick("C"); setShowShelfABC((prev) => !prev); setShelf('C') }} lines={[50]} highlighted={lastCharshelf === "C"} />
+                        <Shelf label="C" height="large" onClick={() => { handleShelfClick("C"); }} lines={[50]} highlighted={lastCharshelf === "C"} />
 
                         <DoubleShelf
                             labels={["D", "E"]}
@@ -739,8 +728,8 @@ export default function StorageRoomLayout() {
 
                         {/* H + I */}
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Shelf label="I" height="small" onClick={() => { onShelfClick("I"); setShowShelfI((prev) => !prev); setShelf('I') }} lines={[50]} highlighted={lastCharshelf === "I"} />
-                            <Shelf label="H" height="small" onClick={() => { onShelfClick("H"); setShowShelfGH((prev) => !prev); setShelf('H') }} lines={[50]} highlighted={lastCharshelf === "H"} />
+                            <Shelf label="I" height="small" onClick={() => { handleShelfClick("I"); }} lines={[50]} highlighted={lastCharshelf === "I"} />
+                            <Shelf label="H" height="small" onClick={() => { handleShelfClick("H") }} lines={[50]} highlighted={lastCharshelf === "H"} />
                         </div>
                     </div>
 
@@ -801,7 +790,7 @@ export default function StorageRoomLayout() {
                 {showShelfI && selectedItem && (
                     shelfSqueegee(selectedItem.sheftname)
                 )}
-                {showFloat && (
+                {showFloat && datasearch && (
                     <FloatingTable
                         data={datasearch}
                         onClose={() => setShowFloat(false)}
@@ -835,6 +824,30 @@ export default function StorageRoomLayout() {
                                 setShowShelfGH(false);
                                 setShowShelfI(false);
                             }
+                        }}
+                    />
+                )}
+
+                {showBox && selectedShelf && (
+                    <ShelfBoxFloating
+                        shelfchoose={selectedShelf}
+                        onResult={(data) => {
+                            console.log("Result from API:", data);
+                            setDatasearch(data.data); // ✅ เก็บผลลัพธ์ลง datasearch
+                            setShowBox(false);
+                            setShowFloat(true)        // ปิดกล่องลอย
+                        }}
+                        onClose={() => setShowBox(false)}
+                    />
+                )}
+
+                {showFloating && selectedShelf && (
+                    <ShelfICTFloating
+                        shelfchoose={selectedShelf}
+                        onResult={(apiData) => {
+                            setDatasearch(apiData.data || []);
+                            setShowFloating(false);
+                            setShowFloat(true); // แสดงตารางลอย
                         }}
                     />
                 )}
