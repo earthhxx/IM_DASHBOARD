@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
                                 [HMax31]
                         FROM [DASHBOARD].[dbo].[Temperature]
                         WHERE Line = @num;
+                    order by [Date] DESC;
             `);
 
         // console.log(`Qurey`, result.recordset);

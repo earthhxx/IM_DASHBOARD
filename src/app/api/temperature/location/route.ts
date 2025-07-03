@@ -63,6 +63,7 @@ export async function GET(req: NextRequest) {
                     [DASHBOARD].[dbo].[Temperature]
                 WHERE 
                     [Line] = @line AND [Area] = @area 
+                order by [Date] DESC;
             `);
 
         if (result.recordset.length === 0) {
