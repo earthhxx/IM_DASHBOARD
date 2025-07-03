@@ -683,15 +683,15 @@ export default function StorageRoomLayout() {
                             label="A"
                             height="large"
                             onClick={() => {
-                                handleShelfClick("A"); setSelectedShelf("A");
+                                handleShelfClick("A");;
                             }}
                             lines={[50]}
                             highlighted={lastCharshelf === "A"}
                         />
 
-                        <Shelf label="B" height="large" onClick={() => { handleShelfClick("B"); setSelectedShelf("B"); }} lines={[50]} highlighted={lastCharshelf === "B"} />
+                        <Shelf label="B" height="large" onClick={() => { handleShelfClick("B"); }} lines={[50]} highlighted={lastCharshelf === "B"} />
 
-                        <Shelf label="C" height="large" onClick={() => { handleShelfClick("C");  setSelectedShelf("C"); }} lines={[50]} highlighted={lastCharshelf === "C"} />
+                        <Shelf label="C" height="large" onClick={() => { handleShelfClick("C"); }} lines={[50]} highlighted={lastCharshelf === "C"} />
 
                         <DoubleShelf
                             labels={["D", "E"]}
@@ -728,8 +728,8 @@ export default function StorageRoomLayout() {
 
                         {/* H + I */}
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Shelf label="I" height="small" onClick={() => { handleShelfClick("I"); setSelectedShelf("I"); }} lines={[50]} highlighted={lastCharshelf === "I"} />
-                            <Shelf label="H" height="small" onClick={() => { handleShelfClick("H");  setSelectedShelf("H");}} lines={[50]} highlighted={lastCharshelf === "H"} />
+                            <Shelf label="I" height="small" onClick={() => { handleShelfClick("I"); }} lines={[50]} highlighted={lastCharshelf === "I"} />
+                            <Shelf label="H" height="small" onClick={() => { handleShelfClick("H");}} lines={[50]} highlighted={lastCharshelf === "H"} />
                         </div>
                     </div>
 
