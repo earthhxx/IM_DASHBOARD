@@ -17,7 +17,7 @@ type Props = {
 };
 
 
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 18;
 
 const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,7 +34,7 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-            <div className="bg-white w-full max-w-4xl max-h-[80vh] rounded-xl shadow-2xl overflow-hidden border border-gray-300 relative">
+            <div className="bg-white w-full max-w-6xl max-h-[95vh] rounded-xl shadow-2xl overflow-hidden border border-gray-300 relative">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-lg font-bold p-4 sticky top-0 z-10 flex justify-between items-center">
                     <span>รายการ Tooling</span>
@@ -44,7 +44,7 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
                 </div>
 
                 {/* Table */}
-                <div className="overflow-auto max-h-[calc(80vh-120px)]">
+                <div className="overflow-auto max-h-[calc(95vh-120px)]">
                     <table className="w-full text-sm text-left text-gray-800">
                         <thead className="bg-gray-100 sticky top-0 z-10 border-b text-gray-700">
                             <tr>
@@ -70,7 +70,6 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
                                 </tr>
                             ))}
                         </tbody>
-
                     </table>
                 </div>
 
@@ -96,6 +95,7 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
                 </div>
             </div>
         </div>
+
     );
 };
 

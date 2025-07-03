@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         const pool = await createConnection();
         const result = await pool
             .request()
-            .input('para', sql.NVarChar, `%${parameter}%`)
+            .input('para', sql.NVarChar, `%${parameter}`)
             .input('num1', sql.Int, parseInt(num1))
             .input('num2', sql.Int, parseInt(num2))
             .query(`

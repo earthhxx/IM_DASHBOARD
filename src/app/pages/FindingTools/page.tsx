@@ -8,8 +8,7 @@ import ShelfWithJigs from "@/app/components/ShelfWithJigs";
 import SupportBox from "@/app/components/SupportBox";
 import ShelfSqueegee from "@/app/components/shelfSqueegee";
 import FloatingTable from "@/app/components/FloatingTable";
-import ShelfBoxFloating from "@/app/components/ShelfBoxFloating";
-import ShelfICTFloating from "@/app/components/ShelfICTFloating";
+
 
 
 
@@ -189,17 +188,18 @@ export default function StorageRoomLayout() {
     const [showBox, setShowBox] = useState(false);
     const [showFloating, setShowFloating] = useState(false);
 
-    const handleShelfClick = (shelf: string) => {
-        setSelectedShelf(shelf);   // เก็บ shelf ที่เลือก
-        setShowBox(true);          // แสดง ShelfBoxFloating
+    const handleshelfClick = async (shelfchoose: string, num1: number, num2: number) => {
+        try {
+            const res = await fetch(`/api/Toolingfinding/shelf?parameter=${shelfchoose}&num1=${num1}&num2=${num2}`);
+            const data = await res.json();
+
+            console.log("Fetched:", data);
+            setDatasearch(data.data || []); // ปรับตาม response จริง
+            setShowFloat(true); // แสดงตารางเมื่อได้ข้อมูล
+        } catch (error) {
+            console.error("Fetch failed:", error);
+        }
     };
-
-    const handleShelfClickDEF = (shelf: string) => {
-        setSelectedShelf(shelf); 
-        setShowFloating(true); // แสดง ShelfICTFloating
-    };
-
-
 
     const handleRowClick = (item: ToolingData) => {
         setSelectedItem(item);
@@ -208,7 +208,7 @@ export default function StorageRoomLayout() {
 
     const handleSearch = async () => {
         if (!query.trim()) return;
-
+        console.log("Searching for:", query);
         setLoading(true);
         setError("");
         try {
@@ -224,25 +224,26 @@ export default function StorageRoomLayout() {
             setDatasearch([]);
         } finally {
             setLoading(false);
+           setQuery("");
         }
     };
 
 
 
     const handleClickD = () => {
-        handleShelfClickDEF("D");
+        handleshelfClick("D", 1, 100);
     };
 
     const handleClickE = () => {
-        handleShelfClickDEF("E");
+        handleshelfClick("E",1, 100);
     };
 
     const handleClickF = () => {
-        handleShelfClickDEF("F");
+        handleshelfClick("F",1, 100);
     };
 
     const handleClickG = () => {
-        handleShelfClick("G")
+        handleshelfClick("G",1, 100);
     };
 
 
@@ -683,15 +684,15 @@ export default function StorageRoomLayout() {
                             label="A"
                             height="large"
                             onClick={() => {
-                                handleShelfClick("A");;
+                                handleshelfClick("A",1,100);;
                             }}
                             lines={[50]}
                             highlighted={lastCharshelf === "A"}
                         />
 
-                        <Shelf label="B" height="large" onClick={() => { handleShelfClick("B"); }} lines={[50]} highlighted={lastCharshelf === "B"} />
+                        <Shelf label="B" height="large" onClick={() => { handleshelfClick("B",1,100); }} lines={[50]} highlighted={lastCharshelf === "B"} />
 
-                        <Shelf label="C" height="large" onClick={() => { handleShelfClick("C"); }} lines={[50]} highlighted={lastCharshelf === "C"} />
+                        <Shelf label="C" height="large" onClick={() => { handleshelfClick("C",1,100); }} lines={[50]} highlighted={lastCharshelf === "C"} />
 
                         <DoubleShelf
                             labels={["D", "E"]}
@@ -728,8 +729,8 @@ export default function StorageRoomLayout() {
 
                         {/* H + I */}
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Shelf label="I" height="small" onClick={() => { handleShelfClick("I"); }} lines={[50]} highlighted={lastCharshelf === "I"} />
-                            <Shelf label="H" height="small" onClick={() => { handleShelfClick("H");}} lines={[50]} highlighted={lastCharshelf === "H"} />
+                            <Shelf label="I" height="small" onClick={() => { handleshelfClick("I",1,100 ); }} lines={[50]} highlighted={lastCharshelf === "I"} />
+                            <Shelf label="H" height="small" onClick={() => { handleshelfClick("H",1,100); }} lines={[50]} highlighted={lastCharshelf === "H"} />
                         </div>
                     </div>
 
@@ -828,29 +829,7 @@ export default function StorageRoomLayout() {
                     />
                 )}
 
-                {showBox && selectedShelf && (
-                    <ShelfBoxFloating
-                        shelfchoose={selectedShelf}
-                        onResult={(data) => {
-                            console.log("Result from API:", data);
-                            setDatasearch(data.data); // ✅ เก็บผลลัพธ์ลง datasearch
-                            setShowBox(false);
-                            setShowFloat(true)        // ปิดกล่องลอย
-                        }}
-                        onClose={() => setShowBox(false)}
-                    />
-                )}
-
-                {showFloating && selectedShelf && (
-                    <ShelfICTFloating
-                        shelfchoose={selectedShelf}
-                        onResult={(apiData) => {
-                            setDatasearch(apiData.data || []);
-                            setShowFloating(false);
-                            setShowFloat(true); // แสดงตารางลอย
-                        }}
-                    />
-                )}
+            
 
                 {toastVisible && selectedItem && (
                     <Toast
