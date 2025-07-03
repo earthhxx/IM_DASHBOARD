@@ -23,7 +23,7 @@ const Toast: React.FC<ToastProps> = ({ message, onClose }) => (
           d="M13 16h-1v-4h-1m1-4h.01M12 20c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z"
         />
       </svg>
-      <div className="font-bold text-green-700">คุณเลือก:</div>
+      <div className="font-bold text-green-700">result :</div>
       <div className="ms-3 text-sm font-medium">{message}</div>
       <button
         type="button"

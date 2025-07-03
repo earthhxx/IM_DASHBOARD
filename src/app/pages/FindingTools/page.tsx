@@ -166,6 +166,8 @@ const Desktop = () => (
 
 export default function StorageRoomLayout() {
     const [toastVisible, setToastVisible] = useState(false);
+    const [toastError, setToastError] = useState<string | null>(null);
+
     const [showShelfABC, setShowShelfABC] = useState(false);
     const [showShelfDEF, setShowShelfDEF] = useState(false);
     const [showShelfGH, setShowShelfGH] = useState(false);
@@ -183,6 +185,8 @@ export default function StorageRoomLayout() {
     const lastCharshelf = selectedItem?.sheftname.trim().slice(-1).toUpperCase();
 
     const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
+
+
 
 
 
@@ -206,23 +210,31 @@ export default function StorageRoomLayout() {
 
     const handleSearch = async () => {
         if (!query.trim()) return;
-        console.log("Searching for:", query);
         setLoading(true);
         setError("");
+        setToastError(null);
         try {
             const res = await fetch(`/api/Toolingfinding/searchbar?parameter=${query}`);
-            if (!res.ok) throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
+            if (!res.ok) {
+                if (res.status === 404) {
+                    setToastError("ไม่พบข้อมูล");
+                } else {
+                    throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
+                }
+                setDatasearch([]);
+                return;
+            }
 
             const json = await res.json();
-            setDatasearch(json.data); // ปรับตาม response จริง
-            console.log("Search results:", json.data);
+            setDatasearch(json.data);
             setShowFloat(true);
         } catch (err: any) {
             setError(err.message || "เกิดข้อผิดพลาด");
+            setToastError(err.message || "เกิดข้อผิดพลาด");
             setDatasearch([]);
         } finally {
             setLoading(false);
-           setQuery("");
+            setQuery("");
         }
     };
 
@@ -233,15 +245,15 @@ export default function StorageRoomLayout() {
     };
 
     const handleClickE = () => {
-        handleshelfClick("E",1, 100);
+        handleshelfClick("E", 1, 100);
     };
 
     const handleClickF = () => {
-        handleshelfClick("F",1, 100);
+        handleshelfClick("F", 1, 100);
     };
 
     const handleClickG = () => {
-        handleshelfClick("G",1, 100);
+        handleshelfClick("G", 1, 100);
     };
 
 
@@ -251,14 +263,15 @@ export default function StorageRoomLayout() {
 
     // ใช้ useEffect รอ 3 วินาทีแล้วซ่อน Toast อัตโนมัติ
     useEffect(() => {
-        if (toastVisible) {
+        if (toastVisible || toastError) {
             const timer = setTimeout(() => {
                 setToastVisible(false);
+                setToastError(null); // ล้างข้อความ error เมื่อซ่อน toast
             }, 5000);
 
             return () => clearTimeout(timer); // ล้าง timer เวลาคอมโพเนนต์ unmount หรือ toastVisible เปลี่ยน
         }
-    }, [toastVisible]);
+    }, [toastVisible,toastError]);
 
     // ตัวอย่าง onClick ที่แยกกันสำหรับแต่ละ shelf
     const onShelfClick = (label: string) => {
@@ -288,7 +301,7 @@ export default function StorageRoomLayout() {
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
                         onClick={() => { setShowShelfGH(false); setSelectedItem(null); }}
-                        className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
+                        className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-red-500 w-[10%] "
                     >
                         &times;
                     </button>
@@ -373,7 +386,7 @@ export default function StorageRoomLayout() {
                     {/* ปุ่มปิด (X) ขวาบน */}
                     <button
                         onClick={() => { setShowShelfDEF(false); setSelectedItem(null); }}
-                        className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[10%] "
+                        className="flex justify-center items-center text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-red-500 w-[10%] "
                     >
                         &times;
                     </button>
@@ -466,7 +479,7 @@ export default function StorageRoomLayout() {
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
                             onClick={() => { setShowShelfABC(false); setSelectedItem(null); }}
-                            className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
+                            className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-red-500 w-[5%] "
                         >
                             &times;
                         </button>
@@ -555,7 +568,7 @@ export default function StorageRoomLayout() {
                         {/* ปุ่มปิด (X) ขวาบน */}
                         <button
                             onClick={() => { setShowShelfI(false); setSelectedItem(null); }}
-                            className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-blue-900 w-[5%] "
+                            className="flex justify-center items-start text-white hover:text-red-500 text-[20px] rounded text-center font-bold bg-red-500 w-[5%] "
                         >
                             &times;
                         </button>
@@ -682,15 +695,15 @@ export default function StorageRoomLayout() {
                             label="A"
                             height="large"
                             onClick={() => {
-                                handleshelfClick("A",1,100);;
+                                handleshelfClick("A", 1, 100);;
                             }}
                             lines={[50]}
                             highlighted={lastCharshelf === "A"}
                         />
 
-                        <Shelf label="B" height="large" onClick={() => { handleshelfClick("B",1,100); }} lines={[50]} highlighted={lastCharshelf === "B"} />
+                        <Shelf label="B" height="large" onClick={() => { handleshelfClick("B", 1, 100); }} lines={[50]} highlighted={lastCharshelf === "B"} />
 
-                        <Shelf label="C" height="large" onClick={() => { handleshelfClick("C",1,100); }} lines={[50]} highlighted={lastCharshelf === "C"} />
+                        <Shelf label="C" height="large" onClick={() => { handleshelfClick("C", 1, 100); }} lines={[50]} highlighted={lastCharshelf === "C"} />
 
                         <DoubleShelf
                             labels={["D", "E"]}
@@ -727,8 +740,8 @@ export default function StorageRoomLayout() {
 
                         {/* H + I */}
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <Shelf label="I" height="small" onClick={() => { handleshelfClick("I",1,100 ); }} lines={[50]} highlighted={lastCharshelf === "I"} />
-                            <Shelf label="H" height="small" onClick={() => { handleshelfClick("H",1,100); }} lines={[50]} highlighted={lastCharshelf === "H"} />
+                            <Shelf label="I" height="small" onClick={() => { handleshelfClick("I", 1, 100); }} lines={[50]} highlighted={lastCharshelf === "I"} />
+                            <Shelf label="H" height="small" onClick={() => { handleshelfClick("H", 1, 100); }} lines={[50]} highlighted={lastCharshelf === "H"} />
                         </div>
                     </div>
 
@@ -827,7 +840,7 @@ export default function StorageRoomLayout() {
                     />
                 )}
 
-            
+
 
                 {toastVisible && selectedItem && (
                     <Toast
@@ -835,6 +848,13 @@ export default function StorageRoomLayout() {
                         onClose={() => setToastVisible(false)}
                     />
                 )}
+                {toastError && (
+                    <Toast
+                        message={toastError}
+                        onClose={() => setToastError(null)}
+                    />
+                )}
+
 
 
 
