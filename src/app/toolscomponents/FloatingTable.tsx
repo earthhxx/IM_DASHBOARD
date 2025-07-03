@@ -22,9 +22,14 @@ const ITEMS_PER_PAGE = 18;
 const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentData = data.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    // const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+    // const currentData = data.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const filteredData = data.filter(item => item.status != null);
+    const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+    const currentData = filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages) {
