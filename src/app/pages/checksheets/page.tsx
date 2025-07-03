@@ -70,7 +70,7 @@ const TimelineMatrix = () => {
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-10 w-full">
                 {/* Summary Card */}
-                <div className="bg-white shadow rounded-2xl p-8 border border-gray-300 h-[450px] w-full">
+                <div className="bg-white shadow rounded-2xl p-8 border border-gray-300 h-[390px] w-full">
                     <h2 className="text-3xl font-bold mb-6 text-gray-800">สรุปภาพรวมรายแผนก</h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {departments.map((dept) => {
@@ -106,7 +106,7 @@ const TimelineMatrix = () => {
                 </div>
 
                 {/* Overdue & Not Checked Lists */}
-                <div className="flex gap-6 h-[450px] justify-start">
+                <div className="flex gap-6 h-[390px] justify-start">
                     {/* Overdue */}
                     <section className="bg-white shadow rounded-2xl p-6 border border-red-200 w-[320px] h-full">
                         <h2 className="text-2xl font-semibold mb-4 text-red-600 flex items-center gap-2">
