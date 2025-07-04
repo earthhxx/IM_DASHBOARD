@@ -1,5 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import DepartmentChecksheetTable from "@/app/components/DepartmentChecksheetTable";
+
+
 
 type DepartmentData = {
     name: string;
@@ -7,6 +10,29 @@ type DepartmentData = {
     onPlan: number[];
     overdue: number[];
 };
+
+const mockData = [
+    {
+        index: 1,
+        docNo: "FM-PD-101",
+        docName: "Checkitems Sheet",
+        line: "AOI",
+        process: "ตรวจสอบภาพ",
+        checks: Array.from({ length: 31 }, (_, i) =>
+            i % 3 === 0 ? "checked" : "uncheck"
+        ),
+    },
+    {
+        index: 2,
+        docNo: "FM-PD-202",
+        docName: "Packaging Checklist",
+        line: "Packing",
+        process: "บรรจุ",
+        checks: Array.from({ length: 31 }, (_, i) =>
+            i % 2 === 0 ? "checked" : "uncheck"
+        ),
+    },
+];
 
 const departments: DepartmentData[] = [
     {
@@ -55,8 +81,12 @@ const getColor = (status: string) => {
     }
 };
 
+
+
 const TimelineMatrix = () => {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
+    const [selectedDep, setSelectedDep] = useState<string | null>(null);
+    const [open, setOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-gray-50 p-8 flex flex-col justify-center items-center text-black">
@@ -68,7 +98,7 @@ const TimelineMatrix = () => {
             </header>
 
             {/* Summary + Lists */}
-            <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-10 w-full">
+            <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
                 <div className="bg-white shadow rounded-2xl p-8 border border-gray-300 h-[390px] w-full">
                     <h2 className="text-3xl font-bold mb-6 text-gray-800">สรุปภาพรวมรายแผนก</h2>
@@ -78,6 +108,7 @@ const TimelineMatrix = () => {
                             return (
                                 <div
                                     key={dept.name}
+                                    onClick={() => { setSelectedDep(dept.name); setOpen(true); }}
                                     className="h-full border rounded-xl p-5 bg-gray-100 shadow-sm hover:shadow-md transition cursor-default"
                                 >
                                     <h3 className="font-semibold text-xl mb-3">{dept.name}</h3>
@@ -179,7 +210,7 @@ const TimelineMatrix = () => {
                     </section>
                 </div>
             </section>
-
+            <div className="flex font-kanit text-2xl mb-4"> 3 กรกฎาคม 2568 </div>
             {/* Timeline Table */}
             <div className="p-6 border-b border-gray-200 rounded-2xl bg-white shadow w-full overflow-x-auto">
                 <table className="min-w-[1000px] w-full border-collapse text-sm">
@@ -246,6 +277,15 @@ const TimelineMatrix = () => {
                     <span>Not Checked</span>
                 </div>
             </div>
+
+            {open && (
+                <DepartmentChecksheetTable
+                    department="Engineer"
+                    data={mockData}
+                    onClose={() => setOpen(false)}
+                />
+            )}
+
         </div>
     );
 };
