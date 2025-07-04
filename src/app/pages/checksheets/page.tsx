@@ -11,28 +11,27 @@ type DepartmentData = {
     overdue: number[];
 };
 
-const mockData = [
-    {
-        index: 1,
-        docNo: "FM-PD-101",
-        docName: "Checkitems Sheet",
-        line: "AOI",
-        process: "ตรวจสอบภาพ",
-        checks: Array.from({ length: 31 }, (_, i) =>
-            i % 3 === 0 ? "checked" : "uncheck"
-        ),
-    },
-    {
-        index: 2,
-        docNo: "FM-PD-202",
-        docName: "Packaging Checklist",
-        line: "Packing",
-        process: "บรรจุ",
-        checks: Array.from({ length: 31 }, (_, i) =>
-            i % 2 === 0 ? "checked" : "uncheck"
-        ),
-    },
-];
+type ChecksheetStatus = "checked" | "uncheck" | "waiting";
+
+const randomStatus = (i: number): ChecksheetStatus => {
+  if (i % 7 === 0) return "waiting";
+  if (i % 3 === 0) return "checked";
+  return "uncheck";
+};
+
+const mockData = Array.from({ length: 10 }, (_, index) => ({
+  index: index + 1,
+  docNo: `FM-DOC-${100 + index}`,
+  docName: `Document ${index + 1}`,
+  line: index % 2 === 0 ? "AOI" : "Packing",
+  process:
+    index % 3 === 0
+      ? "ตรวจสอบภาพ"
+      : index % 3 === 1
+      ? "บรรจุ"
+      : "ทำความสะอาด",
+  checks: Array.from({ length: 31 }, (_, i) => randomStatus(i)),
+}));
 
 const departments: DepartmentData[] = [
     {

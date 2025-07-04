@@ -1,14 +1,17 @@
 "use client";
 import React from "react";
 
+type ChecksheetStatus = "checked" | "uncheck" | "waiting";
+
 type ChecksheetItem = {
   index: number;
   docNo: string;
   docName: string;
   line: string;
   process: string;
-  checks: ("checked" | "uncheck")[]; // size 31
+  checks: ChecksheetStatus[];
 };
+
 
 type Props = {
   department: string;
@@ -16,11 +19,12 @@ type Props = {
   onClose: () => void;
 };
 
-const getStatusColor = (status: string) => {
-  return status === "checked"
-    ? "bg-green-200 text-green-800"
-    : "bg-red-200 text-red-800";
+const getStatusColor = (status: ChecksheetStatus) => {
+  if (status === "checked") return "bg-green-200 text-green-800";
+  if (status === "waiting") return "bg-yellow-200 text-yellow-800";
+  return "bg-red-200 text-red-800"; // uncheck
 };
+
 
 const DepartmentChecksheetTable: React.FC<Props> = ({ department, data, onClose }) => {
   return (
@@ -35,8 +39,8 @@ const DepartmentChecksheetTable: React.FC<Props> = ({ department, data, onClose 
         </button>
 
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4 text-center">{department}</h2>
-          <div className="overflow-x-auto">
+          <h2 className="text-2xl font-bold mb-4 text-center font-kanit">แผนก : {department}</h2>
+          <div className="overflow-x-auto flex justify-center items-center">
             <table className="min-w-[1200px] text-sm border border-gray-300">
               <thead>
                 <tr className="bg-gray-100 text-gray-700 text-center">
@@ -65,7 +69,12 @@ const DepartmentChecksheetTable: React.FC<Props> = ({ department, data, onClose 
                         key={i}
                         className={`border px-1 py-1 ${getStatusColor(status)}`}
                       >
-                        {status === "checked" ? "✔️" : "❌"}
+                        {status === "checked"
+                          ? "✔️"
+                          : status === "waiting"
+                            ? "⏳"
+                            : "❌"}
+
                       </td>
                     ))}
                   </tr>
