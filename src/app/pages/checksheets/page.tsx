@@ -199,7 +199,7 @@ const TimelineMatrix = () => {
           </section>
 
           {/* Ongoing */}
-          <section className="bg-white shadow-md rounded-2xl p-6 border border-gray-300 h-[340px] overflow-auto">
+          <section className="bg-white shadow-md rounded-2xl p-6 border border-gray-300 h-[340px]">
             <h2 className="text-xl font-bold mb-4 text-gray-700 flex items-center gap-2">
               🟡 Ongoing Checksheet
             </h2>
@@ -229,7 +229,7 @@ const TimelineMatrix = () => {
       </section>
 
       {/* Timeline Table */}
-      <div className="p-6 border border-gray-200 rounded-2xl bg-white shadow-xl w-full overflow-x-auto">
+      <div className="p-6 border border-gray-200 rounded-2xl bg-white shadow-xl w-full">
         {/* วันที่ */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold font-kanit text-gray-800">3 กรกฎาคม 2568</h2>
