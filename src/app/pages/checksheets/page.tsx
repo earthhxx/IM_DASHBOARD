@@ -93,8 +93,8 @@ const TimelineMatrix = () => {
         <div className="min-h-screen bg-gray-50 p-8 flex flex-col justify-center items-center text-black">
             {/* Header */}
             <header className="mb-10 text-center mt-[5%]">
-                <h1 className="text-5xl font-extrabold text-gray-800">
-                    สรุปการเช็คเอกสารรายวัน (Timeline View)
+                <h1 className="text-5xl font-extrabold text-gray-800 uppercase">
+                    checksheet monitoring
                 </h1>
             </header>
 
@@ -102,7 +102,7 @@ const TimelineMatrix = () => {
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
                 <div className="bg-white shadow rounded-2xl p-8 border border-gray-300 h-[390px] w-full">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800">สรุปภาพรวมรายแผนก</h2>
+                    <h2 className="text-3xl font-bold mb-6 text-gray-800 uppercase">summary checksheet</h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {departments.map((dept) => {
                             const notChecked = 31 - new Set(dept.overdue).size;
@@ -166,7 +166,7 @@ const TimelineMatrix = () => {
                     {/* Not Checked */}
                     <section className="bg-white shadow rounded-2xl p-6 border border-gray-300 w-[320px] h-full">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-700 flex items-center gap-2">
-                            ❌ Ongoing Checksheet
+                            Ongoing Checksheet
                         </h2>
                         <table className="w-full text-base border-collapse">
                             <thead>
@@ -193,9 +193,10 @@ const TimelineMatrix = () => {
                     </section>
                 </div>
             </section>
-            <div className="flex font-kanit text-2xl mb-4"> 3 กรกฎาคม 2568 </div>
+           
             {/* Timeline Table */}
             <div className="p-6 border-b border-gray-200 rounded-2xl bg-white shadow w-full overflow-x-auto">
+                 <div className="flex font-kanit text-2xl mb-4"> 3 กรกฎาคม 2568 </div>
                 <table className="min-w-[1000px] w-full border-collapse text-sm">
                     <thead className="bg-gray-100 sticky top-0 z-20">
                         <tr>
@@ -239,23 +240,24 @@ const TimelineMatrix = () => {
                         })}
                     </tbody>
                 </table>
+                {/* Legend */}
+                <div className="flex justify-center items-center space-x-8 text-base mt-8 text-gray-700 p-5 ">
+                    <div className="flex items-center space-x-2">
+                        <span className="w-6 h-6 rounded bg-green-400 shadow" />
+                        <span>Completed</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <span className="w-6 h-6 rounded bg-yellow-300 shadow" />
+                        <span>ongoing</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <span className="w-6 h-6 rounded bg-red-400 shadow" />
+                        <span>Overdue</span>
+                    </div>
+                </div>
             </div>
 
-            {/* Legend */}
-            <div className="flex justify-center items-center space-x-8 text-base mt-8 text-gray-700 rounded-full p-5 bg-gray-50 shadow">
-                <div className="flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded bg-green-400 shadow" />
-                    <span>Completed</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded bg-yellow-300 shadow" />
-                    <span>ongoing</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded bg-red-400 shadow" />
-                    <span>Overdue</span>
-                </div>
-            </div>
+
 
             {open && selectedDep && (
                 <DepartmentChecksheetTable
