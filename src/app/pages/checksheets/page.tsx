@@ -169,7 +169,7 @@ const TimelineMatrix = () => {
         </div>
 
         {/* Overdue & Ongoing Lists */}
-        <div className="flex gap-6 justify-start items-start w-[800px]">
+        <div className="flex gap-6 justify-start items-start w-[920px]">
           {/* Overdue */}
           <section className="bg-white shadow-md rounded-2xl p-6 border border-red-300 h-[340px] overflow-auto">
             <h2 className="text-xl font-bold mb-4 text-red-600 flex items-center gap-2">
