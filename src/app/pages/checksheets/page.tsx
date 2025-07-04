@@ -237,19 +237,17 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            {/* ตาราง Timeline */}
             <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full">
                 <table className="min-w-[1000px] w-full border-collapse text-sm text-gray-700">
                     <thead className="bg-blue-200">
-                        <tr>
-                            <th className="sticky left-0 bg-blue-200 p-4 text-left text-base font-semibold z-30 w-[120px] max-w-[120px]">
+                        <tr className="border-b border-gray-200">
+                            <th className="sticky left-0 bg-blue-200 p-4 text-left text-base font-semibold z-30 w-[120px] max-w-[120px] border-r border-gray-200">
                                 แผนก
                             </th>
-
                             {days.map((day) => (
                                 <th
                                     key={day}
-                                    className="px-3 py-4 text-sm w-10 text-center select-none"
+                                    className="px-3 py-4 text-sm w-10 text-center select-none border-r border-gray-200 last:border-r-0"
                                     title={`Day ${day}`}
                                 >
                                     {day}
@@ -261,30 +259,43 @@ const TimelineMatrix = () => {
                         {departments.map((dept) => (
                             <tr
                                 key={dept.name}
-                                className="bg-white hover:bg-yellow-50 transition duration-150"
+                                className="bg-white hover:bg-yellow-50 transition duration-150 border-b border-gray-100"
                             >
-                                <td className="sticky left-0 bg-white px-4 py-3 font-medium whitespace-nowrap z-10 w-[120px] max-w-[120px] truncate">
+                                <td className="sticky left-0 bg-white px-4 py-3 font-medium whitespace-nowrap z-10 w-[120px] max-w-[120px] truncate border-r border-gray-200">
                                     {dept.name}
                                 </td>
-
                                 {days.map((day) => {
                                     const status = getStatus(dept, day);
                                     const bg = getColor(status);
-
                                     const icon =
                                         status === "completed" ? "✔️" :
                                             status === "ongoing" ? "⏳" :
                                                 "❌";
 
                                     return (
-                                        <td key={day} className="p-1">
-                                            <div
-                                                className={`w-6 h-6 ${bg} rounded-full flex items-center justify-center text-xs text-white`}
-                                                title={`${status} - day ${day}`}
-                                            >
-                                                {icon}
+                                        <td
+                                            key={day}
+                                            className="border-r border-gray-100 last:border-r-0 p-1"
+                                        >
+                                            <div className="flex justify-center items-center w-full h-full">
+                                                <div
+                                                    className={`w-6 h-6 ${bg} rounded-full flex justify-center items-center text-white text-[12px] leading-none shadow-md shadow-gray-400/40`}
+                                                    style={{
+                                                        background: bg === "bg-green-400"
+                                                            ? "linear-gradient(to bottom, #4ade80, #16a34a)"
+                                                            : bg === "bg-yellow-300"
+                                                                ? "linear-gradient(to bottom, #fde047, #facc15)"
+                                                                : "linear-gradient(to bottom, #f87171, #dc2626)"
+                                                    }}
+                                                    title={`${status} - day ${day}`}
+                                                >
+                                                    {icon}
+                                                </div>
                                             </div>
                                         </td>
+
+
+
                                     );
                                 })}
                             </tr>
