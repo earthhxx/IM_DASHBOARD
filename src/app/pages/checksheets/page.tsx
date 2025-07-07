@@ -148,10 +148,25 @@ const TimelineMatrix = () => {
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
-                <div className="bg-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[360px] w-full">
+                <div className="bg-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
                     <h2 className="text-3xl font-bold mb-4 text-gray-800 uppercase">
                         summary checksheet
                     </h2>
+                    {/* 🔹 Summary Info Bar (ด้านบนของกราฟ) */}
+                    <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-600 mb-3">
+                        <div className="px-3 py-1 bg-gray-100 rounded-full shadow-sm">
+                            แผนกทั้งหมด: {departments.length}
+                        </div>
+                        <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm">
+                            OVERDUE รวม:{" "}
+                            {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
+                        </div>
+                        <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm">
+                            ONGOING รวม:{" "}
+                            {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
+                        </div>
+                    </div>
+
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart
                             data={departments.map((dept) => ({
@@ -220,8 +235,8 @@ const TimelineMatrix = () => {
                 {/* Overdue & Ongoing Lists */}
                 <div className="flex gap-6 justify-start items-start w-[920px]">
                     {/* Overdue */}
-                    <section className="bg-red-50 shadow-xl rounded-2xl border border-red-300 p-6 h-[360px] overflow-auto">
-                        <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
+                    <section className="bg-red-50 shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto">
+                        <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase mt-4">
                             ⚠️ Overdue Checksheet
                         </h2>
                         <table className="w-full text-[18px] border-collapse">
@@ -248,8 +263,8 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="bg-yellow-50 shadow-xl rounded-2xl border border-yellow-300 p-6 h-[360px]">
-                        <h2 className="text-[18px] font-bold mb-4 text-gray-700 flex items-center gap-2 uppercase">
+                    <section className=" bg-yellow-50 shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px]">
+                        <h2 className="text-[18px] font-bold mb-4 text-gray-700 flex items-center gap-2 uppercase mt-4">
                             🟡 Ongoing Checksheet
                         </h2>
                         <table className="w-full text-[18px] border-collapse">
@@ -277,7 +292,7 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full h-[360px] mt-4">
+            <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full h-[320px] mt-4">
                 <table className="min-w-[1000px] w-full border-collapse text-sm text-gray-700 h-full">
                     <thead className="bg-blue-200">
                         <tr className="border-b border-gray-200">
