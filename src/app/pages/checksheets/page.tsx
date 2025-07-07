@@ -137,7 +137,7 @@ const TimelineMatrix = () => {
     const handleClose = () => setSelectedDepartment(null);
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8 flex flex-col justify-center items-center text-black">
+        <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
             {/* Header */}
             <header className="mb-10 text-center mt-8">
                 <h1 className="text-5xl font-extrabold text-gray-800 uppercase">
@@ -148,22 +148,20 @@ const TimelineMatrix = () => {
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
-                <div className="bg-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
+                <div className="bg-gradient-to-br from-sky-50 to-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
                     <h2 className="text-3xl font-bold mb-4 text-gray-800 uppercase">
                         summary checksheet
                     </h2>
-                    {/* 🔹 Summary Info Bar (ด้านบนของกราฟ) */}
-                    <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-600 mb-3">
-                        <div className="px-3 py-1 bg-gray-100 rounded-full shadow-sm">
-                            แผนกทั้งหมด: {departments.length}
+                    {/* Summary Info Bar */}
+                    <div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-gray-700 mb-3">
+                        <div className="px-3 py-1 bg-white rounded-full shadow-sm flex items-center gap-1 hover:bg-gray-200 cursor-default">
+                            🏢 แผนกทั้งหมด: {departments.length}
                         </div>
-                        <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm">
-                            OVERDUE รวม:{" "}
-                            {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
+                        <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
+                            ⚠️ OVERDUE รวม: {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
                         </div>
-                        <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm">
-                            ONGOING รวม:{" "}
-                            {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
+                        <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
+                            🕒 ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
                         </div>
                     </div>
 
@@ -176,7 +174,8 @@ const TimelineMatrix = () => {
                                 Overdue: dept.overdue.length,
                             }))}
                             margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
-                            barCategoryGap="15%"
+                            barCategoryGap="20%"
+                            barGap={6}
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
@@ -184,21 +183,21 @@ const TimelineMatrix = () => {
                             <Tooltip />
 
                             <Legend
-                                layout="horizontal"           // ✅ แนวนอน
-                                align="center"                // ✅ อยู่กลาง
-                                verticalAlign="bottom"          // หรือ 'bottom', ตามตำแหน่งที่ต้องการ
+                                layout="horizontal"
+                                align="center"
+                                verticalAlign="bottom"
                                 wrapperStyle={{
-                                    marginLeft: 35, // ✅ เพิ่มระยะห่างจากด้านซ้ายของกรอบกราฟ
-                                    lineHeight: '28px',
+                                    marginLeft: 35,
+                                    lineHeight: "28px",
                                 }}
-
                                 formatter={(value) => (
                                     <span
                                         style={{
-                                            margin: '0 8px',
-                                            display: 'inline-block',
-                                            textTransform: 'uppercase',
-                                            color: '#000',
+                                            margin: "0 8px",
+                                            display: "inline-block",
+                                            textTransform: "uppercase",
+                                            color: "#000",
+                                            fontWeight: "600",
                                         }}
                                     >
                                         {value}
@@ -206,27 +205,33 @@ const TimelineMatrix = () => {
                                 )}
                             />
 
-
                             <Bar
+                                className="bar-glow"
                                 dataKey="Completed"
                                 name="COMPLETED"
                                 fill="#4ade80"
                                 radius={[4, 4, 0, 0]}
+                                animationDuration={1000}
                             />
                             <Bar
+                                className="bar-glow"
                                 dataKey="Ongoing"
                                 name="ONGOING"
                                 fill="#facc15"
                                 radius={[4, 4, 0, 0]}
+                                animationDuration={1000}
                             />
                             <Bar
+                                className="bar-glow"
                                 dataKey="Overdue"
                                 name="OVERDUE"
                                 fill="#f87171"
                                 radius={[4, 4, 0, 0]}
+                                animationDuration={1000}
                             />
                         </BarChart>
                     </ResponsiveContainer>
+
 
                 </div>
 
@@ -234,16 +239,17 @@ const TimelineMatrix = () => {
 
                 {/* Overdue & Ongoing Lists */}
                 <div className="flex gap-6 justify-start items-start w-[920px]">
+
                     {/* Overdue */}
-                    <section className="bg-red-50 shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto">
-                        <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase mt-4">
-                            ⚠️ Overdue Checksheet
+                    <section className="bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
+                            <span className="animate-pulse  h-8">⚠️</span> Overdue Checksheet
                         </h2>
                         <table className="w-full text-[18px] border-collapse">
                             <thead>
-                                <tr className="border-b">
-                                    <th className="text-left py-2">แผนก</th>
-                                    <th className="text-center py-2">จำนวน</th>
+                                <tr className="border-b border-red-200">
+                                    <th className="text-left py-2 text-red-600">แผนก</th>
+                                    <th className="text-center py-2 text-red-600">จำนวน</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -252,10 +258,10 @@ const TimelineMatrix = () => {
                                     .map((dept) => (
                                         <tr
                                             key={`${dept.name}-overdue`}
-                                            className="border-b last:border-none hover:bg-red-50 transition"
+                                            className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-medium">{dept.name}</td>
-                                            <td className="text-center">{dept.overdue.length}</td>
+                                            <td className="py-2 font-semibold text-red-800">{dept.name}</td>
+                                            <td className="text-center font-bold text-red-600 animate-pulse">{dept.overdue.length}</td>
                                         </tr>
                                     ))}
                             </tbody>
@@ -263,15 +269,15 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className=" bg-yellow-50 shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px]">
-                        <h2 className="text-[18px] font-bold mb-4 text-gray-700 flex items-center gap-2 uppercase mt-4">
-                            🟡 Ongoing Checksheet
+                    <section className="bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[18px] font-bold mb-4 text-yellow-700 flex items-center gap-2 uppercase">
+                            <span className="animate-spin">⏳</span> Ongoing Checksheet
                         </h2>
                         <table className="w-full text-[18px] border-collapse">
                             <thead>
-                                <tr className="border-b">
-                                    <th className="text-left py-2">แผนก</th>
-                                    <th className="text-center py-2">จำนวน</th>
+                                <tr className="border-b border-yellow-200">
+                                    <th className="text-left py-2 text-yellow-600">แผนก</th>
+                                    <th className="text-center py-2 text-yellow-600">จำนวน</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -280,29 +286,29 @@ const TimelineMatrix = () => {
                                     .map((dept) => (
                                         <tr
                                             key={`${dept.name}-ongoing`}
-                                            className="border-b last:border-none hover:bg-yellow-50 transition"
+                                            className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-yellow-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-medium">{dept.name}</td>
-                                            <td className="text-center">{dept.ongoing.length}</td>
+                                            <td className="py-2 font-semibold text-yellow-800">{dept.name}</td>
+                                            <td className="text-center font-bold text-yellow-700 animate-pulse">{dept.ongoing.length}</td>
                                         </tr>
                                     ))}
                             </tbody>
                         </table>
                     </section>
+
                 </div>
             </section>
 
             <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full h-[320px] mt-4">
                 <table className="min-w-[1000px] w-full border-collapse text-sm text-gray-700 h-full">
-                    <thead className="bg-blue-200">
+                    <thead className="bg-gradient-to-br from-sky-100 via-white to-white">
                         <tr className="border-b border-gray-200">
-                            <th className="sticky left-0 bg-blue-200 p-4 text-left text-base font-semibold z-30 w-[120px] max-w-[120px] border-r border-gray-200">
+                            <th className="sticky left-0 p-4 text-left text-base font-semibold z-30 w-[120px] max-w-[120px] border-r border-gray-200">
                                 แผนก
                             </th>
                             {days.map((day) => (
                                 <th
                                     key={day}
-
                                     className="px-3 py-4 text-sm w-10 text-center select-none border-r border-gray-200 last:border-r-0"
                                     title={`Day ${day}`}
                                 >
@@ -311,48 +317,54 @@ const TimelineMatrix = () => {
                             ))}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="bg-gradient-to-b from-white via-sky-50 to-white">
                         {departments.map((dept) => (
                             <tr
                                 onClick={() => handleOpen(dept.name)}
                                 key={dept.name}
-                                className="bg-white hover:bg-yellow-50 transition duration-150 border-b border-gray-100"
+                                className="hover:bg-yellow-50 transition duration-150 border-b border-gray-100"
                             >
-                                <td className="sticky left-0 bg-white px-4 py-3 font-medium whitespace-nowrap z-10 w-[120px] max-w-[120px] truncate border-r border-gray-200">
+                                <td className="sticky left-0 px-4 py-3 font-medium whitespace-nowrap z-10 w-[120px] max-w-[120px] truncate border-r border-gray-200">
                                     {dept.name}
                                 </td>
                                 {days.map((day) => {
                                     const status = getStatus(dept, day);
-                                    const bg = getColor(status);
                                     const icon =
                                         status === "completed" ? "✔️" :
                                             status === "ongoing" ? "⏳" :
                                                 "❌";
 
+                                    // สี gradient บางๆ
+                                    const bgGradient =
+                                        status === "completed"
+                                            ? "linear-gradient(to bottom, #bbf7d0, #86efac)"
+                                            : status === "ongoing"
+                                                ? "linear-gradient(to bottom, #fef9c3, #fde68a)"
+                                                : "linear-gradient(to bottom, #fecaca, #fda4af)";
+
+                                    const ringColor =
+                                        status === "completed"
+                                            ? "ring-green-200"
+                                            : status === "ongoing"
+                                                ? "ring-yellow-200"
+                                                : "ring-red-200";
+
                                     return (
                                         <td
                                             key={day}
-                                            className="border-r border-gray-100 last:border-r-0 p-1"
+                                            className="border-r border-gray-100 last:border-r-0 p-1 transition duration-200"
                                         >
                                             <div className="flex justify-center items-center w-full h-full">
                                                 <div
-                                                    className={`w-6 h-6 ${bg} rounded-full flex justify-center items-center text-white text-[12px] leading-none shadow-md shadow-gray-400/40`}
-                                                    style={{
-                                                        background: bg === "bg-green-400"
-                                                            ? "linear-gradient(to bottom, #4ade80, #16a34a)"
-                                                            : bg === "bg-yellow-300"
-                                                                ? "linear-gradient(to bottom, #fde047, #facc15)"
-                                                                : "linear-gradient(to bottom, #f87171, #dc2626)"
-                                                    }}
+                                                    className={`w-6 h-6 rounded-full flex justify-center items-center text-white text-[12px] leading-none
+                                            shadow-md shadow-gray-400/40 scale-110 ring-2 ring-offset-2 ${ringColor}`}
+                                                    style={{ background: bgGradient }}
                                                     title={`${status} - day ${day}`}
                                                 >
                                                     {icon}
                                                 </div>
                                             </div>
                                         </td>
-
-
-
                                     );
                                 })}
                             </tr>
@@ -360,6 +372,7 @@ const TimelineMatrix = () => {
                     </tbody>
                 </table>
             </div>
+
 
 
             {/* แสดงตารางถ้ามีการเลือกแผนก */}
