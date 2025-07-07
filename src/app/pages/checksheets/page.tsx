@@ -238,11 +238,11 @@ const TimelineMatrix = () => {
 
 
                 {/* Overdue & Ongoing Lists */}
-                <div className="flex gap-6 justify-start items-start w-[1200px]">
+                <div className="flex gap-6 justify-start items-start w-[500px]">
 
                     {/* Overdue */}
                     <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[20px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
+                        <h2 className="text-[20px] font-bold mb-4 text-red-600 flex items-center justify-start gap-2 uppercase ms-4">
                             <span className="animate-pulse  h-10 text-2xl ">⚠️</span>
                             <div>
                                 Overdue Checksheet
@@ -272,7 +272,7 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
+                    {/* <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[20px] font-bold mb-4 text-yellow-700 flex items-center gap-2 uppercase">
                             <span className="animate-spin ">⏳</span>
                             <div>
@@ -301,7 +301,7 @@ const TimelineMatrix = () => {
                                     ))}
                             </tbody>
                         </table>
-                    </section>
+                    </section> */}
 
                 </div>
             </section>
