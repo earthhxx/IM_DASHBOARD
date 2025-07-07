@@ -139,7 +139,7 @@ const TimelineMatrix = () => {
     return (
         <div className="min-h-screen bg-gray-50 p-8 flex flex-col justify-center items-center text-black">
             {/* Header */}
-            <header className="mb-10 text-center mt-[5%]">
+            <header className="mb-10 text-center mt-8">
                 <h1 className="text-5xl font-extrabold text-gray-800 uppercase">
                     checksheet monitoring
                 </h1>
@@ -270,8 +270,8 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full">
-                <table className="min-w-[1000px] w-full border-collapse text-sm text-gray-700">
+            <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full h-[360px] mt-4">
+                <table className="min-w-[1000px] w-full border-collapse text-sm text-gray-700 h-full">
                     <thead className="bg-blue-200">
                         <tr className="border-b border-gray-200">
                             <th className="sticky left-0 bg-blue-200 p-4 text-left text-base font-semibold z-30 w-[120px] max-w-[120px] border-r border-gray-200">
