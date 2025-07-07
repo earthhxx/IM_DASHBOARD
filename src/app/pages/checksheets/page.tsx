@@ -169,7 +169,7 @@ const TimelineMatrix = () => {
                             <Tooltip />
                             <Legend />
                             <Bar dataKey="Completed" fill="#4ade80" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="Ongoing" fill="#facc15" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="OnGoing" fill="#facc15" radius={[4, 4, 0, 0]} />
                             <Bar dataKey="Overdue" fill="#f87171" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
@@ -180,11 +180,11 @@ const TimelineMatrix = () => {
                 {/* Overdue & Ongoing Lists */}
                 <div className="flex gap-6 justify-start items-start w-[920px]">
                     {/* Overdue */}
-                    <section className="bg-white shadow-xl rounded-2xl border border-red-300 p-6 h-[340px] overflow-auto">
-                        <h2 className="text-xl font-bold mb-4 text-red-600 flex items-center gap-2">
+                    <section className="bg-red-50 shadow-xl rounded-2xl border border-red-300 p-6 h-[360px] overflow-auto">
+                        <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
                             ⚠️ Overdue Checksheet
                         </h2>
-                        <table className="w-full text-sm border-collapse">
+                        <table className="w-full text-[18px] border-collapse">
                             <thead>
                                 <tr className="border-b">
                                     <th className="text-left py-2">แผนก</th>
@@ -208,11 +208,11 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="bg-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[340px]">
-                        <h2 className="text-xl font-bold mb-4 text-gray-700 flex items-center gap-2">
+                    <section className="bg-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[360px]">
+                        <h2 className="text-[18px] font-bold mb-4 text-gray-700 flex items-center gap-2 uppercase">
                             🟡 Ongoing Checksheet
                         </h2>
-                        <table className="w-full text-sm border-collapse">
+                        <table className="w-full text-[18px] border-collapse">
                             <thead>
                                 <tr className="border-b">
                                     <th className="text-left py-2">แผนก</th>
