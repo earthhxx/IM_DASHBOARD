@@ -23,13 +23,14 @@ type DepartmentData = {
 type ChecksheetStatus = "completed" | "ongoing" | "overdue";
 
 type ChecksheetItem = {
-    index: number;
-    docNo: string;
-    docName: string;
-    line: string;
-    process: string;
-    checks: ChecksheetStatus[];
+  index: number;
+  docNo: string;
+  docName: string;
+  line: string;
+  process: string;
+  checks: (ChecksheetStatus | string)[];
 };
+
 
 // ฟังก์ชันแปลง DepartmentData เป็น ChecksheetItem[]
 const convertDepartmentDataToChecksheetItems = (
@@ -158,6 +159,7 @@ const convertOverdueToChecksheetItems = (department: DepartmentData): Checksheet
 const TimelineMatrix = () => {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+    const [showAllOverdue, setShowAllOverdue] = useState(false);
 
     const selectedDepData = selectedDepartment
         ? departments.find((d) => d.name === selectedDepartment)
@@ -170,20 +172,12 @@ const TimelineMatrix = () => {
     const handleOpen = (depName: string) => setSelectedDepartment(depName);
     const handleClose = () => setSelectedDepartment(null);
 
-    const today = new Date().getDate();
+    const handleShowAllOverdue = () => setShowAllOverdue(true);
+    const handleCloseOverdue = () => setShowAllOverdue(false);
 
-    const [showAllOverdue, setShowAllOverdue] = useState(false);
-    const handleShowAllOverdue = () => {
-        setShowAllOverdue(true);
-    };
-    const getAllOverdueDays = (): number[] => {
-        const allDays = departments.flatMap((d) => d.overdue);
-        return Array.from(new Set(allDays)).sort((a, b) => a - b); // เอาไม่ซ้ำและเรียง
-    };
+
 
     const convertAllOverdueToChecksheetItems = (): ChecksheetItem[] => {
-        const overdueDays = getAllOverdueDays();
-
         const documents: Omit<ChecksheetItem, "checks">[] = Array.from(
             { length: 10 },
             (_, i) => ({
@@ -200,11 +194,23 @@ const TimelineMatrix = () => {
             })
         );
 
+        const totalDays = 31;
+
         return documents.map((doc) => {
-            const checks: ChecksheetStatus[] = Array.from({ length: 31 }, (_, i) => {
-                const day = i + 1;
-                return overdueDays.includes(day) ? "overdue" : "completed"; // หรือ return null
-            });
+            const checks: (ChecksheetStatus | string)[] = Array.from(
+                { length: totalDays },
+                (_, i) => {
+                    const day = i + 1;
+                    const overdueDepartments = departments
+                        .filter((dept) => dept.overdue.includes(day))
+                        .map((dept) => dept.name);
+
+                    if (overdueDepartments.length > 0) {
+                        return overdueDepartments.join(", ");
+                    }
+                    return "completed"; // วันปกติ
+                }
+            );
 
             return {
                 ...doc,
@@ -421,6 +427,7 @@ const TimelineMatrix = () => {
                                 แผนก
                             </th>
                             {days.map((day) => {
+                                const today = new Date().getDate();
                                 const isToday = day === today;
                                 const hasOngoing = departments.some((dept) => dept.ongoing.includes(day));
                                 return (
@@ -470,6 +477,8 @@ const TimelineMatrix = () => {
                                             : status === "ongoing"
                                                 ? "bg-green-300 text-white w-full h-full  text-[18px]"
                                                 : "bg-red-400 text-white w-6 h-6 rounded-full ";
+                                    const today = new Date().getDate();
+
                                     const isToday = day === today;
                                     return (
                                         <td
@@ -516,9 +525,11 @@ const TimelineMatrix = () => {
                 <DepartmentChecksheetTable
                     department="รวมทุกแผนก"
                     data={convertAllOverdueToChecksheetItems()}
-                    onClose={() => setShowAllOverdue(false)}
+                    onClose={handleCloseOverdue}
                 />
             )}
+
+
 
 
         </div>

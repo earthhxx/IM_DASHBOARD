@@ -9,8 +9,9 @@ type ChecksheetItem = {
   docName: string;
   line: string;
   process: string;
-  checks: ChecksheetStatus[];
+  checks: (ChecksheetStatus | string)[];
 };
+
 
 type DepartmentData = {
   name: string;
@@ -55,8 +56,8 @@ export const convertDepartmentDataToChecksheetItems = (
         i % 3 === 0
           ? "ตรวจสอบภาพ"
           : i % 3 === 1
-          ? "บรรจุ"
-          : "ทำความสะอาด",
+            ? "บรรจุ"
+            : "ทำความสะอาด",
     })
   );
 
@@ -126,21 +127,35 @@ const DepartmentChecksheetTable: React.FC<Props> = ({
                     <td className="border px-2 py-1 text-left">{item.docName}</td>
                     <td className="border px-2 py-1">{item.line}</td>
                     <td className="border px-2 py-1">{item.process}</td>
-                    {item.checks.map((status, i) => (
-                      <td
-                        key={i}
-                        className={`border px-1 py-1 ${getStatusColor(status)}`}
-                      >
-                        {status === "completed"
-                          ? "✔️"
-                          : status === "ongoing"
-                          ? "⏳"
-                          : "❌"}
-                      </td>
-                    ))}
+                    {item.checks.map((status, i) => {
+                      const isCompleted = status === "completed";
+                      const isOverdue = typeof status === "string" && status !== "completed";
+
+                      return (
+                        <td
+                          key={i}
+                          className={`border px-1 py-1 ${isCompleted
+                              ? "bg-green-200 text-green-800"
+                              : isOverdue
+                                ? "bg-red-200 text-red-800 text-xs"
+                                : "bg-yellow-200 text-yellow-800"
+                            }`}
+                          title={isOverdue ? `Overdue by: ${status}` : status}
+                        >
+                          {isCompleted ? (
+                            "✔️"
+                          ) : isOverdue ? (
+                            <span className="whitespace-nowrap">{status}</span>
+                          ) : (
+                            "⏳"
+                          )}
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
+
             </table>
           </div>
         </div>
