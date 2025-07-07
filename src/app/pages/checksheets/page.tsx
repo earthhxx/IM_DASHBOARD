@@ -247,6 +247,7 @@ const TimelineMatrix = () => {
                             {days.map((day) => (
                                 <th
                                     key={day}
+
                                     className="px-3 py-4 text-sm w-10 text-center select-none border-r border-gray-200 last:border-r-0"
                                     title={`Day ${day}`}
                                 >
@@ -258,6 +259,7 @@ const TimelineMatrix = () => {
                     <tbody>
                         {departments.map((dept) => (
                             <tr
+                                onClick={() => handleOpen(dept.name)}
                                 key={dept.name}
                                 className="bg-white hover:bg-yellow-50 transition duration-150 border-b border-gray-100"
                             >
