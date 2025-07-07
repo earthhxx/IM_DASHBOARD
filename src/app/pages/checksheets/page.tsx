@@ -161,7 +161,7 @@ const TimelineMatrix = () => {
                             ⚠️ OVERDUE รวม: {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
                         </div>
                         <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
-                            🕒 ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
+                            ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
                         </div>
                     </div>
 
@@ -238,12 +238,15 @@ const TimelineMatrix = () => {
 
 
                 {/* Overdue & Ongoing Lists */}
-                <div className="flex gap-6 justify-start items-start w-[920px]">
+                <div className="flex gap-6 justify-start items-start w-[930px]">
 
                     {/* Overdue */}
                     <section className="bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
-                            <span className="animate-pulse  h-8">⚠️</span> Overdue Checksheet
+                            <span className="animate-pulse  h-10 text-2xl ">⚠️</span>
+                            <div>
+                                Overdue Checksheet
+                            </div>
                         </h2>
                         <table className="w-full text-[18px] border-collapse">
                             <thead>
@@ -299,17 +302,18 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            <div className="overflow-x-auto rounded-2xl shadow-xl border border-gray-200 overflow-hidden w-full h-[320px] mt-4">
-                <table className="min-w-[1000px] w-full border-collapse text-sm text-gray-700 h-full">
-                    <thead className="bg-gradient-to-br from-sky-100 via-white to-white">
+            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-br from-sky-50 to-white w-full h-[340px] mt-4">
+                <table className="min-w-[1000px] w-full text-sm text-gray-700 h-full">
+                    {/* Header */}
+                    <thead className="bg-gradient-to-br from-blue-200 to-white">
                         <tr className="border-b border-gray-200">
-                            <th className="sticky left-0 p-4 text-left text-base font-semibold z-30 w-[120px] max-w-[120px] border-r border-gray-200">
+                            <th className="sticky left-0  p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
                                 แผนก
                             </th>
                             {days.map((day) => (
                                 <th
                                     key={day}
-                                    className="px-3 py-4 text-sm w-10 text-center select-none border-r border-gray-200 last:border-r-0"
+                                    className="px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none"
                                     title={`Day ${day}`}
                                 >
                                     {day}
@@ -317,52 +321,45 @@ const TimelineMatrix = () => {
                             ))}
                         </tr>
                     </thead>
-                    <tbody className="bg-gradient-to-b from-white via-sky-50 to-white">
+
+                    {/* Body */}
+                    <tbody>
                         {departments.map((dept) => (
                             <tr
-                                onClick={() => handleOpen(dept.name)}
                                 key={dept.name}
-                                className="hover:bg-yellow-50 transition duration-150 border-b border-gray-100"
+                                onClick={() => handleOpen(dept.name)}
+                                className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
                             >
-                                <td className="sticky left-0 px-4 py-3 font-medium whitespace-nowrap z-10 w-[120px] max-w-[120px] truncate border-r border-gray-200">
+                                <td className="sticky left-0  px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
                                     {dept.name}
                                 </td>
+
                                 {days.map((day) => {
                                     const status = getStatus(dept, day);
                                     const icon =
                                         status === "completed" ? "✔️" :
-                                            status === "ongoing" ? "⏳" :
-                                                "❌";
+                                            status === "ongoing" ? "…" :
+                                                "✕";
 
-                                    // สี gradient บางๆ
-                                    const bgGradient =
+                                    const dotColor =
                                         status === "completed"
-                                            ? "linear-gradient(to bottom, #bbf7d0, #86efac)"
+                                            ? "bg-green-500"
                                             : status === "ongoing"
-                                                ? "linear-gradient(to bottom, #fef9c3, #fde68a)"
-                                                : "linear-gradient(to bottom, #fecaca, #fda4af)";
-
-                                    const ringColor =
-                                        status === "completed"
-                                            ? "ring-green-200"
-                                            : status === "ongoing"
-                                                ? "ring-yellow-200"
-                                                : "ring-red-200";
+                                                ? "bg-yellow-400"
+                                                : "bg-red-400";
 
                                     return (
                                         <td
                                             key={day}
-                                            className="border-r border-gray-100 last:border-r-0 p-1 transition duration-200"
+                                            className="border-r border-gray-100 last:border-r-0 px-1 py-[6px]"
                                         >
                                             <div className="flex justify-center items-center w-full h-full">
-                                                <div
-                                                    className={`w-6 h-6 rounded-full flex justify-center items-center text-white text-[12px] leading-none
-                                            shadow-md shadow-gray-400/40 scale-110 ring-2 ring-offset-2 ${ringColor}`}
-                                                    style={{ background: bgGradient }}
+                                                <span
+                                                    className={`w-6 h-6 rounded-full ${dotColor} text-white text-[10px] font-bold flex items-center justify-center shadow-sm`}
                                                     title={`${status} - day ${day}`}
                                                 >
                                                     {icon}
-                                                </div>
+                                                </span>
                                             </div>
                                         </td>
                                     );
@@ -372,6 +369,8 @@ const TimelineMatrix = () => {
                     </tbody>
                 </table>
             </div>
+
+
 
 
 
