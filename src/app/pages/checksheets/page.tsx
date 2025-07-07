@@ -168,22 +168,29 @@ const TimelineMatrix = () => {
                             <YAxis allowDecimals={false} />
                             <Tooltip />
 
-                            {/* ✅ ใส่ตรงนี้แทน Legend เดิม */}
                             <Legend
-                                wrapperStyle={{ lineHeight: '28px' }}
+                                layout="horizontal"           // ✅ แนวนอน
+                                align="center"                // ✅ อยู่กลาง
+                                verticalAlign="bottom"          // หรือ 'bottom', ตามตำแหน่งที่ต้องการ
+                                wrapperStyle={{
+                                    marginLeft: 35, // ✅ เพิ่มระยะห่างจากด้านซ้ายของกรอบกราฟ
+                                    lineHeight: '28px',
+                                }}
+
                                 formatter={(value) => (
                                     <span
                                         style={{
-                                            marginRight: '24px',
+                                            margin: '0 8px',
                                             display: 'inline-block',
                                             textTransform: 'uppercase',
-                                            color: '#000', // ปรับสีตัวหนังสือได้ตามต้องการ
+                                            color: '#000',
                                         }}
                                     >
                                         {value}
                                     </span>
                                 )}
                             />
+
 
                             <Bar
                                 dataKey="Completed"
