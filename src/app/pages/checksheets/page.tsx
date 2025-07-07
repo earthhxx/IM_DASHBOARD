@@ -148,21 +148,21 @@ const TimelineMatrix = () => {
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
-                <div className="bg-gradient-to-br from-sky-50 to-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
-                    <h2 className="text-3xl font-bold mb-4 text-sky-900 uppercase">
-                        summary checksheet
+                <div className="bg-gradient-to-br from-red-50 to-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
+                    <h2 className="text-3xl font-bold mb-4 text-red-600 uppercase">
+                        summary overdue
                     </h2>
                     {/* Summary Info Bar */}
                     <div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-gray-700 mb-3">
-                        <div className="px-3 py-1 bg-white rounded-full shadow-sm flex items-center gap-1 hover:bg-gray-200 cursor-default">
+                        {/* <div className="px-3 py-1 bg-white rounded-full shadow-sm flex items-center gap-1 hover:bg-gray-200 cursor-default">
                             🏢 แผนกทั้งหมด: {departments.length}
-                        </div>
+                        </div> */}
                         <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
                             ⚠️ OVERDUE รวม: {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
                         </div>
-                        <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
+                        {/* <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
-                        </div>
+                        </div> */}
                     </div>
 
                     <ResponsiveContainer width="100%" height={280}>
@@ -205,7 +205,7 @@ const TimelineMatrix = () => {
                                 )}
                             />
 
-                            <Bar
+                            {/* <Bar
                                 className="bar-glow"
                                 dataKey="Completed"
                                 name="COMPLETED"
@@ -220,7 +220,7 @@ const TimelineMatrix = () => {
                                 fill="#facc15"
                                 radius={[4, 4, 0, 0]}
                                 animationDuration={1000}
-                            />
+                            /> */}
                             <Bar
                                 className="bar-glow"
                                 dataKey="Overdue"
@@ -238,11 +238,11 @@ const TimelineMatrix = () => {
 
 
                 {/* Overdue & Ongoing Lists */}
-                <div className="flex gap-6 justify-start items-start w-[500px]">
+                <div className="flex gap-6 justify-start items-start w-[2000px]">
 
                     {/* Overdue */}
                     <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[20px] font-bold mb-4 text-red-600 flex items-center justify-start gap-2 uppercase ms-4">
+                        <h2 className="text-[20px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
                             <span className="animate-pulse  h-10 text-2xl ">⚠️</span>
                             <div>
                                 Overdue Checksheet
@@ -272,7 +272,7 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    {/* <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
+                    <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[20px] font-bold mb-4 text-yellow-700 flex items-center gap-2 uppercase">
                             <span className="animate-spin ">⏳</span>
                             <div>
@@ -301,7 +301,7 @@ const TimelineMatrix = () => {
                                     ))}
                             </tbody>
                         </table>
-                    </section> */}
+                    </section>
 
                 </div>
             </section>
@@ -357,15 +357,20 @@ const TimelineMatrix = () => {
                                 {days.map((day) => {
                                     const status = getStatus(dept, day);
                                     const icon =
-                                        status === "completed" ? "✔️" :
+                                        status === "completed" ? "" :
                                             status === "ongoing" ? "" :
                                                 "✕";
 
                                     const dotColor =
-                                        status === "completed"
-                                            ? "bg-green-500 text-white w-6 h-6"
+                                        // status === "completed"
+                                        //     ? "bg-green-500 text-white w-6 h-6"
+                                        //     : status === "ongoing"
+                                        //         ? "bg-yellow-100 border-2 border-t-transparent border-yellow-300 rounded-full animate-spin absolute text-black w-5 h-5"
+                                        //         : "bg-red-400 text-white w-6 h-6";
+                                         status === "completed"
+                                            ? ""
                                             : status === "ongoing"
-                                                ? "bg-yellow-100 border-2 border-t-transparent border-yellow-300 rounded-full animate-spin absolute text-black w-5 h-5"
+                                                ? ""
                                                 : "bg-red-400 text-white w-6 h-6";
 
                                     return (
