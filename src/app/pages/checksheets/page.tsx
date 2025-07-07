@@ -91,33 +91,33 @@ const getColor = (status: ChecksheetStatus) => {
 const departments: DepartmentData[] = [
     {
         name: "Engineer",
-        completed:  [1, 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
-        ongoing: [1, 4, 5, 6, 7],
+        completed: [1, 2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        ongoing: [5, 6],
         overdue: [2],
     },
     {
         name: "Production",
-        completed: [1, 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
-        ongoing: Array.from({ length: 30 }, (_, i) => i + 1),
-        overdue: [],
+        completed: [1, 2,4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        ongoing: [5, 6],
+        overdue: [3],
     },
     {
         name: "Warehouse",
-        completed: [1, 2, 3, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
-        ongoing: [1, 6, 18,7, 20, 22, 24, 21],
-        overdue: [4,5],
+        completed: [1, 2, 3, 4,6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        ongoing: [5, 6],
+        overdue: [2],
     },
     {
         name: "HR",
-        completed: [ 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
-        ongoing: [ 28, 7,26, 21, 9],
-        overdue: [1,4],
+        completed: [2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        ongoing: [5,6],
+        overdue: [1, 4],
     },
     {
         name: "QA",
-        completed: [1, 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
-        ongoing: [1, 19,7, 20, 23, 25, 28, 26, 21, 9],
-        overdue: [4],
+        completed: [ 3,4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        ongoing: [5, 6],
+        overdue: [2,1],
     },
 ];
 
@@ -180,12 +180,13 @@ const TimelineMatrix = () => {
                             barCategoryGap="20%"
                             barGap={6}
                         >
-                            <CartesianGrid strokeDasharray="3 3" />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+
                             <XAxis dataKey="name" />
                             <YAxis allowDecimals={false} />
                             <Tooltip />
 
-                            <Legend
+                            {/* <Legend
                                 layout="horizontal"
                                 align="center"
                                 verticalAlign="bottom"
@@ -206,7 +207,7 @@ const TimelineMatrix = () => {
                                         {value}
                                     </span>
                                 )}
-                            />
+                            /> */}
 
                             {/* <Bar
                                 className="bar-glow"
@@ -225,7 +226,7 @@ const TimelineMatrix = () => {
                                 animationDuration={1000}
                             /> */}
                             <Bar
-                                className="bar-glow"
+                                // className="bar-glow"
                                 dataKey="Overdue"
                                 name="OVERDUE"
                                 fill="#f87171"
@@ -244,11 +245,11 @@ const TimelineMatrix = () => {
                 <div className="flex gap-6 justify-start items-start w-[2000px]">
 
                     {/* Overdue */}
-                    <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[26px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
+                    <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[26px] font-bold mb-4 text-red-600 flex items-center justify-center gap-2 uppercase me-4">
                             <span className="animate-pulse  h-9.5 text-2xl ">⚠️</span>
                             <div>
-                                Overdue Checksheet
+                                Overdue
                             </div>
                         </h2>
                         <table className="w-full text-[22px] border-collapse">
@@ -276,10 +277,10 @@ const TimelineMatrix = () => {
 
                     {/* Ongoing */}
                     <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px]  transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[26px] font-bold mb-4 text-yellow-700 flex items-center gap-2 uppercase">
+                        <h2 className="text-[26px] font-bold mb-4 text-yellow-700 flex items-center justify-center gap-2 uppercase me-4">
                             <span className="animate-spin ">⏳</span>
                             <div>
-                                Ongoing Checksheet
+                                Ongoing
                             </div>
 
                         </h2>
@@ -321,13 +322,19 @@ const TimelineMatrix = () => {
                         <tr className="border-b border-gray-200">
                             <th
                                 colSpan={days.length + 1}
-                                className="px-6 py-4 border-b  border-gray-100 text-left"
+                                className="px-6 py-4 border-b border-gray-100 text-left"
                             >
-                                <h1 className="text-2xl font-bold text-sky-900 uppercase tracking-wide">
-                                    📋 Daily Checksheet Realtime
-                                </h1>
+                                <div className="flex justify-between items-center">
+                                    <h1 className="text-2xl font-bold text-sky-900 uppercase tracking-wide">
+                                        📋 Daily Checksheet Realtime
+                                    </h1>
+                                    <span className="text-2xl text-gray-600 whitespace-nowrap">
+                                        {new Date().getDate()}/{new Date().getMonth() + 1}/{new Date().getFullYear()}
+                                    </span>
+                                </div>
                             </th>
                         </tr>
+
                         <tr className="border-b border-gray-200">
                             <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
                                 แผนก
@@ -338,7 +345,7 @@ const TimelineMatrix = () => {
                                     <th
                                         key={day}
                                         className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
-        ${isToday ? "bg-yellow-300 animate-pulse text-black " : ""}`}
+                                            ${isToday ? "bg-yellow-300 animate-pulse text-black " : ""}`}
                                         title={`Day ${day}`}
                                     >
                                         {day}
@@ -367,7 +374,7 @@ const TimelineMatrix = () => {
                                     const status = getStatus(dept, day);
                                     const icon =
                                         status === "completed" ? "" :
-                                            status === "ongoing" ? "" :
+                                            status === "ongoing" ? "H" :
                                                 "✕";
 
                                     const dotColor =
@@ -379,13 +386,14 @@ const TimelineMatrix = () => {
                                         status === "completed"
                                             ? ""
                                             : status === "ongoing"
-                                                ? ""
+                                                ? "bg-green-500 text-white w-6 h-6 text-[18px]"
                                                 : "bg-red-400 text-white w-6 h-6";
-
+                                    const isToday = day === today;
                                     return (
                                         <td
+
                                             key={day}
-                                            className="border-r border-gray-100 last:border-r-0 px-1 py-[6px]"
+                                            className={`border-r border-gray-100 last:border-r-0 px-1 py-[6px] ${isToday ? "bg-yellow-300/40 animate-pulse text-black " : ""}`}
                                         >
                                             <div className="flex justify-center items-center w-full h-full">
                                                 <span
