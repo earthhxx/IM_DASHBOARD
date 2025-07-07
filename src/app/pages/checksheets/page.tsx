@@ -91,33 +91,33 @@ const getColor = (status: ChecksheetStatus) => {
 const departments: DepartmentData[] = [
     {
         name: "Engineer",
-        completed: [1, 2, 4, 5, 6, 7, 8, 9, 11, 13, 15, 16, 17, 18, 20, 21, 22, 23, 25, 28],
-        ongoing: [1, 2, 4, 5, 6, 7],
-        overdue: [16, 17, 18, 20, 21],
+        completed:  [1, 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
+        ongoing: [1, 4, 5, 6, 7],
+        overdue: [2],
     },
     {
         name: "Production",
-        completed: Array.from({ length: 30 }, (_, i) => i + 1),
+        completed: [1, 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
         ongoing: Array.from({ length: 30 }, (_, i) => i + 1),
         overdue: [],
     },
     {
         name: "Warehouse",
-        completed: [1, 2, 3, 5, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 28],
-        ongoing: [1, 6, 18, 20, 22, 24, 21],
-        overdue: [9, 15],
+        completed: [1, 2, 3, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
+        ongoing: [1, 6, 18,7, 20, 22, 24, 21],
+        overdue: [4,5],
     },
     {
         name: "HR",
-        completed: [1, 2, 3, 5, 6, 8, 9, 10, 12, 14, 15, 16, 17, 19, 20, 21, 23, 25, 26, 28],
-        ongoing: [1, 28, 26, 21, 9],
-        overdue: [15],
+        completed: [ 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
+        ongoing: [ 28, 7,26, 21, 9],
+        overdue: [1,4],
     },
     {
         name: "QA",
-        completed: [1, 2, 3, 5, 6, 8, 9, 10, 12, 14, 15, 16, 17, 19, 20, 21, 23, 25, 26, 28],
-        ongoing: [1, 19, 20, 23, 25, 28, 26, 21, 9],
-        overdue: [15],
+        completed: [1, 2, 3, 5, 6, 8, 9, 10,11, 12,13, 14, 15, 16,17, 18,19, 20, 21, 22,23, 24, 25, 26,27, 28,29,30,31],
+        ongoing: [1, 19,7, 20, 23, 25, 28, 26, 21, 9],
+        overdue: [4],
     },
 ];
 
@@ -135,6 +135,9 @@ const TimelineMatrix = () => {
 
     const handleOpen = (depName: string) => setSelectedDepartment(depName);
     const handleClose = () => setSelectedDepartment(null);
+
+    const today = new Date().getDate();
+
 
     return (
         <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
@@ -313,6 +316,7 @@ const TimelineMatrix = () => {
                 <table className="min-w-[1000px] w-full text-sm text-gray-700 h-full">
                     {/* Header */}
 
+
                     <thead className="bg-gradient-to-br from-blue-200 to-white">
                         <tr className="border-b border-gray-200">
                             <th
@@ -324,21 +328,25 @@ const TimelineMatrix = () => {
                                 </h1>
                             </th>
                         </tr>
-
                         <tr className="border-b border-gray-200">
-                            <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700 ">
+                            <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
                                 แผนก
                             </th>
-                            {days.map((day) => (
-                                <th
-                                    key={day}
-                                    className="px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none"
-                                    title={`Day ${day}`}
-                                >
-                                    {day}
-                                </th>
-                            ))}
+                            {days.map((day) => {
+                                const isToday = day === today;
+                                return (
+                                    <th
+                                        key={day}
+                                        className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
+        ${isToday ? "bg-yellow-300 animate-pulse text-black " : ""}`}
+                                        title={`Day ${day}`}
+                                    >
+                                        {day}
+                                    </th>
+                                );
+                            })}
                         </tr>
+
                     </thead>
 
 
@@ -349,6 +357,7 @@ const TimelineMatrix = () => {
                                 key={dept.name}
                                 onClick={() => handleOpen(dept.name)}
                                 className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
+
                             >
                                 <td className="sticky left-0  px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
                                     {dept.name}
@@ -367,7 +376,7 @@ const TimelineMatrix = () => {
                                         //     : status === "ongoing"
                                         //         ? "bg-yellow-100 border-2 border-t-transparent border-yellow-300 rounded-full animate-spin absolute text-black w-5 h-5"
                                         //         : "bg-red-400 text-white w-6 h-6";
-                                         status === "completed"
+                                        status === "completed"
                                             ? ""
                                             : status === "ongoing"
                                                 ? ""
