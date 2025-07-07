@@ -386,18 +386,18 @@ const TimelineMatrix = () => {
                                         status === "completed"
                                             ? ""
                                             : status === "ongoing"
-                                                ? "bg-green-500 text-white w-6 h-6 text-[18px]"
-                                                : "bg-red-400 text-white w-6 h-6";
+                                                ? "bg-green-500 text-white w-full h-full  text-[18px]"
+                                                : "bg-red-400 text-white w-6 h-6 rounded-full ";
                                     const isToday = day === today;
                                     return (
                                         <td
 
                                             key={day}
-                                            className={`border-r border-gray-100 last:border-r-0 px-1 py-[6px] ${isToday ? "bg-yellow-300/40 animate-pulse text-black " : ""}`}
+                                            className={`border-r border-gray-100 last:border-r-0  ${isToday ? "bg-yellow-300/40 animate-pulse text-black " : ""}`}
                                         >
                                             <div className="flex justify-center items-center w-full h-full">
                                                 <span
-                                                    className={` rounded-full ${dotColor}  text-[10px] font-bold flex items-center justify-center shadow-sm`}
+                                                    className={`  ${dotColor}  text-[10px] font-bold flex items-center justify-center shadow-sm`}
                                                     title={`${status} - day ${day}`}
                                                 >
                                                     {icon}
