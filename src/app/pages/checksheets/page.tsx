@@ -139,8 +139,8 @@ const TimelineMatrix = () => {
     return (
         <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
             {/* Header */}
-            <header className="mb-10 text-center mt-8">
-                <h1 className="text-5xl font-extrabold text-gray-800 uppercase">
+            <header className="mb-10 text-center mt-12">
+                <h1 className="text-5xl font-extrabold text-blue-900 uppercase">
                     checksheet monitoring
                 </h1>
             </header>
@@ -149,7 +149,7 @@ const TimelineMatrix = () => {
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
                 <div className="bg-gradient-to-br from-sky-50 to-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
-                    <h2 className="text-3xl font-bold mb-4 text-gray-800 uppercase">
+                    <h2 className="text-3xl font-bold mb-4 text-sky-900 uppercase">
                         summary checksheet
                     </h2>
                     {/* Summary Info Bar */}
@@ -238,17 +238,17 @@ const TimelineMatrix = () => {
 
 
                 {/* Overdue & Ongoing Lists */}
-                <div className="flex gap-6 justify-start items-start w-[930px]">
+                <div className="flex gap-6 justify-start items-start w-[1200px]">
 
                     {/* Overdue */}
-                    <section className="bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[18px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
+                    <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[20px] font-bold mb-4 text-red-600 flex items-center gap-2 uppercase">
                             <span className="animate-pulse  h-10 text-2xl ">⚠️</span>
                             <div>
                                 Overdue Checksheet
                             </div>
                         </h2>
-                        <table className="w-full text-[18px] border-collapse">
+                        <table className="w-full text-[20px] border-collapse">
                             <thead>
                                 <tr className="border-b border-red-200">
                                     <th className="text-left py-2 text-red-600">แผนก</th>
@@ -272,11 +272,15 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[18px] font-bold mb-4 text-yellow-700 flex items-center gap-2 uppercase">
-                            <span className="animate-spin">⏳</span> Ongoing Checksheet
+                    <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px] overflow-auto transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[20px] font-bold mb-4 text-yellow-700 flex items-center gap-2 uppercase">
+                            <span className="animate-spin ">⏳</span>
+                            <div>
+                                Ongoing Checksheet
+                            </div>
+
                         </h2>
-                        <table className="w-full text-[18px] border-collapse">
+                        <table className="w-full text-[20px] border-collapse">
                             <thead>
                                 <tr className="border-b border-yellow-200">
                                     <th className="text-left py-2 text-yellow-600">แผนก</th>
@@ -302,7 +306,12 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-br from-sky-50 to-white w-full h-[340px] mt-4">
+            <div className="flex justify-start items-center w-full mt-4">
+                <div className="uppercase text-3xl font-bold text-sky-900 ">checksheet daily monitoring</div>
+
+            </div>
+
+            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-br from-sky-50 to-white w-full h-fit mt-4">
                 <table className="min-w-[1000px] w-full text-sm text-gray-700 h-full">
                     {/* Header */}
                     <thead className="bg-gradient-to-br from-blue-200 to-white">
