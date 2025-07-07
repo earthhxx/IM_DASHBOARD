@@ -97,27 +97,27 @@ const departments: DepartmentData[] = [
     },
     {
         name: "Production",
-        completed: [1, 2,4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        completed: [1, 2, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
         ongoing: [5, 6],
         overdue: [3],
     },
     {
         name: "Warehouse",
-        completed: [1, 2, 3, 4,6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        completed: [1, 2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
         ongoing: [5, 6],
         overdue: [2],
     },
     {
         name: "HR",
         completed: [2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        ongoing: [5,6],
+        ongoing: [5, 6],
         overdue: [1, 4],
     },
     {
         name: "QA",
-        completed: [ 3,4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        completed: [3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
         ongoing: [5, 6],
-        overdue: [2,1],
+        overdue: [2, 1],
     },
 ];
 
@@ -341,11 +341,12 @@ const TimelineMatrix = () => {
                             </th>
                             {days.map((day) => {
                                 const isToday = day === today;
+                                const hasOngoing = departments.some((dept) => dept.ongoing.includes(day));
                                 return (
                                     <th
                                         key={day}
                                         className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
-                                            ${isToday ? "bg-yellow-300 animate-pulse text-black " : ""}`}
+                                            ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  ${hasOngoing ? "bg-green-400 font-bold" : ""}`}
                                         title={`Day ${day}`}
                                     >
                                         {day}
@@ -386,24 +387,30 @@ const TimelineMatrix = () => {
                                         status === "completed"
                                             ? ""
                                             : status === "ongoing"
-                                                ? "bg-green-500 text-white w-full h-full  text-[18px]"
+                                                ? "bg-green-300 text-white w-full h-full  text-[18px]"
                                                 : "bg-red-400 text-white w-6 h-6 rounded-full ";
                                     const isToday = day === today;
                                     return (
                                         <td
-
                                             key={day}
-                                            className={`border-r border-gray-100 last:border-r-0  ${isToday ? "bg-yellow-300/40 animate-pulse text-black " : ""}`}
+                                            className={`border-r border-gray-100 last:border-r-0 relative`}
                                         >
-                                            <div className="flex justify-center items-center w-full h-full">
+                                            {/* กระพริบเฉพาะวันนี้ */}
+                                            {isToday && (
+                                                <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
+                                            )}
+
+                                            <div className="flex justify-center items-center w-full h-full relative z-10">
                                                 <span
-                                                    className={`  ${dotColor}  text-[10px] font-bold flex items-center justify-center shadow-sm`}
+                                                    className={`${dotColor} text-[10px] font-bold flex items-center justify-center shadow-sm`}
                                                     title={`${status} - day ${day}`}
                                                 >
                                                     {icon}
                                                 </span>
                                             </div>
                                         </td>
+
+
                                     );
                                 })}
                             </tr>
