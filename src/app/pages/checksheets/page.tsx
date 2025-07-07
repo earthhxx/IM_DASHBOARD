@@ -306,17 +306,27 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            <div className="flex justify-start items-center w-full mt-4">
-                <div className="uppercase text-3xl font-bold text-sky-900 ">checksheet daily monitoring</div>
 
-            </div>
 
             <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-br from-sky-50 to-white w-full h-fit mt-4">
+
                 <table className="min-w-[1000px] w-full text-sm text-gray-700 h-full">
                     {/* Header */}
+
                     <thead className="bg-gradient-to-br from-blue-200 to-white">
                         <tr className="border-b border-gray-200">
-                            <th className="sticky left-0  p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
+                            <th
+                                colSpan={days.length + 1}
+                                className="px-6 py-4 border-b  border-gray-100 text-left"
+                            >
+                                <h1 className="text-2xl font-bold text-sky-900 uppercase tracking-wide">
+                                    📋 Daily Checksheet Realtime
+                                </h1>
+                            </th>
+                        </tr>
+
+                        <tr className="border-b border-gray-200">
+                            <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700 ">
                                 แผนก
                             </th>
                             {days.map((day) => (
@@ -330,6 +340,7 @@ const TimelineMatrix = () => {
                             ))}
                         </tr>
                     </thead>
+
 
                     {/* Body */}
                     <tbody>
@@ -347,15 +358,15 @@ const TimelineMatrix = () => {
                                     const status = getStatus(dept, day);
                                     const icon =
                                         status === "completed" ? "✔️" :
-                                            status === "ongoing" ? "…" :
+                                            status === "ongoing" ? "" :
                                                 "✕";
 
                                     const dotColor =
                                         status === "completed"
-                                            ? "bg-green-500"
+                                            ? "bg-green-500 text-white w-6 h-6"
                                             : status === "ongoing"
-                                                ? "bg-yellow-400"
-                                                : "bg-red-400";
+                                                ? "bg-yellow-100 border-2 border-t-transparent border-yellow-300 rounded-full animate-spin absolute text-black w-5 h-5"
+                                                : "bg-red-400 text-white w-6 h-6";
 
                                     return (
                                         <td
@@ -364,7 +375,7 @@ const TimelineMatrix = () => {
                                         >
                                             <div className="flex justify-center items-center w-full h-full">
                                                 <span
-                                                    className={`w-6 h-6 rounded-full ${dotColor} text-white text-[10px] font-bold flex items-center justify-center shadow-sm`}
+                                                    className={` rounded-full ${dotColor}  text-[10px] font-bold flex items-center justify-center shadow-sm`}
                                                     title={`${status} - day ${day}`}
                                                 >
                                                     {icon}
