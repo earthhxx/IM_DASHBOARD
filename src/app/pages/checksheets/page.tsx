@@ -245,7 +245,9 @@ const TimelineMatrix = () => {
                 <div className="flex gap-6 justify-start items-start w-[2000px]">
 
                     {/* Overdue */}
-                    <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                    <section
+                        onClick={() => handleOpen(departments[0].name)}
+                        className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[26px] font-bold mb-4 text-red-600 flex items-center justify-center gap-2 uppercase me-4">
                             <span className="animate-pulse  h-9.5 text-2xl ">⚠️</span>
                             <div>
