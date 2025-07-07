@@ -160,19 +160,52 @@ const TimelineMatrix = () => {
                                 Ongoing: dept.ongoing.length,
                                 Overdue: dept.overdue.length,
                             }))}
-                            margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
+                            margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
                             barCategoryGap="15%"
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis allowDecimals={false} />
                             <Tooltip />
-                            <Legend />
-                            <Bar dataKey="Completed" fill="#4ade80" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="OnGoing" fill="#facc15" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="Overdue" fill="#f87171" radius={[4, 4, 0, 0]} />
+
+                            {/* ✅ ใส่ตรงนี้แทน Legend เดิม */}
+                            <Legend
+                                wrapperStyle={{ lineHeight: '28px' }}
+                                formatter={(value) => (
+                                    <span
+                                        style={{
+                                            marginRight: '24px',
+                                            display: 'inline-block',
+                                            textTransform: 'uppercase',
+                                            color: '#000', // ปรับสีตัวหนังสือได้ตามต้องการ
+                                        }}
+                                    >
+                                        {value}
+                                    </span>
+                                )}
+                            />
+
+                            <Bar
+                                dataKey="Completed"
+                                name="COMPLETED"
+                                fill="#4ade80"
+                                radius={[4, 4, 0, 0]}
+                            />
+                            <Bar
+                                dataKey="Ongoing"
+                                name="ONGOING"
+                                fill="#facc15"
+                                radius={[4, 4, 0, 0]}
+                            />
+                            <Bar
+                                dataKey="Overdue"
+                                name="OVERDUE"
+                                fill="#f87171"
+                                radius={[4, 4, 0, 0]}
+                            />
                         </BarChart>
                     </ResponsiveContainer>
+
                 </div>
 
 
@@ -208,7 +241,7 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="bg-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[360px]">
+                    <section className="bg-yellow-50 shadow-xl rounded-2xl border border-yellow-300 p-6 h-[360px]">
                         <h2 className="text-[18px] font-bold mb-4 text-gray-700 flex items-center gap-2 uppercase">
                             🟡 Ongoing Checksheet
                         </h2>
