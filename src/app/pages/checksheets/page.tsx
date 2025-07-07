@@ -78,16 +78,7 @@ const getStatus = (dept: DepartmentData, day: number): ChecksheetStatus => {
     return "overdue";
 };
 
-const getColor = (status: ChecksheetStatus) => {
-    switch (status) {
-        case "completed":
-            return "bg-green-400";
-        case "ongoing":
-            return "bg-yellow-300";
-        case "overdue":
-            return "bg-red-400";
-    }
-};
+
 
 const departments: DepartmentData[] = [
     {
