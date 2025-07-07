@@ -81,6 +81,7 @@ export const convertDepartmentDataToChecksheetItems = (
   });
 };
 
+
 const DepartmentChecksheetTable: React.FC<Props> = ({
   department,
   data,

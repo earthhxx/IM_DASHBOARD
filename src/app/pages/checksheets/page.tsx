@@ -121,6 +121,40 @@ const departments: DepartmentData[] = [
     },
 ];
 
+const convertOverdueToChecksheetItems = (department: DepartmentData): ChecksheetItem[] => {
+    const documents: Omit<ChecksheetItem, "checks">[] = Array.from(
+        { length: 10 },
+        (_, i) => ({
+            index: i + 1,
+            docNo: `FM-DOC-${100 + i}`,
+            docName: `Document ${i + 1}`,
+            line: i % 2 === 0 ? "AOI" : "Packing",
+            process:
+                i % 3 === 0
+                    ? "ตรวจสอบภาพ"
+                    : i % 3 === 1
+                        ? "บรรจุ"
+                        : "ทำความสะอาด",
+        })
+    );
+
+    const checksheetData: ChecksheetItem[] = documents.map((doc) => {
+        const checks: ChecksheetStatus[] = Array.from({ length: 31 }, (_, day) => {
+            const dayNumber = day + 1;
+            return department.overdue.includes(dayNumber) ? "overdue" : "completed"; // กำหนดอื่น ๆ เป็น completed/blank ก็ได้
+        });
+
+        return {
+            ...doc,
+            checks,
+        };
+    });
+
+    return checksheetData;
+};
+
+
+
 const TimelineMatrix = () => {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
@@ -137,6 +171,50 @@ const TimelineMatrix = () => {
     const handleClose = () => setSelectedDepartment(null);
 
     const today = new Date().getDate();
+
+    const [showAllOverdue, setShowAllOverdue] = useState(false);
+    const handleShowAllOverdue = () => {
+        setShowAllOverdue(true);
+    };
+    const getAllOverdueDays = (): number[] => {
+        const allDays = departments.flatMap((d) => d.overdue);
+        return Array.from(new Set(allDays)).sort((a, b) => a - b); // เอาไม่ซ้ำและเรียง
+    };
+
+    const convertAllOverdueToChecksheetItems = (): ChecksheetItem[] => {
+        const overdueDays = getAllOverdueDays();
+
+        const documents: Omit<ChecksheetItem, "checks">[] = Array.from(
+            { length: 10 },
+            (_, i) => ({
+                index: i + 1,
+                docNo: `FM-DOC-${100 + i}`,
+                docName: `Document ${i + 1}`,
+                line: i % 2 === 0 ? "AOI" : "Packing",
+                process:
+                    i % 3 === 0
+                        ? "ตรวจสอบภาพ"
+                        : i % 3 === 1
+                            ? "บรรจุ"
+                            : "ทำความสะอาด",
+            })
+        );
+
+        return documents.map((doc) => {
+            const checks: ChecksheetStatus[] = Array.from({ length: 31 }, (_, i) => {
+                const day = i + 1;
+                return overdueDays.includes(day) ? "overdue" : "completed"; // หรือ return null
+            });
+
+            return {
+                ...doc,
+                checks,
+            };
+        });
+    };
+
+
+
 
 
     return (
@@ -246,7 +324,7 @@ const TimelineMatrix = () => {
 
                     {/* Overdue */}
                     <section
-                        onClick={() => handleOpen(departments[0].name)}
+                        onClick={handleShowAllOverdue}
                         className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[26px] font-bold mb-4 text-red-600 flex items-center justify-center gap-2 uppercase me-4">
                             <span className="animate-pulse  h-9.5 text-2xl ">⚠️</span>
@@ -267,6 +345,7 @@ const TimelineMatrix = () => {
                                     .map((dept) => (
                                         <tr
                                             key={`${dept.name}-overdue`}
+
                                             className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                         >
                                             <td className="py-2 font-semibold text-red-800">{dept.name}</td>
@@ -433,6 +512,15 @@ const TimelineMatrix = () => {
                     onClose={handleClose}
                 />
             )}
+            {showAllOverdue && (
+                <DepartmentChecksheetTable
+                    department="รวมทุกแผนก"
+                    data={convertAllOverdueToChecksheetItems()}
+                    onClose={() => setShowAllOverdue(false)}
+                />
+            )}
+
+
         </div>
     );
 };
