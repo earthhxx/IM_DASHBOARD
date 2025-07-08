@@ -2,18 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createConnection } from '../../../../lib/db';
 
 export async function GET(req: NextRequest) {
-
     try {
         const pool = await createConnection();
-        const date = new Date().getDate();
+
+        // สร้าง Date object แบบไม่มีเวลา (เวลาเป็น 00:00:00)
+        const now = new Date();
+        const todayOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
         const result = await pool
             .request()
+            .input('date', todayOnly)
             .query(`
-            SELECT *
-FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
-WHERE CAST([UpdateTime] AS DATE) = CAST(GETDATE() AS DATE)
-ORDER BY [UpdateTime] DESC
-
+                SELECT *
+                FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
+                WHERE CAST([UpdateTime] AS DATE) <= CAST(@date AS DATE)
+                ORDER BY [UpdateTime] DESC
             `);
 
         if (result.recordset.length === 0) {

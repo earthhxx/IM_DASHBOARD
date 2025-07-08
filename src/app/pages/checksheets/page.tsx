@@ -14,14 +14,16 @@ import {
 
 
 type Department = {
-  FormID: string;
-  FormName: string;
-  Department: string;
-  status: string;
-  checked: number[]; // ต้องไม่ optional
-  ongoing: number[];
-  overdue: number[];
+    FormID: string;
+    FormName: string;
+    Department: string;
+    status: string;
+    checked: number[];
+    ongoing: number[];
+    overdue: number[];
+    stopline: number[]; // 👈 เพิ่มตรงนี้
 };
+
 
 
 
@@ -79,42 +81,87 @@ const TimelineMatrix = () => {
 
         data.forEach((item) => {
             const departmentName = item.Department;
-            const department = departmentsMap[departmentName] || {
-                FormID: item.FormID,
-                FormName: item.FormName,
-                Department: departmentName,
-                status: item.Status,
-                checked: [],
-                ongoing: [],
-                overdue: [],
-            };
+
+            if (!departmentsMap[departmentName]) {
+                departmentsMap[departmentName] = {
+                    FormID: item.FormID,
+                    FormName: item.FormName,
+                    Department: departmentName,
+                    status: item.Status,
+                    checked: [],
+                    ongoing: [],
+                    overdue: [],
+                    stopline: [], // 👈 เพิ่มตรงนี้
+                };
+            }
+
+            const department = departmentsMap[departmentName];
 
             for (let i = 1; i <= 31; i++) {
                 const dayKey = `Date${i}`;
                 const value = item[dayKey];
 
-                if (value === "1") {
-                    department.checked.push(i);
-                } else if (value === "2") {
-                    department.ongoing.push(i);
-                } else if (value === "0") {
-                    department.overdue.push(i);
+                if (value === "-") {
+                    // ⛔ สำคัญสุด: ลบจากทุก array ก่อน แล้ว push เข้า stopline
+                    department.checked = department.checked.filter(d => d !== i);
+                    department.ongoing = department.ongoing.filter(d => d !== i);
+                    department.overdue = department.overdue.filter(d => d !== i);
+                    if (!department.stopline.includes(i)) department.stopline.push(i);
+                    continue;
                 }
-            }
 
-            departmentsMap[departmentName] = department;
+                if (value === null || value === "") {
+                    department.checked = department.checked.filter(d => d !== i);
+                    department.overdue = department.overdue.filter(d => d !== i);
+                    department.stopline = department.stopline.filter(d => d !== i);
+                    if (!department.ongoing.includes(i)) department.ongoing.push(i);
+                    continue;
+                }
+
+                if (value === "0") {
+                    department.checked = department.checked.filter(d => d !== i);
+                    department.ongoing = department.ongoing.filter(d => d !== i);
+                    department.stopline = department.stopline.filter(d => d !== i);
+                    if (!department.overdue.includes(i)) department.overdue.push(i);
+                    continue;
+                }
+
+                if (value === "1") {
+                    if (
+                        !department.ongoing.includes(i) &&
+                        !department.overdue.includes(i) &&
+                        !department.stopline.includes(i)
+                    ) {
+                        if (!department.checked.includes(i)) department.checked.push(i);
+                    }
+                    continue;
+                }
+
+                // ถ้าเป็น "2" (holiday) → ไม่ต้องแสดงอะไร
+            }
         });
 
         return Object.values(departmentsMap);
     };
 
 
-    const getStatus = (dept: Department, day: number): "completed" | "ongoing" | "overdue" | "null" => {
-        if (dept.checked.includes(day)) return "completed";
+    const getStatus = (
+        dept: Department,
+        day: number
+    ): "completed" | "ongoing" | "overdue" | "stopline" | "holiday" | "null" => {
+        if (dept.stopline.includes(day)) return "stopline";
         if (dept.ongoing.includes(day)) return "ongoing";
         if (dept.overdue.includes(day)) return "overdue";
+        if (dept.checked.includes(day)) return "completed";
+
+        // ✅ ตรวจสอบ holiday (คุณอาจต้องเพิ่ม logic ตรวจ holiday ถ้ามี field แยก)
+        const dayValue = allCheckSheetData.find(d => d.Department === dept.Department)?.[`Date${day}`];
+        if (dayValue === "2") return "holiday";
+
         return "null";
     };
+
+
 
 
     const FetchAllOverdue = async () => {
@@ -367,49 +414,60 @@ const TimelineMatrix = () => {
                                 </td>
 
                                 {days.map((day) => {
-                                    const status = getStatus(dept, day);
+                                    let status = getStatus(dept, day);
+                                    const today = new Date().getDate();
+                                    const isToday = day === today;
+
+                                    // 👇 ถ้าวันหลังวันนี้และ status เป็น overdue → เปลี่ยนให้ไม่แสดง icon
+                                    if (day > today && status === "overdue") {
+                                        status = "null";
+                                    }
+                                    else if (day === today && status === "overdue") {
+                                         status = "ongoing";
+                                        }
+
+
                                     const icon =
-                                        status === "completed" ? "" :
-                                            status === "ongoing" ? "H" :
-                                                "✕";
+                                        status === "completed" ? "C" :
+                                            status === "ongoing" ? "" :
+                                                status === "overdue" ? "✕" :
+                                                    status === "stopline" ? "S" :
+                                                        status === "holiday" ? "H" :
+                                                            "";
 
                                     const dotColor =
-                                        // status === "completed"
-                                        //     ? "bg-green-500 text-white w-6 h-6"
-                                        //     : status === "ongoing"
-                                        //         ? "bg-yellow-100 border-2 border-t-transparent border-yellow-300 rounded-full animate-spin absolute text-black w-5 h-5"
-                                        //         : "bg-red-400 text-white w-6 h-6";
                                         status === "completed"
-                                            ? ""
+                                            ? "bg-green-400 text-white w-6 h-6 rounded-full"
                                             : status === "ongoing"
-                                                ? "bg-gray-300 text-white w-full h-full  text-[18px]"
-                                                : "bg-red-400 text-white w-6 h-6 rounded-full ";
-                                    const today = new Date().getDate();
+                                                ? "bg-gray-300 text-white w-6 h-6 rounded-full"
+                                                : status === "overdue"
+                                                    ? "bg-red-500 text-white w-6 h-6 rounded-full"
+                                                    : status === "stopline"
+                                                        ? "bg-black text-white w-6 h-6 rounded-full"
+                                                        : status === "holiday"
+                                                            ? "bg-yellow-300 text-black w-6 h-6 rounded-full"
+                                                            : "";
 
-                                    const isToday = day === today;
                                     return (
-                                        <td
-                                            key={day}
-                                            className={`border-r border-gray-100 last:border-r-0 relative`}
-                                        >
-                                            {/* กระพริบเฉพาะวันนี้ */}
+                                        <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
                                             {isToday && (
                                                 <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                             )}
-
                                             <div className="flex justify-center items-center w-full h-full relative z-10">
-                                                <span
-                                                    className={`${dotColor} text-[10px] font-bold flex items-center justify-center shadow-sm`}
-                                                    title={`${status} - day ${day}`}
-                                                >
-                                                    {icon}
-                                                </span>
+                                                {status !== "null" && (
+                                                    <span
+                                                        className={`${dotColor} text-[12px] font-bold flex items-center justify-center shadow-sm`}
+                                                        title={`${status} - day ${day}`}
+                                                    >
+                                                        {icon}
+                                                    </span>
+                                                )}
                                             </div>
                                         </td>
-
-
                                     );
                                 })}
+
+
                             </tr>
                         ))}
                     </tbody>
