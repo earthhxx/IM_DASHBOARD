@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import DepartmentChecksheetTable from "@/app/components/DepartmentChecksheetTable";
 import {
     BarChart,
@@ -13,152 +13,16 @@ import {
 } from "recharts";
 
 
-type DepartmentData = {
-    name: string;
-    ongoing: number[];
-    completed: number[];
-    overdue: number[];
-};
 
-type ChecksheetStatus = "completed" | "ongoing" | "overdue";
-
-type ChecksheetItem = {
-  index: number;
-  docNo: string;
-  docName: string;
-  line: string;
-  process: string;
-  checks: (ChecksheetStatus | string)[];
-};
-
-
-// ฟังก์ชันแปลง DepartmentData เป็น ChecksheetItem[]
-const convertDepartmentDataToChecksheetItems = (
-    department: DepartmentData
-): ChecksheetItem[] => {
-    const totalDays = 31;
-
-    // mock รายการเอกสาร 10 รายการ
-    const documents: Omit<ChecksheetItem, "checks">[] = Array.from(
-        { length: 10 },
-        (_, i) => ({
-            index: i + 1,
-            docNo: `FM-DOC-${100 + i}`,
-            docName: `Document ${i + 1}`,
-            line: i % 2 === 0 ? "AOI" : "Packing",
-            process:
-                i % 3 === 0
-                    ? "ตรวจสอบภาพ"
-                    : i % 3 === 1
-                        ? "บรรจุ"
-                        : "ทำความสะอาด",
-        })
-    );
-
-    return documents.map((doc) => {
-        const checks: ChecksheetStatus[] = Array.from({ length: totalDays }, (_, day) => {
-            const dayNumber = day + 1;
-            if (department.completed.includes(dayNumber)) return "completed";
-            if (department.ongoing.includes(dayNumber)) return "ongoing";
-            if (department.overdue.includes(dayNumber)) return "overdue";
-            return "overdue"; // default ถ้าไม่มีข้อมูลถือ overdue
-        });
-
-        return {
-            ...doc,
-            checks,
-        };
-    });
-};
-
-const getStatus = (dept: DepartmentData, day: number): ChecksheetStatus => {
-    if (dept.overdue.includes(day)) return "overdue";
-    if (dept.ongoing.includes(day)) return "ongoing";
-    if (dept.completed.includes(day)) return "completed";
-    return "overdue";
-};
-
-
-
-const departments: DepartmentData[] = [
-    {
-        name: "Engineer",
-        completed: [1, 2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        ongoing: [5, 6],
-        overdue: [2],
-    },
-    {
-        name: "Production",
-        completed: [1, 2, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        ongoing: [5, 6],
-        overdue: [3],
-    },
-    {
-        name: "Warehouse",
-        completed: [1, 2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        ongoing: [5, 6],
-        overdue: [2],
-    },
-    {
-        name: "HR",
-        completed: [2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        ongoing: [5, 6],
-        overdue: [1, 4],
-    },
-    {
-        name: "QA",
-        completed: [3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        ongoing: [5, 6],
-        overdue: [2, 1],
-    },
-];
-
-const convertOverdueToChecksheetItems = (department: DepartmentData): ChecksheetItem[] => {
-    const documents: Omit<ChecksheetItem, "checks">[] = Array.from(
-        { length: 10 },
-        (_, i) => ({
-            index: i + 1,
-            docNo: `FM-DOC-${100 + i}`,
-            docName: `Document ${i + 1}`,
-            line: i % 2 === 0 ? "AOI" : "Packing",
-            process:
-                i % 3 === 0
-                    ? "ตรวจสอบภาพ"
-                    : i % 3 === 1
-                        ? "บรรจุ"
-                        : "ทำความสะอาด",
-        })
-    );
-
-    const checksheetData: ChecksheetItem[] = documents.map((doc) => {
-        const checks: ChecksheetStatus[] = Array.from({ length: 31 }, (_, day) => {
-            const dayNumber = day + 1;
-            return department.overdue.includes(dayNumber) ? "overdue" : "completed"; // กำหนดอื่น ๆ เป็น completed/blank ก็ได้
-        });
-
-        return {
-            ...doc,
-            checks,
-        };
-    });
-
-    return checksheetData;
-};
 
 
 
 const TimelineMatrix = () => {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+
     const [showAllOverdue, setShowAllOverdue] = useState(false);
-
-    const selectedDepData = selectedDepartment
-        ? departments.find((d) => d.name === selectedDepartment)
-        : null;
-
-    const checkSheetData = selectedDepData
-        ? convertDepartmentDataToChecksheetItems(selectedDepData)
-        : [];
+    const [alloverdue, setalloverdue] = useState<any[]>([]);
 
     const handleOpen = (depName: string) => setSelectedDepartment(depName);
     const handleClose = () => setSelectedDepartment(null);
@@ -168,47 +32,19 @@ const TimelineMatrix = () => {
 
 
 
-    const convertAllOverdueToChecksheetItems = (): ChecksheetItem[] => {
-        const documents: Omit<ChecksheetItem, "checks">[] = Array.from(
-            { length: 10 },
-            (_, i) => ({
-                index: i + 1,
-                docNo: `FM-DOC-${100 + i}`,
-                docName: `Document ${i + 1}`,
-                line: i % 2 === 0 ? "AOI" : "Packing",
-                process:
-                    i % 3 === 0
-                        ? "ตรวจสอบภาพ"
-                        : i % 3 === 1
-                            ? "บรรจุ"
-                            : "ทำความสะอาด",
-            })
-        );
-
-        const totalDays = 31;
-
-        return documents.map((doc) => {
-            const checks: (ChecksheetStatus | string)[] = Array.from(
-                { length: totalDays },
-                (_, i) => {
-                    const day = i + 1;
-                    const overdueDepartments = departments
-                        .filter((dept) => dept.overdue.includes(day))
-                        .map((dept) => dept.name);
-
-                    if (overdueDepartments.length > 0) {
-                        return overdueDepartments.join(", ");
-                    }
-                    return "completed"; // วันปกติ
-                }
-            );
-
-            return {
-                ...doc,
-                checks,
-            };
-        });
+    const FetchAllOverdue = async () => {
+        try {
+            const response = await fetch("/api/checksheet/alloverdue");
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            setalloverdue(data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
+
 
 
 
@@ -331,9 +167,9 @@ const TimelineMatrix = () => {
                         </h2>
                         <table className="w-full text-[22px] border-collapse">
                             <thead>
-                                <tr className="border-b border-red-200">
-                                    <th className="text-left py-2 text-red-600">แผนก</th>
-                                    <th className="text-center py-2 text-red-600">จำนวน</th>
+                                <tr className="border-b border-red-200 uppercase">
+                                    <th className="text-left py-2 text-red-600">Department</th>
+                                    <th className="text-center py-2 text-red-600">sheet</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -364,9 +200,9 @@ const TimelineMatrix = () => {
                         </h2>
                         <table className="w-full text-[22px] border-collapse">
                             <thead>
-                                <tr className="border-b border-yellow-200">
-                                    <th className="text-left py-2 text-yellow-600">แผนก</th>
-                                    <th className="text-center py-2 text-yellow-600">จำนวน</th>
+                                <tr className="border-b border-yellow-200 uppercase">
+                                    <th className="text-left py-2 text-yellow-600">department</th>
+                                    <th className="text-center py-2 text-yellow-600">sheet</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -425,7 +261,7 @@ const TimelineMatrix = () => {
                                     <th
                                         key={day}
                                         className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
-                                            ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  ${hasOngoing ? "bg-green-400 font-bold" : ""}`}
+                                            ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  ${hasOngoing ? "bg-gray-400 font-bold" : ""}`}
                                         title={`Day ${day}`}
                                     >
                                         {day}
@@ -466,7 +302,7 @@ const TimelineMatrix = () => {
                                         status === "completed"
                                             ? ""
                                             : status === "ongoing"
-                                                ? "bg-green-300 text-white w-full h-full  text-[18px]"
+                                                ? "bg-gray-300 text-white w-full h-full  text-[18px]"
                                                 : "bg-red-400 text-white w-6 h-6 rounded-full ";
                                     const today = new Date().getDate();
 
