@@ -13,6 +13,18 @@ import {
 } from "recharts";
 
 
+type Department = {
+  FormID: string;
+  FormName: string;
+  Department: string;
+  status: string;
+  checked: number[]; // ต้องไม่ optional
+  ongoing: number[];
+  overdue: number[];
+};
+
+
+
 
 
 
@@ -20,6 +32,10 @@ import {
 const TimelineMatrix = () => {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+
+    const [allCheckSheetData, setAllCheckSheetData] = useState<any[]>([]);
+    const [departments, setDepartments] = useState<Department[]>([]);
+
 
     const [showAllOverdue, setShowAllOverdue] = useState(false);
     const [alloverdue, setalloverdue] = useState<any[]>([]);
@@ -30,6 +46,75 @@ const TimelineMatrix = () => {
     const handleShowAllOverdue = () => setShowAllOverdue(true);
     const handleCloseOverdue = () => setShowAllOverdue(false);
 
+    useEffect(() => {
+        const FetchAllCheckSheetData = async () => {
+            try {
+                const response = await fetch("/api/checksheet/dailyinmouth");
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const data = await response.json();
+                setAllCheckSheetData(data.data);
+                const transformed = transformDataToDepartments(data.data);
+                setDepartments(transformed);
+                console.log("Fetched CheckSheet Data:", data.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        FetchAllCheckSheetData();
+    }, []);
+
+    // หาวันปัจจุบัน (1-31)
+    const today = new Date().getDate();
+    const todayKey = `Date${today}`;
+
+    // กรองเฉพาะรายการที่ DateX ไม่เท่ากับ "0" (หรือเปลี่ยนเงื่อนไขตามต้องการ)
+    const todayCheckSheetData = allCheckSheetData.filter(
+        (item) => item[todayKey] !== "0"
+    );
+
+    const transformDataToDepartments = (data: any[]): Department[] => {
+        const departmentsMap: { [key: string]: Department } = {};
+
+        data.forEach((item) => {
+            const departmentName = item.Department;
+            const department = departmentsMap[departmentName] || {
+                FormID: item.FormID,
+                FormName: item.FormName,
+                Department: departmentName,
+                status: item.Status,
+                checked: [],
+                ongoing: [],
+                overdue: [],
+            };
+
+            for (let i = 1; i <= 31; i++) {
+                const dayKey = `Date${i}`;
+                const value = item[dayKey];
+
+                if (value === "1") {
+                    department.checked.push(i);
+                } else if (value === "2") {
+                    department.ongoing.push(i);
+                } else if (value === "0") {
+                    department.overdue.push(i);
+                }
+            }
+
+            departmentsMap[departmentName] = department;
+        });
+
+        return Object.values(departmentsMap);
+    };
+
+
+    const getStatus = (dept: Department, day: number): "completed" | "ongoing" | "overdue" | "null" => {
+        if (dept.checked.includes(day)) return "completed";
+        if (dept.ongoing.includes(day)) return "ongoing";
+        if (dept.overdue.includes(day)) return "overdue";
+        return "null";
+    };
 
 
     const FetchAllOverdue = async () => {
@@ -39,15 +124,11 @@ const TimelineMatrix = () => {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
-            setalloverdue(data);
+            setalloverdue(data.data);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-
-
-
-
 
 
     return (
@@ -72,7 +153,7 @@ const TimelineMatrix = () => {
                             🏢 แผนกทั้งหมด: {departments.length}
                         </div> */}
                         <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
-                            ⚠️ OVERDUE รวม: {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
+                            ⚠️ OVERDUE รวม:
                         </div>
                         {/* <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
@@ -81,12 +162,12 @@ const TimelineMatrix = () => {
 
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart
-                            data={departments.map((dept) => ({
-                                name: dept.name,
-                                Completed: dept.completed.length,
-                                Ongoing: dept.ongoing.length,
-                                Overdue: dept.overdue.length,
-                            }))}
+                            // data={departments.map((dept) => ({
+                            //     name: dept.name,
+                            //     Completed: dept.completed.length,
+                            //     Ongoing: dept.ongoing.length,
+                            //     Overdue: dept.overdue.length,
+                            // }))}
                             margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
                             barCategoryGap="20%"
                             barGap={6}
@@ -173,7 +254,7 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {departments
+                                {/* {departments
                                     .filter((dept) => dept.overdue.length > 0)
                                     .map((dept) => (
                                         <tr
@@ -184,7 +265,7 @@ const TimelineMatrix = () => {
                                             <td className="py-2 font-semibold text-red-800">{dept.name}</td>
                                             <td className="text-center font-bold text-red-600 animate-pulse">{dept.overdue.length}</td>
                                         </tr>
-                                    ))}
+                                    ))} */}
                             </tbody>
                         </table>
                     </section>
@@ -206,7 +287,7 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {departments
+                                {/* {departments
                                     .filter((dept) => dept.ongoing.length > 0)
                                     .map((dept) => (
                                         <tr
@@ -216,7 +297,7 @@ const TimelineMatrix = () => {
                                             <td className="py-2 font-semibold text-yellow-800">{dept.name}</td>
                                             <td className="text-center font-bold text-yellow-700 animate-pulse">{dept.ongoing.length}</td>
                                         </tr>
-                                    ))}
+                                    ))} */}
                             </tbody>
                         </table>
                     </section>
@@ -272,18 +353,17 @@ const TimelineMatrix = () => {
 
                     </thead>
 
-
                     {/* Body */}
                     <tbody>
                         {departments.map((dept) => (
                             <tr
-                                key={dept.name}
-                                onClick={() => handleOpen(dept.name)}
+                                key={dept.Department}
+                                onClick={() => handleOpen(dept.Department)}
                                 className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
 
                             >
                                 <td className="sticky left-0  px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
-                                    {dept.name}
+                                    {dept.Department}
                                 </td>
 
                                 {days.map((day) => {
@@ -333,6 +413,7 @@ const TimelineMatrix = () => {
                             </tr>
                         ))}
                     </tbody>
+
                 </table>
             </div>
 
@@ -341,7 +422,7 @@ const TimelineMatrix = () => {
 
 
             {/* แสดงตารางถ้ามีการเลือกแผนก */}
-            {selectedDepartment && selectedDepData && (
+            {/* {selectedDepartment && selectedDepData && (
                 <DepartmentChecksheetTable
                     department={selectedDepartment}
                     data={checkSheetData}
@@ -354,7 +435,7 @@ const TimelineMatrix = () => {
                     data={convertAllOverdueToChecksheetItems()}
                     onClose={handleCloseOverdue}
                 />
-            )}
+            )} */}
 
 
 

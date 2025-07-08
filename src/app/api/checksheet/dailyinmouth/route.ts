@@ -9,10 +9,11 @@ export async function GET(req: NextRequest) {
         const result = await pool
             .request()
             .query(`
-                
-                 SELECT *
-                    FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
-                    WHERE CAST([UpdateTime] AS DATE) = CAST(GETDATE() AS DATE)
+            SELECT *
+FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
+WHERE CAST([UpdateTime] AS DATE) = CAST(GETDATE() AS DATE)
+ORDER BY [UpdateTime] DESC
+
             `);
 
         if (result.recordset.length === 0) {
