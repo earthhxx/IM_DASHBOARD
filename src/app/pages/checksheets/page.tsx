@@ -13,9 +13,7 @@ import {
 } from "recharts";
 
 
-type Department = {
-    FormID: string;
-    FormName: string;
+type Department30daytable = {
     Department: string;
     status: string;
     checked: number[];
@@ -36,7 +34,7 @@ const TimelineMatrix = () => {
     const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
 
     const [allCheckSheetData, setAllCheckSheetData] = useState<any[]>([]);
-    const [departments, setDepartments] = useState<Department[]>([]);
+    const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
 
 
     const [showAllOverdue, setShowAllOverdue] = useState(false);
@@ -58,7 +56,7 @@ const TimelineMatrix = () => {
                 const data = await response.json();
                 setAllCheckSheetData(data.data);
                 const transformed = transformDataToDepartments(data.data);
-                setDepartments(transformed);
+                setDepartments30daytable(transformed);
                 console.log("Fetched CheckSheet Data:", data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -76,18 +74,16 @@ const TimelineMatrix = () => {
         (item) => item[todayKey] !== "0"
     );
 
-    const transformDataToDepartments = (data: any[]): Department[] => {
-        const departmentsMap: { [key: string]: Department } = {};
+    const transformDataToDepartments = (data: any[]): Department30daytable[] => {
+        const departmentsMap: { [key: string]: Department30daytable } = {};
 
         data.forEach((item) => {
             const departmentName = item.Department;
 
             if (!departmentsMap[departmentName]) {
                 departmentsMap[departmentName] = {
-                    FormID: item.FormID,
-                    FormName: item.FormName,
                     Department: departmentName,
-                    status: item.Status,
+                    status: item.status,
                     checked: [],
                     ongoing: [],
                     overdue: [],
@@ -147,7 +143,7 @@ const TimelineMatrix = () => {
 
 
     const getStatus = (
-        dept: Department,
+        dept: Department30daytable,
         day: number
     ): "completed" | "ongoing" | "overdue" | "stopline" | "holiday" | "null" => {
         if (dept.stopline.includes(day)) return "stopline";
@@ -201,7 +197,7 @@ const TimelineMatrix = () => {
                             🏢 แผนกทั้งหมด: {departments.length}
                         </div> */}
                         <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
-                            ⚠️ OVERDUE รวม: {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
+                            ⚠️ OVERDUE รวม: {departments30daytable.reduce((sum, d) => sum + d.overdue.length, 0)}
                         </div>
                         {/* <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
@@ -210,7 +206,7 @@ const TimelineMatrix = () => {
 
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart
-                            data={departments.map((dept) => ({
+                            data={departments30daytable.map((dept) => ({
                                 name: dept.Department,
                                 Completed: dept.checked.length,
                                 Ongoing: dept.ongoing.length,
@@ -302,7 +298,7 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                 {departments
+                                 {departments30daytable
                                     .filter((dept) => dept.overdue)
                                     .map((dept) => (
                                         <tr
@@ -335,7 +331,7 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {departments
+                                {departments30daytable
                                     .filter((dept) => dept.ongoing)
                                     .map((dept) => (
                                         <tr
@@ -385,7 +381,7 @@ const TimelineMatrix = () => {
                             {days.map((day) => {
                                 const today = new Date().getDate();
                                 const isToday = day === today;
-                                const hasOngoing = departments.some((dept) => dept.ongoing.includes(day));
+                                const hasOngoing = departments30daytable.some((dept) => dept.ongoing.includes(day));
                                 return (
                                     <th
                                         key={day}
@@ -403,7 +399,7 @@ const TimelineMatrix = () => {
 
                     {/* Body */}
                     <tbody>
-                        {departments.map((dept) => (
+                        {departments30daytable.map((dept) => (
                             <tr
                                 key={dept.Department}
                                 onClick={() => handleOpen(dept.Department)}
