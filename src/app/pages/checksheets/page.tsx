@@ -143,7 +143,7 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
-                if (value === "2") {
+                if (value === "2" ) {
                     // ✅ ถ้าเป็นวันหยุด ให้เพิ่มลงใน holiday
                     if (!department.holiday) department.holiday = [];
                     if (!department.holiday.includes(i)) department.holiday.push(i);
@@ -152,7 +152,9 @@ const TimelineMatrix = () => {
             }
         });
 
+
         return Object.values(departmentsMap);
+    
     };
 
 
