@@ -179,7 +179,7 @@ const TimelineMatrix = () => {
 
 
     return (
-        <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
+        <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
 
             {/* Header */}
             <header className="flex justify-end w-full mb-2 text-center mt-18">
