@@ -18,6 +18,7 @@ type Department30daytable = {
     status: string;
     checked: number[];
     ongoing: number[];
+    ongoingdoc: number;
     overdue: number[];
     stopline: number[]; // 👈 เพิ่มตรงนี้
 };
@@ -57,7 +58,7 @@ const TimelineMatrix = () => {
                 setAllCheckSheetData(data.data);
                 const transformed = transformDataToDepartments(data.data);
                 setDepartments30daytable(transformed);
-                console.log("Fetched CheckSheet Data:", data.data);
+                console.log("Fetched CheckSheet Data:", transformed);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -76,30 +77,31 @@ const TimelineMatrix = () => {
 
     const transformDataToDepartments = (data: any[]): Department30daytable[] => {
         const departmentsMap: { [key: string]: Department30daytable } = {};
+        const today = new Date().getDate(); // ✅ อย่าลืมประกาศก่อน
 
         data.forEach((item) => {
             const departmentName = item.Department;
 
+            // ✅ ถ้าไม่เคยมี Department นี้มาก่อน ให้สร้าง
             if (!departmentsMap[departmentName]) {
                 departmentsMap[departmentName] = {
                     Department: departmentName,
                     status: item.status,
                     checked: [],
                     ongoing: [],
+                    ongoingdoc: 0, // ✅ เริ่มจาก 0
                     overdue: [],
-                    stopline: [], // 👈 เพิ่มตรงนี้
+                    stopline: [],
                 };
             }
 
             const department = departmentsMap[departmentName];
-            //Object ที่มี key แบบไดนามิก”
 
             for (let i = 1; i <= 31; i++) {
                 const dayKey = `Date${i}`;
                 const value = item[dayKey];
 
                 if (value === "-") {
-                    // ⛔ สำคัญสุด: ลบจากทุก array ก่อน แล้ว push เข้า stopline
                     department.checked = department.checked.filter(d => d !== i);
                     department.ongoing = department.ongoing.filter(d => d !== i);
                     department.overdue = department.overdue.filter(d => d !== i);
@@ -107,7 +109,13 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
-                if (value === null || value === "") {
+                // ✅ เฉพาะวันนี้เท่านั้น และเป็น ongoing ("0")
+                if (i === today && value === "0") {
+                    // 👉 เพิ่ม ongoingdoc ของแผนกไป 1 ครั้ง (ครั้งละ 1 เอกสาร)
+                    department.ongoingdoc = (department.ongoingdoc || 0) + 1;
+                }
+
+                if (i === today && value === "0") {
                     department.checked = department.checked.filter(d => d !== i);
                     department.overdue = department.overdue.filter(d => d !== i);
                     department.stopline = department.stopline.filter(d => d !== i);
@@ -134,12 +142,13 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
-                // ถ้าเป็น "2" (holiday) → ไม่ต้องแสดงอะไร
+                // "2" = holiday → ข้าม
             }
         });
 
         return Object.values(departmentsMap);
     };
+
 
 
     const getStatus = (
@@ -298,7 +307,7 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                 {departments30daytable
+                                {departments30daytable
                                     .filter((dept) => dept.overdue)
                                     .map((dept) => (
                                         <tr
@@ -332,17 +341,19 @@ const TimelineMatrix = () => {
                             </thead>
                             <tbody>
                                 {departments30daytable
-                                    .filter((dept) => dept.ongoing)
                                     .map((dept) => (
                                         <tr
                                             key={`${dept.Department}-ongoing`}
                                             className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-yellow-100 hover:shadow-sm"
                                         >
                                             <td className="py-2 font-semibold text-yellow-800">{dept.Department}</td>
-                                            <td className="text-center font-bold text-yellow-700 animate-pulse">{dept.ongoing.length}</td>
+                                            <td className="text-center font-bold text-yellow-700 animate-pulse">
+                                                {dept.ongoingdoc} 
+                                            </td>
                                         </tr>
                                     ))}
                             </tbody>
+
                         </table>
                     </section>
 
@@ -419,9 +430,9 @@ const TimelineMatrix = () => {
                                     if (day > today && status === "overdue") {
                                         status = "null";
                                     }
-                                    else if (day === today && status === "overdue") {
-                                         status = "ongoing";
-                                        }
+                                    // else if (day === today && status === "overdue") {
+                                    //     status = "ongoing";
+                                    // }
 
 
                                     const icon =
