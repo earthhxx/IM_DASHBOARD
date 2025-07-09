@@ -20,6 +20,7 @@ type Department30daytable = {
     ongoing: number[];
     ongoingdoc: number;
     overdue: number[];
+    holiday?: number[]; // 👈 เพิ่มตรงนี้ถ้าต้องการเก็บวันหยุด
     stopline: number[]; // 👈 เพิ่มตรงนี้
 };
 
@@ -142,7 +143,12 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
-                // "2" = holiday → ข้าม
+                if (value === "2") {
+                    // ✅ ถ้าเป็นวันหยุด ให้เพิ่มลงใน holiday
+                    if (!department.holiday) department.holiday = [];
+                    if (!department.holiday.includes(i)) department.holiday.push(i);
+                    continue;
+                }
             }
         });
 
@@ -159,10 +165,7 @@ const TimelineMatrix = () => {
         if (dept.ongoing.includes(day)) return "ongoing";
         if (dept.overdue.includes(day)) return "overdue";
         if (dept.checked.includes(day)) return "completed";
-
-        // ✅ ตรวจสอบ holiday (คุณอาจต้องเพิ่ม logic ตรวจ holiday ถ้ามี field แยก)
-        const dayValue = allCheckSheetData.find(d => d.Department === dept.Department)?.[`Date${day}`];
-        if (dayValue === "2") return "holiday";
+        if (dept.holiday && dept.holiday.includes(day)) return "holiday";
 
         return "null";
     };
@@ -334,7 +337,7 @@ const TimelineMatrix = () => {
                                         >
                                             <td className="py-2 font-semibold text-yellow-800">{dept.Department}</td>
                                             <td className="text-center font-bold text-yellow-700 animate-pulse">
-                                                {dept.ongoingdoc} 
+                                                {dept.ongoingdoc}
                                             </td>
                                         </tr>
                                     ))}
@@ -376,14 +379,18 @@ const TimelineMatrix = () => {
                                 แผนก
                             </th>
                             {days.map((day) => {
-                                const today = new Date().getDate();
-                                const isToday = day === today;
-                                const hasOngoing = departments30daytable.some((dept) => dept.ongoing.includes(day));
+                                const today = new Date().getDate();             // วันที่ปัจจุบันของเดือน (เช่น 9)
+                                const isToday = day === today;                   // ตรวจสอบว่า day คือวันนี้หรือไม่
+                                const holiday = departments30daytable.find(d =>
+                                    Array.isArray(d.holiday) && d.holiday.includes(day)
+                                );
+
+
                                 return (
                                     <th
                                         key={day}
                                         className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
-                                            ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  ${hasOngoing ? "bg-gray-400 font-bold" : ""}`}
+          ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  ${holiday ? "bg-gray-400 font-bold" : ""}`}
                                         title={`Day ${day}`}
                                     >
                                         {day}
@@ -391,6 +398,7 @@ const TimelineMatrix = () => {
                                 );
                             })}
                         </tr>
+
 
                     </thead>
 
@@ -411,6 +419,7 @@ const TimelineMatrix = () => {
                                     let status = getStatus(dept, day);
                                     const today = new Date().getDate();
                                     const isToday = day === today;
+                                    const isHoliday = dept.holiday && dept.holiday.includes(day);
 
                                     // 👇 ถ้าวันหลังวันนี้และ status เป็น overdue → เปลี่ยนให้ไม่แสดง icon
                                     if (day > today && status === "overdue") {
@@ -439,13 +448,16 @@ const TimelineMatrix = () => {
                                                     : status === "stopline"
                                                         ? "bg-black text-white w-6 h-6 rounded-full"
                                                         : status === "holiday"
-                                                            ? "bg-yellow-300 text-black w-6 h-6 rounded-full"
+                                                            ? "bg-gray-300 text-black w-6 h-6 rounded-full"
                                                             : "";
 
                                     return (
                                         <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
                                             {isToday && (
                                                 <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
+                                            )}
+                                            {isHoliday && (
+                                                <div className="absolute inset-0 bg-gray-200/60 animate-pulse}" />
                                             )}
                                             <div className="flex justify-center items-center w-full h-full relative z-10">
                                                 {status !== "null" && (
