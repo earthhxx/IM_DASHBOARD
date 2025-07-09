@@ -96,6 +96,7 @@ const TimelineMatrix = () => {
             }
 
             const department = departmentsMap[departmentName];
+            //Object ที่มี key แบบไดนามิก”
 
             for (let i = 1; i <= 31; i++) {
                 const dayKey = `Date${i}`;
