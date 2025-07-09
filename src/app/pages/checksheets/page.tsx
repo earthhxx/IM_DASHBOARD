@@ -181,17 +181,24 @@ const TimelineMatrix = () => {
     return (
         <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
             {/* Header */}
-            <header className="mb-10 text-center mt-12">
-                <h1 className="text-5xl font-extrabold text-blue-900 uppercase">
+            <header className="flex justify-end w-full mb-2 text-center mt-12">
+                <h1 className="text-3xl font-bold text-blue-900 uppercase">
                     checksheet monitoring
                 </h1>
+
             </header>
+            <div className="flex justify-end items-center w-full ">
+                <div className="flex rounded-full bg-blue-900 text-blue-800 h-1 w-[20%] shadow-md mb-4">
+
+                </div>
+            </div>
+
 
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
-                <div className="bg-gradient-to-br from-red-50 to-white shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
-                    <h2 className="text-3xl font-bold mb-4 text-red-600 uppercase">
+                <div className="bg-gradient-to-br from-blue-50 to-white shadow-2xl rounded-2xl p-6 border border-gray-200 h-[400px] w-full">
+                    <h2 className="text-3xl font-bold mb-4 text-blue-900 uppercase">
                         summary overdue
                     </h2>
                     {/* Summary Info Bar */}
@@ -286,8 +293,8 @@ const TimelineMatrix = () => {
                     {/* Overdue */}
                     <section
                         onClick={handleShowAllOverdue}
-                        className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-red-300 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[26px] font-bold mb-4 text-red-600 flex items-center justify-center gap-2 uppercase me-4">
+                        className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase me-4">
                             <span className="animate-pulse  h-9.5 text-2xl ">⚠️</span>
                             <div>
                                 Overdue
@@ -296,8 +303,8 @@ const TimelineMatrix = () => {
                         <table className="w-full text-[22px] border-collapse">
                             <thead>
                                 <tr className="border-b border-red-200 uppercase">
-                                    <th className="text-left py-2 text-red-600">Department</th>
-                                    <th className="text-center py-2 text-red-600">sheet</th>
+                                    <th className="text-left py-2 text-blue-900">Department</th>
+                                    <th className="text-center py-2 text-blue-900">sheet</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -309,8 +316,8 @@ const TimelineMatrix = () => {
 
                                             className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-semibold text-red-800">{dept.Department}</td>
-                                            <td className="text-center font-bold text-red-600 animate-pulse">{dept.overdue.length}</td>
+                                            <td className="py-2 font-semibold text-blue-900">{dept.Department}</td>
+                                            <td className="text-center font-bold text-blue-900 animate-pulse">{dept.overdue.length}</td>
                                         </tr>
                                     ))}
                             </tbody>
@@ -318,8 +325,8 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-yellow-300 p-6 h-[400px]  transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[26px] font-bold mb-4 text-yellow-700 flex items-center justify-center gap-2 uppercase me-4">
+                    <section className="w-full bg-gradient-to-br from-yellow-50/50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px]  transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase me-4">
                             <span className="animate-spin ">⏳</span>
                             <div>
                                 Ongoing
@@ -328,9 +335,9 @@ const TimelineMatrix = () => {
                         </h2>
                         <table className="w-full text-[22px] border-collapse">
                             <thead>
-                                <tr className="border-b border-yellow-200 uppercase">
-                                    <th className="text-left py-2 text-yellow-600">department</th>
-                                    <th className="text-center py-2 text-yellow-600">sheet</th>
+                                <tr className="border-b border-blue-900 uppercase">
+                                    <th className="text-left py-2 text-blue-900">department</th>
+                                    <th className="text-center py-2 text-blue-900">sheet</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -340,8 +347,8 @@ const TimelineMatrix = () => {
                                             key={`${dept.Department}-ongoing`}
                                             className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-yellow-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-semibold text-yellow-800">{dept.Department}</td>
-                                            <td className="text-center font-bold text-yellow-700 animate-pulse">
+                                            <td className="py-2 font-semibold text-blue-900">{dept.Department}</td>
+                                            <td className="text-center font-bold text-blue-900 animate-pulse">
                                                 {dept.ongoingdoc}
                                             </td>
                                         </tr>
@@ -358,7 +365,7 @@ const TimelineMatrix = () => {
 
             <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-tr from-sky-50 to-white w-full h-fit mt-4">
 
-                <table className="min-w-[1000px] w-full text-sm text-gray-700 h-full">
+                <table className=" w-full text-[18px] text-gray-700 h-full">
                     {/* Header */}
 
 
@@ -385,7 +392,7 @@ const TimelineMatrix = () => {
 
                         <tr className="border-b border-gray-200">
                             <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
-                                แผนก
+                                Department
                             </th>
                             {days.map((day) => {
                                 const todayDate = new Date().getDate();
@@ -399,7 +406,7 @@ const TimelineMatrix = () => {
                                 return (
                                     <th
                                         key={day}
-                                        className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
+                                        className={`px-3 py-3 text-center font-medium  text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
                 ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  
                 ${holiday ? "bg-gray-400 font-bold" : ""}`}
                                         title={`Day ${day}`}
@@ -434,24 +441,27 @@ const TimelineMatrix = () => {
                                         const isToday = day === todayDate && month === currentMonth && year === currentYear;
                                         const isHoliday = dept.holiday?.includes(day);
 
-                                        if (day > todayDate && status === "overdue") {
-                                            status = "null";
+
+                                        const isFutureOverdue = day > todayDate && status === "overdue";
+
+                                        let icon = "";
+                                        if (!isFutureOverdue) {
+                                            if (status === "completed") icon = "C";
+                                            else if (status === "ongoing") icon = "";
+                                            else if (status === "overdue") icon = "✕";
+                                            else if (status === "stopline") icon = "S";
                                         }
 
-                                        const icon =
-                                            status === "completed" ? "C" :
-                                                status === "ongoing" ? "" :
-                                                    status === "overdue" ? "✕" :
-                                                        status === "stopline" ? "S" : "";
 
                                         const dotColor =
-                                            status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
+                                            status === "completed" ? "bg-green-400 text-white  rounded-full shadow-sm" :
                                                 status === "ongoing" ? "" :
-                                                    status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
-                                                        status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
+                                                    isFutureOverdue ? "" : // ✅ ใช้เงื่อนไขแทรกได้เลย
+                                                        status === "overdue" ? "bg-red-500 text-white  rounded-full shadow-sm" :
+                                                            status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
 
                                         return (
-                                            <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
+                                            <td key={day} className="min-w-[40px] min-h-[40px] border-r border-gray-100 last:border-r-0 relative">
                                                 {isToday && (
                                                     <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                                 )}
@@ -461,7 +471,7 @@ const TimelineMatrix = () => {
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
                                                         <span
-                                                            className={`${dotColor} text-[12px] font-bold flex items-center justify-center shadow-sm`}
+                                                            className={`${dotColor} text-[15px] w-6 h-6 font-bold flex items-center justify-center `}
                                                             title={`${status} - day ${day}`}
                                                         >
                                                             {icon}
@@ -505,13 +515,13 @@ const TimelineMatrix = () => {
 
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
-                                                 {isHoliday && (
+                                                {isHoliday && (
                                                     <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
                                                         <span
-                                                            className={`${dotColor} text-[12px] font-bold flex items-center justify-center shadow-sm`}
+                                                            className={`${dotColor} font-bold flex items-center justify-center shadow-sm`}
                                                             title={`${status} - day ${day}`}
                                                         >
                                                             {icon}

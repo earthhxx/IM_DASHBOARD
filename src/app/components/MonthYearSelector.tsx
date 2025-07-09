@@ -22,9 +22,9 @@ const MonthYearSelector = ({
     <div className="flex items-center gap-3 bg-sky-50 text-black rounded-xl shadow-sm px-4 py-2 border border-gray-200">
       {/* Month Selector */}
       <div className="flex flex-col text-xs font-medium ">
-        <label htmlFor="month" className="mb-1 ">
+        {/* <label htmlFor="month" className="mb-1 ">
           เดือน
-        </label>
+        </label> */}
         <select
           id="month"
           value={month}
@@ -41,9 +41,9 @@ const MonthYearSelector = ({
 
       {/* Year Selector */}
       <div className="flex flex-col text-xs font-medium ">
-        <label htmlFor="year" className="mb-1 ">
+        {/* <label htmlFor="year" className="mb-1 ">
           ปี
-        </label>
+        </label> */}
         <select
           id="year"
           value={year}
