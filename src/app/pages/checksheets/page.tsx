@@ -180,20 +180,195 @@ const TimelineMatrix = () => {
 
     return (
         <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
+
             {/* Header */}
-            <header className="flex justify-end w-full mb-2 text-center mt-12">
+            <header className="flex justify-end w-full mb-2 text-center mt-18">
                 <h1 className="text-3xl font-bold text-blue-900 uppercase">
                     checksheet monitoring
                 </h1>
 
             </header>
             <div className="flex justify-end items-center w-full ">
-                <div className="flex rounded-full bg-blue-900 text-blue-800 h-1 w-[20%] shadow-md mb-4">
+                <div className="flex rounded-full bg-blue-900 text-blue-800 h-1 w-[22%] shadow-md ">
 
                 </div>
             </div>
 
+            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-tr from-sky-50 to-white w-full h-fit my-6">
 
+                <table className=" w-full text-[18px] text-blue-900 font-bold h-full uppercase">
+                    {/* Header */}
+
+
+                    <thead className="bg-gradient-to-br from-blue-50 to-white">
+                        <tr className="border-b border-gray-200">
+                            <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
+                                <div className="flex justify-between items-center">
+                                    <h1 className="text-3xl  uppercase tracking-wide">
+                                        📋 Daily Checksheet Realtime
+                                    </h1>
+                                    <MonthYearSelector
+                                        currentMonth={month}
+                                        currentYear={year}
+                                        onChange={(newMonth, newYear) => {
+                                            setMonth(newMonth);
+                                            setYear(newYear);
+                                            FetchAllCheckSheetData(newMonth, newYear);
+                                        }}
+                                    />
+                                </div>
+                            </th>
+                        </tr>
+
+
+                        <tr className="border-b border-gray-200">
+                            <th className="sticky left-0 p-4 text-left z-30 w-[120px] border-r border-gray-200 ">
+                                Department
+                            </th>
+                            {days.map((day) => {
+                                const todayDate = new Date().getDate();
+
+                                const isToday = isCurrentMonth && day === todayDate;
+
+                                const holiday = departments30daytable.find(d =>
+                                    Array.isArray(d.holiday) && d.holiday.includes(day)
+                                );
+
+                                return (
+                                    <th
+                                        key={day}
+                                        className={`px-3 py-3 text-center  border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
+                ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  
+                ${holiday ? "bg-gray-400 " : ""}`}
+                                        title={`Day ${day}`}
+                                    >
+                                        {day}
+                                    </th>
+                                );
+                            })}
+                        </tr>
+
+
+                    </thead>
+
+                    {/* Body */}
+                    <tbody>
+                        {isCurrentMonth &&
+                            departments30daytable.map((dept) => (
+                                <tr
+                                    key={dept.Department}
+                                    onClick={() => handleOpen(dept.Department)}
+                                    className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
+                                >
+                                    <td className="sticky left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
+                                        {dept.Department}
+                                    </td>
+
+                                    {days.map((day) => {
+                                        let status = getStatus(dept, day);
+
+                                        const todayDate = new Date().getDate();
+
+                                        const isToday = day === todayDate && month === currentMonth && year === currentYear;
+                                        const isHoliday = dept.holiday?.includes(day);
+
+
+                                        const isFutureOverdue = day > todayDate && status === "overdue";
+
+                                        let icon = "";
+                                        if (!isFutureOverdue) {
+                                            if (status === "completed") icon = "C";
+                                            else if (status === "ongoing") icon = "";
+                                            else if (status === "overdue") icon = "✕";
+                                            else if (status === "stopline") icon = "S";
+                                        }
+
+
+                                        const dotColor =
+                                            status === "completed" ? "bg-green-400 text-white  rounded-full shadow-sm" :
+                                                status === "ongoing" ? "" :
+                                                    isFutureOverdue ? "" : // ✅ ใช้เงื่อนไขแทรกได้เลย
+                                                        status === "overdue" ? "bg-red-500 text-white  rounded-full shadow-sm" :
+                                                            status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
+
+                                        return (
+                                            <td key={day} className="min-w-[40px] min-h-[40px] border-r border-gray-100 last:border-r-0 relative">
+                                                {isToday && (
+                                                    <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
+                                                )}
+                                                {isHoliday && (
+                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
+                                                )}
+                                                <div className="flex justify-center items-center w-full h-full relative z-10">
+                                                    {status !== "null" && (
+                                                        <span
+                                                            className={`${dotColor} text-[15px] w-6 h-6  flex items-center justify-center `}
+                                                            title={`${status} - day ${day}`}
+                                                        >
+                                                            {icon}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                    </tbody>
+
+                    <tbody>
+                        {!isCurrentMonth &&
+                            departments30daytable.map((dept) => (
+                                <tr
+                                    key={dept.Department}
+                                    onClick={() => handleOpen(dept.Department)}
+                                    className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
+                                >
+                                    <td className="sticky left-0 px-4 py-3  whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium ">
+                                        {dept.Department}
+                                    </td>
+
+                                    {days.map((day) => {
+                                        let status = getStatus(dept, day);
+                                        const isHoliday = dept.holiday?.includes(day);
+
+                                        const icon =
+                                            status === "completed" ? "C" :
+                                                status === "ongoing" ? "" :
+                                                    status === "overdue" ? "✕" :
+                                                        status === "stopline" ? "S" : "";
+
+                                        const dotColor =
+                                            status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
+                                                status === "ongoing" ? "" :
+                                                    status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
+                                                        status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
+
+                                        return (
+                                            <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
+                                                {isHoliday && (
+                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
+                                                )}
+                                                <div className="flex justify-center items-center w-full h-full relative z-10">
+                                                    {status !== "null" && (
+                                                        <span
+                                                            className={`${dotColor} flex items-center justify-center shadow-sm`}
+                                                            title={`${status} - day ${day}`}
+                                                        >
+                                                            {icon}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                    </tbody>
+
+
+                </table>
+            </div>
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
@@ -363,181 +538,7 @@ const TimelineMatrix = () => {
 
 
 
-            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-tr from-sky-50 to-white w-full h-fit mt-4">
 
-                <table className=" w-full text-[18px] text-gray-700 h-full">
-                    {/* Header */}
-
-
-                    <thead className="bg-gradient-to-br from-blue-50 to-white">
-                        <tr className="border-b border-gray-200">
-                            <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
-                                <div className="flex justify-between items-center">
-                                    <h1 className="text-2xl font-bold text-sky-900 uppercase tracking-wide">
-                                        📋 Daily Checksheet Realtime
-                                    </h1>
-                                    <MonthYearSelector
-                                        currentMonth={month}
-                                        currentYear={year}
-                                        onChange={(newMonth, newYear) => {
-                                            setMonth(newMonth);
-                                            setYear(newYear);
-                                            FetchAllCheckSheetData(newMonth, newYear);
-                                        }}
-                                    />
-                                </div>
-                            </th>
-                        </tr>
-
-
-                        <tr className="border-b border-gray-200">
-                            <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
-                                Department
-                            </th>
-                            {days.map((day) => {
-                                const todayDate = new Date().getDate();
-
-                                const isToday = isCurrentMonth && day === todayDate;
-
-                                const holiday = departments30daytable.find(d =>
-                                    Array.isArray(d.holiday) && d.holiday.includes(day)
-                                );
-
-                                return (
-                                    <th
-                                        key={day}
-                                        className={`px-3 py-3 text-center font-medium  text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
-                ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  
-                ${holiday ? "bg-gray-400 font-bold" : ""}`}
-                                        title={`Day ${day}`}
-                                    >
-                                        {day}
-                                    </th>
-                                );
-                            })}
-                        </tr>
-
-
-                    </thead>
-
-                    {/* Body */}
-                    <tbody>
-                        {isCurrentMonth &&
-                            departments30daytable.map((dept) => (
-                                <tr
-                                    key={dept.Department}
-                                    onClick={() => handleOpen(dept.Department)}
-                                    className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
-                                >
-                                    <td className="sticky left-0 px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
-                                        {dept.Department}
-                                    </td>
-
-                                    {days.map((day) => {
-                                        let status = getStatus(dept, day);
-
-                                        const todayDate = new Date().getDate();
-
-                                        const isToday = day === todayDate && month === currentMonth && year === currentYear;
-                                        const isHoliday = dept.holiday?.includes(day);
-
-
-                                        const isFutureOverdue = day > todayDate && status === "overdue";
-
-                                        let icon = "";
-                                        if (!isFutureOverdue) {
-                                            if (status === "completed") icon = "C";
-                                            else if (status === "ongoing") icon = "";
-                                            else if (status === "overdue") icon = "✕";
-                                            else if (status === "stopline") icon = "S";
-                                        }
-
-
-                                        const dotColor =
-                                            status === "completed" ? "bg-green-400 text-white  rounded-full shadow-sm" :
-                                                status === "ongoing" ? "" :
-                                                    isFutureOverdue ? "" : // ✅ ใช้เงื่อนไขแทรกได้เลย
-                                                        status === "overdue" ? "bg-red-500 text-white  rounded-full shadow-sm" :
-                                                            status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
-
-                                        return (
-                                            <td key={day} className="min-w-[40px] min-h-[40px] border-r border-gray-100 last:border-r-0 relative">
-                                                {isToday && (
-                                                    <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
-                                                )}
-                                                {isHoliday && (
-                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
-                                                )}
-                                                <div className="flex justify-center items-center w-full h-full relative z-10">
-                                                    {status !== "null" && (
-                                                        <span
-                                                            className={`${dotColor} text-[15px] w-6 h-6 font-bold flex items-center justify-center `}
-                                                            title={`${status} - day ${day}`}
-                                                        >
-                                                            {icon}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                    </tbody>
-
-                    <tbody>
-                        {!isCurrentMonth &&
-                            departments30daytable.map((dept) => (
-                                <tr
-                                    key={dept.Department}
-                                    onClick={() => handleOpen(dept.Department)}
-                                    className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
-                                >
-                                    <td className="sticky left-0 px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
-                                        {dept.Department}
-                                    </td>
-
-                                    {days.map((day) => {
-                                        let status = getStatus(dept, day);
-                                        const isHoliday = dept.holiday?.includes(day);
-
-                                        const icon =
-                                            status === "completed" ? "C" :
-                                                status === "ongoing" ? "" :
-                                                    status === "overdue" ? "✕" :
-                                                        status === "stopline" ? "S" : "";
-
-                                        const dotColor =
-                                            status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
-                                                status === "ongoing" ? "" :
-                                                    status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
-                                                        status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
-
-                                        return (
-                                            <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
-                                                {isHoliday && (
-                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
-                                                )}
-                                                <div className="flex justify-center items-center w-full h-full relative z-10">
-                                                    {status !== "null" && (
-                                                        <span
-                                                            className={`${dotColor} font-bold flex items-center justify-center shadow-sm`}
-                                                            title={`${status} - day ${day}`}
-                                                        >
-                                                            {icon}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                    </tbody>
-
-
-                </table>
-            </div>
 
 
 
