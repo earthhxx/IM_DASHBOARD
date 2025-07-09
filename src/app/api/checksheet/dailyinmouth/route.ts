@@ -3,24 +3,25 @@ import { createConnection } from '../../../../lib/db';
 
 export async function GET(req: NextRequest) {
     try {
-        const pool = await createConnection();
+        const url = new URL(req.url);
+        const monthParam = url.searchParams.get('month');
+        const yearParam = url.searchParams.get('year');
 
-        // สร้าง Date object แบบไม่มีเวลา (เวลาเป็น 00:00:00)
-        const now = new Date();
-        const currentMonth = now.getMonth() + 1; // JS: เดือนเริ่มที่ 0
-        const currentYear = now.getFullYear();
+        const month = monthParam ? parseInt(monthParam) : new Date().getMonth() + 1;
+        const year = yearParam ? parseInt(yearParam) : new Date().getFullYear();
+
+        const pool = await createConnection();
 
         const result = await pool
             .request()
-            .input('year', currentYear)
-            .input('month', currentMonth)
+            .input('year', year)
+            .input('month', month)
             .query(`
-        SELECT *
-        FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
-        WHERE YEAR(UpdateTime) = @year AND MONTH(UpdateTime) = @month
-        ORDER BY [UpdateTime] DESC
-    `);
-
+                SELECT *
+                FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
+                WHERE YEAR(UpdateTime) = @year AND MONTH(UpdateTime) = @month
+                ORDER BY [UpdateTime] DESC
+            `);
 
         return NextResponse.json({ data: result.recordset });
 

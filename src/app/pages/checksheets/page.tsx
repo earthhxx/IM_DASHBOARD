@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import DepartmentChecksheetTable from "@/app/components/DepartmentChecksheetTable";
+import MonthYearSelector from "@/app/components/MonthYearSelector";
 import {
     BarChart,
     Bar,
@@ -48,33 +49,6 @@ const TimelineMatrix = () => {
     const handleShowAllOverdue = () => setShowAllOverdue(true);
     const handleCloseOverdue = () => setShowAllOverdue(false);
 
-    useEffect(() => {
-        const FetchAllCheckSheetData = async () => {
-            try {
-                const response = await fetch("/api/checksheet/dailyinmouth");
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                const data = await response.json();
-                setAllCheckSheetData(data.data);
-                const transformed = transformDataToDepartments(data.data);
-                setDepartments30daytable(transformed);
-                console.log("Fetched CheckSheet Data:", transformed);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        FetchAllCheckSheetData();
-    }, []);
-
-    // หาวันปัจจุบัน (1-31)
-    const today = new Date().getDate();
-    const todayKey = `Date${today}`;
-
-    // กรองเฉพาะรายการที่ DateX ไม่เท่ากับ "0" (หรือเปลี่ยนเงื่อนไขตามต้องการ)
-    const todayCheckSheetData = allCheckSheetData.filter(
-        (item) => item[todayKey] !== "0"
-    );
 
     const transformDataToDepartments = (data: any[]): Department30daytable[] => {
         const departmentsMap: { [key: string]: Department30daytable } = {};
@@ -143,7 +117,7 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
-                if (value === "2" ) {
+                if (value === "2") {
                     // ✅ ถ้าเป็นวันหยุด ให้เพิ่มลงใน holiday
                     if (!department.holiday) department.holiday = [];
                     if (!department.holiday.includes(i)) department.holiday.push(i);
@@ -154,7 +128,7 @@ const TimelineMatrix = () => {
 
 
         return Object.values(departmentsMap);
-    
+
     };
 
 
@@ -172,6 +146,35 @@ const TimelineMatrix = () => {
         return "null";
     };
 
+    const [month, setMonth] = useState(new Date().getMonth() + 1);
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
+
+
+
+
+    const FetchAllCheckSheetData = async (month: number, year: number) => {
+        try {
+            const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
+            if (!response.ok) throw new Error("Network response was not ok");
+            const data = await response.json();
+            setAllCheckSheetData(data.data);
+            const transformed = transformDataToDepartments(data.data);
+            setDepartments30daytable(transformed);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        FetchAllCheckSheetData(month, year);
+    }, []);
+
+
+    const isCurrentMonth = month === currentMonth && year === currentYear;
 
 
 
@@ -361,38 +364,44 @@ const TimelineMatrix = () => {
 
                     <thead className="bg-gradient-to-br from-blue-200 to-white">
                         <tr className="border-b border-gray-200">
-                            <th
-                                colSpan={days.length + 1}
-                                className="px-6 py-4 border-b border-gray-100 text-left"
-                            >
+                            <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
                                 <div className="flex justify-between items-center">
                                     <h1 className="text-2xl font-bold text-sky-900 uppercase tracking-wide">
                                         📋 Daily Checksheet Realtime
                                     </h1>
-                                    <span className="text-2xl text-gray-600 whitespace-nowrap">
-                                        {new Date().getDate()}/{new Date().getMonth() + 1}/{new Date().getFullYear()}
-                                    </span>
+                                    <MonthYearSelector
+                                        currentMonth={month}
+                                        currentYear={year}
+                                        onChange={(newMonth, newYear) => {
+                                            setMonth(newMonth);
+                                            setYear(newYear);
+                                            FetchAllCheckSheetData(newMonth, newYear);
+                                        }}
+                                    />
                                 </div>
                             </th>
                         </tr>
+
 
                         <tr className="border-b border-gray-200">
                             <th className="sticky left-0 p-4 text-left font-semibold z-30 w-[120px] border-r border-gray-200 text-gray-700">
                                 แผนก
                             </th>
                             {days.map((day) => {
-                                const today = new Date().getDate();             // วันที่ปัจจุบันของเดือน (เช่น 9)
-                                const isToday = day === today;                   // ตรวจสอบว่า day คือวันนี้หรือไม่
+                                const todayDate = new Date().getDate();
+
+                                const isToday = isCurrentMonth && day === todayDate;
+
                                 const holiday = departments30daytable.find(d =>
                                     Array.isArray(d.holiday) && d.holiday.includes(day)
                                 );
-
 
                                 return (
                                     <th
                                         key={day}
                                         className={`px-3 py-3 text-center text-xs font-medium text-gray-600 border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
-          ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  ${holiday ? "bg-gray-400 font-bold" : ""}`}
+                ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  
+                ${holiday ? "bg-gray-400 font-bold" : ""}`}
                                         title={`Day ${day}`}
                                     >
                                         {day}
@@ -406,79 +415,112 @@ const TimelineMatrix = () => {
 
                     {/* Body */}
                     <tbody>
-                        {departments30daytable.map((dept) => (
-                            <tr
-                                key={dept.Department}
-                                onClick={() => handleOpen(dept.Department)}
-                                className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
+                        {isCurrentMonth &&
+                            departments30daytable.map((dept) => (
+                                <tr
+                                    key={dept.Department}
+                                    onClick={() => handleOpen(dept.Department)}
+                                    className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
+                                >
+                                    <td className="sticky left-0 px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
+                                        {dept.Department}
+                                    </td>
 
-                            >
-                                <td className="sticky left-0  px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
-                                    {dept.Department}
-                                </td>
+                                    {days.map((day) => {
+                                        let status = getStatus(dept, day);
 
-                                {days.map((day) => {
-                                    let status = getStatus(dept, day);
-                                    const today = new Date().getDate();
-                                    const isToday = day === today;
-                                    const isHoliday = dept.holiday && dept.holiday.includes(day);
+                                        const todayDate = new Date().getDate();
 
-                                    // 👇 ถ้าวันหลังวันนี้และ status เป็น overdue → เปลี่ยนให้ไม่แสดง icon
-                                    if (day > today && status === "overdue") {
-                                        status = "null";
-                                    }
-                                    // else if (day === today && status === "overdue") {
-                                    //     status = "ongoing";
-                                    // }
+                                        const isToday = day === todayDate && month === currentMonth && year === currentYear;
+                                        const isHoliday = dept.holiday?.includes(day);
 
+                                        if (day > todayDate && status === "overdue") {
+                                            status = "null";
+                                        }
 
-                                    const icon =
-                                        status === "completed" ? "C" :
-                                            status === "ongoing" ? "" :
-                                                status === "overdue" ? "✕" :
-                                                    status === "stopline" ? "S" :
-                                                        status === "holiday" ? "" :
-                                                            "";
+                                        const icon =
+                                            status === "completed" ? "C" :
+                                                status === "ongoing" ? "" :
+                                                    status === "overdue" ? "✕" :
+                                                        status === "stopline" ? "S" : "";
 
-                                    const dotColor =
-                                        status === "completed"
-                                            ? "bg-green-400 text-white w-6 h-6 rounded-full"
-                                            : status === "ongoing"
-                                                ? ""
-                                                : status === "overdue"
-                                                    ? "bg-red-500 text-white w-6 h-6 rounded-full"
-                                                    : status === "stopline"
-                                                        ? "bg-black text-white w-6 h-6 rounded-full"
-                                                        : status === "holiday"
-                                                            ? ""
-                                                            : "";
+                                        const dotColor =
+                                            status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
+                                                status === "ongoing" ? "" :
+                                                    status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
+                                                        status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
 
-                                    return (
-                                        <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
-                                            {isToday && (
-                                                <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
-                                            )}
-                                            {isHoliday && (
-                                                <div className="absolute inset-0 bg-gray-200/60 animate-pulse}" />
-                                            )}
-                                            <div className="flex justify-center items-center w-full h-full relative z-10">
-                                                {status !== "null" && (
-                                                    <span
-                                                        className={`${dotColor} text-[12px] font-bold flex items-center justify-center shadow-sm`}
-                                                        title={`${status} - day ${day}`}
-                                                    >
-                                                        {icon}
-                                                    </span>
+                                        return (
+                                            <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
+                                                {isToday && (
+                                                    <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                                 )}
-                                            </div>
-                                        </td>
-                                    );
-                                })}
-
-
-                            </tr>
-                        ))}
+                                                {isHoliday && (
+                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
+                                                )}
+                                                <div className="flex justify-center items-center w-full h-full relative z-10">
+                                                    {status !== "null" && (
+                                                        <span
+                                                            className={`${dotColor} text-[12px] font-bold flex items-center justify-center shadow-sm`}
+                                                            title={`${status} - day ${day}`}
+                                                        >
+                                                            {icon}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
                     </tbody>
+
+                    <tbody>
+                        {!isCurrentMonth &&
+                            departments30daytable.map((dept) => (
+                                <tr
+                                    key={dept.Department}
+                                    onClick={() => handleOpen(dept.Department)}
+                                    className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
+                                >
+                                    <td className="sticky left-0 px-4 py-3 font-medium text-gray-800 whitespace-nowrap z-10 w-[120px] border-r border-gray-100">
+                                        {dept.Department}
+                                    </td>
+
+                                    {days.map((day) => {
+                                        let status = getStatus(dept, day);
+
+                                        const icon =
+                                            status === "completed" ? "C" :
+                                                status === "ongoing" ? "" :
+                                                    status === "overdue" ? "✕" :
+                                                        status === "stopline" ? "S" : "";
+
+                                        const dotColor =
+                                            status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
+                                                status === "ongoing" ? "" :
+                                                    status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
+                                                        status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
+
+                                        return (
+                                            <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
+                                                <div className="flex justify-center items-center w-full h-full relative z-10">
+                                                    {status !== "null" && (
+                                                        <span
+                                                            className={`${dotColor} text-[12px] font-bold flex items-center justify-center shadow-sm`}
+                                                            title={`${status} - day ${day}`}
+                                                        >
+                                                            {icon}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                    </tbody>
+
 
                 </table>
             </div>
