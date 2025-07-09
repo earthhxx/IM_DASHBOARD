@@ -170,20 +170,6 @@ const TimelineMatrix = () => {
 
 
 
-    const FetchAllOverdue = async () => {
-        try {
-            const response = await fetch("/api/checksheet/alloverdue");
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            setalloverdue(data.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-
     return (
         <div className="min-h-screen bg-white p-8 flex flex-col justify-center items-center text-black">
             {/* Header */}
