@@ -382,7 +382,7 @@ const TimelineMatrix = () => {
                             🏢 แผนกทั้งหมด: {departments.length}
                         </div> */}
                         <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
-                            ⚠️ OVERDUE รวม: {departments30daytable.reduce((sum, d) => sum + d.overdue.length, 0)}
+                            ⚠️ OVERDUE : {departments30daytable.reduce((sum, d) => sum + d.overdue.length, 0)}
                         </div>
                         {/* <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
