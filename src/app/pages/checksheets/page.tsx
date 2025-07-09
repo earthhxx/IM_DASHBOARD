@@ -200,7 +200,7 @@ const TimelineMatrix = () => {
                             🏢 แผนกทั้งหมด: {departments.length}
                         </div> */}
                         <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
-                            ⚠️ OVERDUE รวม:
+                            ⚠️ OVERDUE รวม: {departments.reduce((sum, d) => sum + d.overdue.length, 0)}
                         </div>
                         {/* <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
@@ -209,12 +209,12 @@ const TimelineMatrix = () => {
 
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart
-                            // data={departments.map((dept) => ({
-                            //     name: dept.name,
-                            //     Completed: dept.completed.length,
-                            //     Ongoing: dept.ongoing.length,
-                            //     Overdue: dept.overdue.length,
-                            // }))}
+                            data={departments.map((dept) => ({
+                                name: dept.Department,
+                                Completed: dept.checked.length,
+                                Ongoing: dept.ongoing.length,
+                                Overdue: dept.overdue.length,
+                            }))}
                             margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
                             barCategoryGap="20%"
                             barGap={6}
@@ -301,18 +301,18 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {departments
-                                    .filter((dept) => dept.overdue.length > 0)
+                                 {departments
+                                    .filter((dept) => dept.overdue)
                                     .map((dept) => (
                                         <tr
-                                            key={`${dept.name}-overdue`}
+                                            key={`${dept.Department}-overdue`}
 
                                             className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-semibold text-red-800">{dept.name}</td>
+                                            <td className="py-2 font-semibold text-red-800">{dept.Department}</td>
                                             <td className="text-center font-bold text-red-600 animate-pulse">{dept.overdue.length}</td>
                                         </tr>
-                                    ))} */}
+                                    ))}
                             </tbody>
                         </table>
                     </section>
@@ -334,17 +334,17 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {departments
-                                    .filter((dept) => dept.ongoing.length > 0)
+                                {departments
+                                    .filter((dept) => dept.ongoing)
                                     .map((dept) => (
                                         <tr
-                                            key={`${dept.name}-ongoing`}
+                                            key={`${dept.Department}-ongoing`}
                                             className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-yellow-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-semibold text-yellow-800">{dept.name}</td>
+                                            <td className="py-2 font-semibold text-yellow-800">{dept.Department}</td>
                                             <td className="text-center font-bold text-yellow-700 animate-pulse">{dept.ongoing.length}</td>
                                         </tr>
-                                    ))} */}
+                                    ))}
                             </tbody>
                         </table>
                     </section>
