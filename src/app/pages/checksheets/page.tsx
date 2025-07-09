@@ -356,13 +356,13 @@ const TimelineMatrix = () => {
 
 
 
-            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-br from-sky-50 to-white w-full h-fit mt-4">
+            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-tr from-sky-50 to-white w-full h-fit mt-4">
 
                 <table className="min-w-[1000px] w-full text-sm text-gray-700 h-full">
                     {/* Header */}
 
 
-                    <thead className="bg-gradient-to-br from-blue-200 to-white">
+                    <thead className="bg-gradient-to-br from-blue-50 to-white">
                         <tr className="border-b border-gray-200">
                             <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
                                 <div className="flex justify-between items-center">
