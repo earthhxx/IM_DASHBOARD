@@ -7,21 +7,20 @@ export async function GET(req: NextRequest) {
 
         // สร้าง Date object แบบไม่มีเวลา (เวลาเป็น 00:00:00)
         const now = new Date();
-        const todayOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const currentMonth = now.getMonth() + 1; // JS: เดือนเริ่มที่ 0
+        const currentYear = now.getFullYear();
 
         const result = await pool
             .request()
-            .input('date', todayOnly)
+            .input('year', currentYear)
+            .input('month', currentMonth)
             .query(`
-                SELECT *
-                FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
-                WHERE CAST([UpdateTime] AS DATE) <= CAST(@date AS DATE)
-                ORDER BY [UpdateTime] DESC
-            `);
+        SELECT *
+        FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
+        WHERE YEAR(UpdateTime) = @year AND MONTH(UpdateTime) = @month
+        ORDER BY [UpdateTime] DESC
+    `);
 
-        if (result.recordset.length === 0) {
-            return NextResponse.json({ message: 'No data found' }, { status: 404 });
-        }
 
         return NextResponse.json({ data: result.recordset });
 

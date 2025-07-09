@@ -437,20 +437,20 @@ const TimelineMatrix = () => {
                                             status === "ongoing" ? "" :
                                                 status === "overdue" ? "✕" :
                                                     status === "stopline" ? "S" :
-                                                        status === "holiday" ? "H" :
+                                                        status === "holiday" ? "" :
                                                             "";
 
                                     const dotColor =
                                         status === "completed"
                                             ? "bg-green-400 text-white w-6 h-6 rounded-full"
                                             : status === "ongoing"
-                                                ? "bg-gray-300 text-white w-6 h-6 rounded-full"
+                                                ? ""
                                                 : status === "overdue"
                                                     ? "bg-red-500 text-white w-6 h-6 rounded-full"
                                                     : status === "stopline"
                                                         ? "bg-black text-white w-6 h-6 rounded-full"
                                                         : status === "holiday"
-                                                            ? "bg-gray-300 text-black w-6 h-6 rounded-full"
+                                                            ? ""
                                                             : "";
 
                                     return (
