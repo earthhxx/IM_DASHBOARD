@@ -489,6 +489,7 @@ const TimelineMatrix = () => {
 
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
+                                        const isHoliday = dept.holiday?.includes(day);
 
                                         const icon =
                                             status === "completed" ? "C" :
@@ -504,6 +505,9 @@ const TimelineMatrix = () => {
 
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
+                                                 {isHoliday && (
+                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
+                                                )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
                                                         <span
