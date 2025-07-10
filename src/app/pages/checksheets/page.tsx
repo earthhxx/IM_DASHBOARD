@@ -191,18 +191,16 @@ const TimelineMatrix = () => {
 
 
     const convertAllOverdueToChecksheetItems = (data: any[]) => {
-        const today = new Date().getDate(); // วันที่วันนี้ เช่น 10
+        const today = new Date().getDate(); // เช่น วันที่ 10
 
-        const result = data.filter(item => {
-            for (let i = 1; i <= today; i++) {
+        return data.filter(item => {
+            for (let i = 1; i < today; i++) {
                 if (item[`Date${i}`] === "0") return true;
             }
             return false;
         });
-
-        console.log("Filtered (มี Date{i} = '0' และ i <= วันนี้):", result);
-        return result;
     };
+
 
 
     const FetchAllCheckSheetData = async (month: number, year: number) => {
