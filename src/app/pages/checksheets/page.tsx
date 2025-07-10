@@ -219,6 +219,9 @@ const TimelineMatrix = () => {
     //selected department for showing details
     const [selectedDept, setSelectedDept] = useState("");
 
+    //show OverdueDepartmentList
+    const [showOverdueDepartmentDoc, setshowOverdueDepartmentDoc] = useState(false);
+
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
 
@@ -529,20 +532,24 @@ const TimelineMatrix = () => {
                                     .map((dept) => (
                                         <tr
                                             key={`${dept.Department}-overdue`}
-
                                             className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                         >
                                             <td className="py-2 font-semibold text-blue-900">{dept.Department}</td>
-                                            <td className="text-center font-bold text-blue-900 animate-pulse">{dept.overdue.length}</td>
-                                            <button
-                                                className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
-                                                onClick={() => setSelectedDept(dept.Department)}
-                                            >
-                                                View Details
-                                            </button>
+                                            <td className="text-center font-bold text-blue-900 animate-pulse">
+                                                {dept.overdue.length}
+                                            </td>
+                                            <td className="text-center">
+                                                <button
+                                                    className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+                                                    onClick={() => setSelectedDept(dept.Department)}
+                                                >
+                                                    View Details
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))}
                             </tbody>
+
                         </table>
                     </section>
 
@@ -586,10 +593,13 @@ const TimelineMatrix = () => {
 
 
 
-
-
-
-
+            {selectedDept && alloverdue && (
+                <OverdueDepartmentList
+                    department={selectedDept}
+                    data={alloverdue}
+                    setSelectedDept={setSelectedDept}
+                />
+            )}
 
             {/* แสดงตารางถ้ามีการเลือกแผนก */}
             {/* {selectedDepartment && selectedDepData && (

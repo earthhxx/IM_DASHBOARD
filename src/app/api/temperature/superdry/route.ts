@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
                                 [HMax21], [HMax22], [HMax23], [HMax24], [HMax25], [HMax26], [HMax27], [HMax28], [HMax29], [HMax30],
                                 [HMax31]
                         FROM [DASHBOARD].[dbo].[Temperature]
-                        WHERE Line = @num;
+                        WHERE Line = @num
                     order by [Date] DESC;
             `);
 

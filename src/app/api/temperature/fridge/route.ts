@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
                 FROM 
                     [DASHBOARD].[dbo].[Temperature]
                 WHERE 
-                    [Line] = @line;
+                    [Line] = @line
                 order by [Date] DESC;
             `);
 
