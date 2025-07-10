@@ -231,6 +231,7 @@ const TimelineMatrix = () => {
 
 
     useEffect(() => {
+        setSelectedDept(""); // reset การเลือก
         FetchAllCheckSheetData(month, year);
     }, [month, year]);
 
