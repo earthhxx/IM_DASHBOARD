@@ -192,8 +192,6 @@ const TimelineMatrix = () => {
             return false;
         });
     };
-
-
     const groupOverdueByDepartment = (items: any[]) => {
         const grouped: { [key: string]: number } = {};
 
