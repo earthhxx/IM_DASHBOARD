@@ -162,6 +162,7 @@ const TimelineMatrix = () => {
             if (!response.ok) throw new Error("Network response was not ok");
             const data = await response.json();
             setAllCheckSheetData(data.data);
+            console.log("Fetched data:", data.data);
             const transformed = transformDataToDepartments(data.data);
             setDepartments30daytable(transformed);
         } catch (error) {
@@ -222,7 +223,7 @@ const TimelineMatrix = () => {
 
 
                         <tr className="border-b border-gray-200">
-                            <th className="sticky left-0 p-4 text-left z-30 w-[120px] border-r border-gray-200 ">
+                            <th className=" left-0 p-4 text-left z-30 w-[120px] border-r border-gray-200 ">
                                 Department
                             </th>
                             {days.map((day) => {
@@ -260,7 +261,7 @@ const TimelineMatrix = () => {
                                     onClick={() => handleOpen(dept.Department)}
                                     className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
                                 >
-                                    <td className="sticky left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
+                                    <td className=" left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
                                         {dept.Department}
                                     </td>
 
