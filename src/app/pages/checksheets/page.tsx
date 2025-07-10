@@ -560,7 +560,6 @@ const TimelineMatrix = () => {
                             <div>
                                 Ongoing
                             </div>
-
                         </h2>
                         <table className="w-full text-[22px] border-collapse">
                             <thead>
