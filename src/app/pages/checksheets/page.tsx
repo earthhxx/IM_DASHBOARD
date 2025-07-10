@@ -191,17 +191,9 @@ const TimelineMatrix = () => {
             return false;
         });
     };
-
     const filterOverdueByDepartment = (department: string) => {
         return alloverdue.filter(item => item.Department === department);
     };
-
-    const handleOpenOverdue = (department: string) => {
-        filterOverdueByDepartment(department);
-    };
-
-
-
 
     const FetchAllCheckSheetData = async (month: number, year: number) => {
         try {
@@ -221,11 +213,6 @@ const TimelineMatrix = () => {
     useEffect(() => {
         FetchAllCheckSheetData(month, year);
     }, []);
-
-
-
-
-
 
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
