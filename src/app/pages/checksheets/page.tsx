@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import DepartmentChecksheetTable from "@/app/components/DepartmentChecksheetTable";
 import MonthYearSelector from "@/app/components/MonthYearSelector";
+import OverdueDepartmentList from "@/app/components/OverdueDepartmentList";
+
 import {
     BarChart,
     Bar,
@@ -213,6 +214,10 @@ const TimelineMatrix = () => {
     useEffect(() => {
         FetchAllCheckSheetData(month, year);
     }, []);
+
+
+    //selected department for showing details
+    const [selectedDept, setSelectedDept] = useState("");
 
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
@@ -529,6 +534,12 @@ const TimelineMatrix = () => {
                                         >
                                             <td className="py-2 font-semibold text-blue-900">{dept.Department}</td>
                                             <td className="text-center font-bold text-blue-900 animate-pulse">{dept.overdue.length}</td>
+                                            <button
+                                                className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+                                                onClick={() => setSelectedDept(dept.Department)}
+                                            >
+                                                View Details
+                                            </button>
                                         </tr>
                                     ))}
                             </tbody>
