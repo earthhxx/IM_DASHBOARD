@@ -25,6 +25,43 @@ type Department30daytable = {
     stopline: number[]; // 👈 เพิ่มตรงนี้
 };
 
+type CheckSheetPerDepartment = {
+    id: number;
+    FormID: string;
+    FormName: string;
+    Department: string;
+    Date1: string;
+    Date2: string;
+    Date3: string;
+    Date4: string;
+    Date5: string;
+    Date6: string;
+    Date7: string;
+    Date8: string;
+    Date9: string;
+    Date10: string;
+    Date11: string;
+    Date12: string;
+    Date13: string;
+    Date14: string;
+    Date15: string;
+    Date16: string;
+    Date17: string;
+    Date18: string;
+    Date19: string;
+    Date20: string;
+    Date21: string;
+    Date22: string;
+    Date23: string;
+    Date24: string;
+    Date25: string;
+    Date26: string;
+    Date27: string;
+    Date28: string;
+    Date29: string;
+    Date30: string;
+    Date31: string;
+};
 
 
 
@@ -153,7 +190,19 @@ const TimelineMatrix = () => {
     const currentYear = new Date().getFullYear();
 
 
+    const convertAllOverdueToChecksheetItems = (data: any[]) => {
+        const today = new Date().getDate(); // วันที่วันนี้ เช่น 10
 
+        const result = data.filter(item => {
+            for (let i = 1; i <= today; i++) {
+                if (item[`Date${i}`] === "0") return true;
+            }
+            return false;
+        });
+
+        console.log("Filtered (มี Date{i} = '0' และ i <= วันนี้):", result);
+        return result;
+    };
 
 
     const FetchAllCheckSheetData = async (month: number, year: number) => {
@@ -163,6 +212,7 @@ const TimelineMatrix = () => {
             const data = await response.json();
             setAllCheckSheetData(data.data);
             console.log("Fetched data:", data.data);
+            convertAllOverdueToChecksheetItems(data.data); // ✅ แปลงข้อมูลทั้งหมดเป็นรายการเช็คชีต
             const transformed = transformDataToDepartments(data.data);
             setDepartments30daytable(transformed);
         } catch (error) {
