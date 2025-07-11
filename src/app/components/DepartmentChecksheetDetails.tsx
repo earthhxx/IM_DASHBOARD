@@ -70,25 +70,26 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                   Form Name
                 </th>
                 <th className="border border-gray-300 p-3 text-left font-semibold bg-blue-100">Status</th>
-                <th className="border border-gray-300 p-3 text-left font-semibold bg-blue-100">
-                  Progress
-                </th>
+                <th className="border border-gray-300 p-3 text-left font-semibold bg-blue-100">Progress</th>
+
                 {days.map((day) => {
                   const isToday = isCurrentMonth && day === today;
+                  const isHoliday = filtered.some((item) => item[`Date${day}`] === "2" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay)));
 
                   return (
-
                     <th
                       key={day}
-                      className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none ${isToday ? "bg-yellow-300 animate-pulse":""} `}
-                      title={`วันที่ ${day}` }
+                      className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none relative ${isToday ? "animate-pulse bg-yellow-200/60" : ""
+                        } ${isHoliday ? "bg-gray-400/60 animate-pulse" : ""}`}
+                      title={`วันที่ ${day}`}
                     >
                       {day}
                     </th>
-                  )
+                  );
                 })}
               </tr>
             </thead>
+
             <tbody>
               {filtered.map((item, index) => (
                 <tr
@@ -106,7 +107,9 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                   {days.map((day) => {
                     const val = item[`Date${day}`];
                     const isToday = isCurrentMonth && day === today;
-                    const isOverdue = val === "0" && day < loopUntil;
+                    const isOverdue =
+                      val === "0" &&
+                      ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
                     const iscomplete = val === "1" && day <= loopUntil;
                     const isHoliday = val === "2" && day <= loopUntil;
 
@@ -122,7 +125,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
 
                         {/* พื้นหลังวันหยุด */}
                         {val === "2" && isHoliday && (
-                          <div className="absolute inset-0 bg-green-200/40 z-0 rounded" />
+                          <div className="absolute inset-0 bg-gray-200/40 z-0 rounded" />
                         )}
 
                         <span
@@ -146,7 +149,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                               : val === "-"
                                 ? "–"
                                 : val === "2" && isHoliday
-                                  ? "H"
+                                  ? ""
                                   : ""}
                         </span>
                       </td>
