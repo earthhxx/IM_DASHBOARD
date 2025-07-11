@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import MonthYearSelector from "@/app/components/MonthYearSelector";
-import DepartmentChecksheetDetails from "@/app/components/DepartmentChecksheetDetails";
-import DepartmentAllChecksheet from "@/app/components/DepartmentAllChecksheet";
+import MonthYearSelector from "@/app/pages/checksheets/componentschecksheets/MonthYearSelector";
+import DepartmentChecksheetDetails from "@/app/pages/checksheets/componentschecksheets/DepartmentChecksheetDetails";
+import DepartmentAllChecksheet from "@/app/pages/checksheets/componentschecksheets/DepartmentAllChecksheet";
 
 import {
     BarChart,

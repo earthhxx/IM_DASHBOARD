@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
-import ShelfWithWheels from "../../toolscomponents/ShelfWithWheels";
+import ShelfWithWheels from "./toolscomponents/ShelfWithWheels";
 import { FaCheckCircle, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
-import ShelfWithJigs from "@/app/toolscomponents/ShelfWithJigs";
-import SupportBox from "@/app/toolscomponents/SupportBox";
-import ShelfSqueegee from "@/app/toolscomponents/shelfSqueegee";
-import FloatingTable from "@/app/toolscomponents/FloatingTable";
+import ShelfWithJigs from "@/app/pages/FindingTools/toolscomponents/ShelfWithJigs";
+import SupportBox from "@/app/pages/FindingTools/toolscomponents/SupportBox";
+import ShelfSqueegee from "@/app/pages/FindingTools/toolscomponents/shelfSqueegee";
+import FloatingTable from "@/app/pages/FindingTools/toolscomponents/FloatingTable";
 
 
 
