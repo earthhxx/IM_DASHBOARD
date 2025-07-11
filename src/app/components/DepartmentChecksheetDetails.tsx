@@ -33,22 +33,22 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
   const days = Array.from({ length: lastDay }, (_, i) => i + 1);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-6">
-      <div className="relative w-full max-w-[95vw] max-h-[90vh] rounded-2xl shadow-2xl bg-white overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 backdrop-blur-sm pt-10">
+      <div className="relative w-full max-w-[95vw] max-h-[92vh] rounded-2xl shadow-2xl bg-white overflow-hidden flex flex-col">
         {/* Close Button */}
         <button
           onClick={() => setSelectedDept("")}
-          className="absolute top-5 right-5 text-gray-400 hover:text-red-600 text-4xl font-extrabold transition-colors duration-300"
+          className="fixed top-17 right-20 z-50 px-6 bg-red-500 rounded-md text-white hover:animate-pulse shadow-lg transition-colors duration-300"
           aria-label="Close"
         >
-          &times;
+          <span className="text-4xl font-extrabold leading-none select-none">&times;</span>
         </button>
+
 
         {/* Header */}
         <div
-          className={`text-center text-2xl font-extrabold py-5 bg-white select-none ${
-            type === "overdue" ? "text-red-700" : "text-yellow-700"
-          }`}
+          className={`text-center text-2xl font-extrabold py-5 bg-white select-none ${type === "overdue" ? "text-red-700" : "text-yellow-700"
+            }`}
         >
           {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} - แผนก {department} (
           {filtered.length} รายการ)
@@ -61,17 +61,21 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
               ✅ ไม่มี{type === "overdue" ? "รายการค้างตรวจ" : "รายการ ongoing"}ของแผนก {department}
             </div>
           ) : (
-            <table className="table-auto w-full border-separate border-spacing-0 text-sm md:text-base text-gray-700 rounded-lg">
+            <table className="table-auto w-full border-separate border-spacing-0 text-sm md:text-base text-gray-700 rounded-lg overflow-hidden shadow-lg">
               <thead className="sticky top-0 z-30 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 backdrop-blur-sm shadow-md">
                 <tr>
-                  <th className="p-3 border border-gray-300 bg-blue-100 sticky left-0 z-40 text-left font-semibold rounded-l-lg">
+                  <th className="p-3 border border-gray-300 bg-blue-100 sticky left-0 z-40 text-left font-semibold rounded-tl-lg">
                     #
                   </th>
                   <th className="p-3 border border-gray-300 bg-blue-100 sticky left-[50px] z-40 text-left font-semibold min-w-[220px]">
                     แบบฟอร์ม
                   </th>
-                  <th className="p-3 border border-gray-300 font-semibold text-center">สถานะ</th>
-                  <th className="p-3 border border-gray-300 font-semibold text-center">ความคืบหน้า</th>
+                  <th className="p-3 border border-gray-300 font-semibold text-center">
+                    สถานะ
+                  </th>
+                  <th className="p-3 border border-gray-300 font-semibold text-center">
+                    ความคืบหน้า
+                  </th>
                   {days.map((day) => {
                     const isToday = isCurrentMonth && day === today;
                     const isHoliday = filtered.some(
@@ -83,9 +87,8 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                     return (
                       <th
                         key={day}
-                        className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none relative ${
-                          isToday ? "animate-pulse bg-yellow-200/70" : ""
-                        } ${isHoliday ? "bg-gray-300/70 animate-pulse" : ""}`}
+                        className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none relative ${isToday ? "animate-pulse bg-yellow-200/70" : ""
+                          } ${isHoliday ? "bg-gray-300/70 animate-pulse" : ""}`}
                         title={`วันที่ ${day}`}
                       >
                         {day}
@@ -96,63 +99,78 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
               </thead>
 
               <tbody>
-                {filtered.map((item, index) => (
-                  <tr
-                    key={item.id}
-                    className="group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
-                  >
-                    {/* Sticky Column 1 - Index */}
-                    <td className="p-3 border border-gray-200 sticky left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none">
-                      {index + 1}
-                    </td>
+                {filtered.map((item, index) => {
+                  const isLastRow = index === filtered.length - 1;
+                  return (
+                    <tr
+                      key={item.id}
+                      className="group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
+                    >
+                      {/* Sticky Column 1 - Index */}
+                      <td
+                        className={`p-3 border border-gray-200 sticky left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none ${isLastRow ? "rounded-bl-lg" : ""
+                          }`}
+                      >
+                        {index + 1}
+                      </td>
 
-                    {/* Sticky Column 2 - Form Name */}
-                    <td className="p-3 border border-gray-200 sticky left-[50px] bg-white z-20 truncate group-hover:bg-blue-100 select-text">
-                      {item.FormName}
-                    </td>
+                      {/* Sticky Column 2 - Form Name */}
+                      <td
+                        className={`p-3 border border-gray-200 sticky left-[50px] bg-white z-20 truncate group-hover:bg-blue-100 select-text ${isLastRow ? "rounded-br-lg" : ""
+                          }`}
+                      >
+                        {item.FormName}
+                      </td>
 
-                    {/* Normal Columns */}
-                    <td className="p-3 border border-gray-200 text-center select-none">{item.Status}</td>
-                    <td className="p-3 border border-gray-200 text-center select-none">{item.Progress}%</td>
+                      {/* Normal Columns */}
+                      <td className="p-3 border border-gray-200 text-center select-none">
+                        {item.Status}
+                      </td>
+                      <td className="p-3 border border-gray-200 text-center select-none">
+                        {item.Progress}%
+                      </td>
 
-                    {days.map((day) => {
-                      const val = item[`Date${day}`];
-                      const isToday = isCurrentMonth && day === today;
-                      const isOverdue = val === "0" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
-                      const isComplete = val === "1" && day <= loopUntil;
-                      const isHoliday = val === "2";
+                      {days.map((day) => {
+                        const val = item[`Date${day}`];
+                        const isToday = isCurrentMonth && day === today;
+                        const isOverdue =
+                          val === "0" &&
+                          ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
+                        const isComplete = val === "1" && day <= loopUntil;
+                        const isHoliday = val === "2";
 
-                      let symbol = "";
-                      if (isOverdue) symbol = "✕";
-                      else if (isComplete) symbol = "✔";
-                      else if (val === "-") symbol = "–";
+                        let symbol = "";
+                        if (isOverdue) symbol = "✕";
+                        else if (isComplete) symbol = "✔";
+                        else if (val === "-") symbol = "–";
 
-                      const bg = isToday
-                        ? "bg-yellow-100"
-                        : isHoliday
-                        ? "bg-gray-100"
-                        : "";
+                        const bg = isToday
+                          ? "bg-yellow-100"
+                          : isHoliday
+                            ? "bg-gray-100"
+                            : "";
 
-                      const color = isOverdue
-                        ? "text-red-600 font-bold"
-                        : isComplete
-                        ? "text-green-600 font-bold"
-                        : "text-gray-600";
+                        const color = isOverdue
+                          ? "text-red-600 font-bold"
+                          : isComplete
+                            ? "text-green-600 font-bold"
+                            : "text-gray-600";
 
-                      return (
-                        <td
-                          key={day}
-                          className={`p-1 text-center border border-gray-200 min-w-[28px] h-8 ${bg} select-none`}
-                          title={`วันที่ ${day}`}
-                        >
-                          <span className={color} style={{ fontSize: "1rem" }}>
-                            {symbol}
-                          </span>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
+                        return (
+                          <td
+                            key={day}
+                            className={`p-1 text-center border border-gray-200 min-w-[28px] h-8 ${bg} select-none`}
+                            title={`วันที่ ${day}`}
+                          >
+                            <span className={color} style={{ fontSize: "1rem" }}>
+                              {symbol}
+                            </span>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}

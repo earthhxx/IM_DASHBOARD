@@ -33,16 +33,16 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
   const days = Array.from({ length: getDaysInMonth(displayMonth, displayYear) }, (_, i) => i + 1);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-6">
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-[90vw] max-h-[90vh] w-full overflow-auto px-8 pb-8 flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 backdrop-blur-sm pt-10">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-[95vw] max-h-[92vh] w-full overflow-auto px-2 pb-8 flex flex-col">
         {/* Close Button */}
         <button
           onClick={() => setSelectedDept("")}
-          className="fixed top-5 right-5 z-50 p-3 bg-red-500 rounded-2xl text-white hover:animate-pulse shadow-lg transition-colors duration-300"
+          className="fixed top-17 right-20 z-50 px-6 bg-red-500 rounded-md text-white hover:animate-pulse shadow-lg transition-colors duration-300"
           aria-label="Close"
         >
           <span className="text-4xl font-extrabold leading-none select-none">&times;</span>
-        </button>
+        </button> 
 
 
         <h2 className="text-3xl font-extrabold mb-8 text-center text-blue-900 select-none mt-8">
