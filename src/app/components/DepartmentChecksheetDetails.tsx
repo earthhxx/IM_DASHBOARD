@@ -48,9 +48,8 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
         </button>
 
         <h2
-          className={`text-3xl font-extrabold mb-6 text-center ${
-            type === "overdue" ? "text-red-600" : "text-yellow-600"
-          } select-none`}
+          className={`text-3xl font-extrabold mb-6 text-center ${type === "overdue" ? "text-red-600" : "text-yellow-600"
+            } select-none`}
         >
           {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} แผนก {department} (
           {filtered.length} รายการ)
@@ -74,15 +73,20 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                 <th className="border border-gray-300 p-3 text-left font-semibold bg-blue-100">
                   Progress
                 </th>
-                {days.map((day) => (
-                  <th
-                    key={day}
-                    className="border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none"
-                    title={`วันที่ ${day}`}
-                  >
-                    {day}
-                  </th>
-                ))}
+                {days.map((day) => {
+                  const isToday = isCurrentMonth && day === today;
+
+                  return (
+
+                    <th
+                      key={day}
+                      className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none ${isToday ? "bg-yellow-300 animate-pulse":""} `}
+                      title={`วันที่ ${day}` }
+                    >
+                      {day}
+                    </th>
+                  )
+                })}
               </tr>
             </thead>
             <tbody>
@@ -103,7 +107,8 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                     const val = item[`Date${day}`];
                     const isToday = isCurrentMonth && day === today;
                     const isOverdue = val === "0" && day < loopUntil;
-                    const iscomplete = val ==="1" && day <= loopUntil;
+                    const iscomplete = val === "1" && day <= loopUntil;
+                    const isHoliday = val === "2" && day <= loopUntil;
 
                     return (
                       <td
@@ -112,26 +117,40 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                       >
                         {/* ไฮไลต์วันปัจจุบัน */}
                         {isToday && (
-                          <div className="absolute inset-0 bg-yellow-300/50 rounded transition-opacity animate-pulse z-0" />
+                          <div className="absolute inset-0 bg-yellow-200/50 rounded animate-pulse z-0" />
+                        )}
+
+                        {/* พื้นหลังวันหยุด */}
+                        {val === "2" && isHoliday && (
+                          <div className="absolute inset-0 bg-green-200/40 z-0 rounded" />
                         )}
 
                         <span
-                          className={`relative z-10 select-none ${
-                            isOverdue ? "text-red-600 font-bold" : "text-gray-600"
-                          }`}
-                          title={`วันที่ ${day}: ${
-                            val === "0" ? "ค้างตรวจ" : val === "1" ? "ตรวจแล้ว" : val === "-" ? "ไม่ตรวจ" : "ไม่มีข้อมูล"
-                          }`}
+                          className={`relative z-10 select-none ${isOverdue ? "text-red-600 font-bold" : "text-gray-600"
+                            }`}
+                          title={`วันที่ ${day}: ${val === "0"
+                            ? "ค้างตรวจ"
+                            : val === "1"
+                              ? "ตรวจแล้ว"
+                              : val === "-"
+                                ? "ไม่ตรวจ"
+                                : val === "2"
+                                  ? "วันหยุด"
+                                  : "ไม่มีข้อมูล"
+                            }`}
                         >
                           {val === "0" && isOverdue
                             ? "✕"
                             : val === "1" && iscomplete
-                            ? "✔"
-                            : val === "-"
-                            ? "–"
-                            : ""}
+                              ? "✔"
+                              : val === "-"
+                                ? "–"
+                                : val === "2" && isHoliday
+                                  ? "H"
+                                  : ""}
                         </span>
                       </td>
+
                     );
                   })}
                 </tr>
