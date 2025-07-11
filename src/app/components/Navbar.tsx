@@ -435,13 +435,13 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 w-[30%] h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 p-6 ease-in duration-500 overflow-y-auto shadow-lg
-    ${menuOpen ? "left-0" : "left-[-1000px]"}`}
+        className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 p-6 ease-in duration-500 overflow-y-auto shadow-lg
+    ${menuOpen ? "translate-x-0" : "-translate-x-full"} w-full md:w-[30%] transform transition-transform`}
       >
         <div className="flex flex-col space-y-8 text-blue-900 font-sans">
 
           {/* Navigation Buttons */}
-          <nav className="grid grid-cols-3 space-y-4 mt-4 border-b border-blue-300 pb-6">
+          <nav className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-4 mt-4 border-b border-blue-300 pb-6">
             {[
               { name: "PRODUCTION 1", href: "/pages/skill-Matrix?Param=PRODUCTION1" },
               { name: "PRODUCTION 2", href: "/pages/skill-Matrix?Param=PRODUCTION2" },
@@ -463,16 +463,16 @@ const Navbar = () => {
           </nav>
 
           {/* Images */}
-          <div className="flex space-x-4 justify-center">
+          <div className="flex flex-col xl:flex-row space-y-4 xl:space-y-0 xl:space-x-4 justify-center ">
             <img
               src="/images/tai_img1.jpg"
               alt="Sample 1"
-              className="w-[50%] h-[50%] rounded-lg shadow-md object-cover"
+              className="w-full xl:w-1/2 rounded-lg shadow-md object-cover max-h-48"
             />
             <img
               src="/images/tai_img2.jpg"
               alt="Sample 2"
-              className="w-[50%] h-[50%] rounded-lg shadow-md object-cover"
+              className="w-full xl:w-1/2 rounded-lg shadow-md object-cover max-h-48"
             />
           </div>
 
@@ -499,7 +499,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
 
 
     </div>
