@@ -622,27 +622,7 @@ const TimelineMatrix = () => {
                     type={selectedType}
                 />
             )}
-
-
-            {/* แสดงตารางถ้ามีการเลือกแผนก */}
-            {/* {selectedDepartment && selectedDepData && (
-                <DepartmentChecksheetTable
-                    department={selectedDepartment}
-                    data={checkSheetData}
-                    onClose={handleClose}
-                />
-            )}
-            {showAllOverdue && (
-                <DepartmentChecksheetTable
-                    department="รวมทุกแผนก"
-                    data={convertAllOverdueToChecksheetItems()}
-                    onClose={handleCloseOverdue}
-                />
-            )} */}
-
-
-
-
+            
         </div>
     );
 };
