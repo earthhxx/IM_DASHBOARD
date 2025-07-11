@@ -620,9 +620,12 @@ const TimelineMatrix = () => {
                     data={selectedType === "overdue" ? alloverdue : allongoing}
                     setSelectedDept={setSelectedDept}
                     type={selectedType}
+                    month={month}   // ส่งค่า month
+                    year={year}     // ส่งค่า year
                 />
             )}
-            
+
+
         </div>
     );
 };
