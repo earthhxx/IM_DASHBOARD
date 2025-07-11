@@ -34,11 +34,11 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-6">
-      <div className="relative w-full max-w-[95vw] max-h-[90vh] rounded-xl shadow-2xl bg-white overflow-hidden">
+      <div className="relative w-full max-w-[95vw] max-h-[90vh] rounded-2xl shadow-2xl bg-white overflow-hidden flex flex-col">
         {/* Close Button */}
         <button
           onClick={() => setSelectedDept("")}
-          className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl font-bold"
+          className="absolute top-5 right-5 text-gray-400 hover:text-red-600 text-4xl font-extrabold transition-colors duration-300"
           aria-label="Close"
         >
           &times;
@@ -46,40 +46,46 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
 
         {/* Header */}
         <div
-          className={`text-center text-xl md:text-2xl font-bold py-4 border-b bg-white ${type === "overdue" ? "text-red-600" : "text-yellow-600"
-            } select-none`}
+          className={`text-center text-2xl font-extrabold py-5 bg-white select-none ${
+            type === "overdue" ? "text-red-700" : "text-yellow-700"
+          }`}
         >
           {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} - แผนก {department} (
           {filtered.length} รายการ)
         </div>
 
         {/* Table */}
-        <div className="overflow-auto max-h-[75vh] px-4 pb-4">
+        <div className="overflow-auto flex-grow px-6 pb-4">
           {filtered.length === 0 ? (
-            <div className="text-center text-gray-500 text-lg py-20">
+            <div className="text-center text-gray-500 text-lg py-32 font-medium">
               ✅ ไม่มี{type === "overdue" ? "รายการค้างตรวจ" : "รายการ ongoing"}ของแผนก {department}
             </div>
           ) : (
-            <table className="table-auto w-full border-separate border-spacing-0 text-sm md:text-base text-gray-700">
-              <thead className="sticky top-0 z-20 shadow bg-blue-50/80 backdrop-blur-sm">
+            <table className="table-auto w-full border-separate border-spacing-0 text-sm md:text-base text-gray-700 rounded-lg">
+              <thead className="sticky top-0 z-30 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 backdrop-blur-sm shadow-md">
                 <tr>
-                  <th className="p-2 border border-gray-300 bg-blue-100 left-0 z-30 text-left font-semibold">
+                  <th className="p-3 border border-gray-300 bg-blue-100 sticky left-0 z-40 text-left font-semibold rounded-l-lg">
                     #
                   </th>
-                  <th className="p-2 border border-gray-300 bg-blue-100 left-[50px] z-30 text-left font-semibold min-w-[220px]">
+                  <th className="p-3 border border-gray-300 bg-blue-100 sticky left-[50px] z-40 text-left font-semibold min-w-[220px]">
                     แบบฟอร์ม
                   </th>
-                  <th className="p-2 border border-gray-300 font-semibold">สถานะ</th>
-                  <th className="p-2 border border-gray-300 font-semibold">ความคืบหน้า</th>
+                  <th className="p-3 border border-gray-300 font-semibold text-center">สถานะ</th>
+                  <th className="p-3 border border-gray-300 font-semibold text-center">ความคืบหน้า</th>
                   {days.map((day) => {
                     const isToday = isCurrentMonth && day === today;
-                    const isHoliday = filtered.some((item) => item[`Date${day}`] === "2" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay)));
+                    const isHoliday = filtered.some(
+                      (item) =>
+                        item[`Date${day}`] === "2" &&
+                        ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
+                    );
 
                     return (
                       <th
                         key={day}
-                        className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none relative ${isToday ? "animate-pulse bg-yellow-200/60" : ""
-                          } ${isHoliday ? "bg-gray-400/60 animate-pulse" : ""}`}
+                        className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none relative ${
+                          isToday ? "animate-pulse bg-yellow-200/70" : ""
+                        } ${isHoliday ? "bg-gray-300/70 animate-pulse" : ""}`}
                         title={`วันที่ ${day}`}
                       >
                         {day}
@@ -93,21 +99,21 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                 {filtered.map((item, index) => (
                   <tr
                     key={item.id}
-                    className="group hover:bg-blue-50 transition-all duration-150"
+                    className="group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
                   >
                     {/* Sticky Column 1 - Index */}
-                    <td className="p-2 border border-gray-200 left-0 bg-white z-10 text-center font-bold group-hover:bg-blue-50">
+                    <td className="p-3 border border-gray-200 sticky left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none">
                       {index + 1}
                     </td>
 
                     {/* Sticky Column 2 - Form Name */}
-                    <td className="p-2 border border-gray-200 left-[50px] bg-white z-10 truncate group-hover:bg-blue-50">
+                    <td className="p-3 border border-gray-200 sticky left-[50px] bg-white z-20 truncate group-hover:bg-blue-100 select-text">
                       {item.FormName}
                     </td>
 
                     {/* Normal Columns */}
-                    <td className="p-2 border border-gray-200">{item.Status}</td>
-                    <td className="p-2 border border-gray-200">{item.Progress}%</td>
+                    <td className="p-3 border border-gray-200 text-center select-none">{item.Status}</td>
+                    <td className="p-3 border border-gray-200 text-center select-none">{item.Progress}%</td>
 
                     {days.map((day) => {
                       const val = item[`Date${day}`];
@@ -124,29 +130,30 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                       const bg = isToday
                         ? "bg-yellow-100"
                         : isHoliday
-                          ? "bg-gray-200"
-                          : "";
+                        ? "bg-gray-100"
+                        : "";
 
                       const color = isOverdue
                         ? "text-red-600 font-bold"
                         : isComplete
-                          ? "text-green-600 font-bold"
-                          : "text-gray-600";
+                        ? "text-green-600 font-bold"
+                        : "text-gray-600";
 
                       return (
                         <td
                           key={day}
-                          className={`p-1 text-center border border-gray-200 min-w-[28px] h-8 ${bg}`}
+                          className={`p-1 text-center border border-gray-200 min-w-[28px] h-8 ${bg} select-none`}
                           title={`วันที่ ${day}`}
                         >
-                          <span className={color}>{symbol}</span>
+                          <span className={color} style={{ fontSize: "1rem" }}>
+                            {symbol}
+                          </span>
                         </td>
                       );
                     })}
                   </tr>
                 ))}
               </tbody>
-
             </table>
           )}
         </div>
