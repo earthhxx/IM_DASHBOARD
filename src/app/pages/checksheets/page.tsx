@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import MonthYearSelector from "@/app/components/MonthYearSelector";
 import DepartmentChecksheetDetails from "@/app/components/DepartmentChecksheetDetails";
+import DepartmentAllChecksheet from "@/app/components/DepartmentAllChecksheet";
 
 import {
     BarChart,
@@ -64,6 +65,13 @@ type CheckSheetPerDepartment = {
     Date31: string;
 };
 
+type DepartmentAllChecksheetProps = {
+    department: string;
+    data: any[];
+    setSelectedDept: (value: string) => void;
+    month: number;
+    year: number;
+};
 
 
 
@@ -234,7 +242,6 @@ const TimelineMatrix = () => {
         }));
     };
 
-
     //มัดรวม graph bar
     const combineOverdueAndOngoing = () => {
         const overdue = groupOverdueByDepartment(alloverdue);   // [{ Department: "A", count: 3 }, ...]
@@ -266,6 +273,7 @@ const TimelineMatrix = () => {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
             if (!response.ok) throw new Error("Network response was not ok");
             const data = await response.json();
+            setDepartmentdata(data.data);
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
             setalloverdue(overdue);
@@ -275,6 +283,10 @@ const TimelineMatrix = () => {
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
+
+
+
+
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -292,6 +304,7 @@ const TimelineMatrix = () => {
 
     const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
     const [selectedDept, setSelectedDept] = useState("");
+    const [departmentdata, setDepartmentdata] = useState<any[]>([]);
 
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
@@ -365,7 +378,9 @@ const TimelineMatrix = () => {
                                     key={dept.Department}
                                     className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
                                 >
-                                    <td className=" left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
+                                    <td
+                                        onClick={() => setSelectedDept(dept.Department)}
+                                        className=" left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
                                         {dept.Department}
                                     </td>
 
@@ -513,7 +528,12 @@ const TimelineMatrix = () => {
                                 fill="#f87171"
                                 radius={[4, 4, 0, 0]}
                                 animationDuration={1000}
+                                onClick={(data) => {
+                                    setSelectedDept(data.Department); // ✅ ชื่อแผนกที่ถูกคลิก
+                                    setSelectedType("overdue");       // ✅ ตั้งประเภท
+                                }}
                             />
+
                             {/* <Bar
                                 dataKey="Ongoing"
                                 name="ONGOING"
@@ -598,7 +618,7 @@ const TimelineMatrix = () => {
                             </thead>
                             <tbody>
                                 {groupOngoingByDepartment(allongoing).map((item) => (
-                                   <tr
+                                    <tr
                                         key={`${item.Department}-ongoing`}
                                         className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                     >
@@ -640,6 +660,17 @@ const TimelineMatrix = () => {
                     year={year}     // ส่งค่า year
                 />
             )}
+
+            {selectedDept && (
+                <DepartmentAllChecksheet
+                    department={selectedDept}
+                    data={departmentdata}
+                    setSelectedDept={setSelectedDept}
+                    month={month}
+                    year={year}
+                />
+            )}
+
 
 
         </div>

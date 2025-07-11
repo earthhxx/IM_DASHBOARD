@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-type DepartmentChecksheetDetailsProps = {
+type DepartmentAllChecksheetProps = {
   department: string;
   data: any[];
   setSelectedDept: (value: string) => void;
@@ -9,7 +9,7 @@ type DepartmentChecksheetDetailsProps = {
   year: number;
 };
 
-const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = ({
+const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
   department,
   data,
   setSelectedDept,
@@ -163,4 +163,4 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
   );
 };
 
-export default DepartmentChecksheetDetails;
+export default DepartmentAllChecksheet;
