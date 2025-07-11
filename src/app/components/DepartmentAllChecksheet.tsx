@@ -28,7 +28,6 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
 
   const isCurrentMonth = displayMonth === currentMonth && displayYear === currentYear;
   const lastDay = new Date(displayYear, displayMonth, 0).getDate();
-  const loopUntil = isCurrentMonth ? today : lastDay;
 
   const getDaysInMonth = (m: number, y: number) => new Date(y, m, 0).getDate();
   const days = Array.from({ length: getDaysInMonth(displayMonth, displayYear) }, (_, i) => i + 1);
