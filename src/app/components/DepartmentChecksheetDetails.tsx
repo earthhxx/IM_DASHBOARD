@@ -6,10 +6,9 @@ type DepartmentChecksheetDetailsProps = {
   data: any[];
   setSelectedDept: (value: string) => void;
   type: "overdue" | "ongoing";
-  month: number;  // เพิ่มตรงนี้
-  year: number;   // เพิ่มตรงนี้
+  month: number;
+  year: number;
 };
-
 
 const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = ({
   department,
@@ -36,55 +35,51 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
   const getDaysInMonth = (m: number, y: number) => new Date(y, m, 0).getDate();
   const days = Array.from({ length: getDaysInMonth(displayMonth, displayYear) }, (_, i) => i + 1);
 
-  const getRelevantDates = (item: any, type: "overdue" | "ongoing"): number[] => {
-    const dates: number[] = [];
-    for (let i = 1; i <= loopUntil; i++) {
-      const val = item[`Date${i}`];
-      if (type === "ongoing") {
-        if (i === today && val === "0") dates.push(i);
-      }
-      if (type === "overdue") {
-        if (val === "0") dates.push(i);
-      }
-    }
-    return dates;
-  };
-
-
-
-
   return (
-    <div className="fixed top-0 left-0 w-full h-full backdrop-blur-[10px] bg-opacity-40 z-50 flex items-center justify-center">
-      <div className="relative bg-white max-w-4xl w-full p-6 rounded-lg shadow-xl overflow-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-30 backdrop-blur-sm p-4">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-[90vw] max-h-[90vh] w-full overflow-auto p-6">
+        {/* ปุ่มปิด */}
         <button
           onClick={() => setSelectedDept("")}
-          className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+          className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl font-bold transition-colors"
           aria-label="Close"
         >
-          ✕
+          &times;
         </button>
 
         <h2
-          className={`text-2xl font-bold mb-4 text-center ${type === "overdue" ? "text-red-600" : "text-yellow-600"
-            }`}
+          className={`text-3xl font-extrabold mb-6 text-center ${
+            type === "overdue" ? "text-red-600" : "text-yellow-600"
+          } select-none`}
         >
-          {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} แผนก {department} ({filtered.length} รายการ)
+          {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} แผนก {department} (
+          {filtered.length} รายการ)
         </h2>
 
         {filtered.length === 0 ? (
-          <div className="text-gray-500 text-center">
+          <div className="text-center text-gray-500 text-lg py-16 select-none">
             ✅ ไม่มี{type === "overdue" ? "รายการค้างตรวจ" : "รายการ ongoing"}ของแผนก {department}
           </div>
         ) : (
-          <table className="w-full border-collapse text-sm text-left">
-            <thead>
-              <tr className="bg-gray-100 text-gray-700 uppercase text-xs">
-                <th className="p-2 border">#</th>
-                <th className="p-2 border">Form Name</th>
-                <th className="p-2 border">Status</th>
-                <th className="p-2 border">Progress</th>
+          <table className="w-full border-collapse table-auto text-gray-700">
+            <thead className="bg-gradient-to-r from-blue-100 to-blue-50 sticky top-0 z-20 shadow-md">
+              <tr>
+                <th className="border border-gray-300 p-3 text-left font-semibold sticky left-0 bg-blue-100 z-30 rounded-l-lg">
+                  #
+                </th>
+                <th className="border border-gray-300 p-3 text-left font-semibold sticky left-[50px] bg-blue-100 z-30 min-w-[250px]">
+                  Form Name
+                </th>
+                <th className="border border-gray-300 p-3 text-left font-semibold bg-blue-100">Status</th>
+                <th className="border border-gray-300 p-3 text-left font-semibold bg-blue-100">
+                  Progress
+                </th>
                 {days.map((day) => (
-                  <th key={day} className="p-2 border text-sm text-gray-600 text-center">
+                  <th
+                    key={day}
+                    className="border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none"
+                    title={`วันที่ ${day}`}
+                  >
                     {day}
                   </th>
                 ))}
@@ -92,32 +87,49 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
             </thead>
             <tbody>
               {filtered.map((item, index) => (
-                <tr key={item.id} className="hover:bg-gray-50">
-                  <td className="p-2 border">{index + 1}</td>
-                  <td className="p-2 border font-medium text-gray-800">{item.FormName}</td>
-                  <td className="p-2 border text-gray-600">{item.Status}</td>
-                  <td className="p-2 border text-gray-600">{item.Progress}%</td>
+                <tr
+                  key={item.id}
+                  className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
+                >
+                  <td className="border border-gray-300 p-2 sticky left-0 bg-white font-semibold text-center z-20">
+                    {index + 1}
+                  </td>
+                  <td className="border border-gray-300 p-2 sticky left-[50px] bg-white font-medium min-w-[250px] truncate max-w-xs">
+                    {item.FormName}
+                  </td>
+                  <td className="border border-gray-300 p-2">{item.Status}</td>
+                  <td className="border border-gray-300 p-2">{item.Progress}%</td>
                   {days.map((day) => {
                     const val = item[`Date${day}`];
                     const isToday = isCurrentMonth && day === today;
-
                     const isOverdue = val === "0" && day < loopUntil;
+                    const iscomplete = val ==="1" && day <= loopUntil;
 
                     return (
-                      <td key={day} className="p-1 border text-center relative">
-                        {/* 🔶 ไฮไลต์วันปัจจุบัน */}
+                      <td
+                        key={day}
+                        className="border border-gray-300 p-1 text-center relative min-w-[30px] h-8"
+                      >
+                        {/* ไฮไลต์วันปัจจุบัน */}
                         {isToday && (
-                          <div className="absolute inset-0 bg-yellow-200/70 z-0 animate-pulse" />
+                          <div className="absolute inset-0 bg-yellow-300/50 rounded transition-opacity animate-pulse z-0" />
                         )}
 
-                        <span className={`relative z-10 ${isOverdue ? "text-red-600 font-bold" : ""}`}>
+                        <span
+                          className={`relative z-10 select-none ${
+                            isOverdue ? "text-red-600 font-bold" : "text-gray-600"
+                          }`}
+                          title={`วันที่ ${day}: ${
+                            val === "0" ? "ค้างตรวจ" : val === "1" ? "ตรวจแล้ว" : val === "-" ? "ไม่ตรวจ" : "ไม่มีข้อมูล"
+                          }`}
+                        >
                           {val === "0" && isOverdue
                             ? "✕"
-                            : val === "1"
-                              ? "✔"
-                              : val === "-"
-                                ? "–"
-                                : ""}
+                            : val === "1" && iscomplete
+                            ? "✔"
+                            : val === "-"
+                            ? "–"
+                            : ""}
                         </span>
                       </td>
                     );
