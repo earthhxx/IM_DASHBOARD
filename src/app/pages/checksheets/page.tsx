@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import MonthYearSelector from "@/app/components/MonthYearSelector";
-import OverdueDepartmentList from "@/app/components/OverdueDepartmentList";
+import DepartmentChecksheetDetails from "@/app/components/DepartmentChecksheetDetails";
 
 import {
     BarChart,
@@ -71,17 +71,15 @@ type CheckSheetPerDepartment = {
 
 
 const TimelineMatrix = () => {
-
-
-
-
     //ปีและเดือนปัจจุบัน
     const [month, setMonth] = useState(new Date().getMonth() + 1);
     const [year, setYear] = useState(new Date().getFullYear());
+    const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
+    const days = Array.from({ length: getDaysInMonth(month, year) }, (_, i) => i + 1);
+
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
     const isCurrentMonth = month === currentMonth && year === currentYear;
-    const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
 
     //for table data
@@ -207,6 +205,36 @@ const TimelineMatrix = () => {
         }));
     };
 
+
+    // สำหรับแสดงรายการเช็คชีทที่กำลังรอในวันปัจจุบัน
+    const [allongoing, setallongoing] = useState<any[]>([]);
+
+    const convertAllOngoingToChecksheetItems = (data: any[], month: number, year: number) => {
+        const now = new Date();
+        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
+        const today = now.getDate();
+
+        if (!isCurrentMonth) return []; // ✅ ongoing เฉพาะเดือนปัจจุบันเท่านั้น
+
+        return data.filter(item => item[`Date${today}`] === "0");
+    };
+
+    const groupOngoingByDepartment = (items: any[]) => {
+        const grouped: { [key: string]: number } = {};
+
+        items.forEach((item) => {
+            const dept = item.Department || "Unknown";
+            if (!grouped[dept]) grouped[dept] = 0;
+            grouped[dept]++;
+        });
+
+        return Object.entries(grouped).map(([Department, count]) => ({
+            Department,
+            count,
+        }));
+    };
+
+
     const FetchAllCheckSheetData = async (month: number, year: number) => {
         try {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
@@ -215,6 +243,9 @@ const TimelineMatrix = () => {
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
             setalloverdue(overdue);
+
+            const ongoing = convertAllOngoingToChecksheetItems(data.data, month, year);
+            setallongoing(ongoing);
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
@@ -227,12 +258,14 @@ const TimelineMatrix = () => {
 
     useEffect(() => {
         setSelectedDept(""); // reset การเลือก
+        setalloverdue([]);
+        setallongoing([]); // ✅ ปรับจาก null เป็น []
+        setSelectedType("")
         FetchAllCheckSheetData(month, year);
     }, [month, year]);
 
-
+    const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
     const [selectedDept, setSelectedDept] = useState("");
-    const [allDepartmentMap, setAllDepartmentMap] = useState<Record<string, any[]>>({});
 
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
@@ -245,17 +278,12 @@ const TimelineMatrix = () => {
 
             </header>
             <div className="flex justify-end items-center w-full ">
-                <div className="flex rounded-full bg-blue-900 text-blue-800 h-1 w-[22%] shadow-md ">
-
-                </div>
+                <div className="flex rounded-full bg-blue-900 text-blue-800 h-1 w-[22%] shadow-md "></div>
             </div>
 
             <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-tr from-sky-50 to-white w-full h-fit my-6">
-
                 <table className=" w-full text-[18px] text-blue-900 font-bold h-full uppercase">
                     {/* Header */}
-
-
                     <thead className="bg-gradient-to-br from-blue-50 to-white">
                         <tr className="border-b border-gray-200">
                             <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
@@ -275,8 +303,6 @@ const TimelineMatrix = () => {
                                 </div>
                             </th>
                         </tr>
-
-
                         <tr className="border-b border-gray-200">
                             <th className=" left-0 p-4 text-left z-30 w-[120px] border-r border-gray-200 ">
                                 Department
@@ -303,8 +329,6 @@ const TimelineMatrix = () => {
                                 );
                             })}
                         </tr>
-
-
                     </thead>
 
                     {/* Body */}
@@ -438,7 +462,7 @@ const TimelineMatrix = () => {
                             🏢 แผนกทั้งหมด: {departments.length}
                         </div> */}
                         <div className="px-3 py-1 bg-red-100 text-red-600 rounded-full shadow-sm flex items-center gap-1 hover:bg-red-200 cursor-default">
-                            ⚠️ OVERDUE : {departments30daytable.reduce((sum, d) => sum + d.overdue.length, 0)}
+                            ⚠️ OVERDUE : {alloverdue.length}
                         </div>
                         {/* <div className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full shadow-sm flex items-center gap-1 hover:bg-yellow-200 cursor-default">
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
@@ -447,19 +471,14 @@ const TimelineMatrix = () => {
 
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart
-                            data={departments30daytable.map((dept) => ({
-                                name: dept.Department,
-                                Completed: dept.checked.length,
-                                Ongoing: dept.ongoing.length,
-                                Overdue: dept.overdue.length,
-                            }))}
+                            data={groupOverdueByDepartment(alloverdue)}
                             margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
                             barCategoryGap="20%"
                             barGap={6}
                         >
                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
 
-                            <XAxis dataKey="name" />
+                            <XAxis dataKey="Department" />
                             <YAxis allowDecimals={false} />
                             <Tooltip />
 
@@ -503,8 +522,7 @@ const TimelineMatrix = () => {
                                 animationDuration={1000}
                             /> */}
                             <Bar
-                                // className="bar-glow"
-                                dataKey="Overdue"
+                                dataKey="count"
                                 name="OVERDUE"
                                 fill="#f87171"
                                 radius={[4, 4, 0, 0]}
@@ -546,7 +564,7 @@ const TimelineMatrix = () => {
                                         <td className="text-center">
                                             <button
                                                 className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
-                                                onClick={() => setSelectedDept(item.Department)}
+                                                onClick={() => { setSelectedDept(item.Department); setSelectedType("overdue"); }}
                                             >
                                                 View Details
                                             </button>
@@ -575,15 +593,21 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {departments30daytable
-                                    .map((dept) => (
+                                {groupOngoingByDepartment(allongoing)
+                                    .map((item) => (
                                         <tr
-                                            key={`${dept.Department}-ongoing`}
+                                            key={`${item.Department}-ongoing`}
                                             className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-yellow-100 hover:shadow-sm"
                                         >
-                                            <td className="py-2 font-semibold text-blue-900">{dept.Department}</td>
-                                            <td className="text-center font-bold text-blue-900 animate-pulse">
-
+                                            <td className="py-2 font-semibold text-blue-900">{item.Department}</td>
+                                            <td className="text-center font-bold text-blue-900 animate-pulse">{item.count}</td>
+                                            <td className="text-center">
+                                                <button
+                                                    className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+                                                    onClick={() => { setSelectedDept(item.Department); setSelectedType("ongoing"); }}
+                                                >
+                                                    View Details
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -595,16 +619,15 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-
-
-
-            {selectedDept && alloverdue && (
-                <OverdueDepartmentList
+            {selectedDept && selectedType && (
+                <DepartmentChecksheetDetails
                     department={selectedDept}
-                    data={alloverdue}
+                    data={selectedType === "overdue" ? alloverdue : allongoing}
                     setSelectedDept={setSelectedDept}
+                    type={selectedType}
                 />
             )}
+
 
             {/* แสดงตารางถ้ามีการเลือกแผนก */}
             {/* {selectedDepartment && selectedDepData && (

@@ -4,13 +4,15 @@ import React from "react";
 type OverdueDepartmentListProps = {
   department: string;
   data: any[];
-  setSelectedDept: (value: string) => void; // <- รับฟังก์ชันสำหรับปิด
+  setSelectedDept: (value: string) => void;
+  type: "overdue" | "ongoing";
 };
 
-const OverdueDepartmentList: React.FC<OverdueDepartmentListProps> = ({
+const DepartmentChecksheetDetails: React.FC<OverdueDepartmentListProps> = ({
   department,
   data,
   setSelectedDept,
+  type,
 }) => {
   const filtered = data.filter(item => item.Department === department);
 
@@ -26,13 +28,15 @@ const OverdueDepartmentList: React.FC<OverdueDepartmentListProps> = ({
           ✕
         </button>
 
-        <h2 className="text-2xl font-bold text-red-600 mb-4 text-center">
-          🔴 รายการค้างตรวจแผนก {department} ({filtered.length} รายการ)
+        <h2 className={`text-2xl font-bold mb-4 text-center ${
+          type === "overdue" ? "text-red-600" : "text-yellow-600"
+        }`}>
+          {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} แผนก {department} ({filtered.length} รายการ)
         </h2>
 
         {filtered.length === 0 ? (
           <div className="text-gray-500 text-center">
-            ✅ ไม่มีรายการค้างตรวจของแผนก {department}
+            ✅ ไม่มี{type === "overdue" ? "รายการค้างตรวจ" : "รายการ ongoing"}ของแผนก {department}
           </div>
         ) : (
           <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
@@ -54,4 +58,4 @@ const OverdueDepartmentList: React.FC<OverdueDepartmentListProps> = ({
   );
 };
 
-export default OverdueDepartmentList;
+export default DepartmentChecksheetDetails;
