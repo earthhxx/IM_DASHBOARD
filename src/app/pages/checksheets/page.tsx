@@ -536,16 +536,16 @@ const TimelineMatrix = () => {
 
                     {/* Overdue */}
                     <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase me-4">
-                            <span className="animate-pulse h-9.5 text-2xl">⚠️</span>
+                        <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase">
+                            <span className="animate-pulse text-2xl">⚠️</span>
                             <div>Overdue</div>
                         </h2>
-                        <table className="w-full text-[22px] border-collapse">
+
+                        <table className="w-full text-[20px] border-collapse">
                             <thead>
-                                <tr className="border-b border-red-200 uppercase">
-                                    <th className="text-left py-2 text-blue-900">Department</th>
-                                    <th className="text-center py-2 text-blue-900">Sheet</th>
-                                    <th className="text-center py-2 text-blue-900">Action</th>
+                                <tr className="border-b border-red-200 uppercase text-left text-blue-900">
+                                    <th className="py-2 pl-2">Department</th>
+                                    <th className="text-center">Sheet</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -554,58 +554,75 @@ const TimelineMatrix = () => {
                                         key={`${item.Department}-overdue`}
                                         className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                     >
-                                        <td className="py-2 font-semibold text-blue-900">{item.Department}</td>
-                                        <td className="text-center font-bold text-blue-900 animate-pulse">{item.count}</td>
-                                        <td className="text-center">
+                                        <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
+
+                                        <td className="w-[60px] p-2 text-center font-bold text-blue-900">
+                                            {item.count}
+                                        </td>
+
+                                        <td className="w-[40px] p-2 text-center">
                                             <button
-                                                className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
-                                                onClick={() => { setSelectedDept(item.Department); setSelectedType("overdue"); }}
+                                                onClick={() => {
+                                                    setSelectedDept(item.Department);
+                                                    setSelectedType("overdue");
+                                                }}
+                                                className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
+                                                title={`ดูรายละเอียดแผนก ${item.Department}`}
                                             >
-                                                View Details
+                                                🔍
                                             </button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
+
                         </table>
                     </section>
 
 
 
+
+
+
                     {/* Ongoing */}
-                    <section className="w-full bg-gradient-to-br from-yellow-50/50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px]  transition-transform duration-300 hover:scale-[1.01]">
-                        <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase me-4">
+                    <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                        <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase">
                             <span className="animate-spin ">⏳</span>
-                            <div>
-                                Ongoing
-                            </div>
+                            <div>Ongoing</div>
                         </h2>
-                        <table className="w-full text-[22px] border-collapse">
+                        <table className="w-full text-[20px] border-collapse">
                             <thead>
-                                <tr className="border-b border-blue-900 uppercase">
-                                    <th className="text-left py-2 text-blue-900">department</th>
-                                    <th className="text-center py-2 text-blue-900">sheet</th>
+                                <tr className="border-b border-red-200 uppercase text-left text-blue-900">
+                                    <th className="py-2 pl-2">Department</th>
+                                    <th className="text-center">Sheet</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {groupOngoingByDepartment(allongoing)
-                                    .map((item) => (
-                                        <tr
-                                            key={`${item.Department}-ongoing`}
-                                            className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-yellow-100 hover:shadow-sm"
-                                        >
-                                            <td className="py-2 font-semibold text-blue-900">{item.Department}</td>
-                                            <td className="text-center font-bold text-blue-900 animate-pulse">{item.count}</td>
-                                            <td className="text-center">
-                                                <button
-                                                    className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
-                                                    onClick={() => { setSelectedDept(item.Department); setSelectedType("ongoing"); }}
-                                                >
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                {groupOngoingByDepartment(allongoing).map((item) => (
+                                   <tr
+                                        key={`${item.Department}-ongoing`}
+                                        className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
+                                    >
+                                        <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
+
+                                        <td className="w-[60px] p-2 text-center font-bold text-blue-900">
+                                            {item.count}
+                                        </td>
+
+                                        <td className="w-[40px] p-2 text-center">
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedDept(item.Department);
+                                                    setSelectedType("ongoing");
+                                                }}
+                                                className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
+                                                title={`ดูรายละเอียดแผนก ${item.Department}`}
+                                            >
+                                                🔍
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
 
                         </table>
