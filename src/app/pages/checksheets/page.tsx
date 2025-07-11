@@ -591,7 +591,7 @@ const TimelineMatrix = () => {
                         </h2>
                         <table className="w-full text-[20px] border-collapse">
                             <thead>
-                                <tr className="border-b border-red-200 uppercase text-left text-blue-900">
+                                <tr className="border-b border-yellow-200 uppercase text-left text-blue-900">
                                     <th className="py-2 pl-2">Department</th>
                                     <th className="text-center">Sheet</th>
                                 </tr>
@@ -600,7 +600,7 @@ const TimelineMatrix = () => {
                                 {groupOngoingByDepartment(allongoing).map((item) => (
                                    <tr
                                         key={`${item.Department}-ongoing`}
-                                        className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
+                                        className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
                                     >
                                         <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
 
