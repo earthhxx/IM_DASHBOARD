@@ -305,6 +305,7 @@ const TimelineMatrix = () => {
     const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
     const [selectedDept, setSelectedDept] = useState("");
     const [departmentdata, setDepartmentdata] = useState<any[]>([]);
+    const [viewMode, setViewMode] = useState<"detail" | "all" | "">("");
 
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
@@ -379,7 +380,7 @@ const TimelineMatrix = () => {
                                     className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
                                 >
                                     <td
-                                        onClick={() => setSelectedDept(dept.Department)}
+                                        onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
                                         className=" left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
                                         {dept.Department}
                                     </td>
@@ -412,7 +413,9 @@ const TimelineMatrix = () => {
                                                             status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
 
                                         return (
-                                            <td key={day} className="min-w-[40px] min-h-[40px] border-r border-gray-100 last:border-r-0 relative">
+                                            <td
+                                                onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
+                                                key={day} className="min-w-[40px] min-h-[40px] border-r border-gray-100 last:border-r-0 relative">
                                                 {isToday && (
                                                     <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                                 )}
@@ -440,6 +443,7 @@ const TimelineMatrix = () => {
                         {!isCurrentMonth &&
                             departments30daytable.map((dept) => (
                                 <tr
+                                    onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
                                     key={dept.Department}
 
                                     className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
@@ -489,6 +493,7 @@ const TimelineMatrix = () => {
 
                 </table>
             </div>
+
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
@@ -531,6 +536,7 @@ const TimelineMatrix = () => {
                                 onClick={(data) => {
                                     setSelectedDept(data.Department); // ✅ ชื่อแผนกที่ถูกคลิก
                                     setSelectedType("overdue");       // ✅ ตั้งประเภท
+                                    setViewMode('detail');
                                 }}
                             />
 
@@ -584,6 +590,7 @@ const TimelineMatrix = () => {
                                                 onClick={() => {
                                                     setSelectedDept(item.Department);
                                                     setSelectedType("overdue");
+                                                    setViewMode('detail');
                                                 }}
                                                 className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
                                                 title={`ดูรายละเอียดแผนก ${item.Department}`}
@@ -633,6 +640,7 @@ const TimelineMatrix = () => {
                                                 onClick={() => {
                                                     setSelectedDept(item.Department);
                                                     setSelectedType("ongoing");
+                                                    setViewMode('detail');
                                                 }}
                                                 className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
                                                 title={`ดูรายละเอียดแผนก ${item.Department}`}
@@ -650,26 +658,31 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            {selectedDept && selectedType && (
-                <DepartmentChecksheetDetails
-                    department={selectedDept}
-                    data={selectedType === "overdue" ? alloverdue : allongoing}
-                    setSelectedDept={setSelectedDept}
-                    type={selectedType}
-                    month={month}   // ส่งค่า month
-                    year={year}     // ส่งค่า year
-                />
+            {selectedDept && (
+                <>
+                    {viewMode === "detail" && selectedType && (
+                        <DepartmentChecksheetDetails
+                            department={selectedDept}
+                            data={selectedType === "overdue" ? alloverdue : allongoing}
+                            setSelectedDept={setSelectedDept}
+                            type={selectedType}
+                            month={month}
+                            year={year}
+                        />
+                    )}
+
+                    {viewMode === "all" && (
+                        <DepartmentAllChecksheet
+                            department={selectedDept}
+                            data={departmentdata}
+                            setSelectedDept={setSelectedDept}
+                            month={month}
+                            year={year}
+                        />
+                    )}
+                </>
             )}
 
-            {selectedDept && (
-                <DepartmentAllChecksheet
-                    department={selectedDept}
-                    data={departmentdata}
-                    setSelectedDept={setSelectedDept}
-                    month={month}
-                    year={year}
-                />
-            )}
 
 
 
