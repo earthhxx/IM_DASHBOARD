@@ -433,47 +433,74 @@ const Navbar = () => {
         <AiOutlineMenu size={24} />
       </button>
 
-      {/* Mobile Menu Sidebar */}
+      {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50
-  ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 w-[30%] h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 p-6 ease-in duration-500 overflow-y-auto shadow-lg
+    ${menuOpen ? "left-0" : "left-[-1000px]"}`}
       >
-        <div className="flex flex-col p-6 space-y-6 h-full">
-          {/* Close button */}
-          <button
-            onClick={handleMenuToggle}
-            className="self-end text-gray-600 hover:text-red-600"
-            aria-label="Close Menu"
-          >
-            <AiOutlineClose size={28} />
-          </button>
+        <div className="flex flex-col space-y-8 text-blue-900 font-sans">
 
           {/* Navigation Buttons */}
-          <nav className="flex flex-col space-y-4 mt-4">
-            <Link href="/pages/skill-Matrix?Param=PRODUCTION1" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              PRODUCTION 1
-            </Link>
-            <Link href="/pages/skill-Matrix?Param=PRODUCTION2" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              PRODUCTION 2
-            </Link>
-            <Link href="/pages/skill-Matrix?Param=PRODUCTION3" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              PRODUCTION 3
-            </Link>
-            <Link href="/pages/skill-Matrix?Param=PRODUCTION4" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              PRODUCTION 4
-            </Link>
-            <Link href="/pages/skill-Matrix?Param=PRODUCTION5" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              PRODUCTION 5
-            </Link>
-            <Link href="/pages/skill-Matrix?Param=WAREHOUSE" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              WAREHOUSE
-            </Link>
-            <Link href="/pages/skill-Matrix?Param=MAINTENANCE" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
-              MAINTENANCE
-            </Link>
+          <nav className="grid grid-cols-3 space-y-4 mt-4 border-b border-blue-300 pb-6">
+            {[
+              { name: "PRODUCTION 1", href: "/pages/skill-Matrix?Param=PRODUCTION1" },
+              { name: "PRODUCTION 2", href: "/pages/skill-Matrix?Param=PRODUCTION2" },
+              { name: "PRODUCTION 3", href: "/pages/skill-Matrix?Param=PRODUCTION3" },
+              { name: "PRODUCTION 4", href: "/pages/skill-Matrix?Param=PRODUCTION4" },
+              { name: "PRODUCTION 5", href: "/pages/skill-Matrix?Param=PRODUCTION5" },
+              { name: "WAREHOUSE", href: "/pages/skill-Matrix?Param=WAREHOUSE" },
+              { name: "MAINTENANCE", href: "/pages/skill-Matrix?Param=MAINTENANCE" },
+            ].map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={handleMenuToggle}
+                className="uppercase font-semibold text-lg hover:underline hover:text-blue-700 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
+
+          {/* Images */}
+          <div className="flex space-x-4 justify-center">
+            <img
+              src="/images/tai_img1.jpg"
+              alt="Sample 1"
+              className="w-[50%] h-[50%] rounded-lg shadow-md object-cover"
+            />
+            <img
+              src="/images/tai_img2.jpg"
+              alt="Sample 2"
+              className="w-[50%] h-[50%] rounded-lg shadow-md object-cover"
+            />
+          </div>
+
+          {/* Location & Contact Info */}
+          <div className="bg-white rounded-xl p-5 shadow-md text-sm leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Location</h3>
+            <p className="mb-4">
+              879 Moo 2 Bangpoo North Industrial Estate<br />
+              T.Praksa Mai, MuangSamutprakarn<br />
+              Samutprakarn Thailand 10280
+            </p>
+
+            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Established</h3>
+            <p className="mb-4">March 2011</p>
+
+            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Number of Employees</h3>
+            <p className="mb-4">376</p>
+
+            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Phone</h3>
+            <p className="mb-4">(66) 238-25-661</p>
+
+            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Sales Contact</h3>
+            <p>(66) 832-946-958 (Mr.Kikuchi)</p>
+          </div>
         </div>
       </div>
+
+
 
     </div>
 
@@ -481,3 +508,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
