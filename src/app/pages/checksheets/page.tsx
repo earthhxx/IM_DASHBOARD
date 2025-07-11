@@ -363,7 +363,6 @@ const TimelineMatrix = () => {
                             departments30daytable.map((dept) => (
                                 <tr
                                     key={dept.Department}
-
                                     className="hover:bg-gray-50 transition-all duration-150 border-b border-gray-100 cursor-pointer"
                                 >
                                     <td className=" left-0 px-4 py-3   whitespace-nowrap z-10 w-[120px] border-r border-gray-100 font-medium">
