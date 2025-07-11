@@ -235,6 +235,32 @@ const TimelineMatrix = () => {
     };
 
 
+    //มัดรวม graph bar
+    const combineOverdueAndOngoing = () => {
+        const overdue = groupOverdueByDepartment(alloverdue);   // [{ Department: "A", count: 3 }, ...]
+        const ongoing = groupOngoingByDepartment(allongoing);   // [{ Department: "A", count: 1 }, ...]
+
+        const map: { [dept: string]: { Department: string; Overdue: number; Ongoing: number } } = {};
+
+        overdue.forEach(({ Department, count }) => {
+            if (!map[Department]) {
+                map[Department] = { Department, Overdue: 0, Ongoing: 0 };
+            }
+            map[Department].Overdue = count;
+        });
+
+        ongoing.forEach(({ Department, count }) => {
+            if (!map[Department]) {
+                map[Department] = { Department, Overdue: 0, Ongoing: 0 };
+            }
+            map[Department].Ongoing = count;
+        });
+
+        return Object.values(map);
+    };
+
+
+
     const FetchAllCheckSheetData = async (month: number, year: number) => {
         try {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
@@ -471,65 +497,34 @@ const TimelineMatrix = () => {
 
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart
-                            data={groupOverdueByDepartment(alloverdue)}
+                            data={combineOverdueAndOngoing()}
                             margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
                             barCategoryGap="20%"
                             barGap={6}
                         >
                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-
                             <XAxis dataKey="Department" />
                             <YAxis allowDecimals={false} />
                             <Tooltip />
+                            {/* <Legend /> */}
 
-                            {/* <Legend
-                                layout="horizontal"
-                                align="center"
-                                verticalAlign="bottom"
-                                wrapperStyle={{
-                                    marginLeft: 35,
-                                    lineHeight: "28px",
-                                }}
-                                formatter={(value) => (
-                                    <span
-                                        style={{
-                                            margin: "0 8px",
-                                            display: "inline-block",
-                                            textTransform: "uppercase",
-                                            color: "#000",
-                                            fontWeight: "600",
-                                        }}
-                                    >
-                                        {value}
-                                    </span>
-                                )}
-                            /> */}
-
-                            {/* <Bar
-                                className="bar-glow"
-                                dataKey="Completed"
-                                name="COMPLETED"
-                                fill="#4ade80"
+                            <Bar
+                                dataKey="Overdue"
+                                name="OVERDUE"
+                                fill="#f87171"
                                 radius={[4, 4, 0, 0]}
                                 animationDuration={1000}
                             />
-                            <Bar
-                                className="bar-glow"
+                            {/* <Bar
                                 dataKey="Ongoing"
                                 name="ONGOING"
                                 fill="#facc15"
                                 radius={[4, 4, 0, 0]}
                                 animationDuration={1000}
                             /> */}
-                            <Bar
-                                dataKey="count"
-                                name="OVERDUE"
-                                fill="#f87171"
-                                radius={[4, 4, 0, 0]}
-                                animationDuration={1000}
-                            />
                         </BarChart>
                     </ResponsiveContainer>
+
 
 
                 </div>
