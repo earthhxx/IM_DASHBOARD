@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react'; // React default + useState for state management
 // import Image from 'next/image'; // Import Next.js Image component
-import { AiOutlineMenu } from 'react-icons/ai'; // Import Menu Icon from React Icons
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'; // Import Menu Icon from React Icons
 import Link from 'next/link'; // for navigation to other pages
 
 const Navbar = () => {
@@ -424,13 +424,57 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={menuOpen ? 'fixed left-0 top-0 w-[25%] h-screen bg-gray-400 p-10 ease-in duration-500' : 'fixed left-[-100%] top-0 p-10 ease-in duration-500'}>
-        <div className='flex items-start justify-center'>
-          <div className='flex-col '>
-          </div>
+      {/* Fixed Hamburger Button for Mobile */}
+      <button
+        onClick={handleMenuToggle}
+        className="fixed top-5 right-5 z-50 xl:hidden bg-blue-900 p-3 rounded-md text-white shadow-lg hover:bg-blue-700 transition-colors duration-300"
+        aria-label="Open Mobile Menu"
+      >
+        <AiOutlineMenu size={24} />
+      </button>
+
+      {/* Mobile Menu Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50
+  ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex flex-col p-6 space-y-6 h-full">
+          {/* Close button */}
+          <button
+            onClick={handleMenuToggle}
+            className="self-end text-gray-600 hover:text-red-600"
+            aria-label="Close Menu"
+          >
+            <AiOutlineClose size={28} />
+          </button>
+
+          {/* Navigation Buttons */}
+          <nav className="flex flex-col space-y-4 mt-4">
+            <Link href="/pages/skill-Matrix?Param=PRODUCTION1" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              PRODUCTION 1
+            </Link>
+            <Link href="/pages/skill-Matrix?Param=PRODUCTION2" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              PRODUCTION 2
+            </Link>
+            <Link href="/pages/skill-Matrix?Param=PRODUCTION3" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              PRODUCTION 3
+            </Link>
+            <Link href="/pages/skill-Matrix?Param=PRODUCTION4" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              PRODUCTION 4
+            </Link>
+            <Link href="/pages/skill-Matrix?Param=PRODUCTION5" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              PRODUCTION 5
+            </Link>
+            <Link href="/pages/skill-Matrix?Param=WAREHOUSE" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              WAREHOUSE
+            </Link>
+            <Link href="/pages/skill-Matrix?Param=MAINTENANCE" onClick={handleMenuToggle} className="uppercase font-semibold text-blue-900 hover:underline text-lg">
+              MAINTENANCE
+            </Link>
+          </nav>
         </div>
       </div>
+
     </div>
 
   );
