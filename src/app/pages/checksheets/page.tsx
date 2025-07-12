@@ -24,7 +24,7 @@ type Department30daytable = {
     overdue: number[];
     holiday?: number[];
     stopline: number[];
-    documentCount: number; 
+    documentCount: number;
 };
 
 const TimelineMatrix = () => {
@@ -304,6 +304,21 @@ const TimelineMatrix = () => {
                                 </div>
                             </th>
                         </tr>
+                        <tr className="flex">
+                            <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
+                                {departments30daytable.map((dept) => (
+                                    <tr key={dept.Department}>
+                                        <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
+                                            <div className="flex justify-between items-center">
+                                                {`${dept.Department}    ${dept.documentCount}`}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                ))}
+
+                            </th>
+                        </tr>
+
                         <tr className="border-b border-gray-200">
                             <th className=" left-0 p-4 text-left z-30 w-[120px] border-r border-gray-200 ">
                                 Department
@@ -613,35 +628,37 @@ const TimelineMatrix = () => {
                 </div>
             </section>
 
-            {selectedDept && (
-                <>
-                    {viewMode === "detail" && selectedType && (
-                        <DepartmentChecksheetDetails
-                            department={selectedDept}
-                            data={selectedType === "overdue" ? alloverdue : allongoing}
-                            setSelectedDept={setSelectedDept}
-                            type={selectedType}
-                            month={month}
-                            year={year}
-                        />
-                    )}
+            {
+                selectedDept && (
+                    <>
+                        {viewMode === "detail" && selectedType && (
+                            <DepartmentChecksheetDetails
+                                department={selectedDept}
+                                data={selectedType === "overdue" ? alloverdue : allongoing}
+                                setSelectedDept={setSelectedDept}
+                                type={selectedType}
+                                month={month}
+                                year={year}
+                            />
+                        )}
 
-                    {viewMode === "all" && (
-                        <DepartmentAllChecksheet
-                            department={selectedDept}
-                            data={departmentdata}
-                            setSelectedDept={setSelectedDept}
-                            month={month}
-                            year={year}
-                        />
-                    )}
-                </>
-            )}
+                        {viewMode === "all" && (
+                            <DepartmentAllChecksheet
+                                department={selectedDept}
+                                data={departmentdata}
+                                setSelectedDept={setSelectedDept}
+                                month={month}
+                                year={year}
+                            />
+                        )}
+                    </>
+                )
+            }
 
 
 
 
-        </div>
+        </div >
     );
 };
 
