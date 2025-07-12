@@ -30,6 +30,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
   const loopUntil = isCurrentMonth ? today : lastDay;
 
   const filtered = data.filter((item) => item.Department === department);
+  console.log('filtered',filtered);
   const days = Array.from({ length: lastDay }, (_, i) => i + 1);
 
   return (
@@ -137,7 +138,11 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                           val === "0" &&
                           ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
                         const isComplete = val === "1" && day <= loopUntil;
-                        const isHoliday = val === "2";
+                        const isHoliday = filtered.some(
+                          (item) =>
+                            item[`Date${day}`] === "2" &&
+                            ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
+                        );
 
                         let symbol = "";
                         if (isOverdue) symbol = "✕";

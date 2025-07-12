@@ -42,7 +42,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
           aria-label="Close"
         >
           <span className="text-4xl font-extrabold leading-none select-none">&times;</span>
-        </button> 
+        </button>
 
 
         <h2 className="text-3xl font-extrabold mb-8 text-center text-blue-900 select-none mt-8">
@@ -131,8 +131,11 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                       val === "0" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
                     const isComplete =
                       val === "1" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
-                    const isHoliday =
-                      val === "2" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
+                    const isHoliday = filtered.some(
+                      (item) =>
+                        item[`Date${day}`] === "2" &&
+                        ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
+                    );
                     const isLastDay = idx === days.length - 1;
                     const isLastRow = rowIndex === filtered.length - 1;
 

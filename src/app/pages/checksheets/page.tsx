@@ -277,12 +277,14 @@ const TimelineMatrix = () => {
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
             setalloverdue(overdue);
+            console.log(overdue);
 
             const ongoing = convertAllOngoingToChecksheetItems(data.data, month, year);
             setallongoing(ongoing);
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
+            console.log(transformed);
 
 
 
@@ -387,9 +389,7 @@ const TimelineMatrix = () => {
 
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
-
                                         const todayDate = new Date().getDate();
-
                                         const isToday = day === todayDate && month === currentMonth && year === currentYear;
                                         const isHoliday = dept.holiday?.includes(day);
 
@@ -398,7 +398,7 @@ const TimelineMatrix = () => {
 
                                         let icon = "";
                                         if (!isFutureOverdue) {
-                                            if (status === "completed") icon = "C";
+                                            if (status === "completed") icon = "✓";
                                             else if (status === "ongoing") icon = "";
                                             else if (status === "overdue") icon = "✕";
                                             else if (status === "stopline") icon = "S";
@@ -420,7 +420,7 @@ const TimelineMatrix = () => {
                                                     <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                                 )}
                                                 {isHoliday && (
-                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
+                                                    <div className="absolute inset-0 bg-gray-200/60" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
@@ -457,7 +457,7 @@ const TimelineMatrix = () => {
                                         const isHoliday = dept.holiday?.includes(day);
 
                                         const icon =
-                                            status === "completed" ? "C" :
+                                            status === "completed" ? "✓" :
                                                 status === "ongoing" ? "" :
                                                     status === "overdue" ? "✕" :
                                                         status === "stopline" ? "S" : "";
@@ -471,7 +471,7 @@ const TimelineMatrix = () => {
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
                                                 {isHoliday && (
-                                                    <div className="absolute inset-0 bg-gray-200/60 animate-pulse" />
+                                                    <div className="absolute inset-0 bg-gray-200/60" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
