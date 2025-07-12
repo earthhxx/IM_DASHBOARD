@@ -145,7 +145,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
 
                         let symbol = "";
                         if (isOverdue) symbol = "✕";
-                        else if (isComplete) symbol = "✔";
+                        else if (isComplete) symbol = "✓";
                         else if (val === "-") symbol = "–";
 
                         const bg = isToday
