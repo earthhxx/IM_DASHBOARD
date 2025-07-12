@@ -167,7 +167,9 @@ const TimelineMatrix = () => {
             grouped[dept]++;
         });
 
-        return Object.entries(grouped).map(([Department, count]) => ({
+        return Object.entries(grouped)
+        .sort((a, b) => b[1] - a[1]) // ✅ ใช้ index แทน .count
+        .map(([Department, count]) => ({
             Department,
             count,
         }));
@@ -195,10 +197,13 @@ const TimelineMatrix = () => {
             grouped[dept]++;
         });
 
-        return Object.entries(grouped).map(([Department, count]) => ({
-            Department,
-            count,
-        }));
+        return Object.entries(grouped)
+            .sort((a, b) => b[1] - a[1]) // ✅ ใช้ index แทน .count
+            .map(([Department, count]) => ({
+                Department,
+                count,
+            }));
+
     };
 
     //มัดรวม graph bar
