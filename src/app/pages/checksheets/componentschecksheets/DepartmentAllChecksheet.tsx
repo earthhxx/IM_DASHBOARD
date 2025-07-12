@@ -64,12 +64,12 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                 <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200 min-w-[280px]">
                   Form Name
                 </th>
-                <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200">
+                {/* <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200">
                   Status
                 </th>
                 <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200">
                   Progress
-                </th>
+                </th> */}
                 {days.map((day, idx) => {
                   const isLast = idx === days.length - 1;
                   const isToday = isCurrentMonth && day === today;
@@ -112,7 +112,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                   >
                     {item.FormName}
                   </td>
-                  <td
+                  {/* <td
                     className={`border border-gray-300 p-3 text-center ${rowIndex === filtered.length - 1 ? "" : ""
                       }`}
                   >
@@ -123,7 +123,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                       }`}
                   >
                     {item.Progress}%
-                  </td>
+                  </td> */}
                   {days.map((day, idx) => {
                     const val = item[`Date${day}`];
                     const isToday = isCurrentMonth && day === today;

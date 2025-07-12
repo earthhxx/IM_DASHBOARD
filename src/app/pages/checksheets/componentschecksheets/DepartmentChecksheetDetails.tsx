@@ -70,12 +70,12 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                   <th className="p-3 border border-gray-300 bg-blue-100 sticky left-[50px] z-40 text-left font-semibold min-w-[220px]">
                     แบบฟอร์ม
                   </th>
-                  <th className="p-3 border border-gray-300 font-semibold text-center">
+                  {/* <th className="p-3 border border-gray-300 font-semibold text-center">
                     สถานะ
                   </th>
                   <th className="p-3 border border-gray-300 font-semibold text-center">
                     ความคืบหน้า
-                  </th>
+                  </th> */}
                   {days.map((day) => {
                     const isToday = isCurrentMonth && day === today;
                     const isHoliday = filtered.some(
@@ -123,12 +123,12 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                       </td>
 
                       {/* Normal Columns */}
-                      <td className="p-3 border border-gray-200 text-center select-none">
+                      {/* <td className="p-3 border border-gray-200 text-center select-none">
                         {item.Status}
                       </td>
                       <td className="p-3 border border-gray-200 text-center select-none">
                         {item.Progress}%
-                      </td>
+                      </td> */}
 
                       {days.map((day) => {
                         const val = item[`Date${day}`];
