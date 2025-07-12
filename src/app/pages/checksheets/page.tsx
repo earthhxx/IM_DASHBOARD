@@ -26,57 +26,6 @@ type Department30daytable = {
     stopline: number[]; // 👈 เพิ่มตรงนี้
 };
 
-type CheckSheetPerDepartment = {
-    id: number;
-    FormID: string;
-    FormName: string;
-    Department: string;
-    Date1: string;
-    Date2: string;
-    Date3: string;
-    Date4: string;
-    Date5: string;
-    Date6: string;
-    Date7: string;
-    Date8: string;
-    Date9: string;
-    Date10: string;
-    Date11: string;
-    Date12: string;
-    Date13: string;
-    Date14: string;
-    Date15: string;
-    Date16: string;
-    Date17: string;
-    Date18: string;
-    Date19: string;
-    Date20: string;
-    Date21: string;
-    Date22: string;
-    Date23: string;
-    Date24: string;
-    Date25: string;
-    Date26: string;
-    Date27: string;
-    Date28: string;
-    Date29: string;
-    Date30: string;
-    Date31: string;
-};
-
-type DepartmentAllChecksheetProps = {
-    department: string;
-    data: any[];
-    setSelectedDept: (value: string) => void;
-    month: number;
-    year: number;
-};
-
-
-
-
-
-
 const TimelineMatrix = () => {
     //ปีและเดือนปัจจุบัน
     const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -210,7 +159,6 @@ const TimelineMatrix = () => {
         }));
     };
 
-
     // สำหรับแสดงรายการเช็คชีทที่กำลังรอในวันปัจจุบัน
     const [allongoing, setallongoing] = useState<any[]>([]);
 
@@ -263,8 +211,6 @@ const TimelineMatrix = () => {
         return Object.values(map);
     };
 
-
-
     const FetchAllCheckSheetData = async (month: number, year: number) => {
         try {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
@@ -274,18 +220,12 @@ const TimelineMatrix = () => {
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
             setalloverdue(overdue);
-            console.log(overdue);
 
             const ongoing = convertAllOngoingToChecksheetItems(data.data, month, year);
             setallongoing(ongoing);
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
-            console.log(transformed);
-
-
-
-
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -392,7 +332,6 @@ const TimelineMatrix = () => {
                                             Array.isArray(d.holiday) && d.holiday.includes(day)
                                         );
 
-
                                         const isFutureOverdue = day > todayDate && status === "overdue";
 
                                         let icon = "";
@@ -453,7 +392,9 @@ const TimelineMatrix = () => {
 
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
-                                        const isHoliday = dept.holiday?.includes(day);
+                                        const holiday = departments30daytable.find(d =>
+                                            Array.isArray(d.holiday) && d.holiday.includes(day)
+                                        );
 
                                         const icon =
                                             status === "completed" ? "✓" :
@@ -469,7 +410,7 @@ const TimelineMatrix = () => {
 
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
-                                                {isHoliday && (
+                                                {holiday && (
                                                     <div className="absolute inset-0 bg-gray-200/60" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
@@ -603,11 +544,6 @@ const TimelineMatrix = () => {
 
                         </table>
                     </section>
-
-
-
-
-
 
                     {/* Ongoing */}
                     <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">

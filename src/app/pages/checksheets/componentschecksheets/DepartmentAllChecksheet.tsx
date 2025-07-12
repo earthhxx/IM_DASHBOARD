@@ -17,7 +17,6 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
   year,
 }) => {
   const filtered = data.filter((item) => item.Department === department);
-  console.log(filtered);
   const now = new Date();
   const currentMonth = now.getMonth() + 1;
   const currentYear = now.getFullYear();
