@@ -22,8 +22,9 @@ type Department30daytable = {
     checked: number[];
     ongoing: number[];
     overdue: number[];
-    holiday?: number[]; // 👈 เพิ่มตรงนี้ถ้าต้องการเก็บวันหยุด
-    stopline: number[]; // 👈 เพิ่มตรงนี้
+    holiday?: number[];
+    stopline: number[];
+    documentCount: number; 
 };
 
 const TimelineMatrix = () => {
@@ -63,10 +64,15 @@ const TimelineMatrix = () => {
 
                     stopline: [],
 
+                    documentCount: 0,
+
                 };
             }
 
             const department = departmentsMap[departmentName];
+
+            // เพิ่มจำนวนเอกสารทีละ 1
+            department.documentCount += 1;
 
             for (let i = 1; i <= loopUntil; i++) {
                 const dayKey = `Date${i}`;
@@ -115,7 +121,8 @@ const TimelineMatrix = () => {
             }
         });
 
-        return Object.values(departmentsMap);
+        return Object.values(departmentsMap)
+            ;
     };
 
 
@@ -168,11 +175,11 @@ const TimelineMatrix = () => {
         });
 
         return Object.entries(grouped)
-        .sort((a, b) => b[1] - a[1]) // ✅ ใช้ index แทน .count
-        .map(([Department, count]) => ({
-            Department,
-            count,
-        }));
+            .sort((a, b) => b[1] - a[1]) // ✅ ใช้ index แทน .count
+            .map(([Department, count]) => ({
+                Department,
+                count,
+            }));
     };
 
     // สำหรับแสดงรายการเช็คชีทที่กำลังรอในวันปัจจุบัน
