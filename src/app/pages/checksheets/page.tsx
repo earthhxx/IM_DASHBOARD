@@ -204,7 +204,6 @@ const TimelineMatrix = () => {
     //มัดรวม graph bar
     const combineOverdueAndOngoing = () => {
         const overdue = groupOverdueByDepartment(alloverdue);   // [{ Department: "A", count: 3 }, ...]
-        // const ongoing = groupOngoingByDepartment(allongoing);   // [{ Department: "A", count: 1 }, ...]
 
         const map: { [dept: string]: { Department: string; Overdue: number; Ongoing: number } } = {};
 
@@ -219,14 +218,7 @@ const TimelineMatrix = () => {
             map[Department].Overdue = count;
         });
 
-        // ongoing.forEach(({ Department, count }) => {
-        //     if (!map[Department]) {
-        //         map[Department] = { Department, Overdue: 0, Ongoing: 0 };
-        //     }
-        //     map[Department].Ongoing = count;
-        // });
-
-        return Object.values(map);
+        return Object.values(map).sort((a, b) => b.Overdue - a.Overdue);
     };
 
     const FetchAllCheckSheetData = async (month: number, year: number) => {
