@@ -192,7 +192,7 @@ const TimelineMatrix = () => {
         const loopUntil = isCurrentMonth ? today : lastDay;
 
         return data.filter(item => {
-            for (let i = 1; i <= loopUntil; i++) {
+            for (let i = 1; i < loopUntil; i++) {
                 if (item[`Date${i}`] === "0") return true;
             }
             return false;
