@@ -129,7 +129,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                     const isOverdue =
                       val === "0" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
                     const isComplete =
-                      val === "1" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
+                      val === "1" && ((isCurrentMonth && day <= today) || (!isCurrentMonth && day <= lastDay));
                     const isHoliday = filtered.some(
                       (item) =>
                         item[`Date${day}`] === "2" &&
@@ -175,7 +175,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                           {val === "0" && isOverdue
                             ? "✕"
                             : val === "1" && isComplete
-                              ? "✔"
+                              ? "✓"
                               : val === "-"
                                 ? "–"
                                 : ""}
