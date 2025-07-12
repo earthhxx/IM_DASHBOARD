@@ -1,25 +1,29 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react'; // React default + useState for state management
-// import Image from 'next/image'; // Import Next.js Image component
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'; // Import Menu Icon from React Icons
-import Link from 'next/link'; // for navigation to other pages
+import React, { useState, useEffect, useRef } from 'react';
+import { AiOutlineMenu } from 'react-icons/ai';
+import Link from 'next/link';
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false); // State to toggle mobile menu visibility
-  const handleMenuToggle = () => setMenuOpen(!menuOpen); // Toggle mobile menu
+  const [menuOpen, setMenuOpen] = useState(false);
+  const handleMenuToggle = () => {
+    setMenuOpen((prev) => !prev);
+  };
 
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const buttonRefdestop = useRef<HTMLButtonElement | null>(null);
+  const wrapperRefMenu = useRef<HTMLDivElement | null>(null);
 
-  // Change the type of refs to HTMLLIElement
-  const wrapperRef1 = useRef<HTMLDivElement | null>(null); // Ref for PRODUCTION 1
-  const wrapperRef2 = useRef<HTMLDivElement | null>(null); // Ref for PRODUCTION 2
-  const wrapperRef3 = useRef<HTMLDivElement | null>(null); // Ref for PRODUCTION 3
-  const wrapperRef4 = useRef<HTMLDivElement | null>(null); // Ref for PRODUCTION 4
-  const wrapperRef5 = useRef<HTMLDivElement | null>(null); // Ref for PRODUCTION 5
-  const wrapperRef6 = useRef<HTMLDivElement | null>(null); // Ref for WAREHOUSE
-  const wrapperRef7 = useRef<HTMLDivElement | null>(null); // Ref for MAINTENANCE
-  const wrapperRef8 = useRef<HTMLDivElement | null>(null); // Ref for WORK INSTRUCTION
+  // card refs...
+  const wrapperRef1 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef2 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef3 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef4 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef5 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef6 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef7 = useRef<HTMLDivElement | null>(null);
+  const wrapperRef8 = useRef<HTMLDivElement | null>(null);
 
-  // Separate state for each card visibility
+  // state
   const [isCardOpen1, setIsCardOpen1] = useState(false);
   const [isCardOpen2, setIsCardOpen2] = useState(false);
   const [isCardOpen3, setIsCardOpen3] = useState(false);
@@ -40,34 +44,50 @@ const Navbar = () => {
     if (card === 8) setIsCardOpen8(!isCardOpen8);
   };
 
-  // Close card if clicked outside of the card
-  const handleClickOutside = (e: MouseEvent | TouchEvent) => {
-    if (wrapperRef1.current && !wrapperRef1.current.contains(e.target as Node)) {
+  const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+    const menu = wrapperRefMenu.current;
+    const button = buttonRef.current;
+    const buttondestop = buttonRefdestop.current;
+
+    if (wrapperRef1.current && !wrapperRef1.current.contains(event.target as Node)) {
       setIsCardOpen1(false);
     }
-    if (wrapperRef2.current && !wrapperRef2.current.contains(e.target as Node)) {
+    if (wrapperRef2.current && !wrapperRef2.current.contains(event.target as Node)) {
       setIsCardOpen2(false);
     }
-    if (wrapperRef3.current && !wrapperRef3.current.contains(e.target as Node)) {
+    if (wrapperRef3.current && !wrapperRef3.current.contains(event.target as Node)) {
       setIsCardOpen3(false);
     }
-    if (wrapperRef4.current && !wrapperRef4.current.contains(e.target as Node)) {
+    if (wrapperRef4.current && !wrapperRef4.current.contains(event.target as Node)) {
       setIsCardOpen4(false);
     }
-    if (wrapperRef5.current && !wrapperRef5.current.contains(e.target as Node)) {
+    if (wrapperRef5.current && !wrapperRef5.current.contains(event.target as Node)) {
       setIsCardOpen5(false);
     }
-    if (wrapperRef6.current && !wrapperRef6.current.contains(e.target as Node)) {
+    if (wrapperRef6.current && !wrapperRef6.current.contains(event.target as Node)) {
       setIsCardOpen6(false);
     }
-    if (wrapperRef7.current && !wrapperRef7.current.contains(e.target as Node)) {
+    if (wrapperRef7.current && !wrapperRef7.current.contains(event.target as Node)) {
       setIsCardOpen7(false);
     }
-    if (wrapperRef8.current && !wrapperRef8.current.contains(e.target as Node)) {
+    if (wrapperRef8.current && !wrapperRef8.current.contains(event.target as Node)) {
       setIsCardOpen8(false);
+    }
+
+    if (
+      menuOpen &&
+      menu &&
+      !menu.contains(event.target as Node) &&
+      button &&
+      !button.contains(event.target as Node) &&
+      buttondestop &&
+      !buttondestop.contains(event.target as Node)
+    ) {
+      setMenuOpen(false);
     }
   };
 
+  // ✅ useEffect ต้องอยู่ **ภายใน** ฟังก์ชัน component
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside);
@@ -76,7 +96,9 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, []);
+  }, [menuOpen]);
+
+
 
   return (
 
@@ -175,13 +197,16 @@ const Navbar = () => {
                   </button> */}
                 {/* Mobile Menu Button */}
 
-                <div
+                <button
+                  ref={
+                    buttonRefdestop
+                  }
                   onClick={handleMenuToggle}
                   className='cursor-pointer rounded-full bg-slate-800 flex items-center justify-center'
                   style={{ width: '30px', height: '30px' }}
                 >
                   <AiOutlineMenu style={{ width: '10px', height: '10px' }} color="white" />
-                </div>
+                </button>
 
               </div>
             </ul>
@@ -424,81 +449,87 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Fixed Hamburger Button for Mobile */}
-      <button
-        onClick={handleMenuToggle}
-        className="fixed top-5 right-5 z-50 xl:hidden bg-blue-900 p-3 rounded-md text-white shadow-lg hover:bg-blue-700 transition-colors duration-300"
-        aria-label="Open Mobile Menu"
-      >
-        <AiOutlineMenu size={24} />
-      </button>
+      <div>
+        {/* Fixed Hamburger Button for Mobile */}
+        <button
+          ref={buttonRef}
+          onClick={handleMenuToggle}
+          className="fixed top-5 right-5 z-50 xl:hidden bg-blue-900 p-3 rounded-md text-white shadow-lg hover:bg-blue-700 transition-colors duration-300"
+          aria-label="Open Mobile Menu"
+        >
+          <AiOutlineMenu size={24} />
+        </button>
 
-      {/* Mobile Menu */}
-      <div
-        className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 p-6 ease-in duration-500 overflow-y-auto shadow-lg
+        {/* Mobile Menu */}
+        <div
+          ref={wrapperRefMenu}
+          className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 p-6 ease-in duration-500 overflow-y-auto shadow-lg
     ${menuOpen ? "translate-x-0" : "-translate-x-full"} w-full md:w-[30%] transform transition-transform`}
-      >
-        <div className="flex flex-col space-y-8 text-blue-900 font-sans">
+        >
 
-          {/* Navigation Buttons */}
-          <nav className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-4 mt-4 border-b border-blue-300 pb-6">
-            {[
-              { name: "PRODUCTION 1", href: "/pages/skill-Matrix?Param=PRODUCTION1" },
-              { name: "PRODUCTION 2", href: "/pages/skill-Matrix?Param=PRODUCTION2" },
-              { name: "PRODUCTION 3", href: "/pages/skill-Matrix?Param=PRODUCTION3" },
-              { name: "PRODUCTION 4", href: "/pages/skill-Matrix?Param=PRODUCTION4" },
-              { name: "PRODUCTION 5", href: "/pages/skill-Matrix?Param=PRODUCTION5" },
-              { name: "WAREHOUSE", href: "/pages/skill-Matrix?Param=WAREHOUSE" },
-              { name: "MAINTENANCE", href: "/pages/skill-Matrix?Param=MAINTENANCE" },
-            ].map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={handleMenuToggle}
-                className="uppercase font-semibold text-lg hover:underline hover:text-blue-700 transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex flex-col space-y-8 text-blue-900 font-sans">
 
-          {/* Images */}
-          <div className="flex flex-col xl:flex-row space-y-4 xl:space-y-0 xl:space-x-4 justify-center ">
-            <img
-              src="/images/tai_img1.jpg"
-              alt="Sample 1"
-              className="w-full xl:w-1/2 rounded-lg shadow-md object-cover max-h-48"
-            />
-            <img
-              src="/images/tai_img2.jpg"
-              alt="Sample 2"
-              className="w-full xl:w-1/2 rounded-lg shadow-md object-cover max-h-48"
-            />
-          </div>
+            {/* Navigation Buttons */}
+            <nav className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-4 mt-4 border-b border-blue-300 pb-6">
+              {[
+                { name: "PRODUCTION 1", href: "/pages/skill-Matrix?Param=PRODUCTION1" },
+                { name: "PRODUCTION 2", href: "/pages/skill-Matrix?Param=PRODUCTION2" },
+                { name: "PRODUCTION 3", href: "/pages/skill-Matrix?Param=PRODUCTION3" },
+                { name: "PRODUCTION 4", href: "/pages/skill-Matrix?Param=PRODUCTION4" },
+                { name: "PRODUCTION 5", href: "/pages/skill-Matrix?Param=PRODUCTION5" },
+                { name: "WAREHOUSE", href: "/pages/skill-Matrix?Param=WAREHOUSE" },
+                { name: "MAINTENANCE", href: "/pages/skill-Matrix?Param=MAINTENANCE" },
+              ].map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={handleMenuToggle}
+                  className="uppercase font-semibold text-lg hover:underline hover:text-blue-700 transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
 
-          {/* Location & Contact Info */}
-          <div className="bg-white rounded-xl p-5 shadow-md text-sm leading-relaxed">
-            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Location</h3>
-            <p className="mb-4">
-              879 Moo 2 Bangpoo North Industrial Estate<br />
-              T.Praksa Mai, MuangSamutprakarn<br />
-              Samutprakarn Thailand 10280
-            </p>
+            {/* Images */}
+            <div className="flex flex-col xl:flex-row space-y-4 xl:space-y-0 xl:space-x-4 justify-center ">
+              <img
+                src="/images/tai_img1.jpg"
+                alt="Sample 1"
+                className="w-full xl:w-1/2 rounded-lg shadow-md object-cover max-h-48"
+              />
+              <img
+                src="/images/tai_img2.jpg"
+                alt="Sample 2"
+                className="w-full xl:w-1/2 rounded-lg shadow-md object-cover max-h-48"
+              />
+            </div>
 
-            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Established</h3>
-            <p className="mb-4">March 2011</p>
+            {/* Location & Contact Info */}
+            <div className="bg-white rounded-xl p-5 shadow-md text-sm leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Location</h3>
+              <p className="mb-4">
+                879 Moo 2 Bangpoo North Industrial Estate<br />
+                T.Praksa Mai, MuangSamutprakarn<br />
+                Samutprakarn Thailand 10280
+              </p>
 
-            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Number of Employees</h3>
-            <p className="mb-4">376</p>
+              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Established</h3>
+              <p className="mb-4">March 2011</p>
 
-            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Phone</h3>
-            <p className="mb-4">(66) 238-25-661</p>
+              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Number of Employees</h3>
+              <p className="mb-4">376</p>
 
-            <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Sales Contact</h3>
-            <p>(66) 832-946-958 (Mr.Kikuchi)</p>
+              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Phone</h3>
+              <p className="mb-4">(66) 238-25-661</p>
+
+              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Sales Contact</h3>
+              <p>(66) 832-946-958 (Mr.Kikuchi)</p>
+            </div>
           </div>
         </div>
       </div>
+
 
 
     </div>
