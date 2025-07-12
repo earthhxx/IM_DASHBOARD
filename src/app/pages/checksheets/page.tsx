@@ -73,11 +73,6 @@ type DepartmentAllChecksheetProps = {
     year: number;
 };
 
-
-
-
-
-
 const TimelineMatrix = () => {
     //ปีและเดือนปัจจุบัน
     const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -92,98 +87,44 @@ const TimelineMatrix = () => {
 
     //for table data
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
-    const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
-        const departmentsMap: { [key: string]: Department30daytable } = {};
+    const transformDataToDepartments = (data: any[], month: number, year: number) => {
         const now = new Date();
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
         const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
         const loopUntil = isCurrentMonth ? today : lastDay;
 
-        data.forEach((item) => {
-            const departmentName = item.Department;
-
-            if (!departmentsMap[departmentName]) {
-                departmentsMap[departmentName] = {
-                    Department: departmentName,
-                    status: item.status,
-                    checked: [],
-                    ongoing: [],
-                    ongoingdoc: 0,
-                    overdue: [],
-                    stopline: [],
-                };
-            }
-
-            const department = departmentsMap[departmentName];
-
-            for (let i = 1; i <= loopUntil; i++) {
-                const dayKey = `Date${i}`;
-                const value = item[dayKey];
-
-                if (value === "-") {
-                    department.checked = department.checked.filter(d => d !== i);
-                    department.ongoing = department.ongoing.filter(d => d !== i);
-                    department.overdue = department.overdue.filter(d => d !== i);
-                    if (!department.stopline.includes(i)) department.stopline.push(i);
-                    continue;
+        return (
+            data.filter(item => {
+                for (let i = 1; i <= loopUntil; i++){
+                    
                 }
-
-                if (i === today && value === "0" && isCurrentMonth) {
-                    department.ongoingdoc = (department.ongoingdoc || 0) + 1;
-                    department.checked = department.checked.filter(d => d !== i);
-                    department.overdue = department.overdue.filter(d => d !== i);
-                    department.stopline = department.stopline.filter(d => d !== i);
-                    if (!department.ongoing.includes(i)) department.ongoing.push(i);
-                    continue;
-                }
-
-                if (value === "0") {
-                    department.checked = department.checked.filter(d => d !== i);
-                    department.ongoing = department.ongoing.filter(d => d !== i);
-                    department.stopline = department.stopline.filter(d => d !== i);
-                    if (!department.overdue.includes(i)) department.overdue.push(i);
-                    continue;
-                }
-
-                if (value === "1") {
-                    if (
-                        !department.ongoing.includes(i) &&
-                        !department.overdue.includes(i) &&
-                        !department.stopline.includes(i)
-                    ) {
-                        if (!department.checked.includes(i)) department.checked.push(i);
-                    }
-                    continue;
-                }
-
-                if (value === "2") {
-                    if (!department.holiday) department.holiday = [];
-                    if (!department.holiday.includes(i)) department.holiday.push(i);
-                    continue;
-                }
-            }
-        });
-
-        return Object.values(departmentsMap);
-    };
+            })
+        )
 
 
-    const getStatus = (
-        dept: Department30daytable,
-        day: number
-    ): "completed" | "ongoing" | "overdue" | "stopline" | "holiday" | "null" => {
-        if (dept.stopline.includes(day)) return "stopline";
-        if (dept.ongoing.includes(day)) return "ongoing";
-        if (dept.overdue.includes(day)) return "overdue";
-        if (dept.checked.includes(day)) return "completed";
-        if (dept.holiday && dept.holiday.includes(day)) return "holiday";
 
-        return "null";
     };
 
     // สำหรับแสดงรายการเช็คชีตที่เกินกำหนด
     const [alloverdue, setalloverdue] = useState<any[]>([]);
+    const [alloverduedetail, setalloverduedetail] = useState<any[]>([]);
+
+    const convertAllOverdueToChecksheetItemsdetail = (data: any[], month: number, year: number) => {
+        const now = new Date();
+        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
+        const today = now.getDate();
+        const lastDay = new Date(year, month, 0).getDate();
+        const loopUntil = isCurrentMonth ? today : lastDay;
+
+        return data.filter(item => {
+            for (let i = 1; i <= loopUntil; i++) {
+                if (item[`Date${i}`] === "0") return true;
+            }
+            return false;
+        });
+    };
+
     const convertAllOverdueToChecksheetItems = (data: any[], month: number, year: number) => {
         const now = new Date();
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
@@ -277,10 +218,14 @@ const TimelineMatrix = () => {
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
             setalloverdue(overdue);
-            console.log(overdue);
+            const overduedetail = convertAllOverdueToChecksheetItemsdetail(data.data, month, year);
+            setalloverduedetail(overduedetail);
+            console.log('overdue', overdue);
+            console.log('overduedetail', overduedetail);
 
             const ongoing = convertAllOngoingToChecksheetItems(data.data, month, year);
             setallongoing(ongoing);
+            console.log(ongoing);
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
@@ -354,9 +299,9 @@ const TimelineMatrix = () => {
 
                                 const isToday = isCurrentMonth && day === todayDate;
 
-                                const holiday = departments30daytable.find(d =>
-                                    Array.isArray(d.holiday) && d.holiday.includes(day)
-                                );
+                                const holiday = departmentdata.some(item => (item as any)[`Date${day}`] === "2");
+
+
 
                                 return (
                                     <th
@@ -391,7 +336,7 @@ const TimelineMatrix = () => {
                                         let status = getStatus(dept, day);
                                         const todayDate = new Date().getDate();
                                         const isToday = day === todayDate && month === currentMonth && year === currentYear;
-                                        const isHoliday = dept.holiday?.includes(day);
+                                        const isHoliday = dept.holiday
 
 
                                         const isFutureOverdue = day > todayDate && status === "overdue";
@@ -401,8 +346,10 @@ const TimelineMatrix = () => {
                                             if (status === "completed") icon = "✓";
                                             else if (status === "ongoing") icon = "";
                                             else if (status === "overdue") icon = "✕";
-                                            else if (status === "stopline") icon = "S";
+                                            else if (status === "stopline") icon = "–";
+                                            else if (status === "holiday") icon = "";
                                         }
+
 
 
                                         const dotColor =
@@ -410,7 +357,9 @@ const TimelineMatrix = () => {
                                                 status === "ongoing" ? "" :
                                                     isFutureOverdue ? "" : // ✅ ใช้เงื่อนไขแทรกได้เลย
                                                         status === "overdue" ? "bg-red-500 text-white  rounded-full shadow-sm" :
-                                                            status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
+                                                            status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : ""
+                                        status === "holiday" ? "text-gray-500" :
+                                            "";
 
                                         return (
                                             <td
@@ -663,7 +612,7 @@ const TimelineMatrix = () => {
                     {viewMode === "detail" && selectedType && (
                         <DepartmentChecksheetDetails
                             department={selectedDept}
-                            data={selectedType === "overdue" ? alloverdue : allongoing}
+                            data={selectedType === "overdue" ? alloverduedetail : allongoing}
                             setSelectedDept={setSelectedDept}
                             type={selectedType}
                             month={month}
