@@ -56,9 +56,13 @@ const TimelineMatrix = () => {
                     Department: departmentName,
                     status: item.status,
                     checked: [],
+
                     ongoing: [],
+
                     overdue: [],
+
                     stopline: [],
+
                 };
             }
 
@@ -115,6 +119,7 @@ const TimelineMatrix = () => {
     };
 
 
+
     const getStatus = (
         dept: Department30daytable,
         day: number
@@ -127,6 +132,15 @@ const TimelineMatrix = () => {
 
         return "null";
     };
+
+    const allHolidayDays = Array.from(
+        new Set(
+            departments30daytable.flatMap((d) =>
+                Array.isArray(d.holiday) ? d.holiday : []
+            )
+        )
+    );
+
 
     // สำหรับแสดงรายการเช็คชีตที่เกินกำหนด
     const [alloverdue, setalloverdue] = useState<any[]>([]);
@@ -190,9 +204,13 @@ const TimelineMatrix = () => {
     //มัดรวม graph bar
     const combineOverdueAndOngoing = () => {
         const overdue = groupOverdueByDepartment(alloverdue);   // [{ Department: "A", count: 3 }, ...]
-        const ongoing = groupOngoingByDepartment(allongoing);   // [{ Department: "A", count: 1 }, ...]
+        // const ongoing = groupOngoingByDepartment(allongoing);   // [{ Department: "A", count: 1 }, ...]
 
         const map: { [dept: string]: { Department: string; Overdue: number; Ongoing: number } } = {};
+
+        departmentdata.forEach(({ Department }) => {
+            map[Department] = { Department, Overdue: 0, Ongoing: 0 };
+        });
 
         overdue.forEach(({ Department, count }) => {
             if (!map[Department]) {
@@ -201,12 +219,12 @@ const TimelineMatrix = () => {
             map[Department].Overdue = count;
         });
 
-        ongoing.forEach(({ Department, count }) => {
-            if (!map[Department]) {
-                map[Department] = { Department, Overdue: 0, Ongoing: 0 };
-            }
-            map[Department].Ongoing = count;
-        });
+        // ongoing.forEach(({ Department, count }) => {
+        //     if (!map[Department]) {
+        //         map[Department] = { Department, Overdue: 0, Ongoing: 0 };
+        //     }
+        //     map[Department].Ongoing = count;
+        // });
 
         return Object.values(map);
     };
@@ -291,16 +309,15 @@ const TimelineMatrix = () => {
 
                                 const isToday = isCurrentMonth && day === todayDate;
 
-                                const holiday = departments30daytable.find(d =>
-                                    Array.isArray(d.holiday) && d.holiday.includes(day)
-                                );
+                                const isHoliday = allHolidayDays.includes(day);
+
 
                                 return (
                                     <th
                                         key={day}
                                         className={`px-3 py-3 text-center  border-r border-gray-100 last:border-r-0 select-none transition-all duration-300
                 ${isToday ? "bg-yellow-400 animate-pulse text-black " : ""}  
-                ${holiday ? "bg-gray-400 " : ""}`}
+                ${isHoliday ? "bg-gray-400 " : ""}`}
                                         title={`Day ${day}`}
                                     >
                                         {day}
@@ -328,9 +345,8 @@ const TimelineMatrix = () => {
                                         let status = getStatus(dept, day);
                                         const todayDate = new Date().getDate();
                                         const isToday = day === todayDate && month === currentMonth && year === currentYear;
-                                        const holiday = departments30daytable.find(d =>
-                                            Array.isArray(d.holiday) && d.holiday.includes(day)
-                                        );
+                                        const isHoliday = allHolidayDays.includes(day);
+
 
                                         const isFutureOverdue = day > todayDate && status === "overdue";
 
@@ -357,7 +373,7 @@ const TimelineMatrix = () => {
                                                 {isToday && (
                                                     <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                                 )}
-                                                {holiday && (
+                                                {isHoliday && (
                                                     <div className="absolute inset-0 bg-gray-200/60" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">

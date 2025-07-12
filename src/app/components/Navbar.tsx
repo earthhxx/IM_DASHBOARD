@@ -517,14 +517,9 @@ const Navbar = () => {
               <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Established</h3>
               <p className="mb-4">March 2011</p>
 
-              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Number of Employees</h3>
-              <p className="mb-4">376</p>
-
               <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Phone</h3>
-              <p className="mb-4">(66) 238-25-661</p>
-
-              <h3 className="text-xl font-bold mb-3 border-b border-blue-300 pb-2">Sales Contact</h3>
-              <p>(66) 832-946-958 (Mr.Kikuchi)</p>
+              <p className="">(66) 02-1307921</p>
+              <p className="mb-4">(66) 02-1307922</p>
             </div>
           </div>
         </div>
