@@ -107,24 +107,24 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                   })}
                 </tr>
               </thead>
-
               <tbody>
                 {paginatedData.map((item, index) => {
-                  const isLastRow = index === filtered.length - 1;
+                  const isLastRow = index === paginatedData.length - 1;
+
                   return (
                     <tr
                       key={item.id}
-                      className=" group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
+                      className="group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
                     >
-                      {/*  Column 1 - Index */}
+                      {/* Column 1 - Index */}
                       <td
-                        className={` p-3 border border-gray-200 left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none ${isLastRow ? "rounded-bl-lg" : ""
+                        className={`p-3 border border-gray-200 left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none ${isLastRow ? "rounded-bl-lg" : ""
                           }`}
                       >
-                        {index + 1}
+                        {(currentPage - 1) * itemsPerPage + index + 1}
                       </td>
 
-                      {/*  Column 2 - Form Name */}
+                      {/* Column 2 - Form Name */}
                       <td
                         className={`p-3 border border-gray-200 left-[50px] bg-white z-20 truncate group-hover:bg-blue-100 select-text ${isLastRow ? "rounded-br-lg" : ""
                           }`}
@@ -132,51 +132,47 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                         {item.FormName}
                       </td>
 
-                      {/* Normal Columns */}
-                      {/* <td className="p-3 border border-gray-200 text-center select-none">
-                        {item.Status}
-                      </td>
-                      <td className="p-3 border border-gray-200 text-center select-none">
-                        {item.Progress}%
-                      </td> */}
-
-                      {days.map((day) => {
+                      {/* Days Columns */}
+                      {days.map((day, dayIndex) => {
                         const val = item[`Date${day}`];
                         const isToday = isCurrentMonth && day === today;
                         const isOverdue =
                           val === "0" &&
-                          ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
-                        const isComplete = val === 1 || val === "1";
+                          ((isCurrentMonth && day < today) ||
+                            (!isCurrentMonth && day <= lastDay));
+                        const isComplete = val === "1" || val === 1;
                         const isHoliday = filtered.some(
                           (item) =>
                             item[`Date${day}`] === "2" &&
-                            ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
+                            ((isCurrentMonth && day < today) ||
+                              (!isCurrentMonth && day <= lastDay))
                         );
 
-                        let symbol = "";
-                        if (isOverdue) symbol = "✕";
-                        else if (isComplete) symbol = "✓";
-                        else if (val === "-") symbol = "–";
-
-                        const bg = isToday
-                          ? "bg-yellow-100"
-                          : isHoliday
-                            ? "bg-gray-100"
-                            : "";
-
-                        const color = isOverdue
-                          ? "text-red-600 font-bold"
+                        const symbol = isOverdue
+                          ? "✕"
                           : isComplete
-                            ? "text-green-600 font-bold"
-                            : "text-gray-600";
+                            ? "✓"
+                            : val === "-"
+                              ? "–"
+                              : "";
+
+                        const isLastDay = dayIndex === days.length - 1;
 
                         return (
                           <td
                             key={day}
-                            className={`p-1 text-center border border-gray-200 min-w-[28px] h-8 ${bg} select-none`}
-                            title={`วันที่ ${day}`}
+                            className={`border border-gray-300 p-1 text-center relative min-w-[30px] h-8 select-none ${isLastDay && isLastRow ? "rounded-br-2xl" : ""
+                              }`}
                           >
-                            <span className={color} style={{ fontSize: "1rem" }}>
+                            <span
+                              className={`${isOverdue
+                                  ? "text-red-600 font-bold"
+                                  : isComplete
+                                    ? "text-green-600 font-bold"
+                                    : "text-gray-600"
+                                }`}
+                              style={{ fontSize: "1rem" }}
+                            >
                               {symbol}
                             </span>
                           </td>
@@ -186,6 +182,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                   );
                 })}
               </tbody>
+
             </table>
           )}
           <div className="flex justify-center items-center gap-4 mt-6">
@@ -197,10 +194,10 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                 : "bg-blue-500 text-white hover:bg-blue-600"
                 }`}
             >
-              ⬅ ก่อนหน้า
+              ⬅ Back
             </button>
             <span className="font-bold text-blue-900">
-              หน้า {currentPage} / {totalPages}
+              Page {currentPage} / {totalPages}
             </span>
             <button
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
@@ -210,7 +207,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                 : "bg-blue-500 text-white hover:bg-blue-600"
                 }`}
             >
-              ถัดไป ➡
+              Next ➡
             </button>
           </div>
 

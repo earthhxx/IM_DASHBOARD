@@ -104,99 +104,92 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                 })}
               </tr>
             </thead>
-
             <tbody>
-              {paginatedData.map((item, rowIndex) => (
-                <tr
-                  key={item.id}
-                  className="hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
-                >
-                  <td
-                    className={`border border-gray-300 p-3  font-semibold text-center ${rowIndex === filtered.length - 1 ? "rounded-bl-2xl" : ""
-                      }`}
-                  >
-                    {rowIndex + 1}
-                  </td>
-                  <td
-                    className={`border border-gray-300 p-3 font-medium min-w-[280px] truncate max-w-xs select-text ${rowIndex === filtered.length - 1 ? "" : ""
-                      }`}
-                  >
-                    {item.FormName}
-                  </td>
-                  {/* <td
-                    className={`border border-gray-300 p-3 text-center ${rowIndex === filtered.length - 1 ? "" : ""
-                      }`}
-                  >
-                    {item.Status}
-                  </td>
-                  <td
-                    className={`border border-gray-300 p-3 text-center ${rowIndex === filtered.length - 1 ? "" : ""
-                      }`}
-                  >
-                    {item.Progress}%
-                  </td> */}
-                  {days.map((day, idx) => {
-                    const val = item[`Date${day}`];
-                    const isToday = isCurrentMonth && day === today;
-                    const isOverdue =
-                      val === "0" && ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay));
-                    const isComplete =
-                      val === "1" && ((isCurrentMonth && day <= today) || (!isCurrentMonth && day <= lastDay));
-                    const isHoliday = filtered.some(
-                      (item) =>
-                        item[`Date${day}`] === "2" &&
-                        ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
-                    );
-                    const isLastDay = idx === days.length - 1;
-                    const isLastRow = rowIndex === filtered.length - 1;
+              {paginatedData.map((item, rowIndex) => {
+                const isLastRow = rowIndex === paginatedData.length - 1;
 
-                    return (
-                      <td
-                        key={day}
-                        className={`border border-gray-300 p-1 text-center relative min-w-[30px] h-8 select-none ${isLastDay && isLastRow ? "rounded-br-2xl" : ""
-                          }`}
-                      >
-                        {/* Highlight today */}
-                        {isToday && (
-                          <div className="absolute inset-0 bg-yellow-300/60 rounded animate-pulse z-0" />
-                        )}
+                return (
+                  <tr
+                    key={item.id}
+                    className="hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
+                  >
+                    <td
+                      className={`border border-gray-300 p-3 font-semibold text-center ${isLastRow ? "rounded-bl-2xl" : ""
+                        }`}
+                    >
+                      {(currentPage - 1) * itemsPerPage + rowIndex + 1}
+                    </td>
 
-                        {/* Background for holiday */}
-                        {isHoliday && (
-                          <div className="absolute inset-0 bg-gray-200/50 z-0 rounded" />
-                        )}
+                    <td
+                      className={`border border-gray-300 p-3 font-medium min-w-[280px] truncate max-w-xs select-text ${isLastRow ? "rounded-br-2xl" : ""
+                        }`}
+                    >
+                      {item.FormName}
+                    </td>
 
-                        <span
-                          className={`relative z-10 ${isOverdue
-                            ? "text-red-700 font-bold"
-                            : isComplete
-                              ? "text-green-700 font-bold"
-                              : "text-gray-600"
-                            }`}
-                          title={`วันที่ ${day}: ${val === "0"
-                            ? "ค้างตรวจ"
-                            : val === "1"
-                              ? "ตรวจแล้ว"
-                              : val === "-"
-                                ? "ไม่ตรวจ"
-                                : val === "2"
-                                  ? "วันหยุด"
-                                  : "ไม่มีข้อมูล"
+                    {days.map((day, idx) => {
+                      const val = item[`Date${day}`];
+                      const isToday = isCurrentMonth && day === today;
+                      const isOverdue =
+                        val === "0" &&
+                        ((isCurrentMonth && day < today) ||
+                          (!isCurrentMonth && day <= lastDay));
+                      const isComplete =
+                        val === "1" &&
+                        ((isCurrentMonth && day <= today) ||
+                          (!isCurrentMonth && day <= lastDay));
+                      const isHoliday = filtered.some(
+                        (item) =>
+                          item[`Date${day}`] === "2" &&
+                          ((isCurrentMonth && day < today) ||
+                            (!isCurrentMonth && day <= lastDay))
+                      );
+                      const isLastDay = idx === days.length - 1;
+
+                      return (
+                        <td
+                          key={day}
+                          className={`border border-gray-300 p-1 text-center relative min-w-[30px] h-8 select-none ${isLastDay && isLastRow ? "rounded-br-2xl" : ""
                             }`}
                         >
-                          {val === "0" && isOverdue
-                            ? "✕"
-                            : val === "1" && isComplete
-                              ? "✓"
-                              : val === "-"
-                                ? "–"
-                                : ""}
-                        </span>
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
+                          {isToday && (
+                            <div className="absolute inset-0 bg-yellow-300/60 rounded animate-pulse z-0" />
+                          )}
+                          {isHoliday && (
+                            <div className="absolute inset-0 bg-gray-200/50 z-0 rounded" />
+                          )}
+                          <span
+                            className={`relative z-10 ${isOverdue
+                                ? "text-red-700 font-bold"
+                                : isComplete
+                                  ? "text-green-700 font-bold"
+                                  : "text-gray-600"
+                              }`}
+                            title={`วันที่ ${day}: ${val === "0"
+                                ? "ค้างตรวจ"
+                                : val === "1"
+                                  ? "ตรวจแล้ว"
+                                  : val === "-"
+                                    ? "ไม่ตรวจ"
+                                    : val === "2"
+                                      ? "วันหยุด"
+                                      : "ไม่มีข้อมูล"
+                              }`}
+                          >
+                            {val === "0" && isOverdue
+                              ? "✕"
+                              : val === "1" && isComplete
+                                ? "✓"
+                                : val === "-"
+                                  ? "–"
+                                  : ""}
+                          </span>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
 
           </table>
@@ -206,29 +199,29 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
             className={`px-4 py-2 rounded-lg font-semibold shadow ${currentPage === 1
-                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                : "bg-blue-500 text-white hover:bg-blue-600"
+              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
           >
-            ⬅ ก่อนหน้า
+            ⬅ Back
           </button>
           <span className="font-bold text-blue-900">
-            หน้า {currentPage} / {totalPages}
+            Page {currentPage} / {totalPages}
           </span>
           <button
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
             className={`px-4 py-2 rounded-lg font-semibold shadow ${currentPage === totalPages
-                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                : "bg-blue-500 text-white hover:bg-blue-600"
+              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
           >
-            ถัดไป ➡
+            Next ➡
           </button>
         </div>
 
       </div>
-    </div>
+    </div >
   );
 };
 
