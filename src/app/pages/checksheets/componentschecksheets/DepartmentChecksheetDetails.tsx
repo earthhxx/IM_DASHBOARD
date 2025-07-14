@@ -27,7 +27,6 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
   const displayYear = year || currentYear;
   const isCurrentMonth = displayMonth === currentMonth && displayYear === currentYear;
   const lastDay = new Date(displayYear, displayMonth, 0).getDate();
-  const loopUntil = isCurrentMonth ? today : lastDay;
 
   const filtered = data.filter((item) => item.Department === department);
   const days = Array.from({ length: lastDay }, (_, i) => i + 1);
@@ -47,11 +46,11 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
 
         {/* Header */}
         <div
-          className={`text-center text-2xl font-extrabold py-5 bg-white select-none ${type === "overdue" ? "text-red-700" : "text-yellow-700"
+          className={`uppercase text-center text-2xl font-extrabold py-5 bg-white select-none ${type === "overdue" ? "text-red-700" : "text-yellow-700"
             }`}
         >
-          {type === "overdue" ? "🔴 รายการค้างตรวจ" : "⏳ รายการกำลังตรวจ"} - แผนก {department} (
-          {filtered.length} รายการ)
+          {type === "overdue" ? "⚠️ overdue Checksheet Department : " : "⏳ ONGOING Checksheet Department"} {department} (
+          {filtered.length})
         </div>
 
         {/* Table */}
@@ -64,11 +63,11 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
             <table className="table-auto w-full border-separate border-spacing-0 text-sm md:text-base text-gray-700 rounded-lg overflow-hidden shadow-lg">
               <thead className="sticky top-0 z-30 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 backdrop-blur-sm shadow-md">
                 <tr>
-                  <th className="p-3 border border-gray-300 bg-blue-100 sticky left-0 z-40 text-left font-semibold rounded-tl-lg">
+                  <th className="w-[45px] px-4 border border-gray-300 bg-blue-100 left-0 z-40 text-left font-semibold rounded-tl-lg">
                     #
                   </th>
-                  <th className="p-3 border border-gray-300 bg-blue-100 sticky left-[50px] z-40 text-left font-semibold min-w-[220px]">
-                    แบบฟอร์ม
+                  <th className="p-3 border border-gray-300 bg-blue-100 left-[50px] z-40 text-left font-semibold min-w-[220px]">
+                    FORM NAME
                   </th>
                   {/* <th className="p-3 border border-gray-300 font-semibold text-center">
                     สถานะ
@@ -88,7 +87,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                       <th
                         key={day}
                         className={`border border-gray-300 p-2 text-center text-xs font-medium text-gray-600 select-none relative ${isToday ? "animate-pulse bg-yellow-200/70" : ""
-                          } ${isHoliday ? "bg-gray-300/70 animate-pulse" : ""}`}
+                          } ${isHoliday ? "bg-gray-300/70 " : ""}`}
                         title={`วันที่ ${day}`}
                       >
                         {day}
@@ -104,19 +103,19 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                   return (
                     <tr
                       key={item.id}
-                      className="group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
+                      className=" group hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
                     >
-                      {/* Sticky Column 1 - Index */}
+                      {/*  Column 1 - Index */}
                       <td
-                        className={`p-3 border border-gray-200 sticky left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none ${isLastRow ? "rounded-bl-lg" : ""
+                        className={` p-3 border border-gray-200 left-0 bg-white z-20 text-center font-semibold group-hover:bg-blue-100 select-none ${isLastRow ? "rounded-bl-lg" : ""
                           }`}
                       >
                         {index + 1}
                       </td>
 
-                      {/* Sticky Column 2 - Form Name */}
+                      {/*  Column 2 - Form Name */}
                       <td
-                        className={`p-3 border border-gray-200 sticky left-[50px] bg-white z-20 truncate group-hover:bg-blue-100 select-text ${isLastRow ? "rounded-br-lg" : ""
+                        className={`p-3 border border-gray-200 left-[50px] bg-white z-20 truncate group-hover:bg-blue-100 select-text ${isLastRow ? "rounded-br-lg" : ""
                           }`}
                       >
                         {item.FormName}

@@ -121,8 +121,8 @@ const TimelineMatrix = () => {
             }
         });
 
-        return Object.values(departmentsMap)
-            ;
+        return Object.values(departmentsMap).sort((a, b) => b.documentCount - a.documentCount);
+        ;
     };
 
 
@@ -156,15 +156,34 @@ const TimelineMatrix = () => {
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
         const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
-        const loopUntil = isCurrentMonth ? today : lastDay;
 
-        return data.filter(item => {
-            for (let i = 1; i < loopUntil; i++) {
-                if (item[`Date${i}`] === "0") return true;
+        const result: any[] = [];
+
+        //ทุกรอบ : วนแถวแรก นับเฉพาะวันที่ตรงตามเงี่ยนไข ตรง count++ ถ้า count > 0 เก็บไว้ใน result + count
+        for (const item of data) {
+            let count = 0;
+
+            for (let i = 1; i <= lastDay; i++) {
+                const isInRange = isCurrentMonth ? i < today : i <= lastDay;
+
+                if (isInRange && item[`Date${i}`] === "0") {
+                    count++;
+                }
             }
-            return false;
-        });
+
+            // ✅ ถ้าเจอ "0" อย่างน้อย 1 ตัว → push ลง result
+            if (count > 0) {
+                result.push({ ...item, count });
+            }
+        }
+
+
+        // ✅ เรียงจากมาก → น้อย
+        return result.sort((a, b) => b.count - a.count);
     };
+
+
+
     const groupOverdueByDepartment = (items: any[]) => {
         const grouped: { [key: string]: number } = {};
 
@@ -268,6 +287,15 @@ const TimelineMatrix = () => {
     const [departmentdata, setDepartmentdata] = useState<any[]>([]);
     const [viewMode, setViewMode] = useState<"detail" | "all" | "">("");
 
+    const colors = [
+        "bg-red-100 text-red-600 hover:bg-red-200",
+        "bg-green-100 text-green-600 hover:bg-green-200",
+        "bg-blue-100 text-blue-600 hover:bg-blue-200",
+        "bg-yellow-100 text-yellow-600 hover:bg-yellow-200",
+        "bg-purple-100 text-purple-600 hover:bg-purple-200",
+    ];
+
+
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
 
@@ -286,8 +314,8 @@ const TimelineMatrix = () => {
                 <table className=" w-full text-[18px] text-blue-900 font-bold h-full uppercase">
                     {/* Header */}
                     <thead className="bg-gradient-to-br from-blue-50 to-white">
-                        <tr className="border-b border-gray-200">
-                            <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
+                        <tr className=" border-gray-200">
+                            <th colSpan={days.length + 1} className="px-6 pt-4 border-gray-100 text-left">
                                 <div className="flex justify-between items-center">
                                     <h1 className="text-3xl  uppercase tracking-wide">
                                         📋 Daily Checksheet Realtime
@@ -304,21 +332,22 @@ const TimelineMatrix = () => {
                                 </div>
                             </th>
                         </tr>
-                        <tr className="flex">
-                            <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
-                                {departments30daytable.map((dept) => (
-                                    <tr key={dept.Department}>
-                                        <th colSpan={days.length + 1} className="px-6 py-4 border-b border-gray-100 text-left">
-                                            <div className="flex justify-between items-center">
-                                                {`${dept.Department}    ${dept.documentCount}`}
-                                            </div>
-                                        </th>
-                                    </tr>
-                                ))}
+                        <tr>
+                            <th colSpan={days.length + 1} className="px-6 pb-4 pt-2 border-b border-gray-100 text-left">
+                                <div className="flex flex-wrap gap-4">
+                                    {departments30daytable.map((dept, idx) => (
+                                        // ${colors[idx % colors.length]} ใช้เพื่อ map สีตาม array
+                                        <div
+                                            key={idx}
+                                            className={`px-4 py-1 rounded-full shadow-sm cursor-default text-sm whitespace-nowrap bg-white`}
+                                        >
+                                            {`${dept.Department} : ${dept.documentCount}`}
+                                        </div>
+                                    ))}
+                                </div>
 
                             </th>
                         </tr>
-
                         <tr className="border-b border-gray-200">
                             <th className=" left-0 p-4 text-left z-30 w-[120px] border-r border-gray-200 ">
                                 Department

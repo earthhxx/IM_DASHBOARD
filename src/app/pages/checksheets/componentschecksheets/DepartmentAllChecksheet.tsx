@@ -44,8 +44,8 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
         </button>
 
 
-        <h2 className="text-3xl font-extrabold mb-8 text-center text-blue-900 select-none mt-8">
-          📋 รายการตรวจสอบทั้งหมดของแผนก {department} ({filtered.length} รายการ)
+        <h2 className="text-3xl font-extrabold mb-8 text-center text-blue-900 select-none mt-8 uppercase">
+          📋 AllChecksheet Department : {department} ({filtered.length})
         </h2>
 
         {filtered.length === 0 ? (
@@ -57,10 +57,10 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
 
             <thead className="bg-gradient-to-r from-blue-200 to-blue-100 sticky top-0">
               <tr>
-                <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200 rounded-tl-2xl">
+                <th className="border border-gray-300 p-4 text-center font-semibold bg-blue-200 rounded-tl-2xl ">
                   #
                 </th>
-                <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200 min-w-[280px]">
+                <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200 min-w-[280px] uppercase">
                   Form Name
                 </th>
                 {/* <th className="border border-gray-300 p-4 text-left font-semibold bg-blue-200">
@@ -82,7 +82,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                     <th
                       key={day}
                       className={`border border-gray-300 p-2 text-center text-xs font-semibold text-gray-700 select-none relative ${isToday ? "animate-pulse bg-yellow-300/70" : ""
-                        } ${isHoliday ? "bg-gray-300/70 animate-pulse" : ""} ${isLast ? "rounded-tr-2xl" : ""
+                        } ${isHoliday ? "bg-gray-300/70 " : ""} ${isLast ? "rounded-tr-2xl" : ""
                         }`}
                       title={`วันที่ ${day}`}
                     >
