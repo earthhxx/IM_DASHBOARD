@@ -340,10 +340,10 @@ const TimelineMatrix = () => {
                 <div className="flex rounded-full bg-blue-900 text-blue-800 h-1 w-[22%] shadow-md "></div>
             </div>
 
-            <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200 bg-gradient-to-tr from-sky-50 to-white w-full h-fit my-6">
+            <div className="overflow-x-auto rounded-xl shadow-2xl border border-gray-300 bg-gradient-to-b from-blue-100 to-blue-50 w-full h-fit my-6">
                 <table className=" w-full text-[18px] text-blue-900 font-bold h-full uppercase">
                     {/* Header */}
-                    <thead className="bg-gradient-to-br from-blue-200 to-blue-50">
+                    <thead className="bg-gradient-to-b from-blue-300 to-blue-50">
                         <tr className=" border-gray-200">
                             <th colSpan={days.length + 1} className="px-6 pt-4 border-gray-100 text-left">
                                 <div className="flex justify-between items-center">
@@ -531,7 +531,7 @@ const TimelineMatrix = () => {
             {/* Summary + Lists */}
             <section className="flex flex-col md:flex-row justify-evenly gap-8 mb-6 w-full">
                 {/* Summary Card */}
-                <div className="bg-gradient-to-br from-blue-200 to-blue-50 shadow-2xl rounded-2xl p-6 border border-gray-200 h-[400px] w-full">
+                <div className="bg-gradient-to-br from-blue-100 to-blue-50 shadow-2xl rounded-2xl p-6 border border-gray-300 h-[400px] w-full">
                     <h2 className="text-3xl font-bold mb-4 text-blue-900 uppercase">
                         summary overdue
                     </h2>
