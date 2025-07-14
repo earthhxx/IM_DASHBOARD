@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import MonthYearSelector from "@/app/pages/checksheets/componentschecksheets/MonthYearSelector";
 import DepartmentChecksheetDetails from "@/app/pages/checksheets/componentschecksheets/DepartmentChecksheetDetails";
 import DepartmentAllChecksheet from "@/app/pages/checksheets/componentschecksheets/DepartmentAllChecksheet";
@@ -281,12 +281,18 @@ const TimelineMatrix = () => {
     };
 
 
+    const isFetchingRef = useRef(false);
+
     const FetchAllCheckSheetData = async (month: number, year: number) => {
+        if (isFetchingRef.current) return; // ❌ ถ้ากำลังโหลดอยู่ ไม่ต้องโหลดซ้ำ
+        isFetchingRef.current = true;
+
         try {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
             if (!response.ok) throw new Error("Network response was not ok");
             const data = await response.json();
-            const sortalldata = sortalldata_by_overdue(data.data,month,year);
+
+            const sortalldata = sortalldata_by_overdue(data.data, month, year);
             setDepartmentdata(sortalldata);
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
@@ -300,8 +306,11 @@ const TimelineMatrix = () => {
 
         } catch (error) {
             console.error("Error fetching data:", error);
+        } finally {
+            isFetchingRef.current = false; // ✅ ปลดล็อกเมื่อเสร็จ
         }
     };
+
 
 
     useEffect(() => {
@@ -311,6 +320,8 @@ const TimelineMatrix = () => {
         setSelectedType("")
         FetchAllCheckSheetData(month, year);
     }, [month, year]);
+
+
 
     const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
     const [selectedDept, setSelectedDept] = useState("");
