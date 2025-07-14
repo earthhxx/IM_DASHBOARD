@@ -479,6 +479,7 @@ const Navbar = () => {
                 { name: "PRODUCTION 5", href: "/pages/skill-Matrix?Param=PRODUCTION5" },
                 { name: "WAREHOUSE", href: "/pages/skill-Matrix?Param=WAREHOUSE" },
                 { name: "MAINTENANCE", href: "/pages/skill-Matrix?Param=MAINTENANCE" },
+                { name: "CHECKSHEETS", href: "/pages/checksheets" },
               ].map((item) => (
                 <Link
                   key={item.name}
