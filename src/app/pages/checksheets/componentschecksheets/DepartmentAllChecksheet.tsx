@@ -93,7 +93,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                   return (
                     <th
                       key={day}
-                      className={`border border-gray-300 p-2 text-center text-xs font-semibold text-gray-700 select-none relative ${isToday ? "animate-pulse bg-yellow-300/70" : ""
+                      className={`border border-gray-300 p-2 text-center text-[16px] font-semibold text-gray-700 select-none relative ${isToday ? "animate-pulse bg-yellow-300/70" : ""
                         } ${isHoliday ? "bg-gray-300/70 " : ""} ${isLast ? "rounded-tr-2xl" : ""
                         }`}
                       title={`วันที่ ${day}`}
