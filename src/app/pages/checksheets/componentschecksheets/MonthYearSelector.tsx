@@ -19,7 +19,7 @@ const MonthYearSelector = ({
     };
 
     return (
-        <div className="absolute mt-8 right-15 flex items-center justify-center gap-3  text-black rounded-xl  px-6 py-1 text-[22px] font-medium ">
+        <div className="absolute mt-10 right-15 flex items-center justify-center gap-3  text-black rounded-xl  px-6 py-1 text-[22px] font-medium ">
             {/* Month Selector */}
             <div className="flex flex-col ">
                 {/* <label htmlFor="month" className="mb-1 ">
