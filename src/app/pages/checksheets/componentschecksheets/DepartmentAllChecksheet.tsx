@@ -31,6 +31,18 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
   const getDaysInMonth = (m: number, y: number) => new Date(y, m, 0).getDate();
   const days = Array.from({ length: getDaysInMonth(displayMonth, displayYear) }, (_, i) => i + 1);
 
+
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 14;
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+  const paginatedData = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+
+
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 backdrop-blur-sm pt-10">
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-[95vw] max-h-[92vh] w-full overflow-auto px-2 pb-8 flex flex-col">
@@ -94,7 +106,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
             </thead>
 
             <tbody>
-              {filtered.map((item, rowIndex) => (
+              {paginatedData.map((item, rowIndex) => (
                 <tr
                   key={item.id}
                   className="hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
@@ -186,10 +198,35 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                 </tr>
               ))}
             </tbody>
+
           </table>
-
-
         )}
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-lg font-semibold shadow ${currentPage === 1
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+              }`}
+          >
+            ⬅ ก่อนหน้า
+          </button>
+          <span className="font-bold text-blue-900">
+            หน้า {currentPage} / {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-lg font-semibold shadow ${currentPage === totalPages
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+              }`}
+          >
+            ถัดไป ➡
+          </button>
+        </div>
+
       </div>
     </div>
   );
