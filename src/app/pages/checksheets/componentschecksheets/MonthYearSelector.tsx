@@ -19,9 +19,9 @@ const MonthYearSelector = ({
     };
 
     return (
-        <div className="flex items-center gap-3 bg-sky-50 text-black rounded-xl shadow-sm px-4 py-2 border border-gray-200">
+        <div className="absolute mt-8 right-15 flex items-center justify-center gap-3  text-black rounded-xl  px-6 py-1 text-[22px] font-medium ">
             {/* Month Selector */}
-            <div className="flex flex-col text-xs font-medium ">
+            <div className="flex flex-col ">
                 {/* <label htmlFor="month" className="mb-1 ">
           เดือน
         </label> */}
@@ -29,7 +29,7 @@ const MonthYearSelector = ({
                     id="month"
                     value={month}
                     onChange={(e) => setMonth(Number(e.target.value))}
-                    className="px-3 py-1 rounded-lg border border-gray-300 shadow-inner bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="text-center px-1 py-2 rounded-lg border border-gray-300 shadow-inner bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                     {Array.from({ length: 12 }, (_, i) => (
                         <option key={i} value={i + 1}>
@@ -41,7 +41,7 @@ const MonthYearSelector = ({
             </div>
 
             {/* Year Selector */}
-            <div className="flex flex-col text-xs font-medium ">
+            <div className="flex flex-col">
                 {/* <label htmlFor="year" className="mb-1 ">
           ปี
         </label> */}
@@ -49,7 +49,7 @@ const MonthYearSelector = ({
                     id="year"
                     value={year}
                     onChange={(e) => setYear(Number(e.target.value))}
-                    className="px-3 py-1 rounded-lg border border-gray-300 shadow-inner bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="px-3 py-2 rounded-lg border border-gray-300 shadow-inner bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                     {Array.from({ length: 5 }, (_, i) => {
                         const y = new Date().getFullYear() - 2 + i;
