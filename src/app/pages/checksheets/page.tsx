@@ -452,7 +452,7 @@ const TimelineMatrix = () => {
                                                     <div className="absolute inset-0 bg-yellow-300/60 animate-pulse" />
                                                 )}
                                                 {isHoliday && (
-                                                    <div className="absolute inset-0 bg-gray-200/60" />
+                                                    <div className="absolute inset-0 bg-gray-400/50" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
@@ -505,7 +505,7 @@ const TimelineMatrix = () => {
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
                                                 {holiday && (
-                                                    <div className="absolute inset-0 bg-gray-200/60" />
+                                                    <div className="absolute inset-0 bg-gray-400/50" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
@@ -564,7 +564,7 @@ const TimelineMatrix = () => {
                             <Bar
                                 dataKey="Overdue"
                                 name="OVERDUE"
-                                fill="#f87171"
+                                fill="#ef4444"
                                 radius={[4, 4, 0, 0]}
                                 animationDuration={1000}
                                 onClick={(data) => {
@@ -594,7 +594,7 @@ const TimelineMatrix = () => {
                 <div className="flex gap-6 justify-start items-start w-[2000px]">
 
                     {/* Overdue */}
-                    <section className="w-full bg-gradient-to-br from-red-50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                    <section className="w-full bg-gradient-to-br from-red-300/65 to-red-50 shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase">
                             <span className="animate-pulse text-2xl">⚠️</span>
                             <div>Overdue</div>
@@ -640,7 +640,7 @@ const TimelineMatrix = () => {
                     </section>
 
                     {/* Ongoing */}
-                    <section className="w-full bg-gradient-to-br from-yellow-50 to-white shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                    <section className="w-full bg-gradient-to-br from-yellow-200/60 to-yellow-50 shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase">
                             <span className="animate-spin ">⏳</span>
                             <div>Ongoing</div>
