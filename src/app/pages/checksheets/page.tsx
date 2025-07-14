@@ -252,12 +252,42 @@ const TimelineMatrix = () => {
         return Object.values(map).sort((a, b) => b.Overdue - a.Overdue);
     };
 
+    //sort alldata by overdue
+    const sortalldata_by_overdue = (data: any[], month: number, year: number) => {
+        const now = new Date();
+        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
+        const today = now.getDate();
+        const lastDay = new Date(year, month, 0).getDate();
+
+        const result: any[] = [];
+
+        for (const item of data) {
+            let count = 0;
+
+            for (let i = 1; i <= lastDay; i++) {
+                const isInRange = isCurrentMonth ? i < today : i <= lastDay;
+
+                if (isInRange && item[`Date${i}`] === "0") {
+                    count++;
+                }
+            }
+
+            // ✅ เก็บ item ทั้งหมดไว้ ไม่ว่า count จะเป็น 0 หรือมากกว่า
+            result.push({ ...item, count });
+        }
+
+        // ✅ เรียงจาก count มาก → น้อย
+        return result.sort((a, b) => b.count - a.count);
+    };
+
+
     const FetchAllCheckSheetData = async (month: number, year: number) => {
         try {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
             if (!response.ok) throw new Error("Network response was not ok");
             const data = await response.json();
-            setDepartmentdata(data.data);
+            const sortalldata = sortalldata_by_overdue(data.data,month,year);
+            setDepartmentdata(sortalldata);
 
             const overdue = convertAllOverdueToChecksheetItems(data.data, month, year);
             setalloverdue(overdue);
