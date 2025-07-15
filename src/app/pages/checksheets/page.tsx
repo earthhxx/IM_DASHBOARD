@@ -626,7 +626,7 @@ const TimelineMatrix = () => {
                             <div>Overdue</div>
                         </h2>
 
-                        <table className="w-full text-[20px] border-collapse">
+                        <table className="w-full h-full text-[20px] border-collapse">
                             <thead>
                                 <tr className="border-b border-red-200 uppercase text-left text-blue-900">
                                     <th className="py-2 pl-2">Department</th>
@@ -634,32 +634,41 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {groupOverdueByDepartment(alloverdue).map((item) => (
-                                    <tr
-                                        key={`${item.Department}-overdue`}
-                                        className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
-                                    >
-                                        <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
-
-                                        <td className="w-[60px] p-2 text-center font-bold text-blue-900">
-                                            {item.count}
-                                        </td>
-
-                                        <td className="w-[40px] p-2 text-center">
-                                            <button
-                                                onClick={() => {
-                                                    setSelectedDept(item.Department);
-                                                    setSelectedType("overdue");
-                                                    setViewMode('detail');
-                                                }}
-                                                className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
-                                                title={`ดูรายละเอียดแผนก ${item.Department}`}
-                                            >
-                                                🔍
-                                            </button>
+                                {groupOverdueByDepartment(alloverdue).length === 0 ? (
+                                    <tr>
+                                        <td colSpan={3}>
+                                            <div className="flex justify-center items-center h-full text-gray-500 mb-20">
+                                                No overdue checksheets
+                                            </div>
                                         </td>
                                     </tr>
-                                ))}
+
+                                ) : (
+                                    groupOverdueByDepartment(alloverdue).map((item) => (
+                                        <tr
+                                            key={`${item.Department}-overdue`}
+                                            className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
+                                        >
+                                            <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
+                                            <td className="w-[60px] p-2 text-center font-bold text-blue-900">
+                                                {item.count}
+                                            </td>
+                                            <td className="w-[40px] p-2 text-center">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedDept(item.Department);
+                                                        setSelectedType("overdue");
+                                                        setViewMode("detail");
+                                                    }}
+                                                    className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
+                                                    title={`ดูรายละเอียดแผนก ${item.Department}`}
+                                                >
+                                                    🔍
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
 
                         </table>
@@ -679,32 +688,44 @@ const TimelineMatrix = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {groupOngoingByDepartment(allongoing).map((item) => (
-                                    <tr
-                                        key={`${item.Department}-ongoing`}
-                                        className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
-                                    >
-                                        <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
-
-                                        <td className="w-[60px] p-2 text-center font-bold text-blue-900">
-                                            {item.count}
-                                        </td>
-
-                                        <td className="w-[40px] p-2 text-center">
-                                            <button
-                                                onClick={() => {
-                                                    setSelectedDept(item.Department);
-                                                    setSelectedType("ongoing");
-                                                    setViewMode('detail');
-                                                }}
-                                                className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
-                                                title={`ดูรายละเอียดแผนก ${item.Department}`}
-                                            >
-                                                🔍
-                                            </button>
+                                {groupOngoingByDepartment(allongoing).length === 0 ? (
+                                    <tr>
+                                        <td colSpan={3}>
+                                            <div className="flex justify-center items-center h-full text-gray-500 mb-20">
+                                                No Ongoging checksheets
+                                            </div>
                                         </td>
                                     </tr>
-                                ))}
+
+                                ) : (
+
+                                    groupOngoingByDepartment(allongoing).map((item) => (
+                                        <tr
+                                            key={`${item.Department}-ongoing`}
+                                            className="border-b border-yellow-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
+                                        >
+                                            <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
+
+                                            <td className="w-[60px] p-2 text-center font-bold text-blue-900">
+                                                {item.count}
+                                            </td>
+
+                                            <td className="w-[40px] p-2 text-center">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedDept(item.Department);
+                                                        setSelectedType("ongoing");
+                                                        setViewMode('detail');
+                                                    }}
+                                                    className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
+                                                    title={`ดูรายละเอียดแผนก ${item.Department}`}
+                                                >
+                                                    🔍
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
 
                         </table>
