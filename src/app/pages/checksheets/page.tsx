@@ -316,12 +316,19 @@ const TimelineMatrix = () => {
     };
 
     useEffect(() => {
+        const now = new Date();
+        const isCurrentMonth = month === now.getMonth() + 1 && year === now.getFullYear();
+
+        if (!isCurrentMonth) return; // ❌ ไม่ตรงเดือนปีปัจจุบัน ไม่ต้องตั้ง interval
+
         const interval = setInterval(() => {
             FetchAllCheckSheetData(month, year);
-        }, 5 * 60 * 1000); // 5 นาที
+            console.log("refetch (5 min)");
+        }, 5 * 60 * 1000); // ✅ ทุก 5 นาที
 
-        return () => clearInterval(interval); // ล้างเมื่อ component unmount
+        return () => clearInterval(interval); // ✅ ล้าง interval ตอน unmount หรือเปลี่ยน month/year
     }, [month, year]);
+
 
 
     useEffect(() => {
