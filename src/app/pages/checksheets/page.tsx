@@ -435,7 +435,7 @@ const TimelineMatrix = () => {
 
                     {/* Body */}
                     <tbody>
-                      {(month === currentMonth && year === currentYear) && 
+                        {(month === currentMonth && year === currentYear) &&
                             departments30daytable.map((dept) => (
                                 <tr
                                     key={dept.Department}
@@ -500,7 +500,7 @@ const TimelineMatrix = () => {
                     </tbody>
 
                     <tbody>
-                        {!(month === currentMonth && year === currentYear) && 
+                        {!(month === currentMonth && year === currentYear) &&
                             departments30daytable.map((dept) => (
                                 <tr
                                     onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
@@ -635,59 +635,62 @@ const TimelineMatrix = () => {
                 <div className="flex gap-6 justify-start items-start w-[2000px]">
 
                     {/* Overdue */}
-                    <section className="w-full bg-gradient-to-br from-red-300/65 to-red-50 shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
+                    <section className="w-full bg-gradient-to-br from-red-300/65 to-red-50 shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01] flex flex-col">
                         <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase">
                             <span className="animate-pulse text-2xl">⚠️</span>
                             <div>Overdue</div>
                         </h2>
 
-                        <table className="w-full h-full text-[20px] border-collapse">
-                            <thead>
-                                <tr className="border-b border-red-200 uppercase text-left text-blue-900">
-                                    <th className="py-2 pl-2">Department</th>
-                                    <th className="text-center">Sheet</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {groupOverdueByDepartment(alloverdue).length === 0 ? (
-                                    <tr>
-                                        <td colSpan={3}>
-                                            <div className="flex justify-center items-center h-full text-gray-500 mb-20">
-                                                No overdue checksheets
-                                            </div>
-                                        </td>
+                        <div className="flex-1 overflow-y-auto">
+                            <table className="w-full text-[20px] border-collapse">
+                                <thead>
+                                    <tr className="border-b border-red-200 uppercase text-left text-blue-900">
+                                        <th className="py-2 pl-2">Department</th>
+                                        <th className="text-center">Sheet</th>
+                                        <th className="text-center"></th>
                                     </tr>
+                                </thead>
 
-                                ) : (
-                                    groupOverdueByDepartment(alloverdue).map((item) => (
-                                        <tr
-                                            key={`${item.Department}-overdue`}
-                                            className="border-b border-red-100 last:border-none transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
-                                        >
-                                            <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
-                                            <td className="w-[60px] p-2 text-center font-bold text-blue-900">
-                                                {item.count}
-                                            </td>
-                                            <td className="w-[40px] p-2 text-center">
-                                                <button
-                                                    onClick={() => {
-                                                        setSelectedDept(item.Department);
-                                                        setSelectedType("overdue");
-                                                        setViewMode("detail");
-                                                    }}
-                                                    className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
-                                                    title={`ดูรายละเอียดแผนก ${item.Department}`}
-                                                >
-                                                    🔍
-                                                </button>
+                                <tbody className="divide-y divide-red-100">
+                                    {groupOverdueByDepartment(alloverdue).length === 0 ? (
+                                        <tr>
+                                            <td colSpan={3}>
+                                                <div className="flex justify-center items-center mt-20 text-gray-500">
+                                                    No overdue checksheets
+                                                </div>
                                             </td>
                                         </tr>
-                                    ))
-                                )}
-                            </tbody>
-
-                        </table>
+                                    ) : (
+                                        groupOverdueByDepartment(alloverdue).map((item) => (
+                                            <tr
+                                                key={`${item.Department}-overdue`}
+                                                className="transition-all duration-200 hover:bg-red-100 hover:shadow-sm"
+                                            >
+                                                <td className="py-2 pl-2 font-semibold text-blue-900">{item.Department}</td>
+                                                <td className="w-[60px] p-2 text-center font-bold text-blue-900">
+                                                    {item.count}
+                                                </td>
+                                                <td className="w-[40px] p-2 text-center">
+                                                    <button
+                                                        onClick={() => {
+                                                            setSelectedDept(item.Department);
+                                                            setSelectedType("overdue");
+                                                            setViewMode("detail");
+                                                        }}
+                                                        className="w-7 h-7 flex items-center justify-center rounded-md border border-blue-200 bg-white text-blue-500 hover:bg-blue-100 hover:text-blue-700 shadow-sm transition-all duration-200"
+                                                        title={`ดูรายละเอียดแผนก ${item.Department}`}
+                                                    >
+                                                        🔍
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
+
 
                     {/* Ongoing */}
                     <section className="w-full bg-gradient-to-br from-yellow-200/60 to-yellow-50 shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
@@ -706,7 +709,7 @@ const TimelineMatrix = () => {
                                 {groupOngoingByDepartment(allongoing).length === 0 ? (
                                     <tr>
                                         <td colSpan={3}>
-                                            <div className="flex justify-center items-center h-full text-gray-500 mb-20">
+                                            <div className="flex justify-center items-center mt-20 text-gray-500 mb-20">
                                                 No Ongoging checksheets
                                             </div>
                                         </td>
