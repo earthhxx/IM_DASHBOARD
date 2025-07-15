@@ -33,7 +33,7 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
 
 
   const [currentPage, setCurrentPage] = React.useState(1);
-  const itemsPerPage = 14;
+  const itemsPerPage = 15;
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
   const paginatedData = filtered.slice(
