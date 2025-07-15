@@ -14,6 +14,7 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
+import { Yeseva_One } from "next/font/google";
 
 
 type Department30daytable = {
@@ -307,6 +308,7 @@ const TimelineMatrix = () => {
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
+            console.log(transformed);
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -433,7 +435,7 @@ const TimelineMatrix = () => {
 
                     {/* Body */}
                     <tbody>
-                        {currentMonth &&
+                      {(month === currentMonth && year === currentYear) && 
                             departments30daytable.map((dept) => (
                                 <tr
                                     key={dept.Department}
@@ -498,7 +500,7 @@ const TimelineMatrix = () => {
                     </tbody>
 
                     <tbody>
-                        {!currentMonth &&
+                        {!(month === currentMonth && year === currentYear) && 
                             departments30daytable.map((dept) => (
                                 <tr
                                     onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
@@ -531,7 +533,7 @@ const TimelineMatrix = () => {
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
                                                 {holiday && (
-                                                    <div className="absolute inset-0 bg-gray-400/50" />
+                                                    <div className="absolute inset-0 bg-red-400/50" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
@@ -554,7 +556,7 @@ const TimelineMatrix = () => {
                             <tr>
                                 <td colSpan={days.length + 1}>
                                     <div className="h-[300px] flex items-center justify-center text-gray-500 text-xl select-none uppercase">
-                                         No data to display
+                                        No data to display
                                     </div>
                                 </td>
                             </tr>
