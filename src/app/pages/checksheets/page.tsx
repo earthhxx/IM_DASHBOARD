@@ -396,7 +396,7 @@ const TimelineMatrix = () => {
                             {days.map((day) => {
                                 const todayDate = new Date().getDate();
 
-                                const isToday = isCurrentMonth && day === todayDate;
+                                const isToday = day === todayDate && month === currentMonth && year === currentYear;
 
                                 const isHoliday = allHolidayDays.includes(day);
 

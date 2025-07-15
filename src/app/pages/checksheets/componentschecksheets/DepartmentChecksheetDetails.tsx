@@ -164,12 +164,18 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                             className={`border border-gray-300 p-1 text-center relative min-w-[30px] h-8 select-none ${isLastDay && isLastRow ? "rounded-br-2xl" : ""
                               }`}
                           >
+                            {isToday && (
+                              <div className="absolute inset-0 bg-yellow-300/60 rounded animate-pulse z-0" />
+                            )}
+                            {isHoliday && (
+                              <div className="absolute inset-0 bg-gray-200/50 z-0 rounded" />
+                            )}
                             <span
                               className={`${isOverdue
-                                  ? "text-red-600 font-bold"
-                                  : isComplete
-                                    ? "text-green-600 font-bold"
-                                    : "text-gray-600"
+                                ? "text-red-600 font-bold"
+                                : isComplete
+                                  ? "text-green-600 font-bold"
+                                  : "text-gray-600"
                                 }`}
                               style={{ fontSize: "1rem" }}
                             >
