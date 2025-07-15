@@ -556,7 +556,7 @@ const TimelineMatrix = () => {
                             <tr>
                                 <td colSpan={days.length + 1}>
                                     <div className="h-[300px] flex items-center justify-center text-gray-500 text-xl select-none uppercase">
-                                        No data to display
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -623,7 +623,7 @@ const TimelineMatrix = () => {
                         {/* ✅ แสดงข้อความทับกลางกราฟ ถ้าไม่มี overdue */}
                         {combineOverdueAndOngoing().every(item => item.Overdue === 0) && (
                             <div className="absolute inset-0 flex items-center justify-center text-gray-500 text-lg pointer-events-none uppercase mb-15">
-                                No overdue
+                                
                             </div>
                         )}
                     </div>
@@ -656,7 +656,7 @@ const TimelineMatrix = () => {
                                         <tr>
                                             <td colSpan={3}>
                                                 <div className="flex justify-center items-center mt-20 text-gray-500">
-                                                    No overdue checksheets
+                                                    
                                                 </div>
                                             </td>
                                         </tr>
@@ -710,7 +710,7 @@ const TimelineMatrix = () => {
                                     <tr>
                                         <td colSpan={3}>
                                             <div className="flex justify-center items-center mt-20 text-gray-500 mb-20">
-                                                No Ongoging checksheets
+                                                
                                             </div>
                                         </td>
                                     </tr>
