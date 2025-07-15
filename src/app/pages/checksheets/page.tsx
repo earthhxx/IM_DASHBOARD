@@ -573,45 +573,49 @@ const TimelineMatrix = () => {
                             ⏳ ONGOING รวม: {departments.reduce((sum, d) => sum + d.ongoing.length, 0)}
                         </div> */}
                     </div>
+                    <div className="relative h-[280px]">
+                        {/* ✅ Chart ยังแสดงตามปกติ */}
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                                data={combineOverdueAndOngoing()}
+                                margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
+                                barCategoryGap="20%"
+                                barGap={6}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                <XAxis dataKey="Department" />
+                                <YAxis allowDecimals={false} />
+                                <Tooltip />
 
-                    <ResponsiveContainer width="100%" height={280}>
-                        <BarChart
-                            data={combineOverdueAndOngoing()}
-                            margin={{ top: 10, right: 50, left: 0, bottom: 10 }}
-                            barCategoryGap="20%"
-                            barGap={6}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                            <XAxis dataKey="Department" />
-                            <YAxis allowDecimals={false} />
-                            <Tooltip />
-                            {/* <Legend /> */}
-
-                            <Bar
-                                dataKey="Overdue"
-                                name="OVERDUE"
-                                fill="#ef4444"
-                                radius={[4, 4, 0, 0]}
-                                animationDuration={1000}
-                                onClick={(data) => {
-                                    setSelectedDept(data.Department); // ✅ ชื่อแผนกที่ถูกคลิก
-                                    setSelectedType("overdue");       // ✅ ตั้งประเภท
-                                    setViewMode('detail');
-                                }}
-                            />
-
-                            {/* <Bar
+                                <Bar
+                                    dataKey="Overdue"
+                                    name="OVERDUE"
+                                    fill="#ef4444"
+                                    radius={[4, 4, 0, 0]}
+                                    animationDuration={1000}
+                                    onClick={(data) => {
+                                        setSelectedDept(data.Department);
+                                        setSelectedType("overdue");
+                                        setViewMode('detail');
+                                    }}
+                                />
+                                {/* <Bar
                                 dataKey="Ongoing"
                                 name="ONGOING"
                                 fill="#facc15"
                                 radius={[4, 4, 0, 0]}
                                 animationDuration={1000}
                             /> */}
-                        </BarChart>
-                    </ResponsiveContainer>
+                            </BarChart>
+                        </ResponsiveContainer>
 
-
-
+                        {/* ✅ แสดงข้อความทับกลางกราฟ ถ้าไม่มี overdue */}
+                        {combineOverdueAndOngoing().every(item => item.Overdue === 0) && (
+                            <div className="absolute inset-0 flex items-center justify-center text-gray-500 text-lg pointer-events-none uppercase mb-15">
+                                No overdue
+                            </div>
+                        )}
+                    </div>
                 </div>
 
 
