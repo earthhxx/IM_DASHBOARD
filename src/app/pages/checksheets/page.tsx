@@ -549,8 +549,17 @@ const TimelineMatrix = () => {
                                 </tr>
                             ))}
                     </tbody>
-
-
+                    {departments30daytable.length === 0 && (
+                        <tbody>
+                            <tr>
+                                <td colSpan={days.length + 1}>
+                                    <div className="h-[300px] flex items-center justify-center text-gray-500 text-xl select-none uppercase">
+                                         No data to display
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    )}
                 </table>
             </div>
 
