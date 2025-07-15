@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect , useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MonthYearSelector from "@/app/pages/checksheets/componentschecksheets/MonthYearSelector";
 import DepartmentChecksheetDetails from "@/app/pages/checksheets/componentschecksheets/DepartmentChecksheetDetails";
 import DepartmentAllChecksheet from "@/app/pages/checksheets/componentschecksheets/DepartmentAllChecksheet";
@@ -29,16 +29,20 @@ type Department30daytable = {
 
 const TimelineMatrix = () => {
     //ปีและเดือนปัจจุบัน
-    const [month, setMonth] = useState(new Date().getMonth() + 1);
-    const [year, setYear] = useState(new Date().getFullYear());
+
+
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
+    const today = now.getDate();
+
+    const [month, setMonth] = useState(currentMonth);
+    const [year, setYear] = useState(currentYear);
+
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const days = Array.from({ length: getDaysInMonth(month, year) }, (_, i) => i + 1);
 
-    const currentMonth = new Date().getMonth() + 1;
-    const currentYear = new Date().getFullYear();
-    const isCurrentMonth = month === currentMonth && year === currentYear;
-
-
+    
     //for table data
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
     const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
@@ -394,10 +398,7 @@ const TimelineMatrix = () => {
                                 Department
                             </th>
                             {days.map((day) => {
-                                const todayDate = new Date().getDate();
-
-                                const isToday = day === todayDate && month === currentMonth && year === currentYear;
-
+                                const isToday = day === today && month === currentMonth && year === currentYear;
                                 const isHoliday = allHolidayDays.includes(day);
 
 
@@ -418,7 +419,7 @@ const TimelineMatrix = () => {
 
                     {/* Body */}
                     <tbody>
-                        {isCurrentMonth &&
+                        {currentMonth &&
                             departments30daytable.map((dept) => (
                                 <tr
                                     key={dept.Department}
@@ -433,11 +434,11 @@ const TimelineMatrix = () => {
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
                                         const todayDate = new Date().getDate();
-                                        const isToday = day === todayDate && month === currentMonth && year === currentYear;
+                                        const isToday = day === today && month === currentMonth && year === currentYear;
                                         const isHoliday = allHolidayDays.includes(day);
 
 
-                                        const isFutureOverdue = day > todayDate && status === "overdue";
+                                        const isFutureOverdue = day > today && status === "overdue";
 
                                         let icon = "";
                                         if (!isFutureOverdue) {
@@ -483,7 +484,7 @@ const TimelineMatrix = () => {
                     </tbody>
 
                     <tbody>
-                        {!isCurrentMonth &&
+                        {!currentMonth &&
                             departments30daytable.map((dept) => (
                                 <tr
                                     onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
