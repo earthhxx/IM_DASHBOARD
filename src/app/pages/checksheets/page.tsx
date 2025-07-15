@@ -42,7 +42,7 @@ const TimelineMatrix = () => {
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const days = Array.from({ length: getDaysInMonth(month, year) }, (_, i) => i + 1);
 
-    
+
     //for table data
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
     const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
@@ -315,6 +315,13 @@ const TimelineMatrix = () => {
         }
     };
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            FetchAllCheckSheetData(month, year);
+        }, 5 * 60 * 1000); // 5 นาที
+
+        return () => clearInterval(interval); // ล้างเมื่อ component unmount
+    }, [month, year]);
 
 
     useEffect(() => {
