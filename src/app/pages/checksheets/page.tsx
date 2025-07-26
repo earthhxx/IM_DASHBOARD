@@ -31,8 +31,17 @@ type Department30daytable = {
 const TimelineMatrix = () => {
     //ปีและเดือนปัจจุบัน
 
+    // state เก็บวันที่เวลาปัจจุบัน เพื่ออัปเดตทุก 5 นาที
+    const [now, setNow] = useState(new Date());
 
-    const now = new Date();
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setNow(new Date()); // อัปเดตวันเวลาปัจจุบันทุก 5 นาที
+        }, 5 * 60 * 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
     const today = now.getDate();
@@ -318,18 +327,15 @@ const TimelineMatrix = () => {
     };
 
     useEffect(() => {
-        const now = new Date();
-        const isCurrentMonth = month === now.getMonth() + 1 && year === now.getFullYear();
+        const currentMonth = now.getMonth() + 1;
+        const currentYear = now.getFullYear();
 
-        if (!isCurrentMonth) return; // ❌ ไม่ตรงเดือนปีปัจจุบัน ไม่ต้องตั้ง interval
+        const isCurrentMonth = month === currentMonth && year === currentYear;
+        if (!isCurrentMonth) return;
 
-        const interval = setInterval(() => {
-            FetchAllCheckSheetData(month, year);
-            console.log("refetch (5 min)");
-        }, 5 * 60 * 1000); // ✅ ทุก 5 นาที
-
-        return () => clearInterval(interval); // ✅ ล้าง interval ตอน unmount หรือเปลี่ยน month/year
-    }, [month, year]);
+        FetchAllCheckSheetData(month, year);
+        console.log("refetch (5 min)");
+    }, [now, month, year]);
 
 
 
@@ -414,7 +420,8 @@ const TimelineMatrix = () => {
                                 Department
                             </th>
                             {days.map((day) => {
-                                const isToday = day === today && month === currentMonth && year === currentYear;
+                                const isToday =
+                                    new Date(year, month - 1, day).toDateString() === new Date().toDateString();
                                 const isHoliday = allHolidayDays.includes(day);
 
 
@@ -449,8 +456,8 @@ const TimelineMatrix = () => {
 
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
-                                        const todayDate = new Date().getDate();
-                                        const isToday = day === today && month === currentMonth && year === currentYear;
+                                        const isToday =
+                                            new Date(year, month - 1, day).toDateString() === new Date().toDateString();
                                         const isHoliday = allHolidayDays.includes(day);
 
 
@@ -556,7 +563,7 @@ const TimelineMatrix = () => {
                             <tr>
                                 <td colSpan={days.length + 1}>
                                     <div className="h-[300px] flex items-center justify-center text-gray-500 text-xl select-none uppercase">
-                                        
+
                                     </div>
                                 </td>
                             </tr>
@@ -623,7 +630,7 @@ const TimelineMatrix = () => {
                         {/* ✅ แสดงข้อความทับกลางกราฟ ถ้าไม่มี overdue */}
                         {combineOverdueAndOngoing().every(item => item.Overdue === 0) && (
                             <div className="absolute inset-0 flex items-center justify-center text-gray-500 text-lg pointer-events-none uppercase mb-15">
-                                
+
                             </div>
                         )}
                     </div>
@@ -656,7 +663,7 @@ const TimelineMatrix = () => {
                                         <tr>
                                             <td colSpan={3}>
                                                 <div className="flex justify-center items-center mt-20 text-gray-500">
-                                                    
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -710,7 +717,7 @@ const TimelineMatrix = () => {
                                     <tr>
                                         <td colSpan={3}>
                                             <div className="flex justify-center items-center mt-20 text-gray-500 mb-20">
-                                                
+
                                             </div>
                                         </td>
                                     </tr>
