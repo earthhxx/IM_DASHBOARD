@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const createConnection = async () => {
-  console.log('DB_SERVER:', process.env.DB_SERVER); // debug
+  // console.log('DB_SERVER:', process.env.DB_SERVER); // debug
   try {
     const pool = await sql.connect({
       user: process.env.DB_USER!,
