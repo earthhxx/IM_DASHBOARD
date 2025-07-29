@@ -83,7 +83,7 @@ const TimelineMatrix = () => {
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
     const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
         const departmentsMap: { [key: string]: Department30daytable } = {};;
-        const loopUntil = adjustedMonth ? adjustedDay : lastDayOfAdjustedMonth;
+        const loopUntil = lastDayOfAdjustedMonth;
 
         data.forEach((item) => {
             const departmentName = item.Department;
@@ -356,15 +356,6 @@ const TimelineMatrix = () => {
     const [departmentdata, setDepartmentdata] = useState<any[]>([]);
     const [viewMode, setViewMode] = useState<"detail" | "all" | "">("");
 
-    const colors = [
-        "bg-red-100 text-red-600 hover:bg-red-200",
-        "bg-green-100 text-green-600 hover:bg-green-200",
-        "bg-blue-100 text-blue-600 hover:bg-blue-200",
-        "bg-yellow-100 text-yellow-600 hover:bg-yellow-200",
-        "bg-purple-100 text-purple-600 hover:bg-purple-200",
-    ];
-
-
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
 
@@ -508,6 +499,7 @@ const TimelineMatrix = () => {
                             ))}
                     </tbody>
 
+                    {/* notthisMonth */}
                     <tbody>
                         {!(month === adjustedMonth && year === adjustedYear) &&
                             departments30daytable.map((dept) => (
@@ -529,20 +521,20 @@ const TimelineMatrix = () => {
 
                                         const icon =
                                             status === "completed" ? "✓" :
-                                                status === "ongoing" ? "" :
+                                                status === "ongoing" ? "✕" :
                                                     status === "overdue" ? "✕" :
-                                                        status === "stopline" ? "S" : "";
+                                                        status === "stopline" ? "" : "";
 
                                         const dotColor =
                                             status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
-                                                status === "ongoing" ? "" :
+                                                status === "ongoing" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
                                                     status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
                                                         status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
 
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
                                                 {holiday && (
-                                                    <div className="absolute inset-0 bg-red-400/50" />
+                                                    <div className="absolute inset-0 bg-gray-400/50" />
                                                 )}
                                                 <div className="flex justify-center items-center w-full h-full relative z-10">
                                                     {status !== "null" && (
