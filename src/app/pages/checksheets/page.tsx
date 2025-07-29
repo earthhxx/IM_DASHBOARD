@@ -414,7 +414,7 @@ const TimelineMatrix = () => {
                             </th>
                             {days.map((day) => {
                                 const isToday =
-                                    new Date(year, month - 1, day).toDateString() === now.toDateString(); // ใช้ now ที่อัปเดตทุก 5 นาที
+                                    new Date(year, month - 1, day).toDateString() === tempDate.toDateString();
                                 // console.log(isToday, new Date(year, month - 1, day).toDateString(), '--', now.toDateString())
                                 const isHoliday = allHolidayDays.includes(day);
 
@@ -451,7 +451,7 @@ const TimelineMatrix = () => {
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
                                         const isToday =
-                                            new Date(year, month - 1, day).toDateString() === now.toDateString(); // ใช้ now ที่อัปเดตทุก 5 นาที
+                                            new Date(year, month - 1, day).toDateString() === tempDate.toDateString();
                                         const isHoliday = allHolidayDays.includes(day);
 
 
