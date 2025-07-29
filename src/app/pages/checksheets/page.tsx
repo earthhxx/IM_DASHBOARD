@@ -114,7 +114,7 @@ const TimelineMatrix = () => {
                 const dayKey = `Date${i}`;
                 const value = item[dayKey];
 
-                if (value === "-") {
+                if (value === "3") {
                     department.checked = department.checked.filter(d => d !== i);
                     department.ongoing = department.ongoing.filter(d => d !== i);
                     department.overdue = department.overdue.filter(d => d !== i);
