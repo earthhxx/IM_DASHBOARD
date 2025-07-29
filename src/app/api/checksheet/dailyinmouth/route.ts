@@ -37,8 +37,8 @@ export async function GET(req: NextRequest) {
             .query(`
                 SELECT *
                 FROM [DASHBOARD].[dbo].[tb_DailyChecksheet]
-                WHERE YEAR(UpdateTime) = @year AND MONTH(UpdateTime) = @month
-                ORDER BY [UpdateTime] DESC
+                WHERE YEAR(CreateTime) = @year AND MONTH(CreateTime) = @month
+                ORDER BY [CreateTime] DESC
             `);
 
         return NextResponse.json({
