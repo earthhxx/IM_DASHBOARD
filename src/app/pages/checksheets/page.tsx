@@ -329,7 +329,7 @@ const TimelineMatrix = () => {
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
-            console.log(transformed);
+            // console.log(transformed);
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -415,7 +415,7 @@ const TimelineMatrix = () => {
                             {days.map((day) => {
                                 const isToday =
                                     new Date(year, month - 1, day).toDateString() === now.toDateString(); // ใช้ now ที่อัปเดตทุก 5 นาที
-                                console.log(isToday, new Date(year, month - 1, day).toDateString(), '--', now.toDateString())
+                                // console.log(isToday, new Date(year, month - 1, day).toDateString(), '--', now.toDateString())
                                 const isHoliday = allHolidayDays.includes(day);
 
 
