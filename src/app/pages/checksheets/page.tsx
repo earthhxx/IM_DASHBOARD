@@ -720,7 +720,7 @@ const TimelineMatrix = () => {
                     {/* Ongoing */}
                     <section className="w-full bg-gradient-to-br from-yellow-200/60 to-yellow-50 shadow-xl rounded-2xl border border-gray-200 p-6 h-[400px] transition-transform duration-300 hover:scale-[1.01]">
                         <h2 className="text-[26px] font-bold mb-4 text-blue-900 flex items-center justify-center gap-2 uppercase">
-                            <span className="animate-spin ">⏳</span>
+                            <span className="mb-4 text-3xl">✍️</span>
                             <div>Ongoing</div>
                         </h2>
                         <table className="w-full text-[20px] border-collapse">
