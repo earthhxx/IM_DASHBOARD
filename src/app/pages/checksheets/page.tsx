@@ -14,7 +14,6 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
-import { Yeseva_One } from "next/font/google";
 
 
 type Department30daytable = {
@@ -42,23 +41,49 @@ const TimelineMatrix = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const currentMonth = now.getMonth() + 1;
-    const currentYear = now.getFullYear();
-    const today = now.getDate();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    // เช็คว่าก่อนเวลา 7:45 AM หรือไม่
+    const isBeforeCutoff = currentHour < 7 || (currentHour === 7 && currentMinute < 45);
+
+    let currentYear = now.getFullYear();
+    let currentMonth = now.getMonth() + 1; // 1-12
+    let today = now.getDate();
 
     const [month, setMonth] = useState(currentMonth);
     const [year, setYear] = useState(currentYear);
 
+    if (isBeforeCutoff) {
+        // ถ้าเป็นวันที่ 1 ของเดือน
+        if (today === 1) {
+            if (currentMonth === 1) {
+                // ถ้าเป็น 1 มกราคม → ย้อนกลับไป ธ.ค. ปีที่แล้ว
+                const m = currentMonth = 12;
+                const y = currentYear -= 1;
+                setMonth(m);
+                setYear(y);
+            } else {
+                const m = currentMonth -= 1;
+                setMonth(m);
+            }
+            // หาวันสุดท้ายของเดือนที่แล้ว
+            const lastDayOfPrevMonth = new Date(currentYear, currentMonth, 0).getDate(); // day 0 = วันสุดท้ายของเดือนก่อน
+            today = lastDayOfPrevMonth;
+        } else {
+            // ปรับวัน -1
+            today -= 1;
+        }
+    }
+
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const days = Array.from({ length: getDaysInMonth(month, year) }, (_, i) => i + 1);
-
 
     //for table data
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
     const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
         const departmentsMap: { [key: string]: Department30daytable } = {};
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
         const loopUntil = isCurrentMonth ? today : lastDay;
 
@@ -166,7 +191,6 @@ const TimelineMatrix = () => {
     const [alloverdue, setalloverdue] = useState<any[]>([]);
     const convertAllOverdueToChecksheetItems = (data: any[], month: number, year: number) => {
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
 
         const result: any[] = [];
@@ -218,7 +242,6 @@ const TimelineMatrix = () => {
 
     const convertAllOngoingToChecksheetItems = (data: any[], month: number, year: number) => {
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const today = now.getDate();
 
         if (!isCurrentMonth) return []; // ✅ ongoing เฉพาะเดือนปัจจุบันเท่านั้น
 
@@ -266,7 +289,6 @@ const TimelineMatrix = () => {
     //sort alldata by overdue
     const sortalldata_by_overdue = (data: any[], month: number, year: number) => {
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
 
         const result: any[] = [];
@@ -418,6 +440,7 @@ const TimelineMatrix = () => {
                             {days.map((day) => {
                                 const isToday =
                                     new Date(year, month - 1, day).toDateString() === now.toDateString(); // ใช้ now ที่อัปเดตทุก 5 นาที
+                                console.log(isToday, new Date(year, month - 1, day).toDateString(), '--', now.toDateString())
                                 const isHoliday = allHolidayDays.includes(day);
 
 
