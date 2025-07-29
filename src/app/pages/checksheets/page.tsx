@@ -57,7 +57,6 @@ const TimelineMatrix = () => {
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
     const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
         const departmentsMap: { [key: string]: Department30daytable } = {};
-        const now = new Date();
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
         const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
@@ -166,7 +165,6 @@ const TimelineMatrix = () => {
     // สำหรับแสดงรายการเช็คชีตที่เกินกำหนด
     const [alloverdue, setalloverdue] = useState<any[]>([]);
     const convertAllOverdueToChecksheetItems = (data: any[], month: number, year: number) => {
-        const now = new Date();
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
         const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
@@ -219,7 +217,6 @@ const TimelineMatrix = () => {
     const [allongoing, setallongoing] = useState<any[]>([]);
 
     const convertAllOngoingToChecksheetItems = (data: any[], month: number, year: number) => {
-        const now = new Date();
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
         const today = now.getDate();
 
@@ -268,7 +265,6 @@ const TimelineMatrix = () => {
 
     //sort alldata by overdue
     const sortalldata_by_overdue = (data: any[], month: number, year: number) => {
-        const now = new Date();
         const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
         const today = now.getDate();
         const lastDay = new Date(year, month, 0).getDate();
@@ -421,7 +417,7 @@ const TimelineMatrix = () => {
                             </th>
                             {days.map((day) => {
                                 const isToday =
-                                    new Date(year, month - 1, day).toDateString() === new Date().toDateString();
+                                    new Date(year, month - 1, day).toDateString() === now.toDateString(); // ใช้ now ที่อัปเดตทุก 5 นาที
                                 const isHoliday = allHolidayDays.includes(day);
 
 
@@ -457,7 +453,7 @@ const TimelineMatrix = () => {
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
                                         const isToday =
-                                            new Date(year, month - 1, day).toDateString() === new Date().toDateString();
+                                            new Date(year, month - 1, day).toDateString() === now.toDateString(); // ใช้ now ที่อัปเดตทุก 5 นาที
                                         const isHoliday = allHolidayDays.includes(day);
 
 
@@ -478,7 +474,6 @@ const TimelineMatrix = () => {
                                                     isFutureOverdue ? "" : // ✅ ใช้เงื่อนไขแทรกได้เลย
                                                         status === "overdue" ? "bg-red-500 text-white  rounded-full shadow-sm" :
                                                             status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
-
                                         return (
                                             <td
                                                 onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}

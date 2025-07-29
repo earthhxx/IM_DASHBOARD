@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
 
         // หาวันสุดท้ายของเดือน
         const lastDay = new Date(year, month, 0).getDate();
-
         const isBefore745 = (currentHour < 7) || (currentHour === 7 && currentMinute < 45);
 
         // ถ้าวันนี้คือวันที่ 1 และยังไม่ถึง 7:45 → ย้อนกลับไปเดือนก่อนหน้า
