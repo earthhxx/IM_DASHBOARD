@@ -28,53 +28,53 @@ type Department30daytable = {
 };
 
 const TimelineMatrix = () => {
-    //ปีและเดือนปัจจุบัน
-
-    // state เก็บวันที่เวลาปัจจุบัน เพื่ออัปเดตทุก 5 นาที
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setNow(new Date()); // อัปเดตวันเวลาปัจจุบันทุก 5 นาที
+            setNow(new Date());
         }, 5 * 60 * 1000);
-
         return () => clearInterval(interval);
     }, []);
 
+    // ตัดเวลา 7:45 AM
     const currentHour = now.getHours();
     const currentMinute = now.getMinutes();
-
-    // เช็คว่าก่อนเวลา 7:45 AM หรือไม่
     const isBeforeCutoff = currentHour < 7 || (currentHour === 7 && currentMinute < 45);
 
-    let currentYear = now.getFullYear();
-    let currentMonth = now.getMonth() + 1; // 1-12
-    let today = now.getDate();
-
-    const [month, setMonth] = useState(currentMonth);
-    const [year, setYear] = useState(currentYear);
-
+    // วันที่เวลาที่ใช้ใน context นี้
+    let tempDate = new Date(now); // clone
     if (isBeforeCutoff) {
-        // ถ้าเป็นวันที่ 1 ของเดือน
-        if (today === 1) {
-            if (currentMonth === 1) {
-                // ถ้าเป็น 1 มกราคม → ย้อนกลับไป ธ.ค. ปีที่แล้ว
-                const m = currentMonth = 12;
-                const y = currentYear -= 1;
-                setMonth(m);
-                setYear(y);
-            } else {
-                const m = currentMonth -= 1;
-                setMonth(m);
-            }
-            // หาวันสุดท้ายของเดือนที่แล้ว
-            const lastDayOfPrevMonth = new Date(currentYear, currentMonth, 0).getDate(); // day 0 = วันสุดท้ายของเดือนก่อน
-            today = lastDayOfPrevMonth;
-        } else {
-            // ปรับวัน -1
-            today -= 1;
-        }
+        tempDate.setDate(tempDate.getDate() - 1); // ย้อนวัน
     }
+
+    const adjustedYear = tempDate.getFullYear();
+    const adjustedMonth = tempDate.getMonth() + 1; // 1-12
+    const adjustedDay = tempDate.getDate();
+
+    // หา last day ของเดือนที่กำลังดูอยู่
+    const lastDayOfAdjustedMonth = new Date(adjustedYear, adjustedMonth, 0).getDate();
+
+    // state หลักที่ใช้แสดง
+    const [month, setMonth] = useState(adjustedMonth);
+    const [year, setYear] = useState(adjustedYear);
+
+    // sync เมื่อ adjusted เปลี่ยน
+    useEffect(() => {
+        setMonth(adjustedMonth);
+        setYear(adjustedYear);
+    }, [adjustedMonth, adjustedYear]);
+
+    // Fetch ข้อมูลเมื่อเดือนและปีเปลี่ยน หรือเวลาเดินผ่าน cutoff
+    useEffect(() => {
+        const currentMonth = now.getMonth() + 1;
+        const currentYear = now.getFullYear();
+
+        const isCurrentMonth = month === currentMonth && year === currentYear;
+        if (!isCurrentMonth) return;
+
+        FetchAllCheckSheetData(month, year);
+    }, [now, month, year]);
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const days = Array.from({ length: getDaysInMonth(month, year) }, (_, i) => i + 1);
@@ -82,10 +82,8 @@ const TimelineMatrix = () => {
     //for table data
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
     const transformDataToDepartments = (data: any[], month: number, year: number): Department30daytable[] => {
-        const departmentsMap: { [key: string]: Department30daytable } = {};
-        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const lastDay = new Date(year, month, 0).getDate();
-        const loopUntil = isCurrentMonth ? today : lastDay;
+        const departmentsMap: { [key: string]: Department30daytable } = {};;
+        const loopUntil = adjustedMonth ? adjustedDay : lastDayOfAdjustedMonth;
 
         data.forEach((item) => {
             const departmentName = item.Department;
@@ -124,7 +122,7 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
-                if (i === today && value === "0" && isCurrentMonth) {
+                if (i === adjustedDay && value === "0" && adjustedMonth) {
                     department.checked = department.checked.filter(d => d !== i);
                     department.overdue = department.overdue.filter(d => d !== i);
                     department.stopline = department.stopline.filter(d => d !== i);
@@ -178,6 +176,7 @@ const TimelineMatrix = () => {
         return "null";
     };
 
+    //ใช้เช็คว่าในฟอร์มไหนใส่วันหยุดเก็บแบบ [] แล้วเอาไปเช็ค [] ของวันๆนั้น true = gray
     const allHolidayDays = Array.from(
         new Set(
             departments30daytable.flatMap((d) =>
@@ -190,8 +189,6 @@ const TimelineMatrix = () => {
     // สำหรับแสดงรายการเช็คชีตที่เกินกำหนด
     const [alloverdue, setalloverdue] = useState<any[]>([]);
     const convertAllOverdueToChecksheetItems = (data: any[], month: number, year: number) => {
-        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const lastDay = new Date(year, month, 0).getDate();
 
         const result: any[] = [];
 
@@ -199,8 +196,8 @@ const TimelineMatrix = () => {
         for (const item of data) {
             let count = 0;
 
-            for (let i = 1; i <= lastDay; i++) {
-                const isInRange = isCurrentMonth ? i < today : i <= lastDay;
+            for (let i = 1; i <= lastDayOfAdjustedMonth; i++) {
+                const isInRange = adjustedMonth ? i < adjustedDay : i <= adjustedYear;
 
                 if (isInRange && item[`Date${i}`] === "0") {
                     count++;
@@ -241,11 +238,10 @@ const TimelineMatrix = () => {
     const [allongoing, setallongoing] = useState<any[]>([]);
 
     const convertAllOngoingToChecksheetItems = (data: any[], month: number, year: number) => {
-        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
 
-        if (!isCurrentMonth) return []; // ✅ ongoing เฉพาะเดือนปัจจุบันเท่านั้น
+        if (!adjustedMonth) return []; // ✅ ongoing เฉพาะเดือนปัจจุบันเท่านั้น
 
-        return data.filter(item => item[`Date${today}`] === "0");
+        return data.filter(item => item[`Date${adjustedDay}`] === "0");
     };
 
     const groupOngoingByDepartment = (items: any[]) => {
@@ -288,16 +284,14 @@ const TimelineMatrix = () => {
 
     //sort alldata by overdue
     const sortalldata_by_overdue = (data: any[], month: number, year: number) => {
-        const isCurrentMonth = now.getMonth() + 1 === month && now.getFullYear() === year;
-        const lastDay = new Date(year, month, 0).getDate();
 
         const result: any[] = [];
 
         for (const item of data) {
             let count = 0;
 
-            for (let i = 1; i <= lastDay; i++) {
-                const isInRange = isCurrentMonth ? i < today : i <= lastDay;
+            for (let i = 1; i <= lastDayOfAdjustedMonth; i++) {
+                const isInRange = adjustedMonth ? i < adjustedDay : i <= lastDayOfAdjustedMonth;
 
                 if (isInRange && item[`Date${i}`] === "0") {
                     count++;
@@ -344,16 +338,6 @@ const TimelineMatrix = () => {
         }
     };
 
-    useEffect(() => {
-        const currentMonth = now.getMonth() + 1;
-        const currentYear = now.getFullYear();
-
-        const isCurrentMonth = month === currentMonth && year === currentYear;
-        if (!isCurrentMonth) return;
-
-        FetchAllCheckSheetData(month, year);
-        console.log("refetch (5 min)");
-    }, [now, month, year]);
 
 
 
@@ -461,7 +445,7 @@ const TimelineMatrix = () => {
 
                     {/* Body */}
                     <tbody>
-                        {(month === currentMonth && year === currentYear) &&
+                        {(month === adjustedMonth && year === adjustedYear) &&
                             departments30daytable.map((dept) => (
                                 <tr
                                     key={dept.Department}
@@ -480,7 +464,7 @@ const TimelineMatrix = () => {
                                         const isHoliday = allHolidayDays.includes(day);
 
 
-                                        const isFutureOverdue = day > today && status === "overdue";
+                                        const isFutureOverdue = day > adjustedDay && status === "overdue";
 
                                         let icon = "";
                                         if (!isFutureOverdue) {
@@ -525,7 +509,7 @@ const TimelineMatrix = () => {
                     </tbody>
 
                     <tbody>
-                        {!(month === currentMonth && year === currentYear) &&
+                        {!(month === adjustedMonth && year === adjustedYear) &&
                             departments30daytable.map((dept) => (
                                 <tr
                                     onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
@@ -741,7 +725,6 @@ const TimelineMatrix = () => {
                                     </tr>
 
                                 ) : (
-
                                     groupOngoingByDepartment(allongoing).map((item) => (
                                         <tr
                                             key={`${item.Department}-ongoing`}
@@ -803,10 +786,6 @@ const TimelineMatrix = () => {
                     </>
                 )
             }
-
-
-
-
         </div >
     );
 };
