@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createConnection } from '../../../lib/db';
+import { getDashboardConnection } from '../../../lib/db';
 import sql from 'mssql';
 
 export async function GET(req: NextRequest) {
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const pool = await createConnection();
+        const pool = await getDashboardConnection();
 
         // ✅ Step 1: หาค่า Shift ล่าสุดของทีมที่เลือก
         const latestResult = await pool

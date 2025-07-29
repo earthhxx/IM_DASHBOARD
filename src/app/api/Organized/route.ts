@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createConnection } from '../../../lib/db';
+import { getDashboardConnection } from '../../../lib/db';
 import sql from 'mssql';
 
 
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: 'Missing team parameter' }, { status: 400 });
     }
 
-    const pool = await createConnection();
+    const pool = await getDashboardConnection();
     const result = await pool
       .request()
       .input('team', sql.VarChar, team)

@@ -1,29 +1,49 @@
 import sql from 'mssql';
 import dotenv from 'dotenv';
 
+dotenv.config(); // โหลด .env
 
-dotenv.config();
+let pool_NewFCXT: sql.ConnectionPool | null = null;
+let pool_DASHBOARD: sql.ConnectionPool | null = null;
 
-export const createConnection = async () => {
-  // console.log('DB_SERVER:', process.env.DB_SERVER); // debug
-  try {
-    const pool = await sql.connect({
-      user: process.env.DB_USER!,
-      password: process.env.DB_PASSWORD!,
-      server: process.env.DB_SERVER!, // ต้องมีค่าเป็น string
-      database: process.env.DB_NAME!,
-      options: {
-        encrypt: true,
-        trustServerCertificate: true,
-      },
-      connectionTimeout: 10000,
-      requestTimeout: 15000,
-    });
+const requiredEnv = (name: string): string => {
+  const value = process.env[name];
+  if (!value) throw new Error(`❌ Missing env: ${name}`);
+  return value;
+};
 
-    // console.log('✅ Connected to DB:', process.env.DB_NAME);
-    return pool;
-  } catch (err) {
-    console.error('❌ Database connection error:', err);
-    throw err;
-  }
+export const getDashboardConnection = async () => {
+  if (pool_NewFCXT) return pool_NewFCXT;
+
+  pool_NewFCXT = await new sql.ConnectionPool({
+    user: requiredEnv('DB_USER'),
+    password: requiredEnv('DB_PASSWORD'),
+    server: requiredEnv('DB_SERVER'),
+    database: requiredEnv('DB_NAME'),
+    options: {
+      encrypt: false,
+      trustServerCertificate: true,
+    },
+  }).connect();
+
+  // console.log('✅ Connected to NewFCXT DB');
+  return pool_NewFCXT;
+};
+
+export const getDemo1Connection = async () => {
+  if (pool_DASHBOARD) return pool_DASHBOARD;
+
+  pool_DASHBOARD = await new sql.ConnectionPool({
+    user: requiredEnv('DB_USER234'),
+    password: requiredEnv('DB_PASSWORD234'),
+    server: requiredEnv('DB_SERVER234'),
+    database: requiredEnv('DB_NAME234'),
+    options: {
+      encrypt: false,
+      trustServerCertificate: true,
+    },
+  }).connect();
+
+  // console.log('✅ Connected to DASHBOARD DB');
+  return pool_DASHBOARD;
 };

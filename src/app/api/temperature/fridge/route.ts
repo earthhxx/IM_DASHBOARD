@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createConnection } from '../../../../lib/db';
+import { getDashboardConnection } from '../../../../lib/db';
 import sql from 'mssql';
 
 export async function GET(req: NextRequest) {
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const pool = await createConnection();
+        const pool = await getDashboardConnection();
         const result = await pool
             .request()
             .input('line', sql.NVarChar, `ตู้เย็น ${num}`)

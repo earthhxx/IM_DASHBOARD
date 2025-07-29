@@ -1,7 +1,7 @@
 // /api/OrganizedPdf/route.ts
 // ✅ เพิ่มให้ครบด้านบนของไฟล์
 import { NextRequest, NextResponse } from 'next/server';
-import { createConnection } from '../../../lib/db'; // เส้นทางนี้ควรอิงโฟลเดอร์จริง
+import { getDashboardConnection } from '../../../lib/db'; // เส้นทางนี้ควรอิงโฟลเดอร์จริง
 import sql from 'mssql';
 
 
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: 'Missing parameters' }, { status: 400 });
     }
 
-    const pool = await createConnection();
+    const pool = await getDashboardConnection();
     const result = await pool
       .request()
       .input('team', sql.VarChar, team)

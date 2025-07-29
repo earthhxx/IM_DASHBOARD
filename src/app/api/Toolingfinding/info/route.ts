@@ -1,30 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDashboardConnection } from '../../../../lib/db';
+import { getDemo1Connection } from '../../../../lib/db';
 import sql from 'mssql';
 
 export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
-    const parameter = searchParams.get('parameter'); // ✅ รับพารามิเตอร์จาก URL
+    const parameter = searchParams.get('parameter');
 
     if (!parameter) {
-        return NextResponse.json({ message: 'Missing location parameter' }, { status: 400 });
+        return NextResponse.json({ message: 'Missing parameter(s)' }, { status: 400 });
     }
 
     try {
-        const pool = await getDashboardConnection();
+        const pool = await getDemo1Connection();
         const result = await pool
             .request()
-            .input('para', sql.NVarChar, `%${parameter}%`) // ✅ ใส่ wildcard ที่นี่
+            .input('para', sql.NVarChar, `${parameter}`)
             .query(`
-                SELECT TOP (1000) [sheftname]
-                    ,[slot]
-                    ,[toolingname]
-                    ,[side]
-                    ,[status]
-                FROM 
-                    [DASHBOARD].[dbo].[im_tooling]
-                WHERE 
-                    [toolingname] LIKE @para
+            SELECT TOP 1
+                [ID],
+                [MS_ID],
+                [User_ID],
+                [Loc1],
+                [loc2],
+                [loc3],
+                [loc4],
+                [loc5],
+                [status],
+                [spac],
+                [Datetime]
+            FROM [Demo1].[dbo].[TB_Check_Stencil]
+            WHERE [MS_ID] = 'B02'
+            ORDER BY [Datetime] DESC;
             `);
 
         if (result.recordset.length === 0) {

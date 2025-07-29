@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createConnection } from '../../../../lib/db';
+import { getDashboardConnection } from '../../../../lib/db';
 
 export async function GET(req: NextRequest) {
     try {
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
         //     month = now.getMonth() + 1;
         // }
 
-        const pool = await createConnection();
+        const pool = await getDashboardConnection();
         const result = await pool
             .request()
             .input('year', year)
