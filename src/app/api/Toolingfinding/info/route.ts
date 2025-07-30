@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
                 [spac],
                 [Datetime]
             FROM [Demo1].[dbo].[TB_Check_Stencil]
-            WHERE [MS_ID] = 'B02'
+            WHERE [MS_ID] = @para
             ORDER BY [Datetime] DESC;
             `);
 

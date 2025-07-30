@@ -238,6 +238,33 @@ export default function StorageRoomLayout() {
         }
     };
 
+    useEffect(() => {
+        if (!selectedItem) return;
+        const fetchData = async () => {
+            try {
+                const res = await fetch(`/api/Toolingfinding/info?parameter=${selectedItem?.slot}`);
+                if (!res.ok) {
+                    if (res.status === 404) {
+                        setToastError("ไม่พบข้อมูล");
+                    } else {
+                        throw new Error("ไม่พบข้อมูลหรือเกิดข้อผิดพลาด");
+                    }
+                    return;
+                }
+
+                const json = await res.json();
+                console.log("First item", json.data[0].MS_ID);
+                console.log("First item", json.data?.[0]?.MS_ID);
+            } catch (err: any) {
+                setError(err.message || "ไม่มีผลวัด");
+                setToastError(err.message || "ไม่มีผลวัด");
+            }
+        };
+
+        fetchData();
+    }, [selectedItem]);
+
+
 
 
     const handleClickD = () => {
@@ -271,7 +298,7 @@ export default function StorageRoomLayout() {
 
             return () => clearTimeout(timer); // ล้าง timer เวลาคอมโพเนนต์ unmount หรือ toastVisible เปลี่ยน
         }
-    }, [toastVisible,toastError]);
+    }, [toastVisible, toastError]);
 
 
     const legendItems = [
