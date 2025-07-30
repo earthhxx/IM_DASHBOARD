@@ -308,6 +308,12 @@ export default function StorageRoomLayout() {
                     Datetime: raw.Datetime
                 });
 
+                /* The code appears to be a comment in a TypeScript React file. It is calling a function
+                `normalizeDemo1` with an argument `mockDemo1` and then passing the result to a
+                function `setdemo1`. The specific functionality of `normalizeDemo1`, `mockDemo1`, and
+                `setdemo1` is not provided in the code snippet, so it is unclear what exactly the
+                code is doing. */
+                
                 // setdemo1(normalizeDemo1(mockDemo1));
                 setdemo1(normalizeDemo1(json.data[0]));
 
@@ -649,16 +655,24 @@ export default function StorageRoomLayout() {
                             <div className="text-[16px] font-bold mt-4 mb-2 text-black uppercase">
                                 latest TENSION : [
                                 {(() => {
-                                    const [y, m, d] = demo1.Datetime?.split("T")[0].split("-") ?? [];
-                                    const monthNames = [
-                                        "January", "February", "March", "April", "May", "June",
-                                        "July", "August", "September", "October", "November", "December"
-                                    ];
-                                    const monthName = m ? monthNames[parseInt(m, 10) - 1] : "";
-                                    return d && monthName && y ? ` ${d} ${monthName} ${y} ` : "-";
+                                    const dateStr = demo1.Datetime;
+                                    if (!dateStr) return "-";
+
+                                    const date = new Date(dateStr);
+                                    const day = date.getDate();
+                                    const month = date.toLocaleString("en-US", { month: "long" });
+                                    const year = date.getFullYear();
+
+                                    const hours = date.getHours().toString().padStart(2, "0");
+                                    const minutes = date.getMinutes().toString().padStart(2, "0");
+                                    const ampm = date.getHours() < 12 ? "AM" : "PM";
+
+                                    return `${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
                                 })()}
                                 ]
                             </div>
+
+
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 text-sm">
 

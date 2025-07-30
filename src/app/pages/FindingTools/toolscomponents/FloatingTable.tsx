@@ -57,7 +57,6 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
                                 <th className="px-4 py-2 font-semibold">Slot</th>
                                 <th className="px-4 py-2 font-semibold">Tooling</th>
                                 <th className="px-4 py-2 font-semibold">Side</th>
-                                <th className="px-4 py-2 font-semibold">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,7 +70,6 @@ const FloatingTable: React.FC<Props> = ({ data, onClose, onRowClick }) => {
                                     <td className="px-4 py-2">{item.slot || "ไม่ระบุ"}</td>
                                     <td className="px-4 py-2">{item.toolingname || "ไม่ระบุ"}</td>
                                     <td className="px-4 py-2">{item.side || "ไม่ระบุ"}</td>
-                                    <td className="px-4 py-2">{item.status || "ไม่ระบุ"}</td>
                                 </tr>
                             ))}
                         </tbody>
