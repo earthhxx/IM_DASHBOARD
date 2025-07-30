@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
 
   const sharedFolder = '\\\\192.168.120.9\\4MPicture';
   const filePath = path.join(sharedFolder, `${filename}.PNG`);
-  console.log(filePath);
 
   try {
     const fileBuffer = await fs.readFile(filePath);

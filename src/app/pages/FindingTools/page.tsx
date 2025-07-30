@@ -210,8 +210,6 @@ export default function StorageRoomLayout() {
         try {
             const res = await fetch(`/api/Toolingfinding/shelf?parameter=${shelfchoose}&num1=${num1}&num2=${num2}`);
             const data = await res.json();
-
-            console.log("Fetched:", data);
             setDatasearch(data.data || []); // ปรับตาม response จริง
             setShowFloat(true); // แสดงตารางเมื่อได้ข้อมูล
         } catch (error) {
@@ -957,9 +955,9 @@ export default function StorageRoomLayout() {
                         onRowClick={(item) => {
                             handleRowClick(item);
                             setToastVisible(true);
-                            console.log(`Selected item: ${item.sheftname} - ${item.slot}`);
+                            
                             const lastChar = item.sheftname.trim().slice(-1).toUpperCase();
-                            console.log(`Last character of sheftname: ${lastChar}`);
+                            
                             if (["A", "B", "C"].includes(lastChar)) {
                                 setShowShelfABC(true);
                                 setShowShelfDEF(false);
