@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Toast from "../../components/Toast";
 import ShelfWithWheels from "./toolscomponents/ShelfWithWheels";
-import { FaCheckCircle, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram } from "react-icons/fa";
+import { FaBullseye, FaCheckCircle, FaLayerGroup, FaMapMarkerAlt, FaProjectDiagram, FaRulerCombined } from "react-icons/fa";
 import ShelfWithJigs from "@/app/pages/FindingTools/toolscomponents/ShelfWithJigs";
 import SupportBox from "@/app/pages/FindingTools/toolscomponents/SupportBox";
 import ShelfSqueegee from "@/app/pages/FindingTools/toolscomponents/shelfSqueegee";
@@ -22,13 +22,13 @@ type ToolingData = {
 
 type Demo1 = {
     MS_ID: string;
-    Loc1: string;
-    Loc2: string;
-    Loc3: string;
-    Loc4: string;
-    Loc5: string;
+    Loc1: number;
+    loc2: number;
+    loc3: number;
+    loc4: number;
+    loc5: number;
     status: string;
-    spac: string;
+    spac: number;
     Datetime: string; // ✅ ใช้ string สำหรับ ISO Date
 };
 
@@ -268,6 +268,7 @@ export default function StorageRoomLayout() {
                 }
 
                 const json = await res.json();
+                console.log(json)
                 setdemo1(json.data[0]);
             } catch (err: any) {
                 setError(err.message || "ไม่มีผลวัด");
@@ -505,6 +506,15 @@ export default function StorageRoomLayout() {
         </>
     )
 
+    const getBgColor = (value: number, spac: number) => {
+        if (value < spac) return "bg-red-400/40"; // ต่ำเกณฑ์
+        if ([spac, spac + 1, spac + 2].includes(value)) return "bg-yellow-300/40"; // อยู่ในเกณฑ์
+        if (value > spac + 2) return "bg-green-300/40"; // เกินเกณฑ์
+        return "bg-gray-400"; // fallback
+    };
+
+
+
     const shelfStencil = (shelf: string) => (
         <>
             <div className=" z-50 flex items-center justify-center ">
@@ -525,121 +535,102 @@ export default function StorageRoomLayout() {
                         highlightedNumbers={numonly ? [Number(numonly)] : []} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-2">
-                        {/* ชื่อชั้น */}
-                        <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-sm mt-2">
+                        {/* ชื่อ */}
+                        <div className="col-span-2 bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaProjectDiagram className="text-blue-400" />
                                 ชื่อ
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
-                        </span>
+                            <div className="text-base font-semibold text-gray-800">
+                                {selectedItem?.toolingname || "-"}
+                            </div>
+                        </div>
 
-                        {/* side */}
-                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                        {/* Side */}
+                        <div className="bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaLayerGroup className="text-blue-400" />
-                                side
+                                Side
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
+                            <div className="text-base font-semibold text-gray-800">
+                                {selectedItem?.side || "-"}
+                            </div>
                         </div>
 
                         {/* ตำแหน่ง */}
-                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
                             </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
+                            <div className="text-base font-semibold text-gray-800">
+                                {selectedItem?.slot || "-"}
+                            </div>
                         </div>
 
                         {/* สถานะ */}
-                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaCheckCircle className="text-blue-400" />
                                 สถานะ
                             </div>
-                            <div className="text-lg font-semibold">
+                            <div className="text-base font-semibold">
                                 <span
                                     className={`px-3 py-1 rounded-full text-white text-xs font-medium
-                                        ${demo1?.status === 'OK'
-                                            ? 'bg-green-500': demo1?.status === 'Warning'
-                                            ? 'bg-yellow-500' : demo1?.status === 'NG' 
-                                            ? 'bg-red-500' : 'bg-gray-400'
+          ${demo1?.status === "OK"
+                                            ? "bg-green-500"
+                                            : demo1?.status === "Warning"
+                                                ? "bg-yellow-500"
+                                                : demo1?.status === "NG"
+                                                    ? "bg-red-500"
+                                                    : "bg-gray-400"
                                         }`}
                                 >
-                                    {demo1?.status}
+                                    {demo1?.status || "-"}
                                 </span>
                             </div>
                         </div>
-
-                    </div>
-                    <div>TENSION</div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm">
-                        {/* ชื่อชั้น */}
-                        <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
-                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                <FaProjectDiagram className="text-blue-400" />
-                                ชื่อ
-                            </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
-                        </span>
-
-                        {/* side */}
-                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
-                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                <FaLayerGroup className="text-blue-400" />
-                                side
-                            </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
-                        </div>
-
-                        {/* ตำแหน่ง */}
-                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
-                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                <FaMapMarkerAlt className="text-blue-400" />
-                                ตำแหน่ง
-                            </div>
-                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
-                        </div>
-
-                        {/* สถานะ */}
-                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
-                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
-                                <FaCheckCircle className="text-blue-400" />
-                                สถานะ
-                            </div>
-                            <div className="text-lg font-semibold">
-                                <span
-                                    className={`px-3 py-1 rounded-full text-white text-xs font-medium
-          ${datasearch[0].status === 'Stock'
-                                            ? 'bg-green-500'
-                                            : datasearch[0].status === 'Empty'
-                                                ? 'bg-yellow-500'
-                                                : 'bg-gray-400'
-                                        }`}
-                                >
-                                    {datasearch[0].status}
-                                </span>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <div className="flex flex-col justify-center items-center mt-4 ">
-                        {/* ปุ่มปิด (X) ขวาบน */}
-                        {/* <button
-                            onClick={() => { setShowShelfABC(false); setSelectedItem(null); }}
-                            className="flex flex-col justify-center items-center text-white hover:text-red-500 text-[14px] rounded-xl text-center font-bold bg-green-600 shadow-inner border-2 border-green-300 w-fit uppercase ps-6 pe-6"
-                        >
-                            <div>Withdraw </div>
-                            <div>เบิกออก </div>
-                        </button> */}
+                    {demo1 && (
+                        <>
+                            <div className="text-[16px] font-bold mt-2 mb-1 text-black">
+                                TENSION [
+                                {(() => {
+                                    const [y, m, d] = demo1.Datetime?.split("T")[0].split("-") ?? [];
+                                    return d && m && y ? `${d}/${m}/${y}` : "-";
+                                })()}
+                                ] :
+                            </div>
 
-                    </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 text-sm">
 
+                                {/* Standard */}
+                                <div className="bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm">
+                                    <div className="text-gray-500 font-medium flex items-center gap-1 mb-1">
+                                        <FaBullseye className="text-blue-400" />
+                                        Standard
+                                    </div>
+                                    <div className="text-lg font-semibold text-gray-800 flex justify-center items-center">{demo1.spac}</div>
+                                </div>
 
-
+                                {/* LOC1–LOC5 */}
+                                {[demo1.Loc1, demo1.loc2, demo1.loc3, demo1.loc4, demo1.loc5].map((loc, index) => (
+                                    <div
+                                        key={index}
+                                        className={`px-4 py-2 rounded-xl border border-gray-200 shadow-sm ${getBgColor(loc, demo1.spac)}`}
+                                    >
+                                        <div className="text-gray-500 font-medium flex items-center justify-center gap-2 mb-1">
+                                            <FaRulerCombined className="text-blue-400" />
+                                            Point {index + 1}
+                                        </div>
+                                        <div className="text-lg font-semibold text-gray-800 flex justify-center items-center">{loc}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </>
