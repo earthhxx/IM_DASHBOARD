@@ -33,6 +33,7 @@ type Demo1 = {
 };
 
 
+
 // Common styles
 const shelfBase =
     "w-10 sm:w-[50px] lg:w-[60px] border-2 border-gray-400 rounded-md relative shadow-md font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200 flex items-center justify-center select-none cursor-pointer";
@@ -253,8 +254,35 @@ export default function StorageRoomLayout() {
         }
     };
 
+    //ng
+    // const mockDemo1: Demo1 = {
+    //     MS_ID: "B02",
+    //     Loc1: 3.5,
+    //     loc2: 2.8,
+    //     loc3: 4.1,
+    //     loc4: 3.9,
+    //     loc5: 3.7,
+    //     status: "NG",
+    //     spac: 3.5,
+    //     Datetime: "2025-07-29T13:25:00.000Z" // ISO 8601 format
+    // };
+
+    //close
+    // const mockDemo1: Demo1 = {
+    //     MS_ID: "B02",
+    //     Loc1: 40,
+    //     loc2: 40,
+    //     loc3: 40,
+    //     loc4: 40,
+    //     loc5: 37,
+    //     status: "Warning",
+    //     spac: 35,
+    //     Datetime: "2025-07-29T13:25:00.000Z" // ISO 8601 format
+    // };
+
     useEffect(() => {
         if (!selectedItem) return;
+
         const fetchData = async () => {
             try {
                 const res = await fetch(`/api/Toolingfinding/info?parameter=${selectedItem?.slot}`);
@@ -268,8 +296,21 @@ export default function StorageRoomLayout() {
                 }
 
                 const json = await res.json();
-                console.log(json)
-                setdemo1(json.data[0]);
+                const normalizeDemo1 = (raw: any): Demo1 => ({
+                    MS_ID: raw.MS_ID,
+                    Loc1: Number(raw.Loc1),
+                    loc2: Number(raw.loc2),
+                    loc3: Number(raw.loc3),
+                    loc4: Number(raw.loc4),
+                    loc5: Number(raw.loc5),
+                    status: raw.status,
+                    spac: Number(raw.spac),
+                    Datetime: raw.Datetime
+                });
+
+                // setdemo1(normalizeDemo1(mockDemo1));
+                setdemo1(normalizeDemo1(json.data[0]));
+
             } catch (err: any) {
                 setError(err.message || "ไม่มีผลวัด");
                 setToastError(err.message || "ไม่มีผลวัด");
@@ -278,9 +319,6 @@ export default function StorageRoomLayout() {
 
         fetchData();
     }, [selectedItem]);
-
-
-
 
     const handleClickD = () => {
         handleshelfClick("D", 1, 100);
@@ -507,11 +545,18 @@ export default function StorageRoomLayout() {
     )
 
     const getBgColor = (value: number, spac: number) => {
-        if (value < spac) return "bg-red-400/40"; // ต่ำเกณฑ์
-        if ([spac, spac + 1, spac + 2].includes(value)) return "bg-yellow-300/40"; // อยู่ในเกณฑ์
-        if (value > spac + 2) return "bg-green-300/40"; // เกินเกณฑ์
-        return "bg-gray-400"; // fallback
+        if (typeof value !== "number" || typeof spac !== "number" || isNaN(value) || isNaN(spac)) {
+            return "bg-gray-400"; // invalid data
+        }
+
+        if (value < spac) return "bg-red-400/40";
+        if (value >= spac && value <= spac + 2) return "bg-yellow-300/40";
+        if (value > spac + 2) return ""; // no color if too high
+
+        return "bg-gray-400"; // fallback (really shouldn't happen now)
     };
+
+
 
 
 
@@ -564,13 +609,19 @@ export default function StorageRoomLayout() {
                                 <FaMapMarkerAlt className="text-blue-400" />
                                 ตำแหน่ง
                             </div>
-                            <div className="text-base font-semibold text-gray-800">
+                            <div className="text-base font-semibold text-gray-800  ">
                                 {selectedItem?.slot || "-"}
                             </div>
                         </div>
 
                         {/* สถานะ */}
-                        <div className="bg-white px-4 py-3 rounded-xl border border-gray-200 shadow-sm">
+                        <div className={` px-4 py-3 rounded-xl border border-gray-200 shadow-sm   ${demo1?.status === "OK"
+                            ? "bg-green-300/30"
+                            : demo1?.status === "Warning"
+                                ? "bg-yellow-300/30"
+                                : demo1?.status === "NG"
+                                    ? "bg-red-400/40"
+                                    : "bg-gray-400"} `}>
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
                                 <FaCheckCircle className="text-blue-400" />
                                 สถานะ
@@ -587,7 +638,7 @@ export default function StorageRoomLayout() {
                                                     : "bg-gray-400"
                                         }`}
                                 >
-                                    {demo1?.status || "-"}
+                                    {demo1?.status || "ไม่มีข้อมูล"}
                                 </span>
                             </div>
                         </div>
@@ -595,13 +646,18 @@ export default function StorageRoomLayout() {
 
                     {demo1 && (
                         <>
-                            <div className="text-[16px] font-bold mt-2 mb-1 text-black">
-                                TENSION [
+                            <div className="text-[16px] font-bold mt-4 mb-2 text-black uppercase">
+                                latest TENSION : [
                                 {(() => {
                                     const [y, m, d] = demo1.Datetime?.split("T")[0].split("-") ?? [];
-                                    return d && m && y ? `${d}/${m}/${y}` : "-";
+                                    const monthNames = [
+                                        "January", "February", "March", "April", "May", "June",
+                                        "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const monthName = m ? monthNames[parseInt(m, 10) - 1] : "";
+                                    return d && monthName && y ? ` ${d} ${monthName} ${y} ` : "-";
                                 })()}
-                                ] :
+                                ]
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 text-sm">
