@@ -257,13 +257,13 @@ export default function StorageRoomLayout() {
     //ng
     // const mockDemo1: Demo1 = {
     //     MS_ID: "B02",
-    //     Loc1: 3.5,
-    //     loc2: 2.8,
-    //     loc3: 4.1,
-    //     loc4: 3.9,
-    //     loc5: 3.7,
+    //     Loc1: 40,
+    //     loc2: 42,
+    //     loc3: 40,
+    //     loc4: 37,
+    //     loc5: 34,
     //     status: "NG",
-    //     spac: 3.5,
+    //     spac: 35,
     //     Datetime: "2025-07-29T13:25:00.000Z" // ISO 8601 format
     // };
 
@@ -313,7 +313,7 @@ export default function StorageRoomLayout() {
                 function `setdemo1`. The specific functionality of `normalizeDemo1`, `mockDemo1`, and
                 `setdemo1` is not provided in the code snippet, so it is unclear what exactly the
                 code is doing. */
-                
+
                 // setdemo1(normalizeDemo1(mockDemo1));
                 setdemo1(normalizeDemo1(json.data[0]));
 
