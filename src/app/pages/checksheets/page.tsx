@@ -462,7 +462,7 @@ const TimelineMatrix = () => {
                                             if (status === "completed") icon = "✓";
                                             else if (status === "ongoing") icon = "";
                                             else if (status === "overdue") icon = "✕";
-                                            else if (status === "stopline") icon = "S";
+                                            else if (status === "stopline") icon = "";
                                         }
 
 
@@ -529,7 +529,7 @@ const TimelineMatrix = () => {
                                             status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
                                                 status === "ongoing" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
                                                     status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
-                                                        status === "stopline" ? "bg-black text-white w-6 h-6 rounded-full" : "";
+                                                        status === "stopline" ? "text-white w-6 h-6 rounded-full" : "";
 
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">
