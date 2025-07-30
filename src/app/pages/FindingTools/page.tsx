@@ -20,6 +20,19 @@ type ToolingData = {
     status: string;
 };
 
+type Demo1 = {
+    MS_ID: string;
+    Loc1: string;
+    Loc2: string;
+    Loc3: string;
+    Loc4: string;
+    Loc5: string;
+    status: string;
+    spac: string;
+    Datetime: string; // ✅ ใช้ string สำหรับ ISO Date
+};
+
+
 // Common styles
 const shelfBase =
     "w-10 sm:w-[50px] lg:w-[60px] border-2 border-gray-400 rounded-md relative shadow-md font-semibold text-gray-700 font-sans tracking-wide hover:scale-125 hover:z-50 transition-transform duration-200 flex items-center justify-center select-none cursor-pointer";
@@ -182,6 +195,8 @@ export default function StorageRoomLayout() {
 
     const [selectedItem, setSelectedItem] = useState<ToolingData | null>(null);
 
+    const [demo1, setdemo1] = useState<Demo1 | null>(null);
+
     const lastCharshelf = selectedItem?.sheftname.trim().slice(-1).toUpperCase();
 
     const numonly = selectedItem?.slot.replace(/\D/g, ""); // แปลง slot เป็นตัวเลขเท่านั้น 
@@ -253,8 +268,7 @@ export default function StorageRoomLayout() {
                 }
 
                 const json = await res.json();
-                console.log("First item", json.data[0].MS_ID);
-                console.log("First item", json.data?.[0]?.MS_ID);
+                setdemo1(json.data[0]);
             } catch (err: any) {
                 setError(err.message || "ไม่มีผลวัด");
                 setToastError(err.message || "ไม่มีผลวัด");
@@ -511,7 +525,57 @@ export default function StorageRoomLayout() {
                         highlightedNumbers={numonly ? [Number(numonly)] : []} // ตัวที่ 4, 10, 78 จะกระพริบเป็นสีแดง
                     />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-15">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm mt-2">
+                        {/* ชื่อชั้น */}
+                        <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaProjectDiagram className="text-blue-400" />
+                                ชื่อ
+                            </div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.toolingname}</div>
+                        </span>
+
+                        {/* side */}
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaLayerGroup className="text-blue-400" />
+                                side
+                            </div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.side}</div>
+                        </div>
+
+                        {/* ตำแหน่ง */}
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaMapMarkerAlt className="text-blue-400" />
+                                ตำแหน่ง
+                            </div>
+                            <div className="text-lg font-semibold text-gray-800">{selectedItem?.slot}</div>
+                        </div>
+
+                        {/* สถานะ */}
+                        <div className="bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
+                                <FaCheckCircle className="text-blue-400" />
+                                สถานะ
+                            </div>
+                            <div className="text-lg font-semibold">
+                                <span
+                                    className={`px-3 py-1 rounded-full text-white text-xs font-medium
+                                        ${demo1?.status === 'OK'
+                                            ? 'bg-green-500': demo1?.status === 'Warning'
+                                            ? 'bg-yellow-500' : demo1?.status === 'NG' 
+                                            ? 'bg-red-500' : 'bg-gray-400'
+                                        }`}
+                                >
+                                    {demo1?.status}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>TENSION</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4 text-sm">
                         {/* ชื่อชั้น */}
                         <span className="col-span-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm">
                             <div className="text-gray-500 font-medium flex items-center gap-2 mb-1">
@@ -561,6 +625,7 @@ export default function StorageRoomLayout() {
                         </div>
 
                     </div>
+
                     <div className="flex flex-col justify-center items-center mt-4 ">
                         {/* ปุ่มปิด (X) ขวาบน */}
                         {/* <button
@@ -572,6 +637,7 @@ export default function StorageRoomLayout() {
                         </button> */}
 
                     </div>
+
 
 
                 </div>
