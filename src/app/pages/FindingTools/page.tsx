@@ -276,7 +276,7 @@ export default function StorageRoomLayout() {
     // };
 
     useEffect(() => {
-        if (!selectedItem) return;
+        if (!selectedItem || !['Stencil A', 'Stencil B', 'Stencil C'].includes(selectedItem.sheftname)) return;
 
         const fetchData = async () => {
             try {
