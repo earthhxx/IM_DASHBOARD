@@ -77,7 +77,7 @@ const TimelineMatrix = () => {
     }, [now, month, year]);
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
-    const days = Array.from({ length: getDaysInMonth(month, year) }, (_, i) => i + 1);
+    const days = Array.from({ length: getDaysInMonth(adjustedMonth, adjustedYear) }, (_, i) => i + 1);
 
     //for table data
     const [departments30daytable, setDepartments30daytable] = useState<Department30daytable[]>([]);
@@ -414,7 +414,7 @@ const TimelineMatrix = () => {
                             </th>
                             {days.map((day) => {
                                 const isToday =
-                                    new Date(year, month - 1, day).toDateString() === tempDate.toDateString();
+                                    new Date(adjustedYear, adjustedMonth - 1, day).toDateString() === tempDate.toDateString();
                                 // console.log(isToday, new Date(year, month - 1, day).toDateString(), '--', now.toDateString())
                                 const isHoliday = allHolidayDays.includes(day);
 
@@ -451,7 +451,7 @@ const TimelineMatrix = () => {
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
                                         const isToday =
-                                            new Date(year, month - 1, day).toDateString() === tempDate.toDateString();
+                                            new Date(adjustedYear, adjustedMonth - 1, day).toDateString() === tempDate.toDateString();
                                         const isHoliday = allHolidayDays.includes(day);
 
 

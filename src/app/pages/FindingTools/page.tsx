@@ -9,9 +9,6 @@ import SupportBox from "@/app/pages/FindingTools/toolscomponents/SupportBox";
 import ShelfSqueegee from "@/app/pages/FindingTools/toolscomponents/shelfSqueegee";
 import FloatingTable from "@/app/pages/FindingTools/toolscomponents/FloatingTable";
 
-
-
-
 type ToolingData = {
     sheftname: string;
     slot: string;
