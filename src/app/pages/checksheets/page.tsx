@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import MonthYearSelector from "@/app/pages/checksheets/componentschecksheets/MonthYearSelector";
 import DepartmentChecksheetDetails from "@/app/pages/checksheets/componentschecksheets/DepartmentChecksheetDetails";
 import DepartmentAllChecksheet from "@/app/pages/checksheets/componentschecksheets/DepartmentAllChecksheet";
@@ -11,7 +11,6 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
 } from "recharts";
 
@@ -37,20 +36,19 @@ const TimelineMatrix = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // ตัดเวลา 7:45 AM
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    const isBeforeCutoff = currentHour < 7 || (currentHour === 7 && currentMinute < 45);
+    const adjustedDate = useMemo(() => {
 
-    // วันที่เวลาที่ใช้ใน context นี้
-    let tempDate = new Date(now); // clone
-    if (isBeforeCutoff) {
-        tempDate.setDate(tempDate.getDate() - 1); // ย้อนวัน
-    }
+        const temp = new Date(now);
+        if (temp.getHours() < 7 || (temp.getHours() === 7 && temp.getMinutes() < 45)) {
+            temp.setDate(temp.getDate() - 1);
+        }
+        return temp;
+    }, [now]);
 
-    const adjustedYear = tempDate.getFullYear();
-    const adjustedMonth = tempDate.getMonth() + 1; // 1-12
-    const adjustedDay = tempDate.getDate();
+    const adjustedYear = adjustedDate.getFullYear();
+    const adjustedMonth = adjustedDate.getMonth() + 1;
+    const adjustedDay = adjustedDate.getDate();
+
 
     // หา last day ของเดือนที่กำลังดูอยู่
     const lastDayOfAdjustedMonth = new Date(adjustedYear, adjustedMonth, 0).getDate();
@@ -64,17 +62,6 @@ const TimelineMatrix = () => {
         setMonth(adjustedMonth);
         setYear(adjustedYear);
     }, [adjustedMonth, adjustedYear]);
-
-    // Fetch ข้อมูลเมื่อเดือนและปีเปลี่ยน หรือเวลาเดินผ่าน cutoff
-    useEffect(() => {
-        const currentMonth = now.getMonth() + 1;
-        const currentYear = now.getFullYear();
-
-        const isCurrentMonth = month === currentMonth && year === currentYear;
-        if (!isCurrentMonth) return;
-
-        FetchAllCheckSheetData(month, year);
-    }, [now, month, year]);
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const isAdjusted = month === adjustedMonth && year === adjustedYear;
@@ -119,13 +106,6 @@ const TimelineMatrix = () => {
                 const dayKey = `Date${i}`;
                 const value = item[dayKey];
 
-                if (value === "3") {
-                    department.checked = department.checked.filter(d => d !== i);
-                    department.ongoing = department.ongoing.filter(d => d !== i);
-                    department.overdue = department.overdue.filter(d => d !== i);
-                    if (!department.stopline.includes(i)) department.stopline.push(i);
-                    continue;
-                }
 
                 if (i === adjustedDay && value === "0" && adjustedMonth) {
                     department.checked = department.checked.filter(d => d !== i);
@@ -154,6 +134,14 @@ const TimelineMatrix = () => {
                     continue;
                 }
 
+                if (value === "3") {
+                    // ถ้าวันนั้นไม่มี ongoing หรือ overdue ให้เพิ่ม checked
+                    if (!department.ongoing.includes(i) && !department.overdue.includes(i)) {
+                        if (!department.checked.includes(i)) department.checked.push(i);
+                    }
+                    continue;
+                }
+
                 if (value === "2") {
                     if (!department.holiday) department.holiday = [];
                     if (!department.holiday.includes(i)) department.holiday.push(i);
@@ -171,15 +159,14 @@ const TimelineMatrix = () => {
     const getStatus = (
         dept: Department30daytable,
         day: number
-    ): "completed" | "ongoing" | "overdue" | "stopline" | "holiday" | "null" => {
-        if (dept.stopline.includes(day)) return "stopline";
-        if (dept.ongoing.includes(day)) return "ongoing";
+    ): "completed" | "ongoing" | "overdue" | "holiday" | "null" => {
         if (dept.overdue.includes(day)) return "overdue";
-        if (dept.checked.includes(day)) return "completed";
-        if (dept.holiday && dept.holiday.includes(day)) return "holiday";
+        if (dept.ongoing.includes(day)) return "ongoing";
+        if (dept.holiday?.includes(day)) return "holiday";
 
         return "null";
     };
+
 
     //ใช้เช็คว่าในฟอร์มไหนใส่วันหยุดเก็บแบบ [] แล้วเอาไปเช็ค [] ของวันๆนั้น true = gray
     const allHolidayDays = Array.from(
@@ -194,9 +181,7 @@ const TimelineMatrix = () => {
     // สำหรับแสดงรายการเช็คชีตที่เกินกำหนด
     const [alloverdue, setalloverdue] = useState<any[]>([]);
     const convertAllOverdueToChecksheetItems = (data: any[], month: number, year: number) => {
-
         const result: any[] = [];
-
         //ทุกรอบ : วนแถวแรก นับเฉพาะวันที่ตรงตามเงี่ยนไข ตรง count++ ถ้า count > 0 เก็บไว้ใน result + count
         for (const item of data) {
             let count = 0;
@@ -219,8 +204,6 @@ const TimelineMatrix = () => {
         // ✅ เรียงจากมาก → น้อย
         return result.sort((a, b) => b.count - a.count);
     };
-
-
 
     const groupOverdueByDepartment = (items: any[]) => {
         const grouped: { [key: string]: number } = {};
@@ -343,9 +326,6 @@ const TimelineMatrix = () => {
         }
     };
 
-
-
-
     useEffect(() => {
         setSelectedDept(""); // reset การเลือก
         setalloverdue([]);
@@ -353,8 +333,6 @@ const TimelineMatrix = () => {
         setSelectedType("")
         FetchAllCheckSheetData(month, year);
     }, [month, year]);
-
-
 
     const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
     const [selectedDept, setSelectedDept] = useState("");
@@ -420,7 +398,7 @@ const TimelineMatrix = () => {
                             </th>
                             {days.map((day) => {
                                 const isToday =
-                                    new Date(year, month - 1, day).toDateString() === tempDate.toDateString() &&
+                                    new Date(year, month - 1, day).toDateString() === adjustedDate.toDateString() &&
                                     year === adjustedYear &&
                                     month === adjustedMonth;
                                 const isHoliday = allHolidayDays.includes(day);
@@ -458,18 +436,19 @@ const TimelineMatrix = () => {
                                     {days.map((day) => {
                                         let status = getStatus(dept, day);
                                         const isToday =
-                                            new Date(adjustedYear, adjustedMonth - 1, day).toDateString() === tempDate.toDateString();
+                                            new Date(adjustedYear, adjustedMonth - 1, day).toDateString() === adjustedDate.toDateString();
                                         const isHoliday = allHolidayDays.includes(day);
 
 
                                         const isFutureOverdue = day > adjustedDay && status === "overdue";
+
 
                                         let icon = "";
                                         if (!isFutureOverdue) {
                                             if (status === "completed") icon = "✓";
                                             else if (status === "ongoing") icon = "";
                                             else if (status === "overdue") icon = "✕";
-                                            else if (status === "stopline") icon = "";
+
                                         }
 
 
@@ -478,7 +457,7 @@ const TimelineMatrix = () => {
                                                 status === "ongoing" ? "" :
                                                     isFutureOverdue ? "" : // ✅ ใช้เงื่อนไขแทรกได้เลย
                                                         status === "overdue" ? "bg-red-500 text-white  rounded-full shadow-sm" :
-                                                            status === "stopline" ? "bg-black text-white  rounded-full shadow-sm" : "";
+                                                            "";
                                         return (
                                             <td
                                                 onClick={() => { setSelectedDept(dept.Department); setViewMode('all') }}
@@ -530,13 +509,13 @@ const TimelineMatrix = () => {
                                             status === "completed" ? "✓" :
                                                 status === "ongoing" ? "✕" :
                                                     status === "overdue" ? "✕" :
-                                                        status === "stopline" ? "" : "";
+                                                        "";
 
                                         const dotColor =
                                             status === "completed" ? "bg-green-400 text-white w-6 h-6 rounded-full" :
                                                 status === "ongoing" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
                                                     status === "overdue" ? "bg-red-500 text-white w-6 h-6 rounded-full" :
-                                                        status === "stopline" ? "text-white w-6 h-6 rounded-full" : "";
+                                                        "";
 
                                         return (
                                             <td key={day} className="border-r border-gray-100 last:border-r-0 relative">

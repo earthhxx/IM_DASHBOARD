@@ -87,7 +87,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                   const isHoliday = filtered.some(
                     (item) =>
                       item[`Date${day}`] === "2" &&
-                      ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
+                      ((isCurrentMonth && day <= today) || (!isCurrentMonth && day <= lastDay))
                   );
 
                   return (
@@ -141,7 +141,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                       const isHoliday = filtered.some(
                         (item) =>
                           item[`Date${day}`] === "2" &&
-                          ((isCurrentMonth && day < today) ||
+                          ((isCurrentMonth && day <= today) ||
                             (!isCurrentMonth && day <= lastDay))
                       );
                       const isLastDay = idx === days.length - 1;
