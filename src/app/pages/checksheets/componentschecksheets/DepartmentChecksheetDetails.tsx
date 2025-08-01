@@ -8,6 +8,9 @@ type DepartmentChecksheetDetailsProps = {
   type: "overdue" | "ongoing";
   month: number;
   year: number;
+  adjustedYear: number;
+  adjustedMonth: number;
+  adjustedDay: number;
 };
 
 const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = ({
@@ -17,11 +20,13 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
   type,
   month,
   year,
+  adjustedYear,
+  adjustedMonth,
+  adjustedDay,
 }) => {
-  const now = new Date();
-  const today = now.getDate();
-  const currentMonth = now.getMonth() + 1;
-  const currentYear = now.getFullYear();
+  const currentMonth = adjustedMonth;
+  const currentYear = adjustedYear;
+  const today = adjustedDay;
 
   const displayMonth = month || currentMonth;
   const displayYear = year || currentYear;
@@ -148,13 +153,10 @@ const DepartmentChecksheetDetails: React.FC<DepartmentChecksheetDetailsProps> = 
                               (!isCurrentMonth && day <= lastDay))
                         );
 
-                        const symbol = isOverdue
-                          ? "✕"
-                          : isComplete
-                            ? "✓"
-                            : val === "-"
-                              ? "–"
-                              : "";
+                        const symbol =
+                          isOverdue ? "✕" :
+                            isComplete ? "✓" :
+                              val === "3" ? "–" : "";
 
                         const isLastDay = dayIndex === days.length - 1;
 

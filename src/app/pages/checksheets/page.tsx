@@ -749,6 +749,9 @@ const TimelineMatrix = () => {
                                 type={selectedType}
                                 month={month}
                                 year={year}
+                                adjustedYear={adjustedDate.getFullYear()}
+                                adjustedMonth={adjustedDate.getMonth() + 1}
+                                adjustedDay={adjustedDate.getDate()}
                             />
                         )}
 
@@ -759,6 +762,9 @@ const TimelineMatrix = () => {
                                 setSelectedDept={setSelectedDept}
                                 month={month}
                                 year={year}
+                                adjustedYear={adjustedDate.getFullYear()}
+                                adjustedMonth={adjustedDate.getMonth() + 1}
+                                adjustedDay={adjustedDate.getDate()}
                             />
                         )}
                     </>
