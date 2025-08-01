@@ -30,6 +30,7 @@ const TimelineMatrix = () => {
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
+        setNow(new Date()); // อัปเดตทันทีครั้งแรก
         const interval = setInterval(() => {
             setNow(new Date());
         }, 5 * 60 * 1000);
@@ -45,9 +46,10 @@ const TimelineMatrix = () => {
         return temp;
     }, [now]);
 
-    const adjustedYear = adjustedDate.getFullYear();
-    const adjustedMonth = adjustedDate.getMonth() + 1;
-    const adjustedDay = adjustedDate.getDate();
+    const [adjustedYear, setAdjustedYear] = useState(adjustedDate.getFullYear());
+    const [adjustedMonth, setAdjustedMonth] = useState(adjustedDate.getMonth() + 1);
+    const [adjustedDay, setAdjustedDay] = useState(adjustedDate.getDate());
+
 
 
     // หา last day ของเดือนที่กำลังดูอยู่
@@ -57,11 +59,38 @@ const TimelineMatrix = () => {
     const [month, setMonth] = useState(adjustedMonth);
     const [year, setYear] = useState(adjustedYear);
 
-    // sync เมื่อ adjusted เปลี่ยน
+    const cycle = useRef(0);
+
+    // อัปเดตเมื่อ now เปลี่ยน (และใช้ปรับ year/month/day จาก adjustedDate)
     useEffect(() => {
-        setMonth(adjustedMonth);
-        setYear(adjustedYear);
-    }, [adjustedMonth, adjustedYear]);
+        // console.log(now)
+        // cycle.current += 1;
+
+        setAdjustedYear(adjustedDate.getFullYear());
+        setAdjustedMonth(adjustedDate.getMonth() + 1);
+        setAdjustedDay(adjustedDate.getDate());
+
+        // console.log(`📅 Sync cycle: ${cycle.current}`);
+        // console.log("⏱️ adjustedDate:", adjustedDate);
+        // console.log("📆 Year:", adjustedDate.getFullYear(), "Month:", adjustedDate.getMonth() + 1, "Day:", adjustedDate.getDate());
+    }, [now]); // หรือเปลี่ยนเป็น [adjustedDate] ถ้าอยาก sync ตอน date เปลี่ยนโดยตรง
+
+    // อัปเดตเมื่อ now เปลี่ยน (และใช้ปรับ year/month/day จาก adjustedDate)
+    useEffect(() => {
+        // console.log(now)
+        // cycle.current += 1;
+        if (month !== adjustedMonth && year !== adjustedYear)
+        {
+            return
+        }
+
+        FetchAllCheckSheetData(adjustedMonth, adjustedYear)
+
+        // console.log(`📅 Sync cycle: ${cycle.current}`);
+        // console.log("⏱️ adjustedDate:", adjustedDate);
+        // console.log("📆 Year:", adjustedDate.getFullYear(), "Month:", adjustedDate.getMonth() + 1, "Day:", adjustedDate.getDate());
+    }, [adjustedMonth, adjustedYear]); // หรือเปลี่ยนเป็น [adjustedDate] ถ้าอยาก sync ตอน date เปลี่ยนโดยตรง
+
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const isAdjusted = month === adjustedMonth && year === adjustedYear;
@@ -145,6 +174,16 @@ const TimelineMatrix = () => {
                 if (value === "2") {
                     if (!department.holiday) department.holiday = [];
                     if (!department.holiday.includes(i)) department.holiday.push(i);
+
+                    const isNotInOtherStatuses =
+                        !department.ongoing.includes(i) &&
+                        !department.overdue.includes(i) &&
+                        !department.stopline.includes(i);
+
+                    if (isNotInOtherStatuses && !department.checked.includes(i)) {
+                        department.checked.push(i); // นับเป็น completed ด้วย
+                    }
+
                     continue;
                 }
             }
@@ -162,11 +201,9 @@ const TimelineMatrix = () => {
     ): "completed" | "ongoing" | "overdue" | "holiday" | "null" => {
         if (dept.overdue.includes(day)) return "overdue";
         if (dept.ongoing.includes(day)) return "ongoing";
-        if (dept.holiday?.includes(day)) return "holiday";
-
+        if (dept.checked?.includes(day)) return "completed"; // moved up
         return "null";
     };
-
 
     //ใช้เช็คว่าในฟอร์มไหนใส่วันหยุดเก็บแบบ [] แล้วเอาไปเช็ค [] ของวันๆนั้น true = gray
     const allHolidayDays = Array.from(
@@ -317,7 +354,7 @@ const TimelineMatrix = () => {
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
-            // console.log(transformed);
+
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -401,6 +438,19 @@ const TimelineMatrix = () => {
                                     new Date(year, month - 1, day).toDateString() === adjustedDate.toDateString() &&
                                     year === adjustedYear &&
                                     month === adjustedMonth;
+                                // console.log("🎯 ตรวจ isToday:", {
+                                //     inputDate: new Date(year, month - 1, day).toDateString(),
+                                //     adjustedDate: adjustedDate.toDateString(),
+                                //     year,
+                                //     adjustedYear,
+                                //     month,
+                                //     adjustedMonth,
+                                //     result:
+                                //         new Date(year, month - 1, day).toDateString() === adjustedDate.toDateString() &&
+                                //         year === adjustedYear &&
+                                //         month === adjustedMonth,
+                                // });
+
                                 const isHoliday = allHolidayDays.includes(day);
 
 
@@ -749,9 +799,9 @@ const TimelineMatrix = () => {
                                 type={selectedType}
                                 month={month}
                                 year={year}
-                                adjustedYear={adjustedDate.getFullYear()}
-                                adjustedMonth={adjustedDate.getMonth() + 1}
-                                adjustedDay={adjustedDate.getDate()}
+                                adjustedYear={adjustedYear}
+                                adjustedMonth={adjustedMonth}
+                                adjustedDay={adjustedDay}
                             />
                         )}
 
@@ -762,9 +812,9 @@ const TimelineMatrix = () => {
                                 setSelectedDept={setSelectedDept}
                                 month={month}
                                 year={year}
-                                adjustedYear={adjustedDate.getFullYear()}
-                                adjustedMonth={adjustedDate.getMonth() + 1}
-                                adjustedDay={adjustedDate.getDate()}
+                                adjustedYear={adjustedYear}
+                                adjustedMonth={adjustedMonth}
+                                adjustedDay={adjustedDay}
                             />
                         )}
                     </>
