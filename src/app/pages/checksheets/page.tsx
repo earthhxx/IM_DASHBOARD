@@ -33,12 +33,11 @@ const TimelineMatrix = () => {
         setNow(new Date()); // อัปเดตทันทีครั้งแรก
         const interval = setInterval(() => {
             setNow(new Date());
-        }, 5 * 60 * 1000);
+        }, 10000);
         return () => clearInterval(interval);
     }, []);
 
     const adjustedDate = useMemo(() => {
-
         const temp = new Date(now);
         if (temp.getHours() < 7 || (temp.getHours() === 7 && temp.getMinutes() < 45)) {
             temp.setDate(temp.getDate() - 1);
@@ -46,11 +45,10 @@ const TimelineMatrix = () => {
         return temp;
     }, [now]);
 
-    const [adjustedYear, setAdjustedYear] = useState(adjustedDate.getFullYear());
-    const [adjustedMonth, setAdjustedMonth] = useState(adjustedDate.getMonth() + 1);
-    const [adjustedDay, setAdjustedDay] = useState(adjustedDate.getDate());
-
-
+    // derive ปี เดือน วัน จาก adjustedDate โดยตรง (ไม่ต้องเก็บใน state)
+    const adjustedYear = adjustedDate.getFullYear();
+    const adjustedMonth = adjustedDate.getMonth() + 1;
+    const adjustedDay = adjustedDate.getDate();
 
     // หา last day ของเดือนที่กำลังดูอยู่
     const lastDayOfAdjustedMonth = new Date(adjustedYear, adjustedMonth, 0).getDate();
@@ -59,37 +57,26 @@ const TimelineMatrix = () => {
     const [month, setMonth] = useState(adjustedMonth);
     const [year, setYear] = useState(adjustedYear);
 
-    const cycle = useRef(0);
+    // const cycle = useRef(0);
+    // const cyclefetch = useRef(0);
 
-    // อัปเดตเมื่อ now เปลี่ยน (และใช้ปรับ year/month/day จาก adjustedDate)
+    // อัปเดต log หรืออื่นๆ เมื่อ adjustedDate เปลี่ยน
+    // useEffect(() => {
+    //     cycle.current += 1;
+    //     console.log(now);
+    //     console.log(`📅 Sync cycle: ${cycle.current}`);
+    //     console.log("⏱️ adjustedDate:", adjustedDate);
+    //     console.log("📆 Year:", adjustedYear, "Month:", adjustedMonth, "Day:", adjustedDay);
+    // }, [adjustedDate]);
+
+    // Fetch data ใหม่เมื่อ adjustedDate เปลี่ยน และ month/year ตรงกัน
     useEffect(() => {
-        // console.log(now)
-        // cycle.current += 1;
-
-        setAdjustedYear(adjustedDate.getFullYear());
-        setAdjustedMonth(adjustedDate.getMonth() + 1);
-        setAdjustedDay(adjustedDate.getDate());
-
-        // console.log(`📅 Sync cycle: ${cycle.current}`);
-        // console.log("⏱️ adjustedDate:", adjustedDate);
-        // console.log("📆 Year:", adjustedDate.getFullYear(), "Month:", adjustedDate.getMonth() + 1, "Day:", adjustedDate.getDate());
-    }, [now]); // หรือเปลี่ยนเป็น [adjustedDate] ถ้าอยาก sync ตอน date เปลี่ยนโดยตรง
-
-    // อัปเดตเมื่อ now เปลี่ยน (และใช้ปรับ year/month/day จาก adjustedDate)
-    useEffect(() => {
-        // console.log(now)
-        // cycle.current += 1;
-        if (month !== adjustedMonth && year !== adjustedYear)
-        {
-            return
+        // cyclefetch.current += 1;
+        if (month === adjustedMonth && year === adjustedYear) {
+            FetchAllCheckSheetData(adjustedMonth, adjustedYear);
         }
-
-        FetchAllCheckSheetData(adjustedMonth, adjustedYear)
-
-        // console.log(`📅 Sync cycle: ${cycle.current}`);
-        // console.log("⏱️ adjustedDate:", adjustedDate);
-        // console.log("📆 Year:", adjustedDate.getFullYear(), "Month:", adjustedDate.getMonth() + 1, "Day:", adjustedDate.getDate());
-    }, [adjustedMonth, adjustedYear]); // หรือเปลี่ยนเป็น [adjustedDate] ถ้าอยาก sync ตอน date เปลี่ยนโดยตรง
+        // console.log(`📅 Fetch cycle: ${cyclefetch.current}`);
+    }, [adjustedDate]);
 
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
@@ -335,6 +322,10 @@ const TimelineMatrix = () => {
     const isFetchingRef = useRef(false);
 
     const FetchAllCheckSheetData = async (month: number, year: number) => {
+        setSelectedDept(""); // reset การเลือก
+        setalloverdue([]);
+        setallongoing([]); // ✅ ปรับจาก null เป็น []
+        setSelectedType("")
         if (isFetchingRef.current) return; // ❌ ถ้ากำลังโหลดอยู่ ไม่ต้องโหลดซ้ำ
         isFetchingRef.current = true;
 
@@ -354,6 +345,7 @@ const TimelineMatrix = () => {
 
             const transformed = transformDataToDepartments(data.data, month, year);
             setDepartments30daytable(transformed);
+            console.log("✅ Fetch completed:")
 
 
         } catch (error) {
@@ -364,10 +356,6 @@ const TimelineMatrix = () => {
     };
 
     useEffect(() => {
-        setSelectedDept(""); // reset การเลือก
-        setalloverdue([]);
-        setallongoing([]); // ✅ ปรับจาก null เป็น []
-        setSelectedType("")
         FetchAllCheckSheetData(month, year);
     }, [month, year]);
 
@@ -416,7 +404,6 @@ const TimelineMatrix = () => {
                             <th colSpan={days.length + 1} className="px-6 pb-4 pt-2 border-b border-gray-100 text-left">
                                 <div className="flex flex-wrap gap-4">
                                     {departments30daytable.map((dept, idx) => (
-                                        // ${colors[idx % colors.length]} ใช้เพื่อ map สีตาม array
                                         <div
                                             key={idx}
                                             className={`px-4 py-1 rounded-full shadow-sm cursor-default text-sm whitespace-nowrap bg-white`}
@@ -425,7 +412,6 @@ const TimelineMatrix = () => {
                                         </div>
                                     ))}
                                 </div>
-
                             </th>
                         </tr>
 
@@ -438,21 +424,8 @@ const TimelineMatrix = () => {
                                     new Date(year, month - 1, day).toDateString() === adjustedDate.toDateString() &&
                                     year === adjustedYear &&
                                     month === adjustedMonth;
-                                // console.log("🎯 ตรวจ isToday:", {
-                                //     inputDate: new Date(year, month - 1, day).toDateString(),
-                                //     adjustedDate: adjustedDate.toDateString(),
-                                //     year,
-                                //     adjustedYear,
-                                //     month,
-                                //     adjustedMonth,
-                                //     result:
-                                //         new Date(year, month - 1, day).toDateString() === adjustedDate.toDateString() &&
-                                //         year === adjustedYear &&
-                                //         month === adjustedMonth,
-                                // });
 
                                 const isHoliday = allHolidayDays.includes(day);
-
 
                                 return (
                                     <th
@@ -588,17 +561,6 @@ const TimelineMatrix = () => {
                                 </tr>
                             ))}
                     </tbody>
-                    {departments30daytable.length === 0 && (
-                        <tbody>
-                            <tr>
-                                <td colSpan={days.length + 1}>
-                                    <div className="h-[300px] flex items-center justify-center text-gray-500 text-xl select-none uppercase">
-
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    )}
                 </table>
             </div>
 
