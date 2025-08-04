@@ -27,15 +27,15 @@ type Department30daytable = {
 };
 
 const TimelineMatrix = () => {
-    const [now, setNow] = useState(new Date());
+    // state สำหรับโชข้อมูลเช็คชีตทั้งหมด
+    const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
+    const [selectedDept, setSelectedDept] = useState("");
+    const [departmentdata, setDepartmentdata] = useState<any[]>([]);
+    const [viewMode, setViewMode] = useState<"detail" | "all" | "">("");
 
-    useEffect(() => {
-        setNow(new Date()); // อัปเดตทันทีครั้งแรก
-        const interval = setInterval(() => {
-            setNow(new Date());
-        }, 10000);
-        return () => clearInterval(interval);
-    }, []);
+
+    const [now, setNow] = useState(new Date());
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const adjustedDate = useMemo(() => {
         const temp = new Date(now);
@@ -69,15 +69,37 @@ const TimelineMatrix = () => {
     //     console.log("📆 Year:", adjustedYear, "Month:", adjustedMonth, "Day:", adjustedDay);
     // }, [adjustedDate]);
 
-    // Fetch data ใหม่เมื่อ adjustedDate เปลี่ยน และ month/year ตรงกัน
-    useEffect(() => {
-        // cyclefetch.current += 1;
-        if (month === adjustedMonth && year === adjustedYear) {
-            FetchAllCheckSheetData(adjustedMonth, adjustedYear);
-        }
-        // console.log(`📅 Fetch cycle: ${cyclefetch.current}`);
-    }, [adjustedDate]);
 
+    const startTimer = (adjMonth: number, adjYear: number) => {
+        if (intervalRef.current) return;
+
+        // fetch ครั้งแรกหลัง adjustedDate เปลี่ยน
+        FetchAllCheckSheetData(adjMonth, adjYear);
+
+        intervalRef.current = setInterval(() => {
+            setNow(new Date());
+        }, 10000);
+    };
+
+    const stopTimer = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    };
+
+    useEffect(() => {
+        // ทุกครั้งที่ adjustedDate เปลี่ยน
+        stopTimer();
+
+        if (month === adjustedMonth && year === adjustedYear && selectedDept) {
+            
+            // เริ่ม timer พร้อม fetch ค่า adjusted ใหม่ล่าสุด
+            startTimer(adjustedMonth, adjustedYear);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [adjustedDate, month, year, selectedDept]);
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const isAdjusted = month === adjustedMonth && year === adjustedYear;
@@ -359,11 +381,6 @@ const TimelineMatrix = () => {
         FetchAllCheckSheetData(month, year);
     }, [month, year]);
 
-    const [selectedType, setSelectedType] = useState<"overdue" | "ongoing" | "">("");
-    const [selectedDept, setSelectedDept] = useState("");
-    const [departmentdata, setDepartmentdata] = useState<any[]>([]);
-    const [viewMode, setViewMode] = useState<"detail" | "all" | "">("");
-
     return (
         <div className="min-h-screen bg-white px-8 pt-8 flex flex-col justify-center items-center text-black">
 
@@ -394,7 +411,6 @@ const TimelineMatrix = () => {
                                         onChange={(newMonth, newYear) => {
                                             setMonth(newMonth);
                                             setYear(newYear);
-                                            FetchAllCheckSheetData(newMonth, newYear);
                                         }}
                                     />
                                 </div>
