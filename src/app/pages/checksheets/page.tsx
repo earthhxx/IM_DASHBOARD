@@ -167,9 +167,9 @@ const TimelineMatrix = () => {
                         !department.overdue.includes(i) &&
                         !department.stopline.includes(i);
 
-                    if (isNotInOtherStatuses && !department.checked.includes(i)) {
-                        department.checked.push(i); // นับเป็น completed ด้วย
-                    }
+                    // if (isNotInOtherStatuses && !department.checked.includes(i)) {
+                    //     department.checked.push(i); // นับเป็น completed ด้วย
+                    // }
 
                     continue;
                 }
@@ -421,7 +421,7 @@ const TimelineMatrix = () => {
                             </th>
                             {days.map((day) => {
                                 const isToday =
-                                    new Date(year, month - 1, day).toDateString() === adjustedDate.toDateString() &&
+                                    new Date(adjustedYear, adjustedMonth - 1, day).toDateString() === adjustedDate.toDateString() &&
                                     year === adjustedYear &&
                                     month === adjustedMonth;
 
