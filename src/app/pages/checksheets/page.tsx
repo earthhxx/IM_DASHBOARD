@@ -89,17 +89,25 @@ const TimelineMatrix = () => {
     };
 
     useEffect(() => {
-        // ทุกครั้งที่ adjustedDate เปลี่ยน
+        // ถ้าออกจากหน้า detail แล้วตรงกับเดือนปีปัจจุบัน → setNow ใหม่
+        if (month === adjustedMonth && year === adjustedYear && !selectedDept) {
+            setNow(new Date());
+        }
+    }, [selectedDept]);
+
+    useEffect(() => {
+        // ทุกครั้งที่ adjustedDate เปลี่ยน → เริ่ม timer และ fetch
         stopTimer();
 
-        if (month === adjustedMonth && year === adjustedYear && selectedDept) {
-            
-            // เริ่ม timer พร้อม fetch ค่า adjusted ใหม่ล่าสุด
+        if (month === adjustedMonth && year === adjustedYear && !selectedDept) {
+            FetchAllCheckSheetData(adjustedMonth, adjustedYear);
             startTimer(adjustedMonth, adjustedYear);
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [adjustedDate, month, year, selectedDept]);
+
+
+
+
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const isAdjusted = month === adjustedMonth && year === adjustedYear;
