@@ -20,7 +20,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             </div>
             <div className="">
               {/* Floating Report Issue Card */}
-              <div className="fixed w-screen flex justify-center items-center z-50">
+              <div className="fixed z-50">
                 <ReportIssueCard />
               </div>
               <Navbar />
