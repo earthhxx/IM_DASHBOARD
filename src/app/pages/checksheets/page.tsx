@@ -35,6 +35,9 @@ const TimelineMatrix = () => {
 
 
     const [now, setNow] = useState(new Date());
+    useEffect(() => {
+        setNow(new Date());
+    }, []);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const adjustedDate = useMemo(() => {
@@ -56,6 +59,11 @@ const TimelineMatrix = () => {
     // state หลักที่ใช้แสดง
     const [month, setMonth] = useState(adjustedMonth);
     const [year, setYear] = useState(adjustedYear);
+
+    useEffect(() => {
+        setMonth(adjustedMonth);
+        setYear(adjustedYear);
+    }, [adjustedMonth, adjustedYear]);
 
     // const cycle = useRef(0);
     // const cyclefetch = useRef(0);
@@ -104,10 +112,6 @@ const TimelineMatrix = () => {
             startTimer(adjustedMonth, adjustedYear);
         }
     }, [adjustedDate, month, year, selectedDept]);
-
-
-
-
 
     const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
     const isAdjusted = month === adjustedMonth && year === adjustedYear;
