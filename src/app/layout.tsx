@@ -1,21 +1,15 @@
+//layout.tsx global layout for the application
 import { ReactNode } from "react";
 import "@/app/globals.css"; // Global styles
 import Navbar from "./components/Navbar";
 import Logo from "./components/Logo";
-import { Kanit, Noto_Sans } from "next/font/google";
-
-const kanitFont = Kanit({
-  subsets: ['thai'],
-  weight: ["400", "700"],
-  variable: "--font-kanit",
-});
-// import Sidebar from "@/app/components/sidebar"; // Uncomment if you want to add Sidebar
+import ReportIssueCard from "./components/ReportIssueCard";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
       <head>
-      <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <title>IM DASHBOARD</title>
       </head>
       <body className="font-roboto">
@@ -25,6 +19,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
               <Logo /> {/* Logo will appear above Navbar */}
             </div>
             <div className="">
+              {/* Floating Report Issue Card */}
+              <div className="fixed w-screen flex justify-center items-center z-50">
+                <ReportIssueCard />
+              </div>
               <Navbar />
               <div className="flex-1">{children}</div>
             </div>
