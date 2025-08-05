@@ -55,6 +55,7 @@ const ReportIssueCard = () => {
         return;
       }
 
+      alert(data.message || 'รายงานปัญหาสำเร็จ');
       setName('');
       setSelectedDept('');
       setDescription('');
