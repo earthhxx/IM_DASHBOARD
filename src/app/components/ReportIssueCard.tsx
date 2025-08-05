@@ -100,7 +100,7 @@ const ReportIssueCard = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 border border-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full px-4 py-2 border border-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-white"
             placeholder="กรอกชื่อของคุณ"
           />
         </div>
@@ -112,7 +112,7 @@ const ReportIssueCard = () => {
             id="department"
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            className="border border-white text-white text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500 uppercase bg-blue-900/75"
+            className="border border-white text-white text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500 uppercase bg-blue-900/75 "
           >
             <option value="">-- เลือกแผนก -- </option>
             <option value="external">บุคคลภายนอก</option>
@@ -135,7 +135,7 @@ const ReportIssueCard = () => {
             rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-3 border border-white rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full px-4 py-3 border border-white rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none text-white"
             placeholder="รายละเอียดของปัญหาที่พบบ่อย"
           ></textarea>
         </div>
@@ -145,7 +145,7 @@ const ReportIssueCard = () => {
           <button
             onClick={handlesubmit}
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 "
           >
             ส่ง
           </button>
