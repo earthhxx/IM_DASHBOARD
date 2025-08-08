@@ -34,19 +34,25 @@ const TimelineMatrix = () => {
     const [viewMode, setViewMode] = useState<"detail" | "all" | "">("");
 
 
-    const [now, setNow] = useState(new Date());
+    const [now, setNow] = useState<Date | null>(null);
+
     useEffect(() => {
-        setNow(new Date());
+        setNow(new Date()); // ✅ ค่านี้จะถูกเรียกเฉพาะฝั่ง client หลัง mount
     }, []);
+
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const adjustedDate = useMemo(() => {
+        if (!now) return new Date();
+
         const temp = new Date(now);
         if (temp.getHours() < 7 || (temp.getHours() === 7 && temp.getMinutes() < 45)) {
             temp.setDate(temp.getDate() - 1);
         }
         return temp;
     }, [now]);
+
+
 
     // derive ปี เดือน วัน จาก adjustedDate โดยตรง (ไม่ต้องเก็บใน state)
     const adjustedYear = adjustedDate.getFullYear();
@@ -64,19 +70,6 @@ const TimelineMatrix = () => {
         setMonth(adjustedMonth);
         setYear(adjustedYear);
     }, [adjustedMonth, adjustedYear]);
-
-    // const cycle = useRef(0);
-    // const cyclefetch = useRef(0);
-
-    // อัปเดต log หรืออื่นๆ เมื่อ adjustedDate เปลี่ยน
-    // useEffect(() => {
-    //     cycle.current += 1;
-    //     console.log(now);
-    //     console.log(`📅 Sync cycle: ${cycle.current}`);
-    //     console.log("⏱️ adjustedDate:", adjustedDate);
-    //     console.log("📆 Year:", adjustedYear, "Month:", adjustedMonth, "Day:", adjustedDay);
-    // }, [adjustedDate]);
-
 
     const startTimer = (adjMonth: number, adjYear: number) => {
         if (intervalRef.current) return;
