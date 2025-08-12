@@ -106,12 +106,7 @@ const TimelineMatrix = () => {
         }
     }, [adjustedDate, month, year, selectedDept]);
 
-    const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
-    const isAdjusted = month === adjustedMonth && year === adjustedYear;
-    const days = Array.from(
-        { length: getDaysInMonth(isAdjusted ? adjustedMonth : month, isAdjusted ? adjustedYear : year) },
-        (_, i) => i + 1
-    );
+    const [days, setDays] = useState<number[]>([]);
 
 
     //for table data
@@ -360,6 +355,14 @@ const TimelineMatrix = () => {
             const response = await fetch(`/api/checksheet/dailyinmouth?month=${month}&year=${year}`);
             if (!response.ok) throw new Error("Network response was not ok");
             const data = await response.json();
+
+            const getDaysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
+            const isAdjusted = month === adjustedMonth && year === adjustedYear;
+            const days = Array.from(
+                { length: getDaysInMonth(isAdjusted ? adjustedMonth : month, isAdjusted ? adjustedYear : year) },
+                (_, i) => i + 1
+            );
+            setDays(days);
 
             const sortalldata = sortalldata_by_overdue(data.data, month, year);
             setDepartmentdata(sortalldata);
