@@ -141,10 +141,10 @@ const Production1_skill_Matrix = () => {
     fetchTeamData();
   }, [selectedTeam, param]);
 
-  const handleLoadPdf = async (room: string, team: string, location: string) => {
+  const handleLoadPdf = async (room: string, team: string, location: string,department:string) => {
     try {
       const res = await fetch(
-        `/api/SKILL_MATRIX_Pdf?S_team=${team}&S_room=${room}&S_location=${location}`
+        `/api/SKILL_MATRIX_Pdf?S_team=${team}&S_room=${room}&S_location=${location}&S_department=${department}`
       );
 
       if (!res.ok) throw new Error("Failed to load PDF");
@@ -233,7 +233,7 @@ const Production1_skill_Matrix = () => {
                 .map((data) => (
                   <div
                     key={`${data.room}_${data.department}_${data.location}`}
-                    onClick={() => { handleLoadPdf(data.room, data.team, data.location); setlocationto4m(data.location); }}
+                    onClick={() => { handleLoadPdf(data.room, data.team, data.location,data.department); setlocationto4m(data.location); }}
                     className="group flex w-65 h-25 rounded-l-lg items-center border border-solid border-blue-100 justify-center bg-white shadow-lg hover:bg-white transition-all cursor-pointer"
                   >
                     <div className="flex w-[35%] h-full text-blue-900 bg-blue-100 rounded-l-lg justify-center items-center group-hover:text-white group-hover:bg-blue-800 text-wrap">

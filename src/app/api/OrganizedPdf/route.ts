@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const team = searchParams.get('O_team');
     const room = searchParams.get('O_room');
     const location = searchParams.get('O_location');
+    const department = searchParams.get('O_department'); 
 
     if (!team || !room || !location) {
       return NextResponse.json({ message: 'Missing parameters' }, { status: 400 });
@@ -22,10 +23,11 @@ export async function GET(req: NextRequest) {
       .input('team', sql.VarChar, team)
       .input('room', sql.VarChar, room)
       .input('location', sql.VarChar, location)
+      .input('department',sql.VarChar,department)
       .query(`
         SELECT O_PDFs 
         FROM ORGANIZATION 
-        WHERE O_Room = @room AND O_Team = @team AND O_Loc = @location
+        WHERE O_Room = @room AND O_Team = @team AND O_Loc = @location AND O_Dep = @department
       `);
 
     if (result.recordset.length === 0 || !result.recordset[0].O_PDFs) {

@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const team = searchParams.get('S_team');
     const room = searchParams.get('S_room');
     const location = searchParams.get('S_location');
+    const department = searchParams.get('S_department')
 
     if (!team || !room || !location) {
       return NextResponse.json({ message: 'Missing parameters' }, { status: 400 });
@@ -22,10 +23,11 @@ export async function GET(req: NextRequest) {
       .input('team', sql.VarChar, team)
       .input('room', sql.VarChar, room)
       .input('location', sql.VarChar, location)
+      .input('department',sql.VarChar,department)
       .query(`
         SELECT S_PDF 
         FROM SKILL_MATRIX
-        WHERE S_Room = @room AND S_Team = @team AND S_Loc = @location
+        WHERE S_Room = @room AND S_Team = @team AND S_Loc = @location AND S_Dep = @department
       `);
 
     if (result.recordset.length === 0 || !result.recordset[0].S_PDF) {
