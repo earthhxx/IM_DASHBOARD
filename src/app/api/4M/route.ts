@@ -83,15 +83,15 @@ import { NextRequest, NextResponse } from 'next/server';
 // Mock data
 const mockData = [
   {
-    Line: 'Line1',
-    Shift: 'A/M',
+    Line: 'SMT-1',
+    Shift: 'A/D',
     Date: '2025-08-17T08:00:00.000Z',
     Operator: 'Alice',
     Task: 'Inspection',
     Status: 'Completed'
   },
   {
-    Line: 'Line1',
+    Line: 'SMT-1',
     Shift: 'A/N',
     Date: '2025-08-16T20:00:00.000Z',
     Operator: 'Bob',
@@ -99,8 +99,8 @@ const mockData = [
     Status: 'Pending'
   },
   {
-    Line: 'Line2',
-    Shift: 'B/M',
+    Line: 'SMT-2',
+    Shift: 'B/N',
     Date: '2025-08-17T08:00:00.000Z',
     Operator: 'Charlie',
     Task: 'Assembly',
