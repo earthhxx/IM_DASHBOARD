@@ -35,6 +35,7 @@ const TimelineMatrix = () => {
 
 
     const [now, setNow] = useState<Date | null>(null);
+    // console.log(now)
 
     useEffect(() => {
         setNow(new Date()); // ✅ ค่านี้จะถูกเรียกเฉพาะฝั่ง client หลัง mount
