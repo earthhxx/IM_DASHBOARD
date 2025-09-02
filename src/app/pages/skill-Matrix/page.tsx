@@ -164,6 +164,10 @@ const Production1_skill_Matrix = () => {
 
     let finalLocation = locationto4m;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a26105c378e983652b79af60b7e3393e84013ee
     // Map Location → Line Name (updated)
     const locationMap: Record<string, string> = {
       "FPCA Camera 1": "LABELCD8",
