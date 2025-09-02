@@ -7,7 +7,11 @@ type DepartmentAllChecksheetProps = {
   setSelectedDept: (value: string) => void;
   month: number;
   year: number;
+  adjustedYear: number;
+  adjustedMonth: number;
+  adjustedDay: number;
 };
+
 
 const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
   department,
@@ -15,12 +19,15 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
   setSelectedDept,
   month,
   year,
+  adjustedYear,
+  adjustedMonth,
+  adjustedDay,
+  
 }) => {
   const filtered = data.filter((item) => item.Department === department);
-  const now = new Date();
-  const currentMonth = now.getMonth() + 1;
-  const currentYear = now.getFullYear();
-  const today = now.getDate();
+  const currentMonth = adjustedMonth;
+  const currentYear = adjustedYear;
+  const today = adjustedDay;
 
   const displayMonth = month || currentMonth;
   const displayYear = year || currentYear;
@@ -87,7 +94,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                   const isHoliday = filtered.some(
                     (item) =>
                       item[`Date${day}`] === "2" &&
-                      ((isCurrentMonth && day < today) || (!isCurrentMonth && day <= lastDay))
+                      ((isCurrentMonth && day <= today) || (!isCurrentMonth && day <= lastDay))
                   );
 
                   return (
@@ -141,7 +148,7 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                       const isHoliday = filtered.some(
                         (item) =>
                           item[`Date${day}`] === "2" &&
-                          ((isCurrentMonth && day < today) ||
+                          ((isCurrentMonth && day <= today) ||
                             (!isCurrentMonth && day <= lastDay))
                       );
                       const isLastDay = idx === days.length - 1;
@@ -160,27 +167,27 @@ const DepartmentAllChecksheet: React.FC<DepartmentAllChecksheetProps> = ({
                           )}
                           <span
                             className={`relative z-10 ${isOverdue
-                                ? "text-red-700 font-bold"
-                                : isComplete
-                                  ? "text-green-700 font-bold"
-                                  : "text-gray-600"
+                              ? "text-red-700 font-bold"
+                              : isComplete
+                                ? "text-green-700 font-bold"
+                                : "text-gray-600"
                               }`}
                             title={`วันที่ ${day}: ${val === "0"
-                                ? "ค้างตรวจ"
-                                : val === "1"
-                                  ? "ตรวจแล้ว"
-                                  : val === "-"
-                                    ? "ไม่ตรวจ"
-                                    : val === "2"
-                                      ? "วันหยุด"
-                                      : "ไม่มีข้อมูล"
+                              ? "ค้างตรวจ"
+                              : val === "1"
+                                ? "ตรวจแล้ว"
+                                : val === "-"
+                                  ? "ไม่ตรวจ"
+                                  : val === "2"
+                                    ? "วันหยุด"
+                                    : "ไม่มีข้อมูล"
                               }`}
                           >
                             {val === "0" && isOverdue
                               ? "✕"
                               : val === "1" && isComplete
                                 ? "✓"
-                                : val === "-"
+                                : val === "3"
                                   ? "–"
                                   : ""}
                           </span>

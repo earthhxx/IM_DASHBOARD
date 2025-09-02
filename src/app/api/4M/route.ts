@@ -35,6 +35,9 @@ export async function GET(req: NextRequest) {
         const now = new Date();
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
+        // console.log(now); fake utc but have real local
+        // console.log(currentHour) real localtime
+        // console.log(currentMinute)  real localtime
 
         // ✅ ตรวจสอบว่าจะลดวันหรือไม่
         const isNightShift = latestShift.includes('/N');
@@ -47,7 +50,11 @@ export async function GET(req: NextRequest) {
         //     now.setDate(now.getDate() - 1); // ✅ ลดวัน
         // }
 
-        const queryDate = now.toISOString().split('T')[0]; // 'YYYY-MM-DD'
+        // const queryDate = now.toISOString().split('T')[0]; // 'utc
+
+        const queryDate = now.getFullYear() + '-' +
+            String(now.getMonth() + 1).padStart(2, '0') + '-' +
+            String(now.getDate()).padStart(2, '0');
 
         // ✅ Step 2: Query ข้อมูลของวันนั้น
         const finalResult = await pool

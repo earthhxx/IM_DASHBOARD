@@ -9,9 +9,6 @@ import SupportBox from "@/app/pages/FindingTools/toolscomponents/SupportBox";
 import ShelfSqueegee from "@/app/pages/FindingTools/toolscomponents/shelfSqueegee";
 import FloatingTable from "@/app/pages/FindingTools/toolscomponents/FloatingTable";
 
-
-
-
 type ToolingData = {
     sheftname: string;
     slot: string;
@@ -279,7 +276,7 @@ export default function StorageRoomLayout() {
     // };
 
     useEffect(() => {
-        if (!selectedItem) return;
+        if (!selectedItem || !['Stencil A', 'Stencil B', 'Stencil C'].includes(selectedItem.sheftname)) return;
 
         const fetchData = async () => {
             try {
