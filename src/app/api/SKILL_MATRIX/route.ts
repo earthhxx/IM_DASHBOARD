@@ -50,6 +50,16 @@ export async function GET(req: NextRequest) {
                   WHEN 'SMT-19' THEN 19
                   WHEN 'SMT-20' THEN 20
                   WHEN 'SMT-21' THEN 21
+                  WHEN 'FPCA Camera 1' THEN 22
+                   WHEN 'FPCA Camera 2' THEN 23
+                    WHEN 'FPCA Camera 3' THEN 24
+                     WHEN 'FPCA Camera 4' THEN 25
+                      WHEN 'PCBA Camera' THEN 26
+                      WHEN 'Motor Sensor' THEN 27
+                      WHEN 'ICT Heater Sensor' THEN 28
+                      WHEN 'Automotive' THEN 29
+                      WHEN 'Finish Good' THEN 30
+                      WHEN 'Touch_up' THEN 31
                   ELSE 99
               END;
 
@@ -62,7 +72,7 @@ export async function GET(req: NextRequest) {
     const pdfBase64List = [];
 
     for (const row of result.recordset) {
-      const { S_Room, S_Team, S_Dep, S_Loc} = row;
+      const { S_Room, S_Team, S_Dep, S_Loc } = row;
 
 
 
